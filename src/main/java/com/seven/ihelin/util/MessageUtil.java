@@ -1,7 +1,10 @@
 package com.seven.ihelin.util;
 
-import com.google.common.collect.Maps;
-import com.seven.ihelin.resp.*;
+import com.seven.ihelin.req.TextMessage;
+import com.seven.ihelin.resp.Article;
+import com.seven.ihelin.resp.ImageMessage;
+import com.seven.ihelin.resp.MusicMessage;
+import com.seven.ihelin.resp.NewsMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;

@@ -44,19 +44,4 @@
         <property name="basePackage" value="com.seven.ihelin.db.mapper"/>
     </bean>
 
-    <!-- freemarker配置 -->
-    <bean id="freemarkerConfig"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/templates/"/>
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="defaultEncoding">UTF-8</prop>
-                <prop key="date_format">yyyy-MM-dd</prop>
-                <prop key="time_format">HH:mm:ss</prop>
-                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-                <prop key="number_format">0.##</prop><!-- 设置数字格式，防止出现,号，默认2位 -->
-            </props>
-        </property>
-    </bean>
-
 </beans>
