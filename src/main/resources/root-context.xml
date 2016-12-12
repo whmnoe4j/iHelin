@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <!-- Spring上下文配置 -->
+    <description>Spring配置</description>
+
+    <!-- 使用annotation自动注册bean,并检查@Required,@Autowired的属性已被注入，对@Controller的扫描,交由spring
+        mvc处理 -->
+    <context:component-scan base-package="com.seven.ihelin">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 利用yaml里的jdbc配置实例化dataSource -->
+    <bean id="dataSource" class="com.seven.ihelin.config.DataSourceFactoryBean"></bean>
+
+    <!-- MyBatis数据库连接池配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"/>
+        <property name="typeAliasesPackage" value="com.seven.ihelin.db.entity"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+    </bean>
+
+    <!-- 数据库事务配置 -->
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 配置基于注解的声明式事务，标注@Transactional的类和方法将具有事务性 -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <!-- 定义mybatis接口路径 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.seven.ihelin.db.mapper"/>
+    </bean>
+
+    <!-- freemarker配置 -->
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/templates/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="number_format">0.##</prop><!-- 设置数字格式，防止出现,号，默认2位 -->
+            </props>
+        </property>
+    </bean>
+
+</beans>
