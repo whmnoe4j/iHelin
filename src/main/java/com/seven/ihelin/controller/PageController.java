@@ -1,10 +1,13 @@
 package com.seven.ihelin.controller;
 
+import com.seven.ihelin.util.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PageController extends BaseController {
@@ -41,7 +44,9 @@ public class PageController extends BaseController {
     }
 
     @RequestMapping(value = "music", method = RequestMethod.GET)
-    public String musicPage() {
+    public String musicPage(HttpServletRequest request) {
+        LOGGER.info("Browser's user-agent: " + request.getHeader("User-Agent"));
+        LOGGER.info("remote ip:" + RequestUtil.getRealIp(request));
         LOGGER.info("music...");
         return "music";
     }

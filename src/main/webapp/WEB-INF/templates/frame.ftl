@@ -12,6 +12,15 @@
     <link href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="${request.contextPath}/css/my-blog.css" rel="stylesheet">
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?446e75aa18878239fdca3aead20f2368";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 
 <body>
@@ -120,6 +129,7 @@ ${ex_script!}
         }
     });
 </script>
+
 </body>
 </html>
 </#macro>
