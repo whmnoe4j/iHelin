@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8"/>
-    <title>管理后台登录 | Ian He</title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="" name="author"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="iHelin 的博客">
+    <meta name="author" content="iHelin">
+    <title>后台管理登录 | Ian He</title>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${request.contextPath}/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
-          type="text/css"/>
     <link href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="${request.contextPath}/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="${request.contextPath}/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
-          type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="${request.contextPath}/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${request.contextPath}/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="${request.contextPath}/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
     <link href="${request.contextPath}/css/plugins.min.css" rel="stylesheet" type="text/css"/>
@@ -27,15 +18,11 @@
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="${request.contextPath}/css/login.css" rel="stylesheet" type="text/css"/>
     <!-- END PAGE LEVEL STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="/favicon.ico"/>
 </head>
-<!-- END HEAD -->
 
 <body class=" login">
 <div class="menu-toggler sidebar-toggler"></div>
-<!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="index.html">
@@ -69,10 +56,6 @@
     <!-- END LOGIN FORM -->
 </div>
 <div class="copyright"> ${.now?string('yyyy')} © Ian He.</div>
-<!--[if lt IE 9]>
-<script src="${request.contextPath}/plugins/respond.min.js"></script>
-<script src="${request.contextPath}/plugins/excanvas.min.js"></script>
-<![endif]-->
 <!-- BEGIN CORE PLUGINS -->
 <script src="${request.contextPath}/plugins/jquery/jquery.min.js"></script>
 <script src="${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

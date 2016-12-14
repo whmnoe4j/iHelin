@@ -26,10 +26,10 @@ public class AdminLoginController extends BaseController {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginPage(Model model, String from,HttpServletRequest request) {
+    public String loginPage(Model model, String from, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("test")) {
+            if ("test".equals(cookie.getName())) {
                 // 如果user Cookie存在，进行处理
                 break;
             }
