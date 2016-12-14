@@ -1,6 +1,6 @@
 <#macro page title>
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">

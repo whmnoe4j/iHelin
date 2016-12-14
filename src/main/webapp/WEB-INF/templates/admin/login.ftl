@@ -1,94 +1,140 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>后台登录 | Ian He</title>
+    <meta charset="utf-8"/>
+    <title>管理后台登录 | Ian He</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="alternate icon" type="image/png" href="${request.contextPath}/i/favicon.png">
-    <link rel="stylesheet" href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css"/>
-    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <style>
-        .login-form {
-            background-color: #eceff1;
-            border-radius: 6px;
-            padding: 24px 23px 20px;
-            position: relative;
-        }
-
-        .login-form .login-field {
-            font-size: 17px;
-            padding-bottom: 11px;
-            padding-top: 11px;
-            text-indent: 3px;
-
-        }
-
-        .login-form .login-field-icon {
-            color: #bfc9ca;
-            font-size: 16px;
-            position: absolute;
-            right: 28px;
-            top: 9px;
-            -webkit-transition: 0.25s;
-            -moz-transition: 0.25s;
-            -o-transition: 0.25s;
-            transition: 0.25s;
-            -webkit-backface-visibility: hidden;
-        }
-    </style>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${request.contextPath}/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${request.contextPath}/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="${request.contextPath}/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="${request.contextPath}/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${request.contextPath}/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="${request.contextPath}/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="${request.contextPath}/css/plugins.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="${request.contextPath}/css/login.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="/favicon.ico"/>
 </head>
-<body class="">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2 class="text-center">登录</h2>
-            <hr>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 login-form">
-            <form role="form" class="form-horizontal" action="${request.contextPath}/admin/login" method="post">
-                <input type="hidden" name="from" value="${from!}">
-                <div class="form-group control-group ">
-                    <label for="username" class="col-sm-2 control-label">用户名</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="username" class="form-control login-field" id="username"
-                               placeholder="用户名" required>
-                        <i class="fa fa-user login-field-icon"></i>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">密码</label>
-                    <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control login-field" id="password"
-                               placeholder="密码" required>
-                        <i class="fa fa-lock login-field-icon"></i>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember"> 保存登录信息
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            <#if error??>
-                <p class="text-danger text-center danger">${error!}</p>
-            </#if>
-                <div class="form-group">
-                    <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-primary">登录</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+<!-- END HEAD -->
+
+<body class=" login">
+<div class="menu-toggler sidebar-toggler"></div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a href="index.html">
+        <img src="" alt=""/></a>
 </div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <form class="login-form" action="${request.contextPath}/admin/login" method="post">
+        <input type="hidden" name="from" value="${from!}">
+        <h3 class="form-title font-green">登录</h3>
+        <div class="alert alert-danger display-hide">
+            <button class="close" data-close="alert"></button>
+            <span>请输入用户名和密码。</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"
+                   placeholder="用户名" name="username" required/></div>
+        <div class="form-group">
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"
+                   placeholder="密码" name="password" required/></div>
+    <#if error??>
+        <p class="text-danger text-center danger">${error!}</p>
+    </#if>
+        <div class="form-actions">
+            <button type="submit" class="btn green uppercase">Login</button>
+            <label class="rememberme check">
+                <input type="checkbox" name="remember" value="1"/>Remember </label>
+        </div>
+    </form>
+    <!-- END LOGIN FORM -->
+</div>
+<div class="copyright"> ${.now?string('yyyy')} © Ian He.</div>
+<!--[if lt IE 9]>
+<script src="${request.contextPath}/plugins/respond.min.js"></script>
+<script src="${request.contextPath}/plugins/excanvas.min.js"></script>
+<![endif]-->
+<!-- BEGIN CORE PLUGINS -->
+<script src="${request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="${request.contextPath}/plugins/jquery-validation/js/jquery.validate.min.js"
+        type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/jquery-validation/js/additional-methods.min.js"
+        type="text/javascript"></script>
+<script src="${request.contextPath}/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="${request.contextPath}/js/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script>
+    var Login = function () {
+        var e = function () {
+            $(".login-form").validate({
+                errorElement: "span",
+                errorClass: "help-block",
+                focusInvalid: !1,
+                rules: {username: {required: !0}, password: {required: !0}, remember: {required: !1}},
+                messages: {
+                    username: {required: "Username is required."},
+                    password: {required: "Password is required."}
+                },
+                invalidHandler: function (e, r) {
+                    $(".alert-danger", $(".login-form")).show()
+                },
+                highlight: function (e) {
+                    $(e).closest(".form-group").addClass("has-error")
+                },
+                success: function (e) {
+                    e.closest(".form-group").removeClass("has-error"), e.remove()
+                },
+                errorPlacement: function (e, r) {
+                    e.insertAfter(r.closest(".input-icon"));
+                },
+                submitHandler: function (e) {
+                    e.submit();
+                }
+            }), $(".login-form input").keypress(function (e) {
+                return 13 == e.which ? ($(".login-form").validate().form() && $(".login-form").submit(), !1) : void 0
+            });
+        };
+        return {
+            init: function () {
+                e();
+            }
+        }
+    }();
+    $(function () {
+        Login.init();
+    });
+</script>
 </body>
+
 </html>
