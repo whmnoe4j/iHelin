@@ -76,7 +76,6 @@
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="${request.contextPath}/js/app.min.js" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script>
     var Login = function () {
         var e = function () {
