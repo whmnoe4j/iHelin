@@ -19,10 +19,8 @@ public class DataSourceFactoryBean implements FactoryBean<BasicDataSource>, Disp
 
     @Override
     public BasicDataSource getObject() throws Exception {
-        final String driver = "com.mysql.jdbc.Driver";
-
         dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(driver);
+        dataSource.setDriverClassName(CommonConfig.getDBDriver());
         String cfgUrl = CommonConfig.getDBUrl();
         if (cfgUrl != null && cfgUrl.contains("?"))
             cfgUrl += "&allowMultiQueries=true";

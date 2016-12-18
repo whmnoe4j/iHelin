@@ -1,17 +1,22 @@
 package com.seven.ihelin.config;
 
+import org.ho.yaml.Yaml;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.ho.yaml.Yaml;
-
 public class CommonConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
 
     public static class ConfigEntry {
         public String jdbc_url;
         public String jdbc_user;
         public String jdbc_password;
+        public String jdbc_driver;
 
         public String admin_user;
         public String admin_password;
@@ -36,7 +41,7 @@ public class CommonConfig {
 
     private static String webappRoot;
 
-    private static String contextPath = "";
+    private static String contextPath;
 
     public static String getWebappRoot() {
         return webappRoot;
@@ -44,13 +49,13 @@ public class CommonConfig {
 
     public static void init(String rootPath, String contextName) {
         contextPath = contextName;
-        webappRoot = rootPath;    //System.getProperty("webapp.root"); 使用这个会使多个项目冲突
+        webappRoot = rootPath;
         configEntry = loadConfig(ConfigEntry.class);
 
         try {
             mailEntry = loadConfig("mail_config.yml", MailConfigEntry.class);
         } catch (RuntimeException e) {
-            //ignore, mail not configured.
+            logger.info("mail not configured", e);
         }
 
         if (configEntry == null || configEntry.domain_url == null) {
@@ -104,6 +109,10 @@ public class CommonConfig {
 
     public static String getDBPwd() {
         return configEntry.jdbc_password;
+    }
+
+    public static String getDBDriver() {
+        return configEntry.jdbc_driver;
     }
 
     public static File getWebInfDir() {
