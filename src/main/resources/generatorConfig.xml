@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-gen" >
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 
     <!-- load driver jar, must config local maven repo dir -->
-    <classPathEntry location="/Users/iHelin/Public/tools/mysql-connector-java-5.1.19.jar"/>
+    <classPathEntry
+            location="/Users/iHelin/.m2/repository/mysql/mysql-connector-java/5.1.19/mysql-connector-java-5.1.19.jar"/>
 
     <context id="Tuna" targetRuntime="MyBatis3">
         <!--设置编码格式-->
@@ -43,7 +44,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="iHelin" tableName="User" domainObjectName="User"
+        <table schema="iHelin" tableName="Tip" domainObjectName="Tip"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
