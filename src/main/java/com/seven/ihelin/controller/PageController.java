@@ -1,6 +1,6 @@
 package com.seven.ihelin.controller;
 
-import com.seven.ihelin.util.RequestUtil;
+import com.seven.ihelin.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.seven.ihelin.util.JSON;
+import com.seven.ihelin.utils.JSON;
 
 public class TestInterceptor implements HandlerInterceptor {
 

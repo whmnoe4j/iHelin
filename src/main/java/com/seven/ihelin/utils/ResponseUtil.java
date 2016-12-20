@@ -1,11 +1,10 @@
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
-import com.seven.ihelin.util.JSON;
 
 public class ResponseUtil {
 

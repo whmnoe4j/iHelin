@@ -1,4 +1,4 @@
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import com.google.common.collect.Lists;
 import com.seven.ihelin.config.CommonConfig;

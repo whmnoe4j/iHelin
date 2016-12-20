@@ -1,4 +1,4 @@
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;

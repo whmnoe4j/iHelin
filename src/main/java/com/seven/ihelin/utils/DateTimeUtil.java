@@ -1,4 +1,4 @@
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

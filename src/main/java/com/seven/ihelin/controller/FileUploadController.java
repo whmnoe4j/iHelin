@@ -1,8 +1,8 @@
 package com.seven.ihelin.controller;
 
 import com.qiniu.storage.model.FileInfo;
-import com.seven.ihelin.util.FileUtils;
-import com.seven.ihelin.util.JSON;
+import com.seven.ihelin.utils.FileUtils;
+import com.seven.ihelin.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

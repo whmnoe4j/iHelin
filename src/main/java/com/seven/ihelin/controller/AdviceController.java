@@ -1,7 +1,7 @@
 package com.seven.ihelin.controller;
 
 import com.seven.ihelin.db.entity.Advice;
-import com.seven.ihelin.util.ResponseUtil;
+import com.seven.ihelin.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,5 +1,5 @@
 
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharEncoding;

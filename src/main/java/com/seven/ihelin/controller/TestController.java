@@ -1,10 +1,9 @@
 package com.seven.ihelin.controller;
 
-import com.google.common.collect.Lists;
-import com.seven.ihelin.util.CryptUtil;
-import com.seven.ihelin.util.JSON;
-import com.seven.ihelin.util.MailUtil;
-import com.seven.ihelin.util.TemplateUtil;
+import com.seven.ihelin.utils.CryptUtil;
+import com.seven.ihelin.utils.JSON;
+import com.seven.ihelin.utils.MailUtil;
+import com.seven.ihelin.utils.TemplateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.Properties;
 
 @Controller

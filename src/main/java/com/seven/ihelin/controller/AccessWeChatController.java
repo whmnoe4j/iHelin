@@ -1,8 +1,8 @@
 package com.seven.ihelin.controller;
 
 import com.seven.ihelin.req.LocationMessage;
-import com.seven.ihelin.util.CheckUtil;
-import com.seven.ihelin.util.WechatUtil;
+import com.seven.ihelin.utils.CheckUtil;
+import com.seven.ihelin.utils.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

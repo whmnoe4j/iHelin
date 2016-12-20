@@ -1,4 +1,4 @@
-package com.seven.ihelin.util;
+package com.seven.ihelin.utils;
 
 import java.io.IOException;
 import java.util.Enumeration;

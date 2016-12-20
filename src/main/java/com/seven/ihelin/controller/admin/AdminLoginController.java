@@ -3,7 +3,7 @@ package com.seven.ihelin.controller.admin;
 import com.seven.ihelin.config.CommonConfig;
 import com.seven.ihelin.controller.BaseController;
 import com.seven.ihelin.model.AdminUser;
-import com.seven.ihelin.util.RequestUtil;
+import com.seven.ihelin.utils.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
