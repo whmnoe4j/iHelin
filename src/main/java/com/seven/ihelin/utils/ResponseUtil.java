@@ -29,7 +29,7 @@ public class ResponseUtil {
 		if(res == null)
 			res = Maps.newHashMap();
 		res.put("status", "success");
-		response.setContentType("text/json; charset=utf-8"); 
+		response.setContentType("text/json; charset=utf-8");
 		try {
 			response.getWriter().write(JSON.toJson(res));
 		} catch (Exception e) {
