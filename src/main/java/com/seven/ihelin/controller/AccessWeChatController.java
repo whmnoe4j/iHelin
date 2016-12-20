@@ -2,7 +2,6 @@ package com.seven.ihelin.controller;
 
 import com.seven.ihelin.req.LocationMessage;
 import com.seven.ihelin.util.CheckUtil;
-import com.seven.ihelin.util.MessageUtil;
 import com.seven.ihelin.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +47,10 @@ public class AccessWeChatController extends BaseController {
      */
     @RequestMapping(value = "access_wechat", method = RequestMethod.POST)
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, String> msgMap = MessageUtil.xml2Map(request);
+        Map<String, String> msgMap = WechatUtil.xml2Map(request);
         String msgType = msgMap.get("MsgType");
         String respMessage = null;
-        if (MessageUtil.MESSAGE_EVNET.equals(msgType)) {
+        if (WechatUtil.MESSAGE_EVNET.equals(msgType)) {
             respMessage = processEvent(msgMap); // 进入事件处理
         } else {
             respMessage = processMessage(msgMap); // 进入普通消息处理
@@ -71,34 +70,34 @@ public class AccessWeChatController extends BaseController {
         String content = msgMap.get("Content");
         System.out.println("消息类型：" + msgType);
         switch (msgType) {
-            case MessageUtil.MESSAGE_TEXT:
+            case WechatUtil.MESSAGE_TEXT:
                 // 处理文本消息
                 System.out.println("用户发送的消息是：" + content);
                 message = textMessage(content, toUserName, fromUserName);
                 break;
-            case MessageUtil.MESSAGE_IMAGE:
+            case WechatUtil.MESSAGE_IMAGE:
                 // 图片消息处理
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的图片！");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的图片！");
                 break;
-            case MessageUtil.MESSAGE_LOCATION:
+            case WechatUtil.MESSAGE_LOCATION:
                 // 处理地理位置消息
                 LocationMessage locationMsg = WechatUtil.MapToLocation(msgMap);
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, locationMsg.getLabel());
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, locationMsg.getLabel());
                 break;
-            case MessageUtil.MESSAGE_LINK:
+            case WechatUtil.MESSAGE_LINK:
                 // 链接消息
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的链接！");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的链接！");
                 break;
-            case MessageUtil.MESSAGE_VIDEO:
+            case WechatUtil.MESSAGE_VIDEO:
                 // 视频消息
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的视频！");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的视频！");
                 break;
-            case MessageUtil.MESSAGE_VOICE:
+            case WechatUtil.MESSAGE_VOICE:
                 // 音频消息
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的音频！");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "我已经收到了你的音频！");
                 break;
             default:
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "未知的消息。");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "未知的消息。");
                 break;
         }
         return message;
@@ -116,16 +115,16 @@ public class AccessWeChatController extends BaseController {
         String fromUserName = msgMap.get("FromUserName");
         String toUserName = msgMap.get("ToUserName");
         String message = "";
-        if (MessageUtil.MESSAGE_SUBSCRIBE.equals(eventType)) {
-            message = MessageUtil.sendTextMsg(toUserName, fromUserName, "感谢您的关注，我会继续努力！");// 关注事件
-        } else if (MessageUtil.MESSAGE_VIEW.equals(eventType)) {
+        if (WechatUtil.MESSAGE_SUBSCRIBE.equals(eventType)) {
+            message = WechatUtil.sendTextMsg(toUserName, fromUserName, "感谢您的关注，我会继续努力！");// 关注事件
+        } else if (WechatUtil.MESSAGE_VIEW.equals(eventType)) {
             // view类型事件，访问网页
             String url = msgMap.get("EventKey");
-            message = MessageUtil.sendTextMsg(toUserName, fromUserName, url);
-        } else if (MessageUtil.MESSAGE_SCANCODE.equals(eventType)) {
+            message = WechatUtil.sendTextMsg(toUserName, fromUserName, url);
+        } else if (WechatUtil.MESSAGE_SCANCODE.equals(eventType)) {
             // 扫码事件
             String key = msgMap.get("EventKey");
-            message = MessageUtil.sendTextMsg(toUserName, fromUserName, key);
+            message = WechatUtil.sendTextMsg(toUserName, fromUserName, key);
         }
         return message;
     }
@@ -137,11 +136,11 @@ public class AccessWeChatController extends BaseController {
         String message = "";
         switch (content) {
             case "1":
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName,
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName,
                         "你想干嘛？");
                 break;
             default:
-                message = MessageUtil.sendTextMsg(toUserName, fromUserName, "嗯嗯");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "嗯嗯");
                 break;
         }
         return message;

@@ -6,11 +6,6 @@
     <display-name>iHelin</display-name>
     <description>this is my personal web-app project</description>
 
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath:log4j.xml</param-value>
-    </context-param>
-
     <!-- Spring应用上下文，理解层次化的ApplicationContest -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -21,6 +16,20 @@
         <param-name>spring.profiles.default</param-name>
         <param-value>development</param-value>
     </context-param>
+
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:log4j.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>com.seven.ihelin.config.ContextRootListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -40,16 +49,6 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-
-    <listener>
-        <listener-class>com.seven.ihelin.config.ContextRootListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-    </listener>
 
     <servlet>
         <servlet-name>springServlet</servlet-name>

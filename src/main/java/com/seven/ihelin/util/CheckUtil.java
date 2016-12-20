@@ -3,14 +3,15 @@ package com.seven.ihelin.util;
 import java.util.Arrays;
 
 /**
- * Created by iHelin on 16/11/4.
+ * 微信签名验证
+ * Created by Ian He on 16/11/4.
  */
 public class CheckUtil {
 
-    private static final String token = "ihelin";
+    private static final String TOKEN = "ihelin";
 
     public static boolean checkSignature(String signature, String timestamp, String nonce) {
-        String[] arr = new String[]{token, timestamp, nonce};
+        String[] arr = new String[]{TOKEN, timestamp, nonce};
         // 排序
         Arrays.sort(arr);
         // Collections.sort(Arrays.asList(arr));

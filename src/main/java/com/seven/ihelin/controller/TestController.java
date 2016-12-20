@@ -1,44 +1,29 @@
 package com.seven.ihelin.controller;
 
+import com.google.common.collect.Lists;
+import com.seven.ihelin.util.CryptUtil;
 import com.seven.ihelin.util.JSON;
 import com.seven.ihelin.util.MailUtil;
-import com.seven.ihelin.util.ResponseUtil;
+import com.seven.ihelin.util.TemplateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Properties;
 
 @Controller
 public class TestController extends BaseController {
 
-    @RequestMapping("git")
-    public void git(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        InputStream inStream = request.getInputStream();
-        InputStreamReader inStreamReader = new InputStreamReader(inStream);
-        BufferedReader br = new BufferedReader(inStreamReader);
-        StringBuffer sb = new StringBuffer();
-        String s;
-        while ((s = br.readLine()) != null) {
-            sb.append(s);
-        }
-        String res = sb.toString();
-        Object obj = JSON.parseObject(res, Object.class);
-        ResponseUtil.writeSuccessJSON(response);
-    }
-
-    @RequestMapping("mail")
+    @ResponseBody
+    @RequestMapping(value = "mail", method = RequestMethod.GET)
     public String error() {
-        MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", "这里是内容");
-        return "error";
+        String template = TemplateUtil.applyTemplate("/mail/mail_content.ftl");
+        MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
+        return template;
     }
 
     @RequestMapping(value = "config", method = RequestMethod.GET)
@@ -59,6 +44,12 @@ public class TestController extends BaseController {
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test() {
         return "中国三个人请问";
+    }
+
+    public static void main(String[] args) {
+        String s = "123456";
+        System.out.println(CryptUtil.md5(s));
+        System.out.println(DigestUtils.md5DigestAsHex(s.getBytes()));
     }
 
 }
