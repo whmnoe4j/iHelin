@@ -36,7 +36,7 @@ public class AdminQRCodeController extends BaseController {
 
     @RequestMapping(value = "generate_img", method = RequestMethod.POST)
     public void generateQRCode(String content, HttpServletRequest request, HttpServletResponse response) {
-        String path = "img/";
+        String path = "qrcode/";
         path = path + QRCode.generateQRCode(path, content, "png", 300, 300);
         Map<String, Object> res = Maps.newHashMap();
         res.put("url", path);
