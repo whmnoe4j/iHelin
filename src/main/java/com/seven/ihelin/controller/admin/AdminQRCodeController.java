@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * PackageName:   com.seven.ihelin.controller.admin
- * ClassName:     AdminQRCodeController
- * Description:
+ * 二维码图片生成
+ * <p>
  * Date           16/12/20
  * lastModified:
  *
@@ -32,7 +31,7 @@ public class AdminQRCodeController extends BaseController {
 
     @RequestMapping(value = "qrcode", method = RequestMethod.GET)
     public String qRCode() {
-        return "qrcode";
+        return "admin/qrcode";
     }
 
     @RequestMapping(value = "generate_img", method = RequestMethod.POST)

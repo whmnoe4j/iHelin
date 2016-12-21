@@ -27,8 +27,8 @@
         $.post('${request.contextPath}/admin/generate_img', {content: content}, function (data) {
             layer.close(index);
             if (data.status == 'success') {
-                var pre = 'http://source.520lyx.cn/';
-                $('#img_id').attr("src", pre + data.url);
+                var prefix = 'http://source.520lyx.cn/';
+                $('#img_id').attr("src", prefix + data.url);
             } else {
                 layer.msg("生成失败");
             }
@@ -68,7 +68,7 @@
                             <div class="panel panel-orange">
                                 <div class="panel-body">
                                     <div style="min-width:300px;min-height:300px;margin: auto;" align="center">
-                                        <img id="img_id" style="vertical-align: middle;" alt="二维码生成区">
+                                        <img id="img_id" style="vertical-align: middle;width:300px;height:300px;" alt="二维码生成区">
                                     </div>
                                 </div>
                             </div>

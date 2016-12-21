@@ -42,10 +42,10 @@ public class AdminLoginController extends BaseController {
     public String login(String username, String password, String from, HttpServletRequest request,
                         HttpSession session, Model model, HttpServletResponse response) {
         if (username.equals(CommonConfig.getAdminUser()) && password.equals(CommonConfig.getAdminPassword())) {
-            Cookie cookie = new Cookie("user", UUID.randomUUID().toString());
-            cookie.setMaxAge(365 * 24 * 3600);
+            /*Cookie cookie = new Cookie("user", UUID.randomUUID().toString());
+            cookie.setMaxAge(24 * 3600);
             cookie.setPath("/");
-            response.addCookie(cookie);
+            response.addCookie(cookie);*/
             AdminUser adminUser = new AdminUser();
             adminUser.setAdminId(username);
             adminUser.setNickName("超级管理员");
