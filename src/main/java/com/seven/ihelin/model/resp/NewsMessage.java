@@ -1,4 +1,4 @@
-package com.seven.ihelin.resp;
+package com.seven.ihelin.model.resp;
 
 import java.util.List;
 

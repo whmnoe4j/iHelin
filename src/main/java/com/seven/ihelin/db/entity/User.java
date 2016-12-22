@@ -7,7 +7,7 @@ import java.util.Date;
 public class User {
     private Integer id;
 
-    private String selection;
+    private String account;
 
     @JsonIgnore
     private String password;
@@ -54,12 +54,20 @@ public class User {
         this.id = id;
     }
 
-    public String getSelection() {
-        return selection;
+    public String getAccount() {
+        return account;
     }
 
-    public void setSelection(String selection) {
-        this.selection = selection;
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public Boolean getBind() {
+        return isBind;
+    }
+
+    public void setBind(Boolean bind) {
+        isBind = bind;
     }
 
     public String getPassword() {

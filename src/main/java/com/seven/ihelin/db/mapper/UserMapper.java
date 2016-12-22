@@ -1,6 +1,10 @@
 package com.seven.ihelin.db.mapper;
 
 import com.seven.ihelin.db.entity.User;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,12 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByOpenId(String openId);
+
+    User selectByPhone(String phone);
+
+    List<User> listUserByCondition(Map<String, Object> res, RowBounds rowBounds);
+
+    int listUserCount(Map<String, Object> res);
 }

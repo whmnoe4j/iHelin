@@ -1,6 +1,8 @@
 package com.seven.ihelin.controller;
 
-import com.seven.ihelin.req.LocationMessage;
+import com.seven.ihelin.db.entity.User;
+import com.seven.ihelin.model.WXUser;
+import com.seven.ihelin.model.req.LocationMessage;
 import com.seven.ihelin.utils.CheckUtil;
 import com.seven.ihelin.utils.WechatUtil;
 import org.slf4j.Logger;
@@ -132,15 +134,25 @@ public class AccessWeChatController extends BaseController {
     /**
      * 文本消息处理
      */
-    public static String textMessage(String content, String toUserName, String fromUserName) {
-        String message = "";
+    public String textMessage(String content, String toUserName, String fromUserName) {
+        User user = userManager.selectUserByOpenId(fromUserName);
+        if (user == null) {
+            String accessToken = accessTokenManager.getAccessToken().getToken();
+            WXUser wxUser = userManager.selectWXUserByOpenId(fromUserName, accessToken);
+            user = userManager.transWXUserToUser(wxUser);
+            userManager.insertUser(user);
+        }
+        String message;
         switch (content) {
             case "1":
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName,
                         "你想干嘛？");
                 break;
+            case "2":
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
+                break;
             default:
-                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "嗯嗯");
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
                 break;
         }
         return message;

@@ -24,6 +24,10 @@ public class CommonConfig {
         public String domain_url;
         public String system_name;
 
+        public String wx_appId;
+        public String wx_appSecret;
+        public String mch_id;//商户号
+        public String key;//微信支付的key
     }
 
     public static class MailConfigEntry {
@@ -113,6 +117,22 @@ public class CommonConfig {
 
     public static String getDBDriver() {
         return configEntry.jdbc_driver;
+    }
+
+    public static String getAppID() {
+        return configEntry.wx_appId;
+    }
+
+    public static String getAppSecret() {
+        return configEntry.wx_appSecret;
+    }
+
+    public static String getMchId() {
+        return configEntry.mch_id;
+    }
+
+    public static String getKey() {
+        return configEntry.key;
     }
 
     public static File getWebInfDir() {

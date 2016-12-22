@@ -1,11 +1,9 @@
-package com.seven.ihelin.req;
+package com.seven.ihelin.model.resp;
 
-public class LinkMessage extends BaseMessage {
-	// 消息标题
+public class Article {
 	private String Title;
-	// 消息描述
 	private String Description;
-	// 消息链接
+	private String PicUrl;
 	private String Url;
 
 	public String getTitle() {
@@ -22,6 +20,14 @@ public class LinkMessage extends BaseMessage {
 
 	public void setDescription(String description) {
 		Description = description;
+	}
+
+	public String getPicUrl() {
+		return PicUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		PicUrl = picUrl;
 	}
 
 	public String getUrl() {

@@ -1,4 +1,4 @@
-package com.seven.ihelin.resp;
+package com.seven.ihelin.model.resp;
 
 public class VideoMessage extends BaseMessage {
 	private String MediaId;

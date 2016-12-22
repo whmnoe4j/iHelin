@@ -1,4 +1,4 @@
-package com.seven.ihelin.resp;
+package com.seven.ihelin.model.resp;
 
 public class SubscribeMessage extends BaseMessage {
 	private String Event;// 关注或取关

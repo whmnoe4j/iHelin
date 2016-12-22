@@ -1,4 +1,4 @@
-package com.seven.ihelin.req;
+package com.seven.ihelin.model.req;
 
 /**
  * 音频消息

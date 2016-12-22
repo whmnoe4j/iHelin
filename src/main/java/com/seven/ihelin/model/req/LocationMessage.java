@@ -1,4 +1,4 @@
-package com.seven.ihelin.req;
+package com.seven.ihelin.model.req;
 
 public class LocationMessage extends BaseMessage {
 	private String Location_X;// 纬度

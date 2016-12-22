@@ -6,18 +6,19 @@ import com.seven.ihelin.model.ClickButton;
 import com.seven.ihelin.model.Menu;
 import com.seven.ihelin.model.ViewButton;
 import com.seven.ihelin.model.WXAccessToken;
-import com.seven.ihelin.req.LocationMessage;
-import com.seven.ihelin.resp.Article;
-import com.seven.ihelin.resp.ImageMessage;
-import com.seven.ihelin.resp.MusicMessage;
-import com.seven.ihelin.resp.NewsMessage;
-import com.seven.ihelin.resp.TextMessage;
+import com.seven.ihelin.model.req.LocationMessage;
+import com.seven.ihelin.model.resp.Article;
+import com.seven.ihelin.model.resp.ImageMessage;
+import com.seven.ihelin.model.resp.MusicMessage;
+import com.seven.ihelin.model.resp.NewsMessage;
+import com.seven.ihelin.model.resp.TextMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import org.apache.commons.lang3.CharEncoding;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -128,8 +129,11 @@ public class WechatUtil {
     }
 
     // 获取微信access_token
-    public WXAccessToken getAccessToken(String appid, String secret) {
-        String url = ACCESS_TOKEN_URL.replace("APPID", appid).replace("APPSECRET", secret);
+    public static WXAccessToken getAccessToken(String appId, String secret) {
+        if (StringUtils.isBlank(appId) || StringUtils.isBlank(secret)) {
+            throw new RuntimeException("appId or secret is empty,please check your configuration!");
+        }
+        String url = ACCESS_TOKEN_URL.replace("APPID", appId).replace("APPSECRET", secret);
         String res = doGetStr(url);
         WXAccessToken token = JSON.parseObject(res, WXAccessToken.class);
         LOGGER.info("从微信服务器获取token成功，有效期为" + token.getExpires_in() + "秒");

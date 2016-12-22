@@ -1,11 +1,16 @@
-package com.seven.ihelin.resp;
+package com.seven.ihelin.model.req;
 
+/**
+ * 消息基类（普通用户 -> 公众帐号）
+ * 
+ * @author ihelin
+ */
 public abstract class BaseMessage {
 	private String ToUserName;// 开发者微信号
 	private String FromUserName;// 发送方帐号（一个OpenID）
 	private long CreateTime;// 消息创建时间（整型）
 	private String MsgType;// 消息类型
-	private int FuncFlag;// 位0x0001被标志时，星标刚收到的消息
+	private long MsgId;// 消息id，64位整型
 
 	public String getToUserName() {
 		return ToUserName;
@@ -39,11 +44,11 @@ public abstract class BaseMessage {
 		MsgType = msgType;
 	}
 
-	public int getFuncFlag() {
-		return FuncFlag;
+	public long getMsgId() {
+		return MsgId;
 	}
 
-	public void setFuncFlag(int funcFlag) {
-		FuncFlag = funcFlag;
+	public void setMsgId(long msgId) {
+		MsgId = msgId;
 	}
 }

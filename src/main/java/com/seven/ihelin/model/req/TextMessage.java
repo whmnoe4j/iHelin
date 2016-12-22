@@ -1,4 +1,4 @@
-package com.seven.ihelin.resp;
+package com.seven.ihelin.model.req;
 
 public class TextMessage extends BaseMessage {
 	private String Content;// 消息内容
@@ -10,4 +10,5 @@ public class TextMessage extends BaseMessage {
 	public void setContent(String content) {
 		Content = content;
 	}
+
 }
