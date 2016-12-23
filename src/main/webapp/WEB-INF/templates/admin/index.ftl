@@ -1,29 +1,50 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>首页 | Ian He</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link rel="stylesheet" href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css"/>
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2 class="text-center">首页</h2>
-            <hr>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            <span>首页</span>
-        </div>
-    </div>
+<#import "admin_frame.ftl" as main>
+<#assign html_other_script in main>
+<script>
+	$(function(){
+		
+	});
+</script>
+</#assign>
+<@main.page title="首页">
+<div id="page-heading">
+	<ol class="breadcrumb">
+		<li><a href="index">首页</a></li>
+	</ol>
+	<h1>首页</h1>
 </div>
-</body>
-</html>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-xs-12 col-sm-6">
+	        <a class="info-tiles tiles-green" href="product_admin">
+	            <div class="tiles-heading">商品管理</div>
+	            <div class="tiles-body-alt">
+	                <i class="fa fa-gift"></i>
+	                <div class="text-center"><#if productCount??>${productCount?c}<#else>0</#if></div>
+	            </div>
+	            <div class="tiles-footer"></div>
+	        </a>
+	    </div>
+	    <div class="col-md-4 col-xs-12 col-sm-6">
+	        <a class="info-tiles tiles-midnightblue" href="order_admin">
+	            <div class="tiles-heading">订单管理</div>
+	            <div class="tiles-body-alt">
+	                <i class="fa fa-globe"></i>
+	                <div class="text-center"><#if orderCount??>${orderCount?c}<#else>0</#if></div>
+	            </div>
+	            <div class="tiles-footer"></div>
+	        </a>
+	    </div>
+	    <div class="col-md-4 col-xs-12 col-sm-6">
+	        <a class="info-tiles tiles-indigo" href="user_admin">
+	            <div class="tiles-heading">会员管理</div>
+	            <div class="tiles-body-alt">
+	               <i class="fa fa-user"></i>
+	                <div class="text-center"><#if userCount??>${userCount?c}<#else>0</#if></div>
+	            </div>
+	            <div class="tiles-footer"></div>
+	        </a>
+	    </div>
+	</div>
+</div>
+</@main.page>

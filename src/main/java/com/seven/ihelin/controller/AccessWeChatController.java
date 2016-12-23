@@ -167,8 +167,11 @@ public class AccessWeChatController extends BaseController {
         StringBuilder sb = new StringBuilder();
         String res = WechatUtil.doGetStr(GIT_COMMITS);
         List<HashMap> listMap = JSON.parseArrayMap(res);
-        Map<String,String> commit = (Map<String, String>) listMap.get(0).get("commit");
-        sb.append(commit.get("message"));
+        Map<String, Object> commit = (Map<String, Object>) listMap.get(0).get("commit");
+        sb.append("最后提交：" + commit.get("message") + "\n");
+        Map author = (Map) commit.get("author");
+        sb.append("提交时间：" + author.get("date") + "\n");
+        sb.append("作者：" + author.get("name"));
         return sb.toString();
     }
 

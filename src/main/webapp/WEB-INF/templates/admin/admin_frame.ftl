@@ -1,112 +1,138 @@
 <#macro page title>
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>${title!} | iHelin 后台管理</title>
-    <meta name="keywords" content="table">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <meta name="apple-mobile-web-app-title" content="iHelin"/>
-    <link rel="alternate icon" type="image/png" href="${request.contextPath}/images/favicon.png">
-    <link rel="stylesheet" href="${request.contextPath}/css/amazeui.css"/>
-    <link rel="stylesheet" href="${request.contextPath}/css/admin.css">
+	<meta charset="utf-8" />
+	<title>${title!} - 管理后台</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   	<link href="${request.contextPath}/css/styles.min.css" rel="stylesheet" type='text/css' media="all" />
+   	<link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css' media="all" />
+   	<script src='${request.contextPath}/plugins/jquery/jquery.min.js'></script>
+   	<script src="${request.contextPath}/plugins/layer/layer.js"></script>
 </head>
-<script src="${request.contextPath}/js/jquery-2.2.1.min.js"></script>
-<script src="${request.contextPath}/js/amazeui.min.js"></script>
-<script src="${request.contextPath}/js/app.js"></script>
-
-<body>
-<header class="am-topbar admin-header">
-    <div class="am-topbar-brand"><strong>iHelin</strong>
-        <small>后台管理</small>
-    </div>
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-            class="am-icon-bars"></span>
-    </button>
-    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
-        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-            <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span
-                    class="am-badge am-badge-warning">5</span></a>
-            </li>
-            <li class="am-dropdown" data-am-dropdown>
-                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;"> <span
-                        class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
-                </a>
-                <ul class="am-dropdown-content">
-                    <li><a href="#"><span class="am-icon-user"></span> 资料</a>
-                    </li>
-                    <li><a href="#"><span class="am-icon-cog"></span> 设置</a>
-                    </li>
-                    <li><a href="${request.contextPath}/admin/logout"><span class="am-icon-power-off"></span> 退出</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span
-                    class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a>
-            </li>
-        </ul>
-    </div>
-</header>
-<div class="am-cf admin-main">
-    <!-- sidebar start -->
-    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
-        <div class="am-offcanvas-bar admin-offcanvas-bar">
-            <ul class="am-list admin-sidebar-list">
-                <li><a href="admin-index.html"><span class="am-icon-home"></span> 首页</a>
-                </li>
-                <li class="admin-parent"><a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span
-                        class="am-icon-file"></span> 页面模块 <span
-                        class="am-icon-angle-right am-fr am-margin-right"></span></a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-                        <li><a href="admin-user.html" class="am-cf"><span class="am-icon-check"></span> 个人资料<span
-                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a>
-                        </li>
-                        <li><a href="admin-help.html"><span class="am-icon-puzzle-piece"></span> 帮助页</a>
-                        </li>
-                        <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 相册页面<span
-                                class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a>
-                        </li>
-                        <li><a href="admin-log.html"><span class="am-icon-calendar"></span> 系统日志</a>
-                        </li>
-                        <li><a href="admin-404.html"><span class="am-icon-bug"></span> 404</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="advice"><span class="am-icon-table"></span> 留言管理</a>
-                </li>
-                <li><a href="admin-form.html"><span class="am-icon-pencil-square-o"></span> 表单</a>
-                </li>
-                <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a>
-                </li>
-            </ul>
-            <div class="am-panel am-panel-default admin-sidebar-panel">
-                <div class="am-panel-bd">
-                    <p><span class="am-icon-bookmark"></span> 公告</p>
-                    <p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
-                </div>
-            </div>
-            <div class="am-panel am-panel-default admin-sidebar-panel">
-                <div class="am-panel-bd">
-                    <p><span class="am-icon-tag"></span> wiki</p>
-                    <p>Welcome to the Amaze UI wiki!</p>
-                </div>
-            </div>
+<body class="">
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+        <a id="leftmenu-trigger" class="pull-left tips" data-toggle="tooltip" data-placement="bottom" title="打开/关闭侧边栏"></a>
+        <div class="navbar-header pull-left">
+            <a class="navbar-brand" href="index" style='background:url("${request.contextPath}/favicon.ico") no-repeat center center;background-size: contain'></a>
         </div>
-    </div>
-    <!-- sidebar end -->
-    <#nested>
-</div>
-<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
-   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
-<footer>
-    <hr>
-    <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
-</footer>
+		<ul class="nav navbar-nav pull-left">
+        	<li class="dropdown">
+        		<a href="index" class="username" ><span class="hidden-xs">Ian He</span></a>
+        	</li>
+        </ul>       
+        <ul class="nav navbar-nav  pull-right toolbar">
+        	<li id="right_dropdown" class="dropdown ">
+        		<a href="javascript:;"  class="dropdown-toggle username" data-toggle="dropdown"><#if (adminUser.nickName)??>${adminUser.nickName?html}</#if> <i class="fa fa-caret-down fa-scale"></i></a>
+        		<ul class="dropdown-menu userinfo arrow">
+        			<li class="username">
+                        <a href="javascript:;">
+        				    <div class="pull-left"><h5>您好, <#if (adminUser.nickName)??>${adminUser.nickName?html}<#else>未设置昵称</#if>!</h5></div>
+                        </a>
+        			</li>
+        			<li class="userlinks">
+        				<ul class="dropdown-menu">
+        					<li><a href="${request.contextPath}/admin/logout" class="text-right">退出</a></li>
+        				</ul>
+        			</li>
+        		</ul>
+        	</li>
+		</ul>
+    </header>
+
+    <div id="page-container">
+        <nav id="page-leftbar" role="navigation">
+                <!-- BEGIN SIDEBAR MENU -->
+            <ul class="acc-menu" id="sidebar">
+                <li>
+                	<a href="${request.contextPath}/admin/index">
+                		<i class="fa fa-home"></i><span>首页</span>
+                	</a>
+                </li>
+                <li>
+          			<a href="${request.contextPath}/admin/product_admin"><i class ="fa fa-gift"></i>
+						<span>商品管理</span>
+		            </a>
+			    </li>
+			    <li>
+          			<a href="${request.contextPath}/admin/user_admin"><i class ="fa fa-user"></i>
+						<span>会员管理</span>
+		            </a>
+			    </li>
+			    <li>
+          			<a href="${request.contextPath}/admin/order_admin"><i class ="fa fa-file-text"></i>
+						<span>订单管理</span>
+		            </a>
+			    </li>
+			    <li>
+          			<a href="${request.contextPath}/admin/media_admin"><i class ="fa fa-th"></i>
+						<span>素材管理</span>
+		            </a>
+			    </li>
+                <li>
+          			<a href="${request.contextPath}/admin/menu_admin"><i class ="fa fa-th"></i>
+						<span>自定义菜单</span>
+		            </a>
+			    </li>
+			    <li class="hasChild">
+                	<a href ="javascript:void(0);">
+                		<i class ="fa fa-users"></i> 
+		                <span>加盟商管理</span>
+		            </a>
+		            <ul class="acc-menu">
+						<li><a href="${request.contextPath}/admin/business_admin">
+							<span>商家管理</span></a>
+						</li>
+						<li><a href="javascript:;">
+							<span>汽车保养</span></a>
+						</li>
+			        </ul>
+			    </li>
+			    <li>
+          			<a href="${request.contextPath}/admin/mall_admin"><i class ="fa fa-picture-o"></i>
+						<span>商城配置</span>
+		            </a>
+			    </li>
+			    <li>
+          			<a href="${request.contextPath}/admin/carousel_admin"><i class ="fa fa-picture-o"></i>
+						<span>轮播图配置</span>
+		            </a>
+			    </li>
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </nav> 
+		<div id="page-content">
+			<div id='wrap'>
+				<#nested>
+			</div>
+		</div>
+	    <footer role="contentinfo">
+	        <div class="clearfix">
+	            <ul class="list-unstyled list-inline">
+	                <li>车友1048 &copy; ${.now?string('yyyy')}</li>
+	                <button class="pull-right btn btn-inverse btn-xs" id="back-to-top" style="margin-top: -1px; text-transform: uppercase;"><i class="fa fa-arrow-up"></i></button>
+	            </ul>
+	        </div>
+	    </footer>
+	</div> <!-- page-container -->
+<script type='text/javascript' src='${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='${request.contextPath}/js/enquire.js'></script> 
+<script type='text/javascript' src='${request.contextPath}/js/jquery.cookie.js'></script> 
+<script type='text/javascript' src='${request.contextPath}/js/jquery.touchSwipe.min.js'></script> 
+<script type='text/javascript' src='${request.contextPath}/js/jquery.nicescroll.min.js'></script>
+<script type='text/javascript' src='${request.contextPath}/js/application.js'></script>
+<script type='text/javascript' src='${request.contextPath}/plugins/form-parsley/parsley.min.js'></script> 
+<script type='text/javascript' src='${request.contextPath}/js/formvalidation.js'></script> 
+<script type='text/javascript'>
+	$(function(){
+		$('.tips').tooltip();
+	});
+</script>
+${html_other_script!}
 </body>
 </html>
 </#macro>

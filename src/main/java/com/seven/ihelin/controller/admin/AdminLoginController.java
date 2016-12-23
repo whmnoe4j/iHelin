@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("admin")
@@ -40,12 +38,8 @@ public class AdminLoginController extends BaseController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(String username, String password, String from, HttpServletRequest request,
-                        HttpSession session, Model model, HttpServletResponse response) {
+                        HttpSession session, Model model) {
         if (username.equals(CommonConfig.getAdminUser()) && password.equals(CommonConfig.getAdminPassword())) {
-            /*Cookie cookie = new Cookie("user", UUID.randomUUID().toString());
-            cookie.setMaxAge(24 * 3600);
-            cookie.setPath("/");
-            response.addCookie(cookie);*/
             AdminUser adminUser = new AdminUser();
             adminUser.setAdminId(username);
             adminUser.setNickName("超级管理员");
