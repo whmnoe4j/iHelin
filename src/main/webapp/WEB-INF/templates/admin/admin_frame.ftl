@@ -10,7 +10,7 @@
     <meta name="author" content=""/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link href="${request.contextPath}/css/styles.min.css" rel="stylesheet" type='text/css' media="all"/>
+    <link href="${request.contextPath}/css/styles.css" rel="stylesheet" type='text/css' media="all"/>
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css'
           media="all"/>
     <script src='${request.contextPath}/plugins/jquery/jquery.min.js'></script>
@@ -61,7 +61,12 @@
             </li>
             <li>
                 <a href="${request.contextPath}/admin/user_admin"><i class="fa fa-user"></i>
-                    <span>会员管理</span>
+                    <span>用户管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="${request.contextPath}/admin/advice"><i class="fa fa-user"></i>
+                    <span>留言管理</span>
                 </a>
             </li>
         </ul>
