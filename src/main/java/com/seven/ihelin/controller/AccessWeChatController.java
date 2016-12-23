@@ -29,16 +29,14 @@ public class AccessWeChatController extends BaseController {
     /**
      * 处理get消息：消息验证
      */
-    @ResponseBody
-    @RequestMapping(value = "access_wechat", produces = {"application/json;charset=utf-8"}, method = RequestMethod.GET)
-    public String doGet(String signature, String timestamp, String nonce, String echostr) {
+    @RequestMapping(value = "access_wechat", method = RequestMethod.GET)
+    public void doGet(String signature, String timestamp, String nonce, String echostr, HttpServletResponse response) throws IOException {
         logger.info("验证access");
         if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
             logger.info("验证成功");
-            return echostr;
+            response.getWriter().print(echostr);
         } else {
             logger.info("验证失败，echostr：" + echostr);
-            return "error";
         }
     }
 
@@ -47,25 +45,27 @@ public class AccessWeChatController extends BaseController {
      *
      * @throws IOException
      */
+    @ResponseBody
     @RequestMapping(value = "access_wechat", method = RequestMethod.POST)
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String doPost(HttpServletRequest request) {
         Map<String, String> msgMap = WechatUtil.xml2Map(request);
         String msgType = msgMap.get("MsgType");
-        String respMessage = null;
+        String respMessage;
         if (WechatUtil.MESSAGE_EVNET.equals(msgType)) {
             respMessage = processEvent(msgMap); // 进入事件处理
         } else {
             respMessage = processMessage(msgMap); // 进入普通消息处理
         }
         System.out.println(respMessage);
-        response.getWriter().print(respMessage);
+        //response.getWriter().print(respMessage);
+        return respMessage;
     }
 
     /**
      * 普通消息处理
      */
     public String processMessage(Map<String, String> msgMap) {
-        String message = "";
+        String message;
         String fromUserName = msgMap.get("FromUserName");
         String toUserName = msgMap.get("ToUserName");
         String msgType = msgMap.get("MsgType");

@@ -29,7 +29,7 @@ public class ResponseUtil {
 		if(res == null)
 			res = Maps.newHashMap();
 		res.put("status", "success");
-		response.setContentType("text/json; charset=utf-8");
+		response.setContentType("text/json; charset=UTF-8");
 		try {
 			response.getWriter().write(JSON.toJson(res));
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class ResponseUtil {
 			res = Maps.newHashMap();
 		res.put("status", "failed");
 		res.put("error", error);
-		response.setContentType("text/json; charset=utf-8"); 
+		response.setContentType("text/json; charset=UTF-8");
 		try {
 			response.getWriter().write(JSON.toJson(res));
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class ResponseUtil {
 	public static void writeJSONP(HttpServletResponse response, String callback, String jsData){
 		if(response == null)
 			return ;
-		response.setContentType("text/plain; charset=utf-8");
+		response.setContentType("text/plain; charset=UTF-8");
 		try {
 			response.getWriter().write(callback + "(" + jsData + ")");
 		} catch (Exception e) {

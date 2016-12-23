@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Properties;
 
 @Controller
@@ -32,16 +34,21 @@ public class TestController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "console", produces = {"application/json"}, method = RequestMethod.GET)
+    @RequestMapping(value = "console", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.GET)
     public String getProperties() {
         Properties props = System.getProperties();
         return JSON.toJson(props);
     }
 
     @ResponseBody
-    @RequestMapping(value = "test", method = RequestMethod.GET)
+    @RequestMapping(value = "test", produces = {"text/html;charset=UTF-8"}, method = RequestMethod.GET)
     public String test() {
-        return "中国三个人请问";
+        return "<h1>三个人请问abc123</h1>";
+    }
+
+    @RequestMapping(value = "test1", method = RequestMethod.GET)
+    public void test1(HttpServletResponse response) throws IOException {
+        response.getWriter().print("<h1>三个人请问abc123</h1>");
     }
 
     public static void main(String[] args) {
