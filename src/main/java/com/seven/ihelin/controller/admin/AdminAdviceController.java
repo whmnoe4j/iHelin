@@ -13,10 +13,8 @@ import com.seven.ihelin.manager.AdviceManager;
 
 @Controller
 @RequestMapping("admin")
-public class AdminAdviceController {
-	@Resource
-	private AdviceManager adviceManager;
-	
+public class AdminAdviceController extends BaseAdminController{
+
 	@RequestMapping(value="advice")
 	public String Advice(Model model){
 		List<Advice> advices = adviceManager.selectAdviceByCondition();

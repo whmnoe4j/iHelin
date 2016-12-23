@@ -18,15 +18,8 @@ public abstract class BaseController {
     @Resource
     protected UserManager userManager;
 
-    protected static final String NAMESPACE = "admin";
-    protected static final String SESSION_KEY_ADMIN = "adminUser";
-
 
     protected static final int PAGE_LENGTH = 20;//分页大小
     protected static final int MAX_LENGTH = 1000;
-
-    protected String adminFtl(String ftlFileName) {
-        return NAMESPACE + "/" + ftlFileName;
-    }
 
 }

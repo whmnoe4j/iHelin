@@ -19,7 +19,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("admin")
-public class AdminLoginController extends BaseController {
+public class AdminLoginController extends BaseAdminController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
@@ -54,7 +54,7 @@ public class AdminLoginController extends BaseController {
         } else {
             model.addAttribute("error", "用户名密码不正确！");
             model.addAttribute("from", from);
-            return adminFtl("login");
+            return ftl("login");
         }
     }
 

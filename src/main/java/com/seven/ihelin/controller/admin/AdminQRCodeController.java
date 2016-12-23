@@ -1,7 +1,6 @@
 package com.seven.ihelin.controller.admin;
 
 import com.google.common.collect.Maps;
-import com.seven.ihelin.controller.BaseController;
 import com.seven.ihelin.utils.QRCode;
 import com.seven.ihelin.utils.RequestUtil;
 import com.seven.ihelin.utils.ResponseUtil;
@@ -25,13 +24,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "admin")
-public class AdminQRCodeController extends BaseController {
+public class AdminQRCodeController extends BaseAdminController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "qrcode", method = RequestMethod.GET)
     public String qRCode() {
-        return "admin/qrcode";
+        return ftl("qrcode");
     }
 
     @RequestMapping(value = "generate_img", method = RequestMethod.POST)
