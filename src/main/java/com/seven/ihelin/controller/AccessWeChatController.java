@@ -4,6 +4,7 @@ import com.seven.ihelin.db.entity.User;
 import com.seven.ihelin.model.WXUser;
 import com.seven.ihelin.model.req.LocationMessage;
 import com.seven.ihelin.utils.CheckUtil;
+import com.seven.ihelin.utils.JSON;
 import com.seven.ihelin.utils.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +28,8 @@ import java.util.Map;
 public class AccessWeChatController extends BaseController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private static final String GIT_COMMITS = "https://api.github.com/repos/iHelin/iHelin/commits?per_page=1";
 
     /**
      * 处理get消息：消息验证
@@ -41,9 +46,7 @@ public class AccessWeChatController extends BaseController {
     }
 
     /**
-     * 处理post消息
-     *
-     * @throws IOException
+     * 处理post消息：消息处理
      */
     @ResponseBody
     @RequestMapping(value = "access_wechat", method = RequestMethod.POST)
@@ -57,7 +60,6 @@ public class AccessWeChatController extends BaseController {
             respMessage = processMessage(msgMap); // 进入普通消息处理
         }
         System.out.println(respMessage);
-        //response.getWriter().print(respMessage);
         return respMessage;
     }
 
@@ -151,11 +153,23 @@ public class AccessWeChatController extends BaseController {
             case "2":
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
                 break;
+            case "commit":
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, getGitCommits());
+                break;
             default:
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
                 break;
         }
         return message;
+    }
+
+    public static String getGitCommits() {
+        StringBuilder sb = new StringBuilder();
+        String res = WechatUtil.doGetStr(GIT_COMMITS);
+        List<HashMap> listMap = JSON.parseArrayMap(res);
+        Map<String,String> commit = (Map<String, String>) listMap.get(0).get("commit");
+        sb.append(commit.get("message"));
+        return sb.toString();
     }
 
 }
