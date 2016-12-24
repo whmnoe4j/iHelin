@@ -34,14 +34,14 @@ public class TestController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "console", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.GET)
+    @RequestMapping(value = "console", method = RequestMethod.GET)
     public String getProperties() {
         Properties props = System.getProperties();
         return JSON.toJson(props);
     }
 
     @ResponseBody
-    @RequestMapping(value = "test", produces = {"text/html;charset=UTF-8"}, method = RequestMethod.GET)
+    @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test() {
         return "<h1>三个人请问abc123</h1>";
     }
