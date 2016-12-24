@@ -45,7 +45,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="iHelin" tableName="Tip" domainObjectName="Tip"
+        <table schema="iHelin" tableName="ServiceMenu" domainObjectName="ServiceMenu"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>

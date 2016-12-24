@@ -2,6 +2,7 @@ package com.seven.ihelin.controller;
 
 import com.seven.ihelin.manager.AccessTokenManager;
 import com.seven.ihelin.manager.AdviceManager;
+import com.seven.ihelin.manager.ServiceMenuMannger;
 import com.seven.ihelin.manager.UserManager;
 
 import javax.annotation.Resource;
@@ -17,6 +18,8 @@ public abstract class BaseController {
     protected AccessTokenManager accessTokenManager;
     @Resource
     protected UserManager userManager;
+    @Resource
+    protected ServiceMenuMannger serviceMenuMannger;
 
 
     protected static final int PAGE_LENGTH = 20;//分页大小

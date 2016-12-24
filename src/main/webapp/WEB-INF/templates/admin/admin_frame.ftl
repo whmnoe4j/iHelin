@@ -65,6 +65,11 @@
                 </a>
             </li>
             <li>
+                <a href="${request.contextPath}/admin/menu_admin"><i class="fa fa-th"></i>
+                    <span>自定义菜单</span>
+                </a>
+            </li>
+            <li>
                 <a href="${request.contextPath}/admin/advice"><i class="fa fa-user"></i>
                     <span>留言管理</span>
                 </a>

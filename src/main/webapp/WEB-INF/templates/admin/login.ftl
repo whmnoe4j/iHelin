@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="iHelin">
-    <link rel="stylesheet" href="${request.contextPath}/css/styles.min.styles.css">
+    <link rel="stylesheet" href="${request.contextPath}/css/styles.css">
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css' media="all" />
 </head>
 <body class="focusedform">
