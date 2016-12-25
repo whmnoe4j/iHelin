@@ -74,6 +74,11 @@
                     <span>留言管理</span>
                 </a>
             </li>
+            <li>
+                <a href="${request.contextPath}/admin/qrcode"><i class="fa fa-user"></i>
+                    <span>二维码</span>
+                </a>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
     </nav>

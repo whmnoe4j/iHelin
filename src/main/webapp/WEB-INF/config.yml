@@ -9,5 +9,10 @@ admin_password: 246260
 domain_url: http://www.520lyx.cn
 system_name: Ian He
 
+# 安工大助手
+#wx_appId: wx9d6b26495bf4ee5c
+#wx_appSecret: 26c55ea85c7924f05c3def29244c275c
+
+# 测试
 wx_appId: wx2bc2718db9216693
 wx_appSecret: 78bbcdc96727e0d539bd6e08fb289a87

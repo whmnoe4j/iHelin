@@ -124,8 +124,8 @@ public class AccessWeChatController extends BaseController {
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, "感谢您的关注，我会继续努力！");// 关注事件
         } else if (WechatUtil.MESSAGE_VIEW.equals(eventType)) {
             // view类型事件，访问网页
-            //String url = msgMap.get("EventKey");
-            //message = WechatUtil.sendTextMsg(toUserName, fromUserName, url);
+            String url = msgMap.get("EventKey");
+            logger.info("用户正在访问：{}", url);
         } else if (WechatUtil.MESSAGE_SCANCODE.equals(eventType)) {
             // 扫码事件
             String key = msgMap.get("EventKey");

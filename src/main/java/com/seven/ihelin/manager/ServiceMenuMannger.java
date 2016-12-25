@@ -25,7 +25,7 @@ public class ServiceMenuMannger {
     @Resource
     private ServiceMenuMapper serviceMenuMapper;
 
-    private static final int parentMenuId = 0;
+    private static final Integer parentMenuId = 0;
 
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
@@ -53,38 +53,38 @@ public class ServiceMenuMannger {
     public String syncServiceMenuToWeiXin(String token) throws ParseException, IOException {
         Menu menu = new Menu();
         List<ServiceMenu> parentServiceMenus = getMenuByCondition(parentMenuId);
-        List<Button> parBtns = Lists.newArrayList();
-        for (ServiceMenu serviceMenu : parentServiceMenus) {
-            List<ServiceMenu> subServiceMenus = getMenuByCondition(serviceMenu.getId());
+        List<Button> pBtns = Lists.newArrayList();
+        for (ServiceMenu pServiceMenu : parentServiceMenus) {
+            List<ServiceMenu> subServiceMenus = getMenuByCondition(pServiceMenu.getId());
             List<Button> subBtns = Lists.newArrayList();
-            if (serviceMenu.getContentType() == ServiceMenu.TEXT_MENU) {
-                ClickButton parBtn = new ClickButton();
-                parBtn.setName(serviceMenu.getName());
+            if (pServiceMenu.getContentType() == ServiceMenu.TEXT_MENU) {
+                ClickButton pClickButton = new ClickButton();
+                pClickButton.setName(pServiceMenu.getName());
                 if (subServiceMenus.size() > 0) {
-                    for (ServiceMenu subMenu : subServiceMenus) {
-                        if (subMenu.getContentType() == ServiceMenu.TEXT_MENU) {
-                            ClickButton subBtn = new ClickButton();
-                            subBtn.setName(subMenu.getName());
-                            subBtn.setType("click");
-                            subBtn.setKey(subMenu.getId() + "");
-                            subBtns.add(subBtn);
-                        } else if (subMenu.getContentType() == ServiceMenu.LINK_MENU) {
-                            ViewButton subBtn = new ViewButton();
-                            subBtn.setName(subMenu.getName());
-                            subBtn.setType("view");
-                            subBtn.setUrl(subMenu.getContent());
-                            subBtns.add(subBtn);
+                    for (ServiceMenu subServiceMenu : subServiceMenus) {
+                        if (subServiceMenu.getContentType() == ServiceMenu.TEXT_MENU) {
+                            ClickButton subClickButton = new ClickButton();
+                            subClickButton.setName(subServiceMenu.getName());
+                            subClickButton.setType("click");
+                            subClickButton.setKey(String.valueOf(subServiceMenu.getId()));
+                            subBtns.add(subClickButton);
+                        } else if (subServiceMenu.getContentType() == ServiceMenu.LINK_MENU) {
+                            ViewButton subViewButton = new ViewButton();
+                            subViewButton.setName(subServiceMenu.getName());
+                            subViewButton.setType("view");
+                            subViewButton.setUrl(subServiceMenu.getContent());
+                            subBtns.add(subViewButton);
                         }
                     }
-                    parBtn.setSub_button(subBtns);
+                    pClickButton.setSub_button(subBtns);
                 } else {
-                    parBtn.setType("click");
-                    parBtn.setKey(serviceMenu.getId() + "");
+                    pClickButton.setType("click");
+                    pClickButton.setKey(pServiceMenu.getId() + "");
                 }
-                parBtns.add(parBtn);
-            } else if (serviceMenu.getContentType() == ServiceMenu.LINK_MENU) {
+                pBtns.add(pClickButton);
+            } else if (pServiceMenu.getContentType() == ServiceMenu.LINK_MENU) {
                 ViewButton patBtn = new ViewButton();
-                patBtn.setName(serviceMenu.getName());
+                patBtn.setName(pServiceMenu.getName());
                 if (subServiceMenus.size() > 0) {
                     for (ServiceMenu subMenu : subServiceMenus) {
                         if (subMenu.getContentType() == ServiceMenu.TEXT_MENU) {
@@ -104,14 +104,14 @@ public class ServiceMenuMannger {
                     patBtn.setSub_button(subBtns);
                 } else {
                     patBtn.setType("view");
-                    patBtn.setUrl(serviceMenu.getContent());
+                    patBtn.setUrl(pServiceMenu.getContent());
                 }
-                parBtns.add(patBtn);
-            } else if (serviceMenu.getContentType() == ServiceMenu.PIC_MENU) {
+                pBtns.add(patBtn);
+            } else if (pServiceMenu.getContentType() == ServiceMenu.PIC_MENU) {
                 // 图文消息
             }
         }
-        menu.setButton(parBtns);
+        menu.setButton(pBtns);
         String res = WechatUtil.createMenu(token, JSON.toJson(menu));
         LOGGER.info(res);
         return res;

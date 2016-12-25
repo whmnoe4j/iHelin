@@ -25,13 +25,13 @@
     }
 </script>
 </#assign>
-<@main.page title="会员管理">
+<@main.page title="用户管理">
 <div id="page-heading">
     <ol class="breadcrumb">
         <li><a href="${request.contextPath}/admin/index">首页</a></li>
-        <li>会员管理</li>
+        <li>用户管理</li>
     </ol>
-    <h1>会员管理</h1>
+    <h1>用户管理</h1>
 </div>
 <div class="container">
     <div class="row">
