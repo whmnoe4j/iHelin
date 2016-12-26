@@ -1,25 +1,21 @@
 package com.seven.ihelin.controller.admin;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.seven.ihelin.db.entity.Advice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.seven.ihelin.db.entity.Advice;
-import com.seven.ihelin.manager.AdviceManager;
+import java.util.List;
 
 @Controller
-@RequestMapping("admin")
-public class AdminAdviceController extends BaseAdminController{
+public class AdminAdviceController extends BaseAdminController {
 
-	@RequestMapping(value="advice")
-	public String Advice(Model model){
-		List<Advice> advices = adviceManager.selectAdviceByCondition();
-		model.addAttribute("advices", advices);
-		return "admin/advice_manager";
-	}
+    @RequestMapping(value = "advice", method = RequestMethod.GET)
+    public String Advice(Model model) {
+        List<Advice> advices = adviceManager.selectAdviceByCondition();
+        model.addAttribute("advices", advices);
+        return "admin/advice_manager";
+    }
 
 }

@@ -29,7 +29,7 @@ public class PageController extends BaseController {
     }
 
     @RequestMapping(value = "post", method = RequestMethod.GET)
-    public String postDoPage() {
+    public String postPage() {
         return "post";
     }
 

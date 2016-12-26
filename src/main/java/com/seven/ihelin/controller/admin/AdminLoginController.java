@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
-@RequestMapping("admin")
 public class AdminLoginController extends BaseAdminController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());

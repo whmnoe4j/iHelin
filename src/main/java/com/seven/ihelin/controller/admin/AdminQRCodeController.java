@@ -23,7 +23,6 @@ import java.util.Map;
  * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
  */
 @Controller
-@RequestMapping(value = "admin")
 public class AdminQRCodeController extends BaseAdminController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());

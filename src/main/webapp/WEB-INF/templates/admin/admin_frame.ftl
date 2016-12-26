@@ -60,6 +60,11 @@
                 </a>
             </li>
             <li>
+                <a href="${request.contextPath}/admin/article"><i class="fa fa-user"></i>
+                    <span>文章管理</span>
+                </a>
+            </li>
+            <li>
                 <a href="${request.contextPath}/admin/user_admin"><i class="fa fa-user"></i>
                     <span>用户管理</span>
                 </a>

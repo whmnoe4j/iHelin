@@ -6,6 +6,7 @@ import com.seven.ihelin.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Controller
 public class AdminUserController extends BaseAdminController {
 
-    @RequestMapping("user_admin")
+    @RequestMapping(value = "user_admin", method = RequestMethod.GET)
     public String userAdmin(Model model, String nickName, Integer pageNum) {
         if (pageNum == null)
             pageNum = 1;
@@ -25,7 +26,7 @@ public class AdminUserController extends BaseAdminController {
         return ftl("user_admin");
     }
 
-    @RequestMapping("delete_user")
+    @RequestMapping(value = "delete_user", method = RequestMethod.POST)
     public void deleteProduct(Integer id, HttpServletResponse response) {
         userManager.deleteUserById(id);
         ResponseUtil.writeSuccessJSON(response);
