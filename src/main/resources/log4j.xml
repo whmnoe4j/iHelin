@@ -16,8 +16,8 @@
         <param name="Encoding" value="UTF-8"/>
         <param name="File" value="/logs/iHelin.log"/>
         <param name="Append" value="true"/>
-        <param name="MaxFileSize" value="20KB"/>
-        <param name="MaxBackupIndex" value="1"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <param name="MaxBackupIndex" value="0"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%d{yy-MM-dd HH:mm:ss} %5p: %m - [%t]  %c{1} (line %L)%n"/>
