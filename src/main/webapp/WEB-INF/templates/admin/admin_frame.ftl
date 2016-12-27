@@ -60,7 +60,7 @@
                 </a>
             </li>
             <li>
-                <a href="${request.contextPath}/admin/article"><i class="fa fa-user"></i>
+                <a href="${request.contextPath}/admin/article"><i class="fa fa-file"></i>
                     <span>文章管理</span>
                 </a>
             </li>
@@ -75,12 +75,12 @@
                 </a>
             </li>
             <li>
-                <a href="${request.contextPath}/admin/advice"><i class="fa fa-user"></i>
+                <a href="${request.contextPath}/admin/advice"><i class="fa fa-envelope"></i>
                     <span>留言管理</span>
                 </a>
             </li>
             <li>
-                <a href="${request.contextPath}/admin/qrcode"><i class="fa fa-user"></i>
+                <a href="${request.contextPath}/admin/qrcode"><i class="fa fa-qrcode"></i>
                     <span>二维码</span>
                 </a>
             </li>
