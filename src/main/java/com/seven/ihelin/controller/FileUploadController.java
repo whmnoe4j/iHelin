@@ -1,8 +1,6 @@
 package com.seven.ihelin.controller;
 
-import com.qiniu.storage.model.FileInfo;
-import com.seven.ihelin.utils.DateTimeUtil;
-import com.seven.ihelin.utils.FileUtils;
+import com.seven.ihelin.utils.FileUtil;
 import com.seven.ihelin.utils.JSON;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.UUID;
 
 @Controller
@@ -41,19 +38,19 @@ public class FileUploadController extends BaseController {
             model.addAttribute("msg", "请选择文件……");
             return "upload";
         }
-        try {
-            byte[] bytes = file.getBytes();
-            String res = FileUtils.uploadFile(bytes, UUID.randomUUID().toString());
-            FileInfo fileInfo = JSON.parseObject(res, FileInfo.class);
-            logger.info(JSON.toJson(fileInfo));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveFile(file, UUID.randomUUID().toString());
         model.addAttribute("msg", "上传成功！");
         return "upload";
     }
 
-    @RequestMapping(value = "imgupload", method = RequestMethod.POST)
+    /**
+     * simditor
+     * 富文本编辑器文件上传接口
+     *
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "img_upload", method = RequestMethod.POST)
     @ResponseBody
     public String imgUpload(@RequestParam("file") MultipartFile file) {
         ResponseJSON resJson = new ResponseJSON();
@@ -63,20 +60,25 @@ public class FileUploadController extends BaseController {
             return JSON.toJson(resJson);
         }
         String fileExt = FilenameUtils.getExtension(file.getOriginalFilename());
-        String fileName = "article/" + DateTimeUtil.formatSecond(new Date()) + "." + fileExt;
-        try {
-            byte[] bytes = file.getBytes();
-            String result = FileUtils.uploadFile(bytes, fileName);
-            FileInfo fileInfo = JSON.parseObject(result, FileInfo.class);
-            logger.info(JSON.toJson(fileInfo));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String fileName = "article/" + UUID.randomUUID().toString() + "." + fileExt;
+        saveFile(file, fileName);
         fileName = "http://source.520lyx.cn/" + fileName;
         resJson.setSuccess(true);
         resJson.setFile_path(fileName);
         String res = JSON.toJson(resJson);
         return res;
+    }
+
+    public String saveFile(MultipartFile file, String newFileName) {
+        try {
+            byte[] bytes = file.getBytes();
+            String result = FileUtil.uploadFile(bytes, newFileName);
+            logger.info("upload file {} to qiniu service,result:{}", file.getOriginalFilename(), result);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     class ResponseJSON {

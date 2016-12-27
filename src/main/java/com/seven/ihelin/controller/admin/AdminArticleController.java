@@ -1,8 +1,12 @@
 package com.seven.ihelin.controller.admin;
 
+import com.seven.ihelin.db.entity.Article;
+import com.seven.ihelin.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * PackageName:   com.seven.ihelin.controller.admin
@@ -17,13 +21,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AdminArticleController extends BaseAdminController {
 
     @RequestMapping(value = "article", method = RequestMethod.GET)
-    public String ArticleAdminPage() {
+    public String articleAdminPage() {
         return ftl("article");
     }
 
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
-    public String ArticleAddPage() {
+    public String articleAddPage() {
         return ftl("article_add");
+    }
+
+    @RequestMapping(value = "article", method = RequestMethod.POST)
+    public void addArticle(Article article, HttpServletResponse response) {
+        articleManager.addArticle(article);
+        ResponseUtil.writeSuccessJSON(response);
     }
 
 }

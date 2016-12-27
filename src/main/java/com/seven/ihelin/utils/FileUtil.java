@@ -16,9 +16,8 @@ import java.util.UUID;
  *
  * @author Ian He
  */
-public class FileUtils {
+public class FileUtil {
 
-    // 设置好账号的ACCESS_KEY和SECRET_KEY
     public static final String ACCESS_KEY = "XRWyYeG0mx7jS_DRCj08bOHDweU44WeyjlbZxPFC";
     public static final String SECRET_KEY = "oD7T8X-h_vJaywxy8llLR4jKKE7BKwpIW3whlQoF";
     // 要上传的空间
@@ -36,7 +35,7 @@ public class FileUtils {
         return auth.uploadToken(bucketname);
     }
 
-    public static String uploadFile(byte[] bytes, String key) throws IOException {
+    public static String uploadFile(byte[] bytes, String key) {
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         UploadManager uploadManager = new UploadManager(c);

@@ -43,7 +43,7 @@ public class QRCode {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             MatrixToImageWriter.writeToStream(bitMatrix, format, baos);
-            FileUtils.uploadFile(baos.toByteArray(), folder + fileName);
+            FileUtil.uploadFile(baos.toByteArray(), folder + fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }

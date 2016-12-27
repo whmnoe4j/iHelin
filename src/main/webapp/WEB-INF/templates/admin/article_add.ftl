@@ -23,17 +23,17 @@
         }
     };
 
-    $("#article_name_inp").change(function () {
+    $("#title").change(function () {
         blnCheckUnload = true;//离开提示失效
     });
 
     $(function () {
         //编辑器初始化
         simditor = new Simditor({
-            textarea: $('#editor_id'),
+            textarea: $('#content'),
             toolbarFloat: false,
             upload: {
-                url: '${request.contextPath}/imgupload',
+                url: '${request.contextPath}/img_upload',
                 params: null,
                 fileKey: 'file',
                 connectionCount: 3,
@@ -60,6 +60,8 @@
 
                 }
             });
+        } else {
+            return false;
         }
     }
 
@@ -78,42 +80,51 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
-                <div class="panel-body">
-                    <form class="form-horizontal myform" id="article_form" method="post" data-validate="parsley">
+                <form class="form-horizontal myform" id="article_form"
+                      data-validate="parsley">
+                    <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="article_name_inp">文章标题</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="name" id="article_name_inp" placeholder="名称"
+                                    <label class="col-sm-2 control-label" for="title">文章标题</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="title" id="title" placeholder="名称"
                                                class="form-control"
-                                               value=""
                                                data-required="true" data-rangelength="[1,45]"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="editor_id">内容</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" id="editor_id" name="detail" placeholder="内容"
+                                    <label class="col-sm-2 control-label" for="summary">摘要</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" id="summary" name="summary"
+                                                  placeholder="摘要" data-required="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="content">内容</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" id="content" name="content" placeholder="内容"
                                                   autofocus></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-sm-5 col-sm-offset-5">
-                            <div class="btn-toolbar">
-                                <button class="btn-primary btn" type="button" onclick="submitForm()">保存</button>
-                                <button class="btn-primary btn" type="button" onclick="history.back();">取消</button>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-5 col-sm-offset-5">
+                                <div class="btn-toolbar">
+                                    <button class="btn-primary btn" type="button" onclick="submitForm();">保存</button>
+                                    <button class="btn-primary btn" type="button" onclick="history.back();">取消</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

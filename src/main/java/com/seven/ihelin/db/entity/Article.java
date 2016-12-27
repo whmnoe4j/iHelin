@@ -17,7 +17,7 @@ public class Article {
 
     private Date updateTime;
 
-    private byte[] content;
+    private String content;
 
     public Integer getId() {
         return id;
@@ -75,11 +75,11 @@ public class Article {
         this.updateTime = updateTime;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 }
