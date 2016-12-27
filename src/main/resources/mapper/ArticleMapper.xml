@@ -1,37 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seven.ihelin.db.mapper.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.seven.ihelin.db.entity.Article">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="summary" jdbcType="VARCHAR" property="summary" />
-    <result column="read_num" jdbcType="INTEGER" property="readNum" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seven.ihelin.db.entity.Article">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, title, author, summary, read_num, create_time, update_time
+    <resultMap id="BaseResultMap" type="com.seven.ihelin.db.entity.Article">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="read_num" jdbcType="INTEGER" property="readNum"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, author, summary, read_num, create_time, update_time,content
   </sql>
-  <sql id="Blob_Column_List">
-    content
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from Article
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Article
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from Article
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyProperty="id" parameterType="com.seven.ihelin.db.entity.Article" useGeneratedKeys="true">
+    <insert id="insert" keyProperty="id" parameterType="com.seven.ihelin.db.entity.Article" useGeneratedKeys="true">
     insert into Article (title, author, summary, 
       read_num, create_time, update_time, 
       content)
@@ -39,83 +32,84 @@
       #{readNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" keyProperty="id" parameterType="com.seven.ihelin.db.entity.Article" useGeneratedKeys="true">
-    insert into Article
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="author != null">
-        author,
-      </if>
-      <if test="summary != null">
-        summary,
-      </if>
-      <if test="readNum != null">
-        read_num,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null">
-        #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="readNum != null">
-        #{readNum,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.seven.ihelin.db.entity.Article">
-    update Article
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        author = #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="summary != null">
-        summary = #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="readNum != null">
-        read_num = #{readNum,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seven.ihelin.db.entity.Article">
+    <insert id="insertSelective" keyProperty="id" parameterType="com.seven.ihelin.db.entity.Article"
+            useGeneratedKeys="true">
+        insert into Article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="readNum != null">
+                read_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="readNum != null">
+                #{readNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.seven.ihelin.db.entity.Article">
+        update Article
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="readNum != null">
+                read_num = #{readNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.seven.ihelin.db.entity.Article">
     update Article
     set title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
@@ -126,14 +120,23 @@
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.seven.ihelin.db.entity.Article">
-    update Article
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      read_num = #{readNum,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+
+    <select id="listByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Article
+        <where>
+            <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
+        </where>
+        ORDER BY update_time DESC, create_time DESC
+    </select>
+    <select id="listCount" resultType="int" parameterType="java.util.Map">
+        select
+        count(id)
+        from Article
+        <where>
+            <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
+        </where>
+    </select>
 </mapper>

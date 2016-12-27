@@ -1,13 +1,16 @@
 package com.seven.ihelin.controller;
 
+import com.seven.ihelin.db.entity.Article;
 import com.seven.ihelin.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PageController extends BaseController {
@@ -18,8 +21,12 @@ public class PageController extends BaseController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = {"index"}, method = RequestMethod.GET)
-    public String indexPage() {
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String indexPage(Model model) {
+        int PAGE_LENGTH = 5;
+        int pageNum = 1;
+        List<Article> articles = articleManager.listByCondition(null, (pageNum - 1) * PAGE_LENGTH, PAGE_LENGTH);
+        model.addAttribute("articles", articles);
         return "index";
     }
 

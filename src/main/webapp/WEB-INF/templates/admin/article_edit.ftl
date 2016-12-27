@@ -52,12 +52,15 @@
             var index = layer.load(1, {
                 shade: [0.1, '#000']
             });
-            $.post("${request.contextPath}/admin/article", $("#article_form").serialize(), function (data) {
-                layer.close(index);
-                if (data.status == 'success') {
-                    window.location.href = '${request.contextPath}/admin/article';
-                } else {
-
+            $.ajax({
+                url: '${request.contextPath}/admin/article',
+                type: 'PUT',
+                data: $("#article_form").serialize(),
+                success: function (data) {
+                    layer.close(index);
+                    if (data.status == 'success') {
+                        window.location.href = '${request.contextPath}/admin/article';
+                    }
                 }
             });
         } else {
@@ -67,14 +70,14 @@
 
 </script>
 </#assign>
-<@main.page title="添加文章">
+<@main.page title="编辑文章">
 <div id="page-heading">
     <ol class="breadcrumb">
         <li><a href="${request.contextPath}/admin/index">首页</a></li>
         <li><a href="${request.contextPath}/admin/article">文章管理</a></li>
-        <li>添加文章</li>
+        <li>编辑文章</li>
     </ol>
-    <h1>添加文章</h1>
+    <h1>编辑文章</h1>
 </div>
 <div class="container">
     <div class="row">
@@ -82,6 +85,7 @@
             <div class="panel panel-primary">
                 <form class="form-horizontal myform" id="article_form"
                       data-validate="parsley">
+                    <input type="hidden" name="id" value="#{(article.id)!}">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12">
@@ -90,6 +94,7 @@
                                     <div class="col-sm-9">
                                         <input type="text" name="title" id="title" placeholder="名称"
                                                class="form-control"
+                                               value="${(article.title)!''}"
                                                data-required="true" data-rangelength="[1,100]"/>
                                     </div>
                                 </div>
@@ -99,7 +104,8 @@
                                     <label class="col-sm-2 control-label" for="summary">摘要</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="summary" name="summary"
-                                                  placeholder="摘要" data-required="true"></textarea>
+                                                  placeholder="摘要"
+                                                  data-required="true">${(article.summary)!''}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +114,9 @@
                                     <label class="col-sm-2 control-label" for="content">内容</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="content" name="content" placeholder="内容"
-                                                  autofocus></textarea>
+                                                  autofocus>
+                                        ${(article.content)!''}
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>

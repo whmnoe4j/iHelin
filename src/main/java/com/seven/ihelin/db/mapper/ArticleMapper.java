@@ -1,6 +1,10 @@
 package com.seven.ihelin.db.mapper;
 
 import com.seven.ihelin.db.entity.Article;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -13,7 +17,9 @@ public interface ArticleMapper {
 
     int updateByPrimaryKeySelective(Article record);
 
-    int updateByPrimaryKeyWithBLOBs(Article record);
-
     int updateByPrimaryKey(Article record);
+
+    List<Article> listByCondition(Map<String, Object> res, RowBounds rowBounds);
+
+    int listCount(Map<String, Object> res);
 }

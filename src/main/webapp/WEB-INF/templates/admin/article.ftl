@@ -1,6 +1,30 @@
 <#import "admin_frame.ftl" as main>
 <#assign html_other_script in main>
 <script>
+    function deleteArticle(id) {
+        layer.confirm('确定要删除吗？', {
+            btn: ['确定', '取消']
+        }, function () {
+            var index = layer.load(1, {
+                shade: [0.1, '#000']
+            });
+            $.ajax({
+                url: '${request.contextPath}/admin/article/' + id,
+                type: 'DELETE',
+                success: function (data) {
+                    layer.close(index);
+                    if (data.status == 'success') {
+                        layer.msg("删除成功！");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                    } else {
+
+                    }
+                }
+            });
+        });
+    }
 
 </script>
 </#assign>
@@ -39,23 +63,49 @@
                             <thead>
                             <tr>
                                 <th class="text-center">标题</th>
+                                <th class="text-center">摘要</th>
                                 <th class="text-center">阅读量</th>
                                 <th class="text-center">创建时间</th>
-                                <th class="text-center">手机</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    12
-                                </td>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <button class="btn btn-sm btn-danger-alt tips" title="删除"
-                                            onclick="deleteUser(1);"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
+                                <#if articles??>
+                                    <#if articles?size==0>
+                                    <tr>
+                                        <td align="center" colspan="5">暂无任何文章</td>
+                                    <tr>
+                                    <#else>
+                                        <#list articles as article>
+                                        <tr>
+                                            <td class="text-center">
+                                                <span>${article.title!}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span>${article.summary!}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span>#{article.readNum!0}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <#if article.createTime??>
+                                                    <span>${article.createTime?string('yy-MM-dd HH:mm')}</span>
+                                                </#if>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-primary-alt tips" title="编辑"
+                                                   href="${request.contextPath}/admin/article/edit/#{article.id!}"
+                                                   type="button">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger-alt tips" title="删除"
+                                                        onclick="deleteArticle(#{article.id!});"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </#list>
+                                    </#if>
+                                </#if>
                             </tbody>
                         </table>
                     <#--<#import "pagination.ftl" as pager>
