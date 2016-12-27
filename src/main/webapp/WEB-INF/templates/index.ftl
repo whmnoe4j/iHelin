@@ -24,7 +24,7 @@
             <#if articles??>
                 <#list articles as article>
                     <div class="post-preview">
-                        <a href="post">
+                        <a href="${request.contextPath}/post/#{article.id!}">
                             <h2 class="post-title">
                             ${article.title!''}
                             </h2>
@@ -41,7 +41,7 @@
             <!-- Pager -->
             <ul class="pager">
                 <li class="next">
-                    <a href="#">Older Posts &rarr;</a>
+                    <a href="javascript:void(0);">Older Posts &rarr;</a>
                 </li>
             </ul>
         </div>

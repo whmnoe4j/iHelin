@@ -46,8 +46,8 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label"><strong>关键词:</strong></label>
                                 <div class="col-sm-2">
-                                    <input class="input-small form-control" name="nickName" type="text"
-                                           value="${nickName!}" placeholder="标题"/>
+                                    <input class="input-small form-control" name="title" type="text"
+                                           value="${title!}" placeholder="标题"/>
                                 </div>
                                 <div class="col-md-1">
                                     <button type="submit" class="btn btn-md btn-primary"><i class="fa fa-search"></i> 查询
@@ -108,9 +108,9 @@
                                 </#if>
                             </tbody>
                         </table>
-                    <#--<#import "pagination.ftl" as pager>
-                    <#assign currentUrl>user_admin?nickName=${nickName!}&</#assign>
-                    <@pager.pageul pagination=pagination url="${currentUrl}" />-->
+                        <#import "pagination.ftl" as pager>
+                        <#assign currentUrl>user_admin?title=${title!}&</#assign>
+                        <@pager.pageul pagination=pagination url="${currentUrl}" />
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * 文章管理Controller
  * PackageName:   com.seven.ihelin.controller.admin
  * ClassName:     AdminArticleController
  * Description:

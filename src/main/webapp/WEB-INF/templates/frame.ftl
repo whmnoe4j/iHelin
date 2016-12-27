@@ -34,23 +34,23 @@
                 <span class="sr-only">Toggle navigation</span>
                 菜单 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="${request.contextPath}/index">Starting</a>
+            <a class="navbar-brand" href="${request.contextPath}/home">Starting</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="home">Home</a>
+                    <a href="${request.contextPath}/index">Index</a>
                 </li>
                 <li>
-                    <a href="about">About</a>
+                    <a href="${request.contextPath}/about">About</a>
                 </li>
                 <li>
-                    <a href="post">Post</a>
+                    <a href="${request.contextPath}/post/0">Post</a>
                 </li>
                 <li>
-                    <a href="contact">Contact</a>
+                    <a href="${request.contextPath}/contact">Contact</a>
                 </li>
             </ul>
         </div>
@@ -68,10 +68,10 @@
                 <ul class="list-inline text-center">
                     <li>
                         <a href="https://twitter.com/helinull">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
                         </a>
                     </li>
                     <li>

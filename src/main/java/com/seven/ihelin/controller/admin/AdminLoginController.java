@@ -1,7 +1,6 @@
 package com.seven.ihelin.controller.admin;
 
 import com.seven.ihelin.config.CommonConfig;
-import com.seven.ihelin.controller.BaseController;
 import com.seven.ihelin.model.AdminUser;
 import com.seven.ihelin.utils.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +40,7 @@ public class AdminLoginController extends BaseAdminController {
         if (username.equals(CommonConfig.getAdminUser()) && password.equals(CommonConfig.getAdminPassword())) {
             AdminUser adminUser = new AdminUser();
             adminUser.setAdminId(username);
-            adminUser.setNickName("超级管理员");
+            adminUser.setNickName("Ian He");
             adminUser.setLastLoginTime(new Date());
             String rip = RequestUtil.getRealIp(request);
             adminUser.setLastLoginIp(rip);
