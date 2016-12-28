@@ -52,15 +52,10 @@
             var index = layer.load(1, {
                 shade: [0.1, '#000']
             });
-            $.ajax({
-                url: '${request.contextPath}/admin/article',
-                type: 'PUT',
-                data: $("#article_form").serialize(),
-                success: function (data) {
-                    layer.close(index);
-                    if (data.status == 'success') {
-                        window.location.href = '${request.contextPath}/admin/article';
-                    }
+            $.post("${request.contextPath}/admin/article/edit", $("#article_form").serialize(), function (data) {
+                layer.close(index);
+                if (data.status == 'success') {
+                    window.location.href = '${request.contextPath}/admin/article';
                 }
             });
         } else {

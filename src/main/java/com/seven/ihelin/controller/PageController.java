@@ -42,9 +42,14 @@ public class PageController extends BaseController {
         if (id == null || id == 0) {
             List<Article> articles = articleManager.listByCondition(null, 0, 1);
             article = articles.get(0);
+
         } else {
             article = articleManager.selectArticleById(id);
         }
+        if(article==null){
+            return "post";
+        }
+        articleManager.addReadCount(article);
         model.addAttribute("article", article);
         return "post";
     }

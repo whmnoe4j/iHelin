@@ -2,12 +2,17 @@ package com.seven.ihelin.controller.admin;
 
 import com.seven.ihelin.db.entity.Article;
 import com.seven.ihelin.db.plugin.Pagination;
+import com.seven.ihelin.utils.JSON;
 import com.seven.ihelin.utils.ResponseUtil;
+import org.apache.commons.lang3.CharEncoding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -24,6 +29,8 @@ import java.util.List;
  */
 @Controller
 public class AdminArticleController extends BaseAdminController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "article", method = RequestMethod.GET)
     public String articleAdminPage(Model model, String title, Integer pageNum) {
@@ -79,14 +86,19 @@ public class AdminArticleController extends BaseAdminController {
      * @param article
      * @param response
      */
-    @RequestMapping(value = "article", method = RequestMethod.PUT)
+    @RequestMapping(value = "article/edit", method = RequestMethod.POST)
     public void editArticle(Article article, HttpServletResponse response) {
-        article = articleManager.selectArticleById(article.getId());
+        logger.info("article is {}", JSON.toJson(article));
         if (article == null || article.getId() == null) {
+            logger.error("no article found {}", article);
             ResponseUtil.writeFailedJSON(response, "文章不存在！");
             return;
         }
-        articleManager.editArticle(article);
+        Article newArticle = articleManager.selectArticleById(article.getId());
+        newArticle.setTitle(HtmlUtils.htmlEscape(article.getTitle(), CharEncoding.UTF_8));
+        newArticle.setSummary(HtmlUtils.htmlEscape(article.getSummary(), CharEncoding.UTF_8));
+        newArticle.setContent(article.getContent());
+        articleManager.editArticle(newArticle);
         ResponseUtil.writeSuccessJSON(response);
     }
 

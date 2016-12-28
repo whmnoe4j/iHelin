@@ -19,6 +19,10 @@ public class Article {
 
     private String content;
 
+    public Article() {
+        this.readNum = 0;
+    }
+
     public Integer getId() {
         return id;
     }
