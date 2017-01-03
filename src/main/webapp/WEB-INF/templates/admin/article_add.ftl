@@ -99,7 +99,7 @@
                                     <label class="col-sm-2 control-label" for="summary">摘要</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="summary" name="summary"
-                                                  placeholder="摘要" data-required="true"></textarea>
+                                                  placeholder="摘要"></textarea>
                                     </div>
                                 </div>
                             </div>

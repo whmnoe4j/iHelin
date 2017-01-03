@@ -100,7 +100,7 @@
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="summary" name="summary"
                                                   placeholder="摘要"
-                                                  data-required="true">${(article.summary)!''}</textarea>
+                                        >${(article.summary)!''}</textarea>
                                     </div>
                                 </div>
                             </div>

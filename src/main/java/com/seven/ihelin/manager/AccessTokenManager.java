@@ -71,7 +71,7 @@ public class AccessTokenManager {
                     LOGGER.error("update access token error", e);
                 }
             }
-        }, 0, 1000L * 60 * 60 * 2);
+        }, 0, 1000L * 60 * 30);
     }
 
     // 强制更新token
