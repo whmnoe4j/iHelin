@@ -20,7 +20,8 @@ public class QRCode {
         int height = 300;
         String format = "png";
         String content = "2";
-        generateQRCode("/Users/ihelin/Documents/", content, format, width, height);
+        String fileName = new Random().nextInt(1000000) + "." + format;
+        generateQRCode("/Users/ihelin/Documents/", content, fileName, format, width, height);
     }
 
     /**
@@ -33,8 +34,7 @@ public class QRCode {
      * @param height  高度
      * @return 二维码文件名
      */
-    public static String generateQRCode(String folder, String content, String format, int width, int height) {
-        String fileName = new Random().nextInt(1000000) + "." + format;
+    public static String generateQRCode(String folder, String content, String fileName, String format, int width, int height) {
         HashMap<EncodeHintType, Object> hints = Maps.newHashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);

@@ -6,7 +6,7 @@ jdbc_driver: com.mysql.jdbc.Driver
 admin_user: admin
 admin_password: 246260
 
-domain_url: http://www.520lyx.cn
+domain_url: localhost:8080
 system_name: Ian He
 
 # 安工大助手

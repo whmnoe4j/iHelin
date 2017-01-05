@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * 二维码图片生成
@@ -35,7 +36,9 @@ public class AdminQRCodeController extends BaseAdminController {
     @RequestMapping(value = "generate_img", method = RequestMethod.POST)
     public void generateQRCode(String content, HttpServletRequest request, HttpServletResponse response) {
         String path = "qrcode/";
-        path = path + QRCode.generateQRCode(path, content, "png", 300, 300);
+        String format = "png";
+        String fileName = new Random().nextInt(1000000) + "." + format;
+        path = path + QRCode.generateQRCode(path, content, fileName, format, 300, 300);
         Map<String, Object> res = Maps.newHashMap();
         res.put("url", path);
         LOGGER.info("Success generate qrcode {},ip is {}", content, RequestUtil.getRealIp(request));

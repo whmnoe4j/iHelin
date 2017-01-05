@@ -45,7 +45,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="iHelin" tableName="Article" domainObjectName="Article"
+        <table schema="iHelin" tableName="Qrcode" domainObjectName="Qrcode"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
