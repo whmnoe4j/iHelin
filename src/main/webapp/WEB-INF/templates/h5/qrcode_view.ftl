@@ -19,8 +19,8 @@
 <div style="text-align: center;margin-top: 70px;">
 ${qrcode.content!}
 </div>
+<span style="right: 5px;bottom: 5px;position: fixed;font-size: small;color: #948e8e">--海航年会专用</span>
+</body>
 <script>
 </script>
-</body>
-
 </html>

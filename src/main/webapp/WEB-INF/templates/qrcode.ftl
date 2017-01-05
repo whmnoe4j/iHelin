@@ -65,7 +65,7 @@
                           autofocus></textarea>
                 </div>
             </div>
-            <div class="col-sm-2 text-center" style="margin-top: 125px;">
+            <div class="col-sm-2 text-center" style="margin-top: 100px;margin-bottom: 50px;">
                 <button class="btn btn-md btn-primary" onclick="generate();">生成二维码</button>
             </div>
             <div class="col-sm-4">
@@ -95,9 +95,7 @@
         simditor = new Simditor({
             textarea: $('#content'),
             toolbarFloat: false,
-            toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', 'ol', 'ul',
-                'blockquote', 'code', 'table', 'link', 'image', 'hr', 'indent', 'outdent', 'alignment'
-            ],
+            toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'table', 'image', 'alignment'],
             upload: {
                 url: '${request.contextPath}/img_upload',
                 params: null,
