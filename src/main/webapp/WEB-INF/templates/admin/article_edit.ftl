@@ -1,10 +1,14 @@
 <#import "admin_frame.ftl" as main>
 <#assign html_other_script in main>
 <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor.css"/>
+<link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor-markdown.css"/>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/module.js"></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/hotkeys.js"></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/uploader.js"></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/simditor.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/marked.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/to-markdown.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/simditor-markdown.js"></script>
 <style>
     img {
         width: auto;
@@ -32,6 +36,9 @@
         simditor = new Simditor({
             textarea: $('#content'),
             toolbarFloat: false,
+            markdown: true,
+            toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', 'ol', 'ul',
+                'blockquote', 'code', 'table', 'link', 'image', 'hr', 'indent', 'outdent', 'alignment', 'markdown'],
             upload: {
                 url: '${request.contextPath}/img_upload',
                 params: null,

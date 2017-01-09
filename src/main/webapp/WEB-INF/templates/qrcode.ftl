@@ -14,6 +14,7 @@
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css'
           media="all"/>
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor.css"/>
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor-markdown.css"/>
     <script src='${request.contextPath}/plugins/jquery/jquery.min.js'></script>
     <script src="${request.contextPath}/plugins/layer/layer.js"></script>
 
@@ -85,6 +86,9 @@
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/hotkeys.js"></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/uploader.js"></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/simditor.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/marked.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/to-markdown.js"></script>
+<script type="text/javascript" src="${request.contextPath}/plugins/simditor/simditor-markdown.js"></script>
 <script type='text/javascript'>
     var simditor;
 
@@ -95,7 +99,8 @@
         simditor = new Simditor({
             textarea: $('#content'),
             toolbarFloat: false,
-            toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'table', 'image', 'alignment'],
+            markdown: true,
+            toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'table', 'image', 'alignment','|','markdown'],
             upload: {
                 url: '${request.contextPath}/img_upload',
                 params: null,

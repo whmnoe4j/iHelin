@@ -20,7 +20,7 @@ public class TestController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "mail", method = RequestMethod.GET)
-    public String error() {
+    public String mail() {
         String template = TemplateUtil.applyTemplate("/mail/mail_content.ftl");
         MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
         return template;
