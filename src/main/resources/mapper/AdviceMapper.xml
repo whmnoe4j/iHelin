@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.seven.ihelin.db.mapper.AdviceMapper">
-    <resultMap id="BaseResultMap" type="com.seven.ihelin.db.entity.Advice">
+<mapper namespace="me.ianhe.db.mapper.AdviceMapper">
+    <resultMap id="BaseResultMap" type="me.ianhe.db.entity.Advice">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
@@ -26,13 +26,13 @@
     delete from Advice
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.seven.ihelin.db.entity.Advice" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="me.ianhe.db.entity.Advice" useGeneratedKeys="true" keyProperty="id">
     insert into Advice (name, email, message, 
       create_time)
     values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="com.seven.ihelin.db.entity.Advice" useGeneratedKeys="true"
+    <insert id="insertSelective" parameterType="me.ianhe.db.entity.Advice" useGeneratedKeys="true"
             keyProperty="id">
         insert into Advice
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -64,7 +64,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.seven.ihelin.db.entity.Advice">
+    <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.Advice">
         update Advice
         <set>
             <if test="name != null">
@@ -82,7 +82,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.seven.ihelin.db.entity.Advice">
+    <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.Advice">
     update Advice
     set name = #{name,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},

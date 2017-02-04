@@ -15,7 +15,7 @@
         <setting name="defaultStatementTimeout" value="2000"/>
     </settings>
     <plugins>
-        <plugin interceptor="com.seven.ihelin.db.plugin.PaginationInterceptor">
+        <plugin interceptor="me.ianhe.db.plugin.PaginationInterceptor">
             <property name="dialect" value="MYSQL"/>
         </plugin>
     </plugins>

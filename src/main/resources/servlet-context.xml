@@ -36,16 +36,16 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/admin/**"/>
-            <bean class="com.seven.ihelin.interceptor.AdminAuthInterceptor"></bean>
+            <bean class="me.ianhe.interceptor.AdminAuthInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/error/**"/>
-            <bean class="com.seven.ihelin.interceptor.TestInterceptor"></bean>
+            <bean class="me.ianhe.interceptor.TestInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
     <!-- DispatcherServlet上下文，只管理@Controller类型的bean，忽略其他类型的bean，自动扫描且只扫描@Controller -->
-    <context:component-scan base-package="com.seven.ihelin.controller"
+    <context:component-scan base-package="me.ianhe.controller"
                             use-default-filters="false">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>

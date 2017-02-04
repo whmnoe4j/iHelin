@@ -22,7 +22,7 @@
         <param-value>classpath:log4j.xml</param-value>
     </context-param>
     <listener>
-        <listener-class>com.seven.ihelin.config.ContextRootListener</listener-class>
+        <listener-class>me.ianhe.config.ContextRootListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

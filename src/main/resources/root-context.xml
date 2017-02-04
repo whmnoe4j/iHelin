@@ -16,13 +16,13 @@
 
     <!-- 使用annotation自动注册bean,并检查@Required,@Autowired的属性已被注入，对@Controller的扫描,交由spring
         mvc处理 -->
-    <context:component-scan base-package="com.seven.ihelin">
+    <context:component-scan base-package="me.ianhe">
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <!-- 利用yaml里的jdbc配置实例化dataSource -->
-    <bean id="dataSource" class="com.seven.ihelin.config.DataSourceFactoryBean"></bean>
+    <bean id="dataSource" class="me.ianhe.config.DataSourceFactoryBean"></bean>
 
     <!-- MyBatis数据库连接池配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -33,13 +33,13 @@
         <!--扫描mepper需要的xml文件-->
         <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
         <!--扫描entity包 使用别名-->
-        <property name="typeAliasesPackage" value="com.seven.ihelin.db.entity"/>
+        <property name="typeAliasesPackage" value="me.ianhe.db.entity"/>
     </bean>
 
     <!-- 定义mybatis接口路径 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.seven.ihelin.db.mapper"/>
+        <property name="basePackage" value="me.ianhe.db.mapper"/>
     </bean>
 
     <!-- 数据库事务配置 -->
