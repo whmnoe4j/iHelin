@@ -1,22 +1,14 @@
 package me.ianhe.utils;
 
 import com.google.common.collect.Lists;
-import me.ianhe.model.Button;
-import me.ianhe.model.ClickButton;
-import me.ianhe.model.Menu;
-import me.ianhe.model.ViewButton;
-import me.ianhe.model.WXAccessToken;
-import me.ianhe.model.req.LocationMessage;
-import me.ianhe.model.resp.Article;
-import me.ianhe.model.resp.ImageMessage;
-import me.ianhe.model.resp.MusicMessage;
-import me.ianhe.model.resp.NewsMessage;
-import me.ianhe.model.resp.TextMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import me.ianhe.model.*;
+import me.ianhe.model.req.LocationMessage;
+import me.ianhe.model.resp.*;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -84,6 +76,8 @@ public class WechatUtil {
         } catch (Exception e) {
             LOGGER.warn("error while doGet url:" + url, e);
             return null;
+        } finally {
+            httpGet.releaseConnection();
         }
     }
 
@@ -100,6 +94,8 @@ public class WechatUtil {
         } catch (Exception e) {
             LOGGER.warn("error while doPost url:" + url, e);
             return null;
+        } finally {
+            httpPost.releaseConnection();
         }
     }
 
