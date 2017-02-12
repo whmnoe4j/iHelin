@@ -21,7 +21,7 @@ public class FileUtil {
     public static final String ACCESS_KEY = "XRWyYeG0mx7jS_DRCj08bOHDweU44WeyjlbZxPFC";
     public static final String SECRET_KEY = "oD7T8X-h_vJaywxy8llLR4jKKE7BKwpIW3whlQoF";
     // 要上传的空间
-    public static final String bucketname = "ianhe";
+    public static final String BUCKET_NAME = "ihelin";
 
     public static void main(String args[]) throws IOException {
         File file = new File("/Users/iHelin/Pictures/001.png");
@@ -32,7 +32,7 @@ public class FileUtil {
     public static String getUpToken() {
         //密钥配置
         Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-        return auth.uploadToken(bucketname);
+        return auth.uploadToken(BUCKET_NAME);
     }
 
     public static String uploadFile(byte[] bytes, String key) {
