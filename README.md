@@ -1,16 +1,13 @@
 # [Ian He](http://www.520lyx.cn)
 
-## 基于以下实现
-- Java
-- JavaScript
-- Bootstrap
+
+## 基于以下技术实现
+- Java(Spring Spring MVC MyBatis)
+- JavaScript(Bootstrap)
 - MySQL
 - Maven
-- HTML
-- CSS
 - MyBatis
 - Freemarker
-- Spring MVC
 - ...
 
 ## IDE
