@@ -6,7 +6,7 @@
 - JavaScript(Bootstrap)
 - MySQL
 - Maven
-- MyBatis
+- Git
 - Freemarker
 - ...
 
