@@ -14,4 +14,4 @@
 IntelliJ IDEA 2016.3
 
 ## Copyright and license
-Code released under the MIT license.
+MIT
