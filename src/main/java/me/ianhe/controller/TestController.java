@@ -1,9 +1,8 @@
 package me.ianhe.controller;
 
-import me.ianhe.utils.CryptUtil;
-import me.ianhe.utils.JSON;
-import me.ianhe.utils.MailUtil;
-import me.ianhe.utils.TemplateUtil;
+import com.beust.jcommander.internal.Maps;
+import me.ianhe.model.Result;
+import me.ianhe.utils.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 @Controller
@@ -43,12 +43,17 @@ public class TestController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test() {
-        return "<h1>三个人请问abc123</h1>";
+        Result result = new Result();
+        result.setData("<h1>三个人请问abc123</h1>");
+        return JSON.toJson(result);
     }
 
     @RequestMapping(value = "test1", method = RequestMethod.GET)
     public void test1(HttpServletResponse response) throws IOException {
-        response.getWriter().print("<h1>三个人请问abc123</h1>");
+        Map<String, Object> data = Maps.newHashMap();
+        data.put("data", "<h1>三个人请问abc123</h1>");
+        ResponseUtil.writeSuccessJSON(response, data);
+//        response.getWriter().print("<h1>三个人请问abc123</h1>");
     }
 
     public static void main(String[] args) {

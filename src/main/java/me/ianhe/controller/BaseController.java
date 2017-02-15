@@ -1,8 +1,11 @@
 package me.ianhe.controller;
 
+import com.beust.jcommander.internal.Maps;
 import me.ianhe.manager.*;
+import me.ianhe.utils.JSON;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * Created by iHelin on 16/11/1.
@@ -24,6 +27,33 @@ public abstract class BaseController {
 
 
     protected static final int PAGE_LENGTH = 20;//分页大小
-    protected static final int MAX_LENGTH = 1000;
+    private static final String SUCCESS = "success";
+    private static final String ERROR = "error";
+
+    protected String success() {
+        Map<String, Object> res = Maps.newHashMap();
+        res.put("status", SUCCESS);
+        return JSON.toJson(res);
+    }
+
+    protected <T> String success(T model) {
+        Map<String, Object> res = Maps.newHashMap();
+        res.put("status", SUCCESS);
+        res.put("data", model);
+        return JSON.toJson(res);
+    }
+
+    protected String error() {
+        Map<String, Object> res = Maps.newHashMap();
+        res.put("status", ERROR);
+        return JSON.toJson(res);
+    }
+
+    protected <T> String error(T model) {
+        Map<String, Object> res = Maps.newHashMap();
+        res.put("status", ERROR);
+        res.put("data", model);
+        return JSON.toJson(res);
+    }
 
 }

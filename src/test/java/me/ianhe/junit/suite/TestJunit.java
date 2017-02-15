@@ -20,7 +20,6 @@ public class TestJunit {
 
     @Test
     public void testErrPrintMessage() {
-        message = "New Word";
         assertEquals(message,messageUtil.printMessage());
     }
 
