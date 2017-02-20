@@ -66,14 +66,7 @@
                     var index = layer.load(1, {
                         shade: [0.1, '#000']
                     });
-                    this.$http.post("${request.contextPath}/admin/activity", {
-                        id: this.id,
-                        staff: this.staff,
-                        project: this.project,
-                        labour: this.labour,
-                        bonus: this.bonus,
-                        dateStr: this.date
-                    }, {
+                    this.$http.post("${request.contextPath}/admin/activity", {}, {
                         params: {
                             id: this.id,
                             staff: this.staff,
