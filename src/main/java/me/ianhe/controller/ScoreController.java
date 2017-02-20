@@ -29,8 +29,6 @@ public class ScoreController extends BaseController {
     @Autowired
     private ScoreManager myScoreManager;
 
-    protected static final int PAGE_LENGTH = 10;
-
     @ResponseBody
     @RequestMapping(value = "score", method = RequestMethod.POST)
     public String addScore(Integer score, String reason) throws UnsupportedEncodingException {
@@ -44,8 +42,12 @@ public class ScoreController extends BaseController {
         res.put("score", ms);
         res.put("total", myScoreManager.getMyTotalScore());
         String mailContent = TemplateUtil.applyTemplateSimple("/mail/score.ftl", res);
-        new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + score + "分", mailContent).start();
-        new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + score + "分", mailContent).start();
+        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + score + "分", mailContent);
+        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + score + "分", mailContent);
+        Thread t1 = new Thread(m1);
+        Thread t2 = new Thread(m2);
+        t1.start();
+        t2.start();
         return success();
     }
 
@@ -65,10 +67,13 @@ public class ScoreController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "scores", method = RequestMethod.GET)
-    public String getScores(Integer pageNum) {
+    public String getScores(Integer pageNum, Integer pageLength) {
         if (pageNum == null)
             pageNum = 1;
-        List<MyScore> scores = myScoreManager.selectByCondition((pageNum - 1) * PAGE_LENGTH, PAGE_LENGTH);
+        if (pageLength == null) {
+            pageLength = 10;
+        }
+        List<MyScore> scores = myScoreManager.selectByCondition((pageNum - 1) * pageLength, pageLength);
         return success(scores);
     }
 

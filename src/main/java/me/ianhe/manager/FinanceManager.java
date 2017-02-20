@@ -1,0 +1,72 @@
+package me.ianhe.manager;
+
+import com.beust.jcommander.internal.Maps;
+import me.ianhe.db.entity.Activity;
+import me.ianhe.db.entity.Staff;
+import me.ianhe.db.mapper.ActivityMapper;
+import me.ianhe.db.mapper.StaffMapper;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 财务管理
+ *
+ * @author iHelin
+ * @create 2017-02-18 12:47
+ */
+@Service
+public class FinanceManager {
+
+    @Autowired
+    private StaffMapper staffMapper;
+
+    @Autowired
+    private ActivityMapper activityMapper;
+
+    public int addStaff(Staff staff) {
+        return staffMapper.insert(staff);
+    }
+
+    public int removeStaff(Integer id) {
+        return staffMapper.deleteByPrimaryKey(id);
+    }
+
+    public int updateStaff(Staff staff) {
+        return staffMapper.updateByPrimaryKey(staff);
+    }
+
+    public Staff getStaffById(Integer id) {
+        return staffMapper.selectByPrimaryKey(id);
+    }
+
+    public List<Staff> listStaffByCondition(int offset, int size) {
+        Map<String, Object> param = Maps.newHashMap();
+        return staffMapper.listByCondition(param, new RowBounds(offset, size));
+    }
+
+    public int listStaffCount() {
+        Map<String, Object> param = Maps.newHashMap();
+        return staffMapper.listCount(param);
+    }
+
+    public int addActivity(Activity activity) {
+        return activityMapper.insert(activity);
+    }
+
+    public int removeActivity(Integer id) {
+        return activityMapper.deleteByPrimaryKey(id);
+    }
+
+    public int updateActivity(Activity staff) {
+        return activityMapper.updateByPrimaryKey(staff);
+    }
+
+    public Activity getActivityById(Integer id) {
+        return activityMapper.selectByPrimaryKey(id);
+    }
+
+}

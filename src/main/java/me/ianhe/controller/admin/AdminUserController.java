@@ -18,11 +18,12 @@ public class AdminUserController extends BaseAdminController {
     public String userAdmin(Model model, String nickName, Integer pageNum) {
         if (pageNum == null)
             pageNum = 1;
-        List<User> users = userManager.listUserByCondition(nickName, null, (pageNum - 1) * PAGE_LENGTH, PAGE_LENGTH);
+        List<User> users = userManager.listUserByCondition(nickName, null,
+                (pageNum - 1) * DEFAULT_PAGE_LENGTH, DEFAULT_PAGE_LENGTH);
         int totalCount = userManager.listUserCount(nickName, null);
         model.addAttribute("nickName", nickName);
         model.addAttribute("users", users);
-        model.addAttribute("pagination", new Pagination(totalCount, pageNum, PAGE_LENGTH));
+        model.addAttribute("pagination", new Pagination(totalCount, pageNum, DEFAULT_PAGE_LENGTH));
         return ftl("user_admin");
     }
 

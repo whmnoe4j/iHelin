@@ -4,7 +4,6 @@ import me.ianhe.db.entity.Article;
 import me.ianhe.db.plugin.Pagination;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.ResponseUtil;
-import me.ianhe.controller.BaseController;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +36,12 @@ public class AdminArticleController extends BaseAdminController {
     public String articleAdminPage(Model model, String title, Integer pageNum) {
         if (pageNum == null)
             pageNum = 1;
-        List<Article> articles = articleManager.listByCondition(title, (pageNum - 1) * BaseController.PAGE_LENGTH, BaseController.PAGE_LENGTH);
+        List<Article> articles = articleManager.listByCondition(title,
+                (pageNum - 1) * DEFAULT_PAGE_LENGTH, DEFAULT_PAGE_LENGTH);
         int totalCount = articleManager.listCount(title);
         model.addAttribute("title", title);
         model.addAttribute("articles", articles);
-        model.addAttribute("pagination", new Pagination(totalCount, pageNum, BaseController.PAGE_LENGTH));
+        model.addAttribute("pagination", new Pagination(totalCount, pageNum, DEFAULT_PAGE_LENGTH));
         return ftl("article");
     }
 

@@ -10,6 +10,7 @@ public class BaseAdminController extends BaseController {
     protected static final String NAMESPACE = "admin";
     public static final String SESSION_KEY_ADMIN = "adminUser";
 
+    @Override
     protected String ftl(String ftlFileName) {
         return NAMESPACE + "/" + ftlFileName;
     }

@@ -53,7 +53,6 @@ public class TestController extends BaseController {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
-//        response.getWriter().print("<h1>三个人请问abc123</h1>");
     }
 
     public static void main(String[] args) {

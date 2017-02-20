@@ -22,7 +22,7 @@ public class AdminMenuController extends BaseAdminController {
         return ftl("menu_admin");
     }
 
-    @RequestMapping(value = "service_menu_sync", method = RequestMethod.POST)
+    @RequestMapping(value = "service_menu_sync", method = RequestMethod.GET)
     public String syncMenu() {
         String token = accessTokenManager.getAccessToken().getToken();
         try {

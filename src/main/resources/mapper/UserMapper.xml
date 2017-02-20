@@ -24,10 +24,10 @@
         <result column="is_bind" property="isBind" jdbcType="BIT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, account, password, open_id, nick_name, gender, city, province, country, headimgurl,
-    subscribe_time, status, subscribe, language, unionid, remark, groupid, tagid_list, 
-    phone, is_bind
-  </sql>
+        id, account, password, open_id, nick_name, gender, city, province, country, headimgurl,
+        subscribe_time, status, subscribe, language, unionid, remark, groupid, tagid_list,
+        phone, is_bind
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -35,25 +35,25 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from User
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from User
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="me.ianhe.db.entity.User" useGeneratedKeys="true" keyProperty="id">
-    insert into User (account, password, open_id,
-      nick_name, gender, city, 
-      province, country, headimgurl, 
-      subscribe_time, status, subscribe, 
-      language, unionid, remark, 
-      groupid, tagid_list, phone, 
-      is_bind)
-    values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
-      #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
-      #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
-      #{subscribeTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER}, 
-      #{language,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{groupid,jdbcType=INTEGER}, #{tagidList,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{isBind,jdbcType=BIT})
-  </insert>
+        insert into User (account, password, open_id,
+        nick_name, gender, city,
+        province, country, headimgurl,
+        subscribe_time, status, subscribe,
+        language, unionid, remark,
+        groupid, tagid_list, phone,
+        is_bind)
+        values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+        #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR},
+        #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR},
+        #{subscribeTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER},
+        #{language,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+        #{groupid,jdbcType=INTEGER}, #{tagidList,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{isBind,jdbcType=BIT})
+    </insert>
     <insert id="insertSelective" parameterType="me.ianhe.db.entity.User" useGeneratedKeys="true"
             keyProperty="id">
         insert into User
@@ -240,28 +240,28 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.User">
-    update User
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=INTEGER},
-      city = #{city,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      country = #{country,jdbcType=VARCHAR},
-      headimgurl = #{headimgurl,jdbcType=VARCHAR},
-      subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER},
-      subscribe = #{subscribe,jdbcType=INTEGER},
-      language = #{language,jdbcType=VARCHAR},
-      unionid = #{unionid,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      groupid = #{groupid,jdbcType=INTEGER},
-      tagid_list = #{tagidList,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      is_bind = #{isBind,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update User
+        set account = #{account,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        open_id = #{openId,jdbcType=VARCHAR},
+        nick_name = #{nickName,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=INTEGER},
+        city = #{city,jdbcType=VARCHAR},
+        province = #{province,jdbcType=VARCHAR},
+        country = #{country,jdbcType=VARCHAR},
+        headimgurl = #{headimgurl,jdbcType=VARCHAR},
+        subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=INTEGER},
+        subscribe = #{subscribe,jdbcType=INTEGER},
+        language = #{language,jdbcType=VARCHAR},
+        unionid = #{unionid,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        groupid = #{groupid,jdbcType=INTEGER},
+        tagid_list = #{tagidList,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        is_bind = #{isBind,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
     <select id="listUserByCondition" resultMap="BaseResultMap">
         select

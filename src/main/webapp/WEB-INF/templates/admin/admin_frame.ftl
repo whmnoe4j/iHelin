@@ -84,6 +84,11 @@
                     <span>二维码</span>
                 </a>
             </li>
+            <li>
+                <a href="${request.contextPath}/admin/finance"><i class="fa fa-dollar"></i>
+                    <span>财务管理</span>
+                </a>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
     </nav>
@@ -102,14 +107,16 @@
         </div>
     </footer>
 </div> <!-- page-container -->
-<script type='text/javascript' src='${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/enquire.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/jquery.cookie.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/jquery.touchSwipe.min.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/jquery.nicescroll.min.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/application.js'></script>
-<script type='text/javascript' src='${request.contextPath}/plugins/form-parsley/parsley.min.js'></script>
-<script type='text/javascript' src='${request.contextPath}/js/formvalidation.js'></script>
+<script src='${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js'></script>
+<script src='${request.contextPath}/js/enquire.js'></script>
+<script src='${request.contextPath}/js/jquery.cookie.js'></script>
+<script src='${request.contextPath}/js/jquery.touchSwipe.min.js'></script>
+<script src='${request.contextPath}/js/jquery.nicescroll.min.js'></script>
+<script src='${request.contextPath}/js/application.js'></script>
+<script src='${request.contextPath}/plugins/form-parsley/parsley.min.js'></script>
+<script src='${request.contextPath}/js/formvalidation.js'></script>
+<script src="${request.contextPath}/js/vue.js"></script>
+<script src="${request.contextPath}/js/vue-resource.js"></script>
 <script type='text/javascript'>
     $(function () {
         $('.tips').tooltip();

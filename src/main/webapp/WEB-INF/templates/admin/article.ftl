@@ -109,7 +109,7 @@
                             </tbody>
                         </table>
                         <#import "pagination.ftl" as pager>
-                        <#assign currentUrl>user_admin?title=${title!}&</#assign>
+                        <#assign currentUrl>article?title=${title!}&</#assign>
                         <@pager.pageul pagination=pagination url="${currentUrl}" />
                     </div>
                 </div>

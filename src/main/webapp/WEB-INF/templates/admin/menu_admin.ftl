@@ -25,7 +25,7 @@
 		var index = layer.load(2, {
 	    	shade: [0.3, '#000']
 	    });
-	    $.post("${request.contextPath}/admin/get_menu_by_id",{id,id},function(data){
+	    $.get("${request.contextPath}/admin/get_menu_by_id",{id,id},function(data){
 	    	layer.close(index);
 	    	if(data.status=="success"){
 	    		$("input[name=menuName]").val(data.menu.name);

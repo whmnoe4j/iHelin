@@ -24,9 +24,11 @@ public abstract class BaseController {
     protected ArticleManager articleManager;
     @Resource
     protected QrcodeManager qrcodeManager;
+    @Resource
+    protected FinanceManager financeManager;
 
 
-    protected static final int PAGE_LENGTH = 20;//分页大小
+    protected static final int DEFAULT_PAGE_LENGTH = 10;//分页大小
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
 
@@ -54,6 +56,10 @@ public abstract class BaseController {
         res.put("status", ERROR);
         res.put("data", model);
         return JSON.toJson(res);
+    }
+
+    protected String ftl(String ftlFileName){
+        return ftlFileName;
     }
 
 }
