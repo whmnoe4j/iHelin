@@ -69,4 +69,20 @@ public class FinanceManager {
         return activityMapper.selectByPrimaryKey(id);
     }
 
+    public List<Activity> listActivityByCondition(Integer staffId, int offset, int size) {
+        Map<String, Object> param = Maps.newHashMap();
+        if (staffId != null) {
+            param.put("staffId", staffId);
+        }
+        return activityMapper.listByCondition(param, new RowBounds(offset, size));
+    }
+
+    public int listActivityCount(Integer staffId) {
+        Map<String, Object> param = Maps.newHashMap();
+        if (staffId != null) {
+            param.put("staffId", staffId);
+        }
+        return activityMapper.listCount(param);
+    }
+
 }

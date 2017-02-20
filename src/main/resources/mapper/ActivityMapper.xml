@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.ianhe.db.mapper.ActivityMapper">
+    <resultMap id="BaseResultMap" type="me.ianhe.db.entity.Activity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="staff" property="staff" jdbcType="INTEGER"/>
+        <result column="project" property="project" jdbcType="VARCHAR"/>
+        <result column="labour" property="labour" jdbcType="DECIMAL"/>
+        <result column="bonus" property="bonus" jdbcType="DECIMAL"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, staff, project, labour, bonus, date
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from Activity
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from Activity
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="me.ianhe.db.entity.Activity" useGeneratedKeys="true" keyProperty="id">
+        insert into Activity (staff, project, labour,
+        bonus, date)
+        values (#{staff,jdbcType=INTEGER}, #{project,jdbcType=VARCHAR}, #{labour,jdbcType=DECIMAL},
+        #{bonus,jdbcType=DECIMAL}, #{date,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="me.ianhe.db.entity.Activity" useGeneratedKeys="true" keyProperty="id">
+        insert into Activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="staff != null">
+                staff,
+            </if>
+            <if test="project != null">
+                project,
+            </if>
+            <if test="labour != null">
+                labour,
+            </if>
+            <if test="bonus != null">
+                bonus,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="staff != null">
+                #{staff,jdbcType=INTEGER},
+            </if>
+            <if test="project != null">
+                #{project,jdbcType=VARCHAR},
+            </if>
+            <if test="labour != null">
+                #{labour,jdbcType=DECIMAL},
+            </if>
+            <if test="bonus != null">
+                #{bonus,jdbcType=DECIMAL},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.Activity">
+        update Activity
+        <set>
+            <if test="staff != null">
+                staff = #{staff,jdbcType=INTEGER},
+            </if>
+            <if test="project != null">
+                project = #{project,jdbcType=VARCHAR},
+            </if>
+            <if test="labour != null">
+                labour = #{labour,jdbcType=DECIMAL},
+            </if>
+            <if test="bonus != null">
+                bonus = #{bonus,jdbcType=DECIMAL},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.Activity">
+        update Activity
+        set staff = #{staff,jdbcType=INTEGER},
+        project = #{project,jdbcType=VARCHAR},
+        labour = #{labour,jdbcType=DECIMAL},
+        bonus = #{bonus,jdbcType=DECIMAL},
+        date = #{date,jdbcType=DATE}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="listByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Activity
+        <where>
+            <if test="staffId!=null">
+                and staff = #{staffId,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by date desc
+    </select>
+    <select id="listCount" parameterType="java.util.Map" resultType="int">
+        select
+        count(id)
+        from Activity
+        <where>
+            <if test="staffId!=null">
+                and staff = #{staffId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+</mapper>
