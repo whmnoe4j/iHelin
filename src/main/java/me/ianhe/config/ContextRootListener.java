@@ -1,11 +1,11 @@
 package me.ianhe.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ContextRootListener implements ServletContextListener {
 
@@ -16,9 +16,9 @@ public class ContextRootListener implements ServletContextListener {
     }
 
     public void contextInitialized(ServletContextEvent event) {
-        LOGGER.info("context is initialized");
         ServletContext context = event.getServletContext();
         CommonConfig.init(context.getRealPath("/"), context.getContextPath());
+        LOGGER.info("context is initialized,root path: {}",context.getRealPath("/"));
     }
 
 }
