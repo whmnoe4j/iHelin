@@ -1,7 +1,6 @@
 package me.ianhe.test;
 
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,9 +12,14 @@ public class FileTest {
 
     public static void main(String[] args) throws IOException {
         test1();
-//        test2();
     }
 
+    /**
+     * 向文件写入信息
+     * 注意最后一定要flush或close
+     *
+     * @throws FileNotFoundException
+     */
     public static void test1() throws FileNotFoundException {
         PrintWriter out = new PrintWriter("employee.txt");
         String name = "iHelin";
@@ -25,16 +29,8 @@ public class FileTest {
         out.println(salary);
         out.flush();
         out.print('.');
-//        out.close();
+        out.close();
     }
 
-    public static void test2() throws IOException {
-        PrintWriter out = new PrintWriter(new FileWriter("employee.txt"), true);
-        String name = "Seven";
-        double salary = 6000D;
-        out.print(name);
-        out.print(' ');
-        out.println(salary);
-    }
 
 }

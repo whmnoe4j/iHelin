@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 /**
  * Created by iHelin on 17/2/8.
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MethodNote {
+public @interface TestAnnotation {
 
     // 方法作用，有默认值
     String description() default "作者很懒，没有写本方法的作用。";
