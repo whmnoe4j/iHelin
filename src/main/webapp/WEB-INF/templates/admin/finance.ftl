@@ -11,11 +11,15 @@
             socialSecurity: null,
             accumulationFund: null,
             other: null,
-            modalTitle:'添加员工'
+            modalTitle: '添加员工'
         },
         mounted: function () {
         },
         methods: {
+            exportExcel: function () {
+                console.log(111);
+                window.location.href = '${request.contextPath}/admin/excel';
+            },
             addStaff: function () {
                 this.modalTitle = '添加员工';
                 this.id = null;
@@ -123,8 +127,12 @@
                             </div>
                         </form>
                         <div class="pull-right">
-                            <a href="javascript:void(0);" @click="addStaff" class="btn btn-md btn-success"><i
-                                    class="fa fa-plus"></i> 新增</a>
+                            <button @click="exportExcel" class="btn btn-md btn-info">
+                                <i class="fa fa-download"></i> Excel 导出
+                            </button>
+                            <button @click="addStaff" class="btn btn-md btn-success"><i
+                                    class="fa fa-plus"></i> 新增
+                            </button>
                         </div>
                         <table class="table table-striped">
                             <thead>
