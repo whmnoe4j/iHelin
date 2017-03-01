@@ -22,15 +22,36 @@ public class HelloTest {
         helloApi.sayHello();
     }
 
+    /**
+     * 使用构造器实例化bean
+     */
     @Test
     public void testInstantiatingBeanByConstructor() {
-        //使用构造器
-        BeanFactory beanFactory =
-                new ClassPathXmlApplicationContext("instantiatingBean.xml");
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("instantiatingBean.xml");
         HelloApi bean1 = beanFactory.getBean("bean1", HelloApi.class);
         bean1.sayHello();
         HelloApi bean2 = beanFactory.getBean("bean2", HelloApi.class);
         bean2.sayHello();
+    }
+
+    /**
+     * 使用静态工厂方法
+     */
+    @Test
+    public void testInstantiatingBeanByStaticFactory() {
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("instantiatingBean.xml");
+        HelloApi bean3 = beanFactory.getBean("bean3", HelloApi.class);
+        bean3.sayHello();
+    }
+
+    /**
+     * 使用实例工厂方法
+     */
+    @Test
+    public void testInstantiatingBeanByInstanceFactory() {
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("instantiatingBean.xml");
+        HelloApi bean4 = beanFactory.getBean("bean4", HelloApi.class);
+        bean4.sayHello();
     }
 
 }
