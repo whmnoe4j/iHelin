@@ -48,6 +48,11 @@ public class FinanceManager {
         return staffMapper.listByCondition(param, new RowBounds(offset, size));
     }
 
+    public List<Staff> listStaffByCondition() {
+        Map<String, Object> param = Maps.newHashMap();
+        return staffMapper.listByCondition(param);
+    }
+
     public int listStaffCount() {
         Map<String, Object> param = Maps.newHashMap();
         return staffMapper.listCount(param);

@@ -21,6 +21,8 @@ public interface StaffMapper {
 
     int updateByPrimaryKey(Staff record);
 
+    List<Staff> listByCondition(Map<String, Object> res);
+
     List<Staff> listByCondition(Map<String, Object> res, RowBounds rowBounds);
 
     int listCount(Map<String, Object> res);

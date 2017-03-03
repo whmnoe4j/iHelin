@@ -4,6 +4,7 @@ import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.manager.ScoreManager;
 import me.ianhe.utils.AutoSendMail;
+import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,8 @@ public class ScoreController extends BaseController {
         myScoreManager.addRecord(ms);
         Map<String, Object> res = Maps.newHashMap();
         res.put("score", ms);
-        res.put("total", myScoreManager.getMyTotalScore());
+        int total = myScoreManager.getMyTotalScore();
+        res.put("total", total);
         String mailContent = TemplateUtil.applyTemplateSimple("/mail/score.ftl", res);
         AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + score + "分", mailContent);
         AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + score + "分", mailContent);
@@ -48,6 +50,7 @@ public class ScoreController extends BaseController {
         Thread t2 = new Thread(m2);
         t1.start();
         t2.start();
+        DingUtil.say("今天又加了"+score+"分，现在一共有"+total+"分，加油，你们要继续努力呦！");
         return success();
     }
 
