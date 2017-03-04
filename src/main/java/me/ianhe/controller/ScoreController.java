@@ -50,7 +50,8 @@ public class ScoreController extends BaseController {
         Thread t2 = new Thread(m2);
         t1.start();
         t2.start();
-        DingUtil.say("今天又加了"+score+"分，现在一共有"+total+"分，加油，你们要继续努力呦！");
+        DingUtil.say("今天又加了" + score + "分，理由是：" + reason + "，现在一共有"
+                + total + "分，加油，你们要继续努力呦！");
         return success();
     }
 
