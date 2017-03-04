@@ -5,6 +5,7 @@ import me.ianhe.db.entity.User;
 import me.ianhe.model.WXUser;
 import me.ianhe.model.req.LocationMessage;
 import me.ianhe.utils.CheckUtil;
+import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
@@ -30,14 +31,15 @@ public class AccessWeChatController extends BaseController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String GIT_COMMITS = "https://api.github.com/repos/iHelin/iHelin/commits?per_page=1";
+    private static final String GIT_COMMIT_URL = "https://api.github.com/repos/iHelin/iHelin/commits?per_page=1";
 
     /**
-     * 处理get消息：消息验证
+     * get消息：消息服务器验证
      */
     @RequestMapping(value = "access_wechat", method = RequestMethod.GET)
-    public void doGet(String signature, String timestamp, String nonce, String echostr, HttpServletResponse response) throws IOException {
-        logger.info("验证access");
+    public void doGet(String signature, String timestamp, String nonce, String echostr,
+                      HttpServletResponse response) throws IOException {
+        logger.info("验证token");
         if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
             logger.info("验证成功");
             response.getWriter().print(echostr);
@@ -47,7 +49,7 @@ public class AccessWeChatController extends BaseController {
     }
 
     /**
-     * 处理post消息：消息处理
+     * post消息：消息处理
      */
     @ResponseBody
     @RequestMapping(value = "access_wechat", method = RequestMethod.POST)
@@ -77,7 +79,6 @@ public class AccessWeChatController extends BaseController {
         switch (msgType) {
             case WechatUtil.MESSAGE_TEXT:
                 // 处理文本消息
-                System.out.println("用户发送的消息是：" + content);
                 message = textMessage(content, toUserName, fromUserName);
                 break;
             case WechatUtil.MESSAGE_IMAGE:
@@ -149,6 +150,7 @@ public class AccessWeChatController extends BaseController {
             user = userManager.transWXUserToUser(wxUser);
             userManager.insertUser(user);
         }
+        DingUtil.say("用户" + user.getNickName() + "发来消息：" + content);
         String message;
         switch (content) {
             case "1":
@@ -159,7 +161,7 @@ public class AccessWeChatController extends BaseController {
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
                 break;
             case "commit":
-                message = WechatUtil.sendTextMsg(toUserName, fromUserName, getGitCommits());
+                message = WechatUtil.sendTextMsg(toUserName, fromUserName, getGitCommitUrl());
                 break;
             default:
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName, "你好，" + user.getNickName());
@@ -168,9 +170,9 @@ public class AccessWeChatController extends BaseController {
         return message;
     }
 
-    public static String getGitCommits() {
+    public static String getGitCommitUrl() {
         StringBuilder sb = new StringBuilder();
-        String res = WechatUtil.doGetStr(GIT_COMMITS);
+        String res = WechatUtil.doGetStr(GIT_COMMIT_URL);
         List<HashMap> listMap = JSON.parseArrayMap(res);
         Map<String, Object> commit = (Map<String, Object>) listMap.get(0).get("commit");
         sb.append("最后提交：" + commit.get("message") + "\n");

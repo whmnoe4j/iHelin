@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public class DingUtil {
 
-    private static final String DING_ROBUT_URL = "https://oapi.dingtalk.com/robot/send?access_token" +
+    //葫芦娃的机器人
+    private static final String DING_ROBOT_URL = "https://oapi.dingtalk.com/robot/send?access_token" +
             "=0822db7059b63a7f73a12e0b665574310108c73649e256c87c646394e63fc6a2";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DingUtil.class);
@@ -25,8 +26,12 @@ public class DingUtil {
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "text");
         data.put("text", map);
-        String res = WechatUtil.doPostStr(DING_ROBUT_URL, JSON.toJson(data));
+        String res = WechatUtil.doPostStr(DING_ROBOT_URL, JSON.toJson(data));
         LOGGER.info("Robut return {}", res);
+    }
+
+    public static void main(String[] args){
+        say("！");
     }
 
 }

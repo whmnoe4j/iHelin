@@ -18,7 +18,7 @@ public class JSON {
 
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
-    private static Logger logger = LoggerFactory.getLogger(JSON.class);
+    private final static Logger logger = LoggerFactory.getLogger(JSON.class);
 
     static {
         objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
@@ -82,8 +82,8 @@ public class JSON {
         try {
             return objectMapper.readValue(json, Map.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("解析map异常：", e);
+            return null;
         }
-        return null;
     }
 }

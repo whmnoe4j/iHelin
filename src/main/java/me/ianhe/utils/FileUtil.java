@@ -20,21 +20,16 @@ public class FileUtil {
 
     public static final String ACCESS_KEY = "XRWyYeG0mx7jS_DRCj08bOHDweU44WeyjlbZxPFC";
     public static final String SECRET_KEY = "oD7T8X-h_vJaywxy8llLR4jKKE7BKwpIW3whlQoF";
-    // 要上传的空间
+    // 要上传的空间bucket
     public static final String BUCKET_NAME = "ihelin";
 
-    public static void main(String args[]) throws IOException {
-        File file = new File("/Users/iHelin/Pictures/001.png");
-        System.out.println(uploadFile(org.apache.commons.io.FileUtils.readFileToByteArray(file), UUID.randomUUID().toString()));
-    }
-
-    //简单上传，使用默认策略，只需要设置上传的空间名就可以了
-    public static String getUpToken() {
-        //密钥配置
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-        return auth.uploadToken(BUCKET_NAME);
-    }
-
+    /**
+     * 字节数组方式上传
+     *
+     * @param bytes
+     * @param key
+     * @return
+     */
     public static String uploadFile(byte[] bytes, String key) {
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
@@ -46,5 +41,17 @@ public class FileUtil {
             Response r = e.response;
             return r.toString();
         }
+    }
+
+    public static void main(String args[]) throws IOException {
+        File file = new File("/Users/iHelin/Pictures/001.png");
+        System.out.println(uploadFile(org.apache.commons.io.FileUtils.readFileToByteArray(file), UUID.randomUUID().toString()));
+    }
+
+    //简单上传，使用默认策略，只需要设置上传的空间名就可以了
+    private static String getUpToken() {
+        //密钥配置
+        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        return auth.uploadToken(BUCKET_NAME);
     }
 }

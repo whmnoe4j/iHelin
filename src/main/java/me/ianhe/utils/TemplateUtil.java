@@ -1,54 +1,41 @@
 package me.ianhe.utils;
 
 import com.google.common.collect.Maps;
-import me.ianhe.config.CommonConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import me.ianhe.config.CommonConfig;
+import org.apache.commons.codec.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
 public class TemplateUtil {
 
+    private static final String TEMPLATE_DIR = "templates";
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateUtil.class);
 
     public static String applyTemplate(String templatePath) {
         Map<String, Object> res = Maps.newHashMap();
-        String result = null;
-        try {
-            result = applyTemplate(templatePath, res);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String result = applyTemplate(templatePath, res);
         return result;
     }
 
-    public static String applyTemplate(String templatePath, Map<String, Object> propMap) throws IOException {
-        Configuration config = new Configuration(Configuration.VERSION_2_3_23);
-        File dir = new File(CommonConfig.getWebInfDir(), "templates");
-        config.setDirectoryForTemplateLoading(dir);
-        Template template = config.getTemplate(templatePath, "UTF-8");
-        StringWriter writer = new StringWriter();
+    public static String applyTemplate(String templatePath, Map<String, Object> propMap) {
         try {
+            propMap.put("contextPath", CommonConfig.getContextUrl());
+            Configuration config = new Configuration(Configuration.VERSION_2_3_23);
+            File dir = new File(CommonConfig.getWebInfDir(), TEMPLATE_DIR);
+            config.setDirectoryForTemplateLoading(dir);
+            Template template = config.getTemplate(templatePath, CharEncoding.UTF_8);
+            StringWriter writer = new StringWriter();
             template.process(propMap, writer);
-        } catch (TemplateException e) {
+            return writer.toString();
+        } catch (Exception e) {
             LOGGER.warn("Error while process template: " + templatePath, e);
+            return "";
         }
-        return writer.toString();
-    }
-
-    public static String applyTemplateSimple(String templatePath, Map<String, Object> propMap) {
-        propMap.put("contextUrl", CommonConfig.getContextUrl());
-        try {
-            return applyTemplate(templatePath, propMap);
-        } catch (IOException e) {
-            LOGGER.warn("Error while process template: " + templatePath, e);
-        }
-        return null;
     }
 }
