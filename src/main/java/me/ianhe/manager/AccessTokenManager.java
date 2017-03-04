@@ -15,11 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 @Service
 public class AccessTokenManager {
@@ -35,11 +31,11 @@ public class AccessTokenManager {
 
     // 获取token
     public AccessToken getAccessToken() {
-        AccessToken accessToken = new AccessToken();
         String token = (String) accessTokenMap.get(ACCESS_TOKEN);
         if (StringUtils.isBlank(token)) {
             return null;
         }
+        AccessToken accessToken = new AccessToken();
         accessToken.setToken(token);
         accessToken.setGenTime((Date) accessTokenMap.get(GEN_TIME));
         accessToken.setExpiresTime((Date) accessTokenMap.get(EXPIRES_TIME));
@@ -95,9 +91,10 @@ public class AccessTokenManager {
     private AccessToken transAccessToken(WXAccessToken wxAccessToken) {
         AccessToken accessToken = new AccessToken();
         accessToken.setToken(wxAccessToken.getAccess_token());
-        Date now = new Date();
-        accessToken.setGenTime(now);
-        Date validUntil = new Date(now.getTime() + (wxAccessToken.getExpires_in() * 1000L));
+        Calendar now = Calendar.getInstance();
+        accessToken.setGenTime(now.getTime());
+        now.add(Calendar.MILLISECOND,wxAccessToken.getExpires_in() * 1000);
+        Date validUntil = new Date(now.getTime().getTime());
         accessToken.setExpiresTime(validUntil);
         return accessToken;
     }
