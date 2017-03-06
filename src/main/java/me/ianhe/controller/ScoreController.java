@@ -8,12 +8,8 @@ import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,27 +26,31 @@ public class ScoreController extends BaseController {
     @Autowired
     private ScoreManager myScoreManager;
 
+
+    /**
+     * 加分操作
+     *
+     * @param score
+     * @param reason
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "score", method = RequestMethod.POST)
-    public String addScore(Integer score, String reason) throws UnsupportedEncodingException {
-        MyScore ms = new MyScore();
-        ms.setScore(score);
-        ms.setReason(reason);
-        ms.setAddWriter(1);
-        ms.setAddDate(new Date());
-        myScoreManager.addRecord(ms);
+    public String addScore(@RequestBody MyScore myScore) {
+        myScore.setAddDate(new Date());
+        myScoreManager.addRecord(myScore);
         Map<String, Object> res = Maps.newHashMap();
-        res.put("score", ms);
+        res.put("score", myScore);
         int total = myScoreManager.getMyTotalScore();
         res.put("total", total);
         String mailContent = TemplateUtil.applyTemplate("/mail/score.ftl", res);
-        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + score + "分", mailContent);
-        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + score + "分", mailContent);
+        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + myScore + "分", mailContent);
+        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + myScore + "分", mailContent);
         Thread t1 = new Thread(m1);
         Thread t2 = new Thread(m2);
         t1.start();
         t2.start();
-        DingUtil.say("今天又加了" + score + "分，理由是：" + reason + "，现在一共有"
+        DingUtil.say("今天又加了" + myScore.getScore() + "分，理由是：" + myScore.getReason() + "，现在一共有"
                 + total + "分，加油，你们要继续努力呦！");
         return success();
     }

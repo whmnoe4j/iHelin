@@ -40,9 +40,9 @@ public class AdminLoginController extends BaseAdminController {
             String rip = RequestUtil.getRealIp(request);
             adminUser.setLastLoginIp(rip);
             session.setAttribute(SESSION_KEY_ADMIN, adminUser);
-            Cookie cookie = new Cookie("ihelin", UUID.randomUUID().toString());
-            cookie.setMaxAge(60 * 60 * 24 * 7);
-            response.addCookie(cookie);
+//            Cookie cookie = new Cookie("ihelin", UUID.randomUUID().toString());
+//            cookie.setMaxAge(60 * 60 * 24 * 7);
+//            response.addCookie(cookie);
             LOGGER.info("Admin user: {} login success,ip : {}.", username, rip);
             if (StringUtils.isNotEmpty(from))
                 return "redirect:" + from;

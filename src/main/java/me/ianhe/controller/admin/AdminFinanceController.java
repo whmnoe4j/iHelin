@@ -11,19 +11,18 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +34,8 @@ import java.util.List;
  */
 @Controller
 public class AdminFinanceController extends BaseAdminController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "finance", method = RequestMethod.GET)
     public String financePage(Model model, Integer pageNum) {
@@ -62,9 +63,15 @@ public class AdminFinanceController extends BaseAdminController {
         return ftl("staff_detail");
     }
 
+    /**
+     * 添加、修改员工
+     *
+     * @param staff
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "staff", method = RequestMethod.POST)
-    public String addStaff(Staff staff) {
+    public String addStaff(@RequestBody Staff staff) {
         if (staff.getId() != null) {
             financeManager.updateStaff(staff);
         } else {
@@ -154,14 +161,16 @@ public class AdminFinanceController extends BaseAdminController {
     public void exportExcel(HttpServletResponse response) throws UnsupportedEncodingException {
         // 生成提示信息，
         response.setContentType("application/vnd.ms-excel");
-        Calendar calendar = Calendar.getInstance();
-        String fileName = calendar.get(Calendar.YEAR) + "年" + (calendar.get(Calendar.MONTH) + 1) + "月工资表";
+        LocalDate localDate = LocalDate.now();
+        String fileName = localDate.getYear() + "年" + localDate.getMonthValue() + "月工资表";
         OutputStream fOut = null;
         try {
             response.setHeader("content-disposition", "attachment;filename="
                     + URLEncoder.encode(fileName, CharEncoding.UTF_8) + ".xls");
+
             // 创建工作簿对象
             HSSFWorkbook workbook = new HSSFWorkbook();
+
             //设置居中
             HSSFCellStyle hssfCellStyle = workbook.createCellStyle();
             hssfCellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -177,20 +186,17 @@ public class AdminFinanceController extends BaseAdminController {
             hssfCellStyle.setFont(font);
             hssfCellStyle.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
             hssfCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
             //产生工作表对象
             List<Staff> staffs = financeManager.listStaffByCondition();
             Sheet firstSheet = buildFirstSheet(workbook, fileName, hssfCellStyle, staffs);
             List<HSSFSheet> staffSheets = createStaffSheets(staffs, workbook);
-
             fOut = response.getOutputStream();
             workbook.write(fOut);
-        } catch (UnsupportedEncodingException e1) {
         } catch (Exception e) {
+            logger.error("生成excel异常", e);
         } finally {
             try {
-                if (fOut != null) {
-                    fOut.flush();
-                }
                 if (fOut != null) {
                     fOut.close();
                 }
@@ -211,27 +217,71 @@ public class AdminFinanceController extends BaseAdminController {
         cell00.setCellStyle(cellStyle);
         cell00.setCellValue(fileName);
         HSSFRow secondRow = sheet.createRow(1);
-        HSSFCell cell10 = secondRow.createCell(0,CellType.STRING);
+        HSSFCell cell10 = secondRow.createCell(0, CellType.STRING);
         cell10.setCellValue("序号");
+        HSSFCell cell11 = secondRow.createCell(1, CellType.STRING);
+        cell11.setCellValue("姓名");
+        HSSFCell cell12 = secondRow.createCell(2, CellType.STRING);
+        cell12.setCellValue("基本工资");
+        HSSFCell cell13 = secondRow.createCell(3, CellType.STRING);
+        cell13.setCellValue("劳务");
+        HSSFCell cell14 = secondRow.createCell(4, CellType.STRING);
+        cell14.setCellValue("奖金");
+        HSSFCell cell15 = secondRow.createCell(5, CellType.STRING);
+        cell15.setCellValue("餐补");
+        HSSFCell cell16 = secondRow.createCell(6, CellType.STRING);
+        cell16.setCellValue("其他");
+        HSSFCell cell17 = secondRow.createCell(7, CellType.STRING);
+        cell17.setCellValue("社保");
+        HSSFCell cell18 = secondRow.createCell(8, CellType.STRING);
+        cell18.setCellValue("公积金");
+        HSSFCell cell19 = secondRow.createCell(9, CellType.STRING);
+        cell19.setCellValue("金额");
         HSSFCellStyle hlinkStyle = workbook.createCellStyle();
         HSSFFont hlinkFont = workbook.createFont();
         hlinkFont.setUnderline(HSSFFont.U_SINGLE);
         hlinkFont.setColor(HSSFColor.BLUE.index);
         hlinkStyle.setFont(hlinkFont);
         Staff staff;
-        for (int i = 2; i <= staffs.size()+1; i++) {
-            staff = staffs.get(i-1);
-            HSSFRow row = sheet.createRow(i);//创建一行
-            HSSFCell cell = row.createCell(0);//创建一列
+        for (int i = 0; i < staffs.size(); i++) {
+            staff = staffs.get(i);
+            HSSFRow row = sheet.createRow(i + 2);//创建一行
+            HSSFCell cell0 = row.createCell(0);//创建一列
+            cell0.setCellValue(i + 1);
+            HSSFCell cell = row.createCell(1);//创建一列
             HSSFCreationHelper helper = workbook.getCreationHelper();
             Hyperlink link = helper.createHyperlink(HyperlinkType.DOCUMENT);
-            link.setAddress("#"+staff.getName()+"!A1");
+            link.setAddress("#" + staff.getName() + "!A1");
             cell.setCellType(CellType.STRING);
             cell.setCellValue(staff.getName());
             cell.setHyperlink(link);
             cell.setCellStyle(hlinkStyle);
-//                cell.setCellFormula("HYPERLINK(\"[test.xls]'赖玉霞'!A1\",\"homepage\")");
+
+            HSSFCellStyle contextstyle = workbook.createCellStyle();
+            HSSFDataFormat df = workbook.createDataFormat(); // 此处设置数据格式
+            contextstyle.setDataFormat(df.getBuiltinFormat("#,##0.00"));//保留两位小数点
+
+            HSSFCell cell2 = row.createCell(2, CellType.NUMERIC);//基本工资
+            cell2.setCellStyle(contextstyle);
+            cell2.setCellValue(staff.getBasicWage().setScale(2).doubleValue());
+            HSSFCell cell3 = row.createCell(3, CellType.NUMERIC);//劳务
+            cell3.setCellValue(0);
+            HSSFCell cell4 = row.createCell(4, CellType.NUMERIC);//奖金
+            cell4.setCellValue(0);
+            HSSFCell cell5 = row.createCell(5, CellType.NUMERIC);//餐补
+            cell5.setCellValue(staff.getSubsidizedMeals().setScale(2).toString());
+            HSSFCell cell6 = row.createCell(6, CellType.NUMERIC);//其他
+            cell6.setCellValue(staff.getOther().setScale(2).toString());
+            HSSFCell cell7 = row.createCell(7, CellType.NUMERIC);//社保
+            cell7.setCellValue(staff.getSocialSecurity().setScale(2).toString());
+            HSSFCell cell8 = row.createCell(8, CellType.NUMERIC);//公积金
+            cell8.setCellValue(staff.getAccumulationFund().setScale(2).toString());
+            HSSFCell cell9 = row.createCell(9, CellType.NUMERIC);//金额
+            cell9.setCellValue(0);
         }
+        HSSFRow row = sheet.createRow(staffs.size() + 2);//创建一行
+        HSSFCell cell = row.createCell(0);
+        cell.setCellValue("合计");
         return sheet;
     }
 

@@ -38,16 +38,14 @@
                     var index = layer.load(1, {
                         shade: [0.1, '#000']
                     });
-                    this.$http.post("${request.contextPath}/admin/staff", {}, {
-                        params: {
-                            id: this.id,
-                            name: this.name,
-                            basicWage: this.basicWage,
-                            subsidizedMeals: this.subsidizedMeals,
-                            socialSecurity: this.socialSecurity,
-                            accumulationFund: this.accumulationFund,
-                            other: this.other
-                        }
+                    this.$http.post("${request.contextPath}/admin/staff",{
+                        id: this.id,
+                        name: this.name,
+                        basicWage: this.basicWage,
+                        subsidizedMeals: this.subsidizedMeals,
+                        socialSecurity: this.socialSecurity,
+                        accumulationFund: this.accumulationFund,
+                        other: this.other
                     }).then(function (res) {
                         layer.close(index);
                         if (res.data.status == 'success') {
