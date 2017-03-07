@@ -17,6 +17,13 @@
         @Autowired、JSR 250's @PostConstruct、@PreDestroy and @Resource等注解 -->
     <context:annotation-config/>
 
+    <!-- DispatcherServlet上下文，只管理@Controller类型的bean，忽略其他类型的bean，自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="me.ianhe.controller"
+                            use-default-filters="false">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
     <!--解决@ResponseBody注解中文乱码问题-->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
@@ -32,6 +39,7 @@
                 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                     <property name="supportedMediaTypes">
                         <list>
+                            <value>text/plain;charset=UTF-8</value>
                             <value>application/json;charset=UTF-8</value>
                         </list>
                     </property>
@@ -53,13 +61,6 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- DispatcherServlet上下文，只管理@Controller类型的bean，忽略其他类型的bean，自动扫描且只扫描@Controller -->
-    <context:component-scan base-package="me.ianhe.controller"
-                            use-default-filters="false">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
     <!-- HandlerMapping，无需配置，Spring MVC可以默认启动。DefaultAnnotationHandleMapping
         annotation-driven HandlerMapping -->
 
@@ -75,7 +76,7 @@
         <property name="freemarkerSettings">
             <props>
                 <prop key="defaultEncoding">UTF-8</prop>
-                <prop key="locale">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
                 <prop key="date_format">yyyy-MM-dd</prop>
                 <prop key="time_format">HH:mm:ss</prop>
                 <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
