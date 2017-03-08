@@ -65,7 +65,7 @@
         annotation-driven HandlerMapping -->
 
     <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
     <!-- 静态资源处理，css,js,imgs -->
     <!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
 
@@ -73,9 +73,10 @@
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/templates/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
         <property name="freemarkerSettings">
             <props>
-                <prop key="defaultEncoding">UTF-8</prop>
+                <!--<prop key="defaultEncoding">UTF-8</prop>-->
                 <prop key="locale">zh_CN</prop>
                 <prop key="date_format">yyyy-MM-dd</prop>
                 <prop key="time_format">HH:mm:ss</prop>
