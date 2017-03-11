@@ -47,10 +47,9 @@
                 leaveConfirm: '文件正在上传，确定要离开吗？'
             },
             defaultImage: '${request.contextPath}/img/simditor-default.png',
-            pasteImage: true,
+            pasteImage: true,//支持剪切板粘贴
             imageButton: ['upload']
         });
-
     });
 
     function submitForm() {

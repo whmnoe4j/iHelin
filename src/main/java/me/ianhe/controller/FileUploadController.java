@@ -1,8 +1,10 @@
 package me.ianhe.controller;
 
+import com.beust.jcommander.internal.Maps;
 import me.ianhe.utils.FileUtil;
 import me.ianhe.utils.JSON;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -21,15 +24,22 @@ public class FileUploadController extends BaseController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    /**
+     * 文件上传页面
+     *
+     * @return
+     */
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
     public String uploadPage() {
         return "upload";
     }
 
     /**
-     * 上传到七牛
+     * 上传到七牛服务器
      *
-     * @param file
+     * @param file  待上传的文件
+     * @param model
      * @return
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -38,14 +48,15 @@ public class FileUploadController extends BaseController {
             model.addAttribute("msg", "请选择文件……");
             return "upload";
         }
-        saveFile(file, UUID.randomUUID().toString());
+        String res = saveFile(file, "test" + UUID.randomUUID().toString());
         model.addAttribute("msg", "上传成功！");
+        model.addAttribute("img", res);
         return "upload";
     }
 
     /**
      * simditor
-     * 富文本编辑器文件上传接口
+     * 富文本编辑器图片文件上传接口
      *
      * @param file
      * @return
@@ -53,61 +64,36 @@ public class FileUploadController extends BaseController {
     @RequestMapping(value = "img_upload", method = RequestMethod.POST)
     @ResponseBody
     public String imgUpload(@RequestParam("file") MultipartFile file) {
-        ResponseJSON resJson = new ResponseJSON();
+        Map<String, Object> res = Maps.newHashMap();
         if (file.isEmpty()) {
-            resJson.setSuccess(false);
-            resJson.setMsg("文件不存在！");
-            return JSON.toJson(resJson);
+            res.put("success", false);
+            res.put("msg", "文件不存在！");
+            return JSON.toJson(res);
         }
+        //扩展名
         String fileExt = FilenameUtils.getExtension(file.getOriginalFilename());
-        String fileName = "article/" + UUID.randomUUID().toString() + "." + fileExt;
-        saveFile(file, fileName);
-        fileName = "http://source.520lyx.cn/" + fileName;
-        resJson.setSuccess(true);
-        resJson.setFile_path(fileName);
-        String res = JSON.toJson(resJson);
-        return res;
+        //文件相对路径（粘贴板文件无扩展名）
+        String fileName = null;
+        if (StringUtils.isBlank(fileExt)) {
+            fileName = "article/" + UUID.randomUUID().toString() + ".png";
+        } else {
+            fileName = "article/" + UUID.randomUUID().toString() + "." + fileExt;
+        }
+        //保存到七牛对象存储
+        String realFullPath = saveFile(file, fileName);
+        res.put("success", true);
+        res.put("file_path", realFullPath);
+        return JSON.toJson(res);
     }
 
     public String saveFile(MultipartFile file, String newFileName) {
         try {
             byte[] bytes = file.getBytes();
             String result = FileUtil.uploadFile(bytes, newFileName);
-            logger.info("upload file {} to qiniu service,result:{}", file.getOriginalFilename(), result);
             return result;
         } catch (IOException e) {
             e.printStackTrace();
             return "";
-        }
-    }
-
-    class ResponseJSON {
-        private boolean success;
-        private String msg;
-        private String file_path;
-
-        public boolean isSuccess() {
-            return success;
-        }
-
-        public void setSuccess(boolean success) {
-            this.success = success;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public String getFile_path() {
-            return file_path;
-        }
-
-        public void setFile_path(String file_path) {
-            this.file_path = file_path;
         }
     }
 
