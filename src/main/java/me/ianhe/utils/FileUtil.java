@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 public class FileUtil {
 
-    private static final String QINIU_PREFIX = "http://source.ianhe.me/";
+    private static final String QINIU_PREFIX = "http://resource.ianhe.me/";
 
     private static final String ACCESS_KEY = "XRWyYeG0mx7jS_DRCj08bOHDweU44WeyjlbZxPFC";
     private static final String SECRET_KEY = "oD7T8X-h_vJaywxy8llLR4jKKE7BKwpIW3whlQoF";
