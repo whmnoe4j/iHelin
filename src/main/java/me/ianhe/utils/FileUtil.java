@@ -6,12 +6,13 @@ import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -31,7 +32,7 @@ public class FileUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     /**
-     * 字节数组方式上传
+     * 以字节数组上传
      * 上传成功返回文件访问路径
      *
      * @param bytes
@@ -72,11 +73,57 @@ public class FileUtil {
         }
     }
 
-    public static String uploadFile(String filePath, String key) {
+    /**
+     * 以字节流上传
+     * 上传成功返回文件访问路径
+     *
+     * @param bytes
+     * @param key
+     * @return
+     */
+    public static String uploadFile(InputStream inputStream, String key) {
+        UploadManager uploadManager = getUploadManager();
+        String uploadToken = getUpLoadToken();
+        try {
+            Response res = uploadManager.put(inputStream, key, uploadToken, null, null);
+            LOGGER.info("upload file {} to qiniu service,result:{}", key, res.isOK());
+            return QINIU_PREFIX + key;
+        } catch (QiniuException e) {
+            LOGGER.error("error upload file to qiniu ！", e);
+            return "";
+        }
+    }
+
+    /**
+     * 以MultipartFile文件形式上传，适用于spring mvc
+     * 上传成功返回文件访问路径
+     *
+     * @param multipartFile
+     * @param key
+     * @return
+     */
+    public static String uploadFile(MultipartFile multipartFile, String key) {
+        try {
+            return uploadFile(multipartFile.getInputStream(), key);
+        } catch (IOException e) {
+            LOGGER.error("error upload file to qiniu ！", e);
+            return "";
+        }
+    }
+
+    /**
+     * 以绝对路径上传
+     * 上传成功返回文件访问路径
+     *
+     * @param pathToFile
+     * @param key
+     * @return
+     */
+    public static String uploadFile(String pathToFile, String key) {
         String uploadToken = getUpLoadToken();
         UploadManager uploadManager = getUploadManager();
         try {
-            Response res = uploadManager.put(filePath, key, uploadToken);
+            Response res = uploadManager.put(pathToFile, key, uploadToken);
             LOGGER.info("upload file {} to qiniu service,result:{}", key, res.isOK());
             return QINIU_PREFIX + key;
         } catch (QiniuException e) {
@@ -88,7 +135,7 @@ public class FileUtil {
     public static void main(String args[]) throws IOException {
 //        File file = new File("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico");
         String key = UUID.randomUUID().toString();
-        System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico",key));
+        System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico", key));
 //        System.out.println(uploadFile(FileUtils.readFileToByteArray(file), UUID.randomUUID().toString()));
     }
 

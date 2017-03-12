@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,7 +30,11 @@ public class FileUploadController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public String uploadPage() {
+    public String uploadPage(String src, Model model) {
+        if (StringUtils.isNotBlank(src)) {
+            model.addAttribute("msg", "上传成功！");
+            model.addAttribute("src", src);
+        }
         return "upload";
     }
 
@@ -48,10 +51,8 @@ public class FileUploadController extends BaseController {
             model.addAttribute("msg", "请选择文件……");
             return "upload";
         }
-        String res = saveFile(file, "test" + UUID.randomUUID().toString());
-        model.addAttribute("msg", "上传成功！");
-        model.addAttribute("img", res);
-        return "upload";
+        String res = FileUtil.uploadFile(file, "test-" + UUID.randomUUID().toString());
+        return "redirect:/upload?src=" + res;
     }
 
     /**
@@ -80,21 +81,10 @@ public class FileUploadController extends BaseController {
             fileName = "article/" + UUID.randomUUID().toString() + "." + fileExt;
         }
         //保存到七牛对象存储
-        String realFullPath = saveFile(file, fileName);
+        String realFullPath = FileUtil.uploadFile(file, fileName);
         res.put("success", true);
         res.put("file_path", realFullPath);
         return JSON.toJson(res);
-    }
-
-    public String saveFile(MultipartFile file, String newFileName) {
-        try {
-            byte[] bytes = file.getBytes();
-            String result = FileUtil.uploadFile(bytes, newFileName);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        }
     }
 
 }

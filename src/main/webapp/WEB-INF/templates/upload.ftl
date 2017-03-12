@@ -10,8 +10,8 @@
 <#if msg??>
 <p>${msg!}</p>
 </#if>
-<#if img??>
-<img src="${img!}"></img>
+<#if src??>
+<img src="${src!}"></img>
 </#if>
 </body>
 </html>

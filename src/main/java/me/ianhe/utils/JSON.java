@@ -16,15 +16,15 @@ import java.util.Map;
 
 public class JSON {
 
-    private final static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private final static Logger logger = LoggerFactory.getLogger(JSON.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JSON.class);
 
     static {
-        objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
     }
 
     /**
@@ -35,41 +35,41 @@ public class JSON {
      */
     public static String toJson(Object object) {
         try {
-            return objectMapper.writeValueAsString(object);
+            OBJECT_MAPPER.writeValue(System.out, object);
+            return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonGenerationException e) {
-            logger.error("encode(Object)", e);
+            LOGGER.error("encode(Object)", e);
+            return null;
         } catch (JsonMappingException e) {
-            logger.error("encode(Object)", e);
+            LOGGER.error("encode(Object)", e);
+            return null;
         } catch (IOException e) {
-            logger.error("encode(Object)", e);
+            LOGGER.error("encode(Object)", e);
+            return null;
         }
-        return null;
     }
 
+    /**
+     * json反序列化
+     *
+     * @param json
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public static <T> T parseObject(String json, Class<T> clazz) {
         try {
-            return objectMapper.readValue(json, clazz);
+            return OBJECT_MAPPER.readValue(json, clazz);
         } catch (JsonParseException e) {
-            logger.error("decode(String, Class<T>)", e);
+            LOGGER.error("decode(String, Class<T>)", e);
+            return null;
         } catch (JsonMappingException e) {
-            logger.error("decode(String, Class<T>)", e);
+            LOGGER.error("decode(String, Class<T>)", e);
+            return null;
         } catch (IOException e) {
-            logger.error("decode(String, Class<T>)", e);
+            LOGGER.error("decode(String, Class<T>)", e);
+            return null;
         }
-        return null;
-    }
-
-    public static <T> T parseArray(String json, TypeReference<T> jsonTypeReference) {
-        try {
-            return (T) objectMapper.readValue(json, jsonTypeReference);
-        } catch (JsonParseException e) {
-            logger.error("decode(String, JsonTypeReference<T>)", e);
-        } catch (JsonMappingException e) {
-            logger.error("decode(String, JsonTypeReference<T>)", e);
-        } catch (IOException e) {
-            logger.error("decode(String, JsonTypeReference<T>)", e);
-        }
-        return null;
     }
 
     public static List<HashMap> parseArrayMap(String json) {
@@ -80,10 +80,23 @@ public class JSON {
 
     public static Map<String, Object> parseMap(String json) {
         try {
-            return objectMapper.readValue(json, Map.class);
+            return OBJECT_MAPPER.readValue(json, Map.class);
         } catch (IOException e) {
-            logger.error("解析map异常：", e);
+            LOGGER.error("解析map异常：", e);
             return null;
         }
+    }
+
+    private static <T> T parseArray(String json, TypeReference<T> jsonTypeReference) {
+        try {
+            return (T) OBJECT_MAPPER.readValue(json, jsonTypeReference);
+        } catch (JsonParseException e) {
+            LOGGER.error("decode(String, JsonTypeReference<T>)", e);
+        } catch (JsonMappingException e) {
+            LOGGER.error("decode(String, JsonTypeReference<T>)", e);
+        } catch (IOException e) {
+            LOGGER.error("decode(String, JsonTypeReference<T>)", e);
+        }
+        return null;
     }
 }
