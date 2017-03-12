@@ -17,7 +17,6 @@
 - Druid: 数据库连接池
 - Log4J: 日志管理
 - Maven: 项目构建管理
-- Git: 代码版本管理
 - Freemarker: 视图渲染
 
 #### 前端技术
@@ -36,7 +35,7 @@
 - MySql: 数据库
 - jetty: 开发服务器
 - Tomcat: 应用服务器
-- SVN|Git: 版本管理
+- Git: 版本管理
 - Nginx: 反向代理服务器
 - Navicat for MySQL & MySQL Workbench: 数据库客户端
 

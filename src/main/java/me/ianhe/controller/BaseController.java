@@ -3,6 +3,7 @@ package me.ianhe.controller;
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.manager.*;
 import me.ianhe.utils.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -12,20 +13,22 @@ import java.util.Map;
  */
 public abstract class BaseController {
 
-    @Resource
+    @Autowired
     protected AdviceManager adviceManager;
-    @Resource
+    @Autowired
     protected AccessTokenManager accessTokenManager;
-    @Resource
+    @Autowired
     protected UserManager userManager;
-    @Resource
+    @Autowired
     protected ServiceMenuMannger serviceMenuMannger;
-    @Resource
+    @Autowired
     protected ArticleManager articleManager;
-    @Resource
+    @Autowired
     protected QrcodeManager qrcodeManager;
-    @Resource
+    @Autowired
     protected FinanceManager financeManager;
+    @Autowired
+    protected ScoreManager myScoreManager;
 
 
     protected static final int DEFAULT_PAGE_LENGTH = 10;//分页大小
@@ -58,7 +61,7 @@ public abstract class BaseController {
         return JSON.toJson(res);
     }
 
-    protected String ftl(String ftlFileName){
+    protected String ftl(String ftlFileName) {
         return ftlFileName;
     }
 

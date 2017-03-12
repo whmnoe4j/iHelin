@@ -2,11 +2,9 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.manager.ScoreManager;
 import me.ianhe.utils.AutoSendMail;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +21,10 @@ import java.util.Map;
 @Controller
 public class ScoreController extends BaseController {
 
-    @Autowired
-    private ScoreManager myScoreManager;
-
-
     /**
      * 加分操作
      *
-     * @param score
-     * @param reason
+     * @param myScore
      * @return
      */
     @ResponseBody

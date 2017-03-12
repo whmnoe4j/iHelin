@@ -23,7 +23,6 @@ public class PageController extends BaseController {
         return "forward:/home";
     }
 
-    @Transactional
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String indexPage(Model model) {
         int PAGE_LENGTH = 5;
@@ -48,7 +47,7 @@ public class PageController extends BaseController {
         } else {
             article = articleManager.selectArticleById(id);
         }
-        if(article==null){
+        if (article == null) {
             return "post";
         }
         articleManager.addReadCount(article);

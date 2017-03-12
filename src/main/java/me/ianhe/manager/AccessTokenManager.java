@@ -15,7 +15,12 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Service
 public class AccessTokenManager {
@@ -93,7 +98,7 @@ public class AccessTokenManager {
         accessToken.setToken(wxAccessToken.getAccess_token());
         Calendar now = Calendar.getInstance();
         accessToken.setGenTime(now.getTime());
-        now.add(Calendar.MILLISECOND,wxAccessToken.getExpires_in() * 1000);
+        now.add(Calendar.MILLISECOND, wxAccessToken.getExpires_in() * 1000);
         Date validUntil = new Date(now.getTime().getTime());
         accessToken.setExpiresTime(validUntil);
         return accessToken;
@@ -125,10 +130,11 @@ public class AccessTokenManager {
         File file = new File(CommonConfig.getWebInfDir(), fileName);
         try {
             Yaml.dump(accessTokenMap, file);
+            return 1;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("写入文件异常：", e);
+            return 0;
         }
-        return 1;
     }
 
 }

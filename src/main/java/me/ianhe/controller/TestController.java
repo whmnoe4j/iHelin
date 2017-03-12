@@ -2,7 +2,11 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.model.Result;
-import me.ianhe.utils.*;
+import me.ianhe.utils.CryptUtil;
+import me.ianhe.utils.JSON;
+import me.ianhe.utils.MailUtil;
+import me.ianhe.utils.ResponseUtil;
+import me.ianhe.utils.TemplateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
