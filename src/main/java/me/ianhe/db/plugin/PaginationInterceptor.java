@@ -23,7 +23,6 @@ public class PaginationInterceptor implements Interceptor {
     private static final int MAPPED_STATEMENT_INDEX = 0;
     private static final int PARAMETER_INDEX = 1;
     private static final int ROWBOUNDS_INDEX = 2;
-    @SuppressWarnings("unused")
     private static final int RESULT_HANDLER_INDEX = 3;
 
     private static final String PROP_DIALECT_KEY = "dialect";
@@ -64,13 +63,13 @@ public class PaginationInterceptor implements Interceptor {
      */
     private String createOffsetLimitSql(int offset, int limit, StatementType statementType, BoundSql boundSql) {
         String sql = boundSql.getSql().trim();
-        LOGGER.debug("original sql : {}", sql);
+//        LOGGER.debug("original sql : {}", sql);
         if (dialect.supportsLimitOffset()) {
             sql = dialect.getLimitString(sql, offset, limit);
         } else {
             sql = dialect.getLimitString(sql, 0, limit);
         }
-        LOGGER.debug("pagination sql: {}", sql);
+//        LOGGER.debug("pagination sql: {}", sql);
         return sql;
     }
 

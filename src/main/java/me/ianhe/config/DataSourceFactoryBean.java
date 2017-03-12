@@ -1,10 +1,11 @@
 package me.ianhe.config;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 
-public class DataSourceFactoryBean implements FactoryBean<BasicDataSource>, DisposableBean {
+public class DataSourceFactoryBean implements FactoryBean<DruidDataSource>, DisposableBean {
 
     private static final int DBCP_INITIAL_SIZE = 5;
     private static final int DBCP_MAX_ACTIVE = 30;
@@ -15,11 +16,11 @@ public class DataSourceFactoryBean implements FactoryBean<BasicDataSource>, Disp
     private static final int DBCP_MIN_EVICTABLE_IDLE_TIME_MILLIS = 320000;
     private static final int DBCP_REMOVE_ABANDONED_TIMEOUT = 150;
 
-    private BasicDataSource dataSource;
+    private DruidDataSource dataSource;
 
     @Override
-    public BasicDataSource getObject() throws Exception {
-        dataSource = new BasicDataSource();
+    public DruidDataSource getObject() throws Exception {
+        dataSource = new DruidDataSource();
         dataSource.setDriverClassName(CommonConfig.getDBDriver());
         String cfgUrl = CommonConfig.getDBUrl();
         if (cfgUrl != null && cfgUrl.contains("?"))
@@ -48,8 +49,8 @@ public class DataSourceFactoryBean implements FactoryBean<BasicDataSource>, Disp
     }
 
     @Override
-    public Class<BasicDataSource> getObjectType() {
-        return BasicDataSource.class;
+    public Class<DruidDataSource> getObjectType() {
+        return DruidDataSource.class;
     }
 
     @Override

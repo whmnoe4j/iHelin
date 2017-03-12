@@ -5,6 +5,7 @@ import me.ianhe.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class PageController extends BaseController {
         return "forward:/home";
     }
 
+    @Transactional
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String indexPage(Model model) {
         int PAGE_LENGTH = 5;

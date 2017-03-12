@@ -16,7 +16,8 @@ public abstract class Dialect {
 
         public static Dialect getDialet(String dialectType) {
             if (StringUtils.isBlank(dialectType)) {
-                throw new RuntimeException("The value of the dialect property of plugin in mybatis-config.xml is not defined!");
+                throw new RuntimeException("The value of the dialect property of plugin in mybatis-config.xml " +
+                        "is not defined!");
             }
             switch (valueOf(dialectType.trim().toUpperCase())) {
                 case MYSQL:
