@@ -13,11 +13,6 @@ public class CommonConfig {
     private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
 
     public static class ConfigEntry {
-        public String jdbc_url;
-        public String jdbc_user;
-        public String jdbc_password;
-        public String jdbc_driver;
-
         public String admin_user;
         public String admin_password;
 
@@ -99,24 +94,8 @@ public class CommonConfig {
         return configEntry.admin_password;
     }
 
-    public static String getDBUrl() {
-        return configEntry.jdbc_url;
-    }
-
     public static String getSystemName() {
         return configEntry.system_name;
-    }
-
-    public static String getDBUser() {
-        return configEntry.jdbc_user;
-    }
-
-    public static String getDBPwd() {
-        return configEntry.jdbc_password;
-    }
-
-    public static String getDBDriver() {
-        return configEntry.jdbc_driver;
     }
 
     public static String getAppID() {
