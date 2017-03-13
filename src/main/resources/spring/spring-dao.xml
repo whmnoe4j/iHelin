@@ -1,56 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-	http://www.springframework.org/schema/tx
-	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置整合mybatis过程 -->
+    <!-- 1.配置数据库相关参数properties的属性：${url} -->
+    <!-- 使用数据库配置文件解耦 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <!-- Root Context: defines shared resources visible to all other web components -->
-    <!-- Spring上下文配置 -->
-    <description>Spring配置</description>
-
-    <!-- 使用annotation自动注册bean,并检查@Required,@Autowired的属性已被注入，对@Controller的扫描,交由spring
-        mvc处理 -->
-    <context:component-scan base-package="me.ianhe">
-        <context:exclude-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
-
-    <!--<bean id="dataSource" class="me.ianhe.config.DataSourceFactoryBean"></bean>-->
-
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:dbconfig.properties</value>
-            </list>
-        </property>
-    </bean>
-
-    <!-- druid dataSource -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+    <!-- 下面的druid配置都是基本配置,具体优化设置可以上网查询,也可以去github上面直接搜索druid -->
+    <!-- 2.数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
+        <property name="driverClassName" value="${driverClassName}"/>
         <property name="url" value="${url}"/>
         <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
-        <property name="driverClassName" value="${driverClassName}"/>
         <property name="filters" value="${filters}"/>
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}"/>
-        <!-- 初始化连接数量 -->
-        <property name="initialSize" value="${initialSize}"/>
-        <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="${maxWait}"/>
         <!-- 最小空闲连接数 -->
         <property name="minIdle" value="${minIdle}"/>
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="${initialSize}"/>
+        <!-- 配置获取连接等待超时的时间(毫秒) -->
+        <property name="maxWait" value="${maxWait}"/>
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
         <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"/>
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
@@ -59,6 +36,10 @@
         <property name="testWhileIdle" value="${testWhileIdle}"/>
         <property name="testOnBorrow" value="${testOnBorrow}"/>
         <property name="testOnReturn" value="${testOnReturn}"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <!--<property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20"/>-->
         <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}"/>
         <!-- 打开 removeAbandoned 功能 -->
         <property name="removeAbandoned" value="${removeAbandoned}"/>
@@ -66,9 +47,14 @@
         <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
         <!-- 关闭 abanded 连接时输出错误日志 -->
         <property name="logAbandoned" value="${logAbandoned}"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
     </bean>
 
-    <!-- MyBatis数据库连接池配置 -->
+    <!-- 3.配置SqlSessionFactory对象 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--引入数据库连接池-->
         <property name="dataSource" ref="dataSource"/>
@@ -80,30 +66,15 @@
         <property name="typeAliasesPackage" value="me.ianhe.db.entity"/>
     </bean>
 
+    <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <!-- 定义mybatis接口路径 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="me.ianhe.db.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-    <!-- 数据库事务配置 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+    <!-- 上面的druid的配置 -->
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="statementExecutableSqlLogEnable" value="false"/>
     </bean>
-
-    <!-- 配置基于注解的声明式事务，标注@Transactional的类和方法将具有事务性 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--<tx:advice id="advice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
-            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <aop:config>
-        <aop:pointcut id="testService" expression="execution (* me.ianhe.*(..))"/>
-        <aop:advisor advice-ref="advice" pointcut-ref="testService"/>
-    </aop:config>-->
-
 </beans>

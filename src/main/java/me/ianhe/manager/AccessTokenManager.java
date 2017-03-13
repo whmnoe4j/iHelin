@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -131,7 +131,7 @@ public class AccessTokenManager {
         try {
             Yaml.dump(accessTokenMap, file);
             return 1;
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             LOGGER.error("写入文件异常：", e);
             return 0;
         }
