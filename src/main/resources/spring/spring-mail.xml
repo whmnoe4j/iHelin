@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.126.com"/>
+        <property name="port" value="25"/>
+        <property name="username" value="ihelin@126.com"/>
+        <property name="password" value="13635567652hl"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="me.ianhe.common.mail.SimpleMail">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean id="mimeMail" class="me.ianhe.common.mail.MimeMail">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+</beans>

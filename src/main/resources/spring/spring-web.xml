@@ -10,13 +10,12 @@
       http://www.springframework.org/schema/mvc
       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-    <!-- 本配置文件由DispatcherServlet使用，提供其相关的Spring MVC配置 -->
+    <description>本配置文件由DispatcherServlet使用，提供其相关的Spring MVC配置</description>
 
-    <!-- 启用spring mvc 注解 -->
-    <context:annotation-config/>
+    <!-- spring mvc 注解，配置了context:component-scan就不需要了 -->
+    <!--<context:annotation-config/>-->
 
-    <!-- 扫描web相关的bean配置 -->
-    <!-- DispatcherServlet上下文，只管理@Controller类型的bean，忽略其他类型的bean，自动扫描且只扫描@Controller -->
+    <!-- DispatcherServlet上下文，只扫描@Controller类型的bean，忽略其他类型的bean -->
     <context:component-scan base-package="me.ianhe.controller" use-default-filters="false">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
@@ -46,12 +45,9 @@
         </property>
     </bean>
 
-    <!-- 1.开启SpringMVC注解模式 -->
-    <!-- 简化配置：
+    <!-- 扩充了mvc注解驱动，可以将请求参数绑定到控制器参数，简化配置：
         (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
-        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
-    -->
-    <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 -->
+        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持-->
     <mvc:annotation-driven/>
 
     <!-- 静态资源处理，css,js,imgs -->
@@ -61,7 +57,7 @@
     <mvc:resources mapping="/view/**" location="/static/view/"/>
     <mvc:default-servlet-handler/>-->
 
-    <!-- 注册拦截器 -->
+    <!-- 拦截器配置 -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/admin/**"/>
@@ -73,10 +69,8 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- 3.配置jsp 显示ViewResolver -->
     <!-- freemarker配置 -->
-    <bean id="freemarkerConfig"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/templates/"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="freemarkerSettings">
@@ -92,8 +86,7 @@
     </bean>
 
     <!-- 配置viewResolver，可以使用多个viewResolver，使用order属性排序，InternalResourceViewResolver放在最后。 -->
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="contentType" value="text/html;charset=utf-8"/>
         <property name="cache" value="true"/>
         <property name="prefix" value=""/>
@@ -104,13 +97,11 @@
     </bean>
 
     <!-- 文件上传配置 -->
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- the maximum file size in bytes : 10M -->
         <property name="maxUploadSize" value="10485760"/>
         <!-- the maximum in memory size allowed in bytes : 10M -->
         <property name="maxInMemorySize" value="10485760"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
-
 </beans>

@@ -6,12 +6,12 @@
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd">
-    <!-- 配置整合mybatis过程 -->
+
+    <description>整合mybatis</description>
+
     <!-- 1.配置数据库相关参数properties的属性：${url} -->
-    <!-- 使用数据库配置文件解耦 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <!-- 下面的druid配置都是基本配置,具体优化设置可以上网查询,也可以去github上面直接搜索druid -->
     <!-- 2.数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
