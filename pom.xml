@@ -116,7 +116,6 @@
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!-- redis客户端:Jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -189,7 +188,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.0.5</version>
+            <version>2.7.5</version>
         </dependency>
 
         <!-- yaml -->
