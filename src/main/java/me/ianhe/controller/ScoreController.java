@@ -7,7 +7,6 @@ import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +32,7 @@ public class ScoreController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "score", method = RequestMethod.POST)
-    public String addScore(@RequestBody MyScore myScore) {
+    public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
         myScoreManager.addRecord(myScore);
         Map<String, Object> res = Maps.newHashMap();
