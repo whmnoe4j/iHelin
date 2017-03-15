@@ -15,7 +15,7 @@ public class MimeMailTest {
 
 
     @Autowired
-    private MimeMail mimeMail;
+    private SimpleMail mimeMail;
 
     @Test
     public void sendMail() throws Exception {

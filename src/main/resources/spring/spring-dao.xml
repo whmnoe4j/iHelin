@@ -9,10 +9,7 @@
 
     <description>整合mybatis</description>
 
-    <!-- 1.配置数据库相关参数properties的属性：${url} -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-
-    <!-- 2.数据库连接池 -->
+    <!-- druid数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
         <property name="driverClassName" value="${driverClassName}"/>

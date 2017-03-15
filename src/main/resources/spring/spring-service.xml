@@ -12,6 +12,18 @@
 
     <description>spring 上下文配置</description>
 
+    <!--读取配置文件-->
+    <!--<context:property-placeholder location="classpath:jdbc.properties,classpath:mail.properties"/>-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!--<property name="ignoreUnresolvablePlaceholders" value="true"></property>-->
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:mail.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- 扫描service包下所有使用注解的类型，使用annotation自动注册bean，并检查@Required,@Autowired的属性已被注入，
     对@Controller的扫描,交由spring mvc处理 -->
     <context:component-scan base-package="me.ianhe">
