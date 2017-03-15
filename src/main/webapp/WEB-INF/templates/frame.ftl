@@ -9,7 +9,7 @@
     <meta name="author" content="iHelin">
     <title>${title} | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${request.contextPath}/css/my-blog.css" rel="stylesheet">
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script>
@@ -47,7 +47,10 @@
                     <a href="${request.contextPath}/about">About</a>
                 </li>
                 <li>
-                    <a href="${request.contextPath}/post/0">Post</a>
+                    <a href="${request.contextPath}/post/0">Article</a>
+                </li>
+                <li>
+                    <a href="${request.contextPath}/music">Music</a>
                 </li>
                 <li>
                     <a href="${request.contextPath}/contact">Contact</a>
@@ -106,8 +109,8 @@
 </footer>
 
 <!-- common js -->
-<script src="${request.contextPath}/plugins/jquery/jquery.min.js"></script>
-<script src="${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${request.contextPath}/js/jquery.min.js"></script>
+<script src="${request.contextPath}/js/bootstrap.min.js"></script>
 ${ex_script!}
 <script>
     $(function () {

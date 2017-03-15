@@ -32,8 +32,6 @@ import java.util.Map;
 @Controller
 public class QrcodeController extends BaseController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @RequestMapping(value = "qrcode", method = RequestMethod.GET)
     public String qrcodePage() {
         return "qrcode";

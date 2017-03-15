@@ -4,24 +4,18 @@ import me.ianhe.config.CommonConfig;
 import me.ianhe.model.AdminUser;
 import me.ianhe.utils.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.UUID;
 
 @Controller
 public class AdminLoginController extends BaseAdminController {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage(Model model, String from) {
@@ -43,7 +37,7 @@ public class AdminLoginController extends BaseAdminController {
 //            Cookie cookie = new Cookie("ihelin", UUID.randomUUID().toString());
 //            cookie.setMaxAge(60 * 60 * 24 * 7);
 //            response.addCookie(cookie);
-            LOGGER.info("Admin user: {} login success,ip : {}.", username, rip);
+            logger.info("Admin user: {} login success,ip : {}.", username, rip);
             if (StringUtils.isNotEmpty(from))
                 return "redirect:" + from;
             return "redirect:/admin/index";

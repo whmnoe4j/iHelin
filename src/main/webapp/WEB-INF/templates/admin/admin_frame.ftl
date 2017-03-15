@@ -10,10 +10,9 @@
     <meta name="author" content=""/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link href="${request.contextPath}/css/styles.css" rel="stylesheet" type='text/css' media="all"/>
-    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css'
-          media="all"/>
-    <script src='${request.contextPath}/plugins/jquery/jquery.min.js'></script>
+    <link href="${request.contextPath}/css/styles.css" rel="stylesheet"/>
+    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <script src='${request.contextPath}/js/jquery.min.js'></script>
     <script src="${request.contextPath}/plugins/layer/layer.js"></script>
 </head>
 <body>
@@ -107,7 +106,7 @@
         </div>
     </footer>
 </div> <!-- page-container -->
-<script src='${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js'></script>
+<script src='${request.contextPath}/js/bootstrap.min.js'></script>
 <script src='${request.contextPath}/js/enquire.js'></script>
 <script src='${request.contextPath}/js/jquery.cookie.js'></script>
 <script src='${request.contextPath}/js/jquery.touchSwipe.min.js'></script>
@@ -120,6 +119,28 @@
 <script type='text/javascript'>
     $(function () {
         $('.tips').tooltip();
+
+        Date.prototype.format = function (format) {
+            var date = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
+            };
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+            for (var k in date) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                            ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+                }
+            }
+            return format;
+        }
     });
 </script>
 ${html_other_script!}

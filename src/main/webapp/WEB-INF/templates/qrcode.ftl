@@ -15,7 +15,7 @@
           media="all"/>
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor.css"/>
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/simditor/simditor-markdown.css"/>
-    <script src='${request.contextPath}/plugins/jquery/jquery.min.js'></script>
+    <script src='${request.contextPath}/js/jquery.min.js'></script>
     <script src="${request.contextPath}/plugins/layer/layer.js"></script>
 
     <style>

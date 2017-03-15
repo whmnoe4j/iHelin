@@ -93,6 +93,12 @@
                                                 </#if>
                                             </td>
                                             <td class="text-center">
+                                                <a class="btn btn-sm btn-primary-alt tips" title="预览"
+                                                   href="${request.contextPath}/post/#{article.id!}"
+                                                   target="_blank"
+                                                   type="button">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </a>
                                                 <a class="btn btn-sm btn-primary-alt tips" title="编辑"
                                                    href="${request.contextPath}/admin/article/edit/#{article.id!}"
                                                    type="button">

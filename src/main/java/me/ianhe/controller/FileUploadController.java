@@ -21,9 +21,6 @@ import java.util.UUID;
 @Controller
 public class FileUploadController extends BaseController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
     /**
      * 文件上传页面
      *

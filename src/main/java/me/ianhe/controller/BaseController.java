@@ -1,11 +1,19 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.manager.*;
+import me.ianhe.manager.AccessTokenManager;
+import me.ianhe.manager.AdviceManager;
+import me.ianhe.manager.ArticleManager;
+import me.ianhe.manager.FinanceManager;
+import me.ianhe.manager.QrcodeManager;
+import me.ianhe.manager.ScoreManager;
+import me.ianhe.manager.ServiceMenuMannger;
+import me.ianhe.manager.UserManager;
 import me.ianhe.utils.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -30,6 +38,7 @@ public abstract class BaseController {
     @Autowired
     protected ScoreManager myScoreManager;
 
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected static final int DEFAULT_PAGE_LENGTH = 10;//分页大小
     private static final String SUCCESS = "success";

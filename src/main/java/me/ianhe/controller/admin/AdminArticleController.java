@@ -30,8 +30,6 @@ import java.util.List;
 @Controller
 public class AdminArticleController extends BaseAdminController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @RequestMapping(value = "article", method = RequestMethod.GET)
     public String articleAdminPage(Model model, String title, Integer pageNum) {
         if (pageNum == null)

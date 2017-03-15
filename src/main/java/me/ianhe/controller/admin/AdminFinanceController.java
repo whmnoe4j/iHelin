@@ -35,8 +35,6 @@ import java.util.List;
 @Controller
 public class AdminFinanceController extends BaseAdminController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @RequestMapping(value = "finance", method = RequestMethod.GET)
     public String financePage(Model model, Integer pageNum) {
         if (pageNum == null)

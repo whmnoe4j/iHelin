@@ -29,8 +29,6 @@ import java.util.Map;
 @Controller
 public class AccessWeChatController extends BaseController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private static final String GIT_COMMIT_URL = "https://api.github.com/repos/iHelin/iHelin/commits?per_page=1";
 
     /**
