@@ -36,13 +36,6 @@ public class TestController extends BaseController {
         return template;
     }
 
-    @RequestMapping(value = "config", method = RequestMethod.GET)
-    public String configPage(Model model) {
-        Properties props = System.getProperties();
-        model.addAttribute("props", props);
-        return "config";
-    }
-
     @ResponseBody
     @RequestMapping(value = "console", method = RequestMethod.GET)
     public String getProperties() {

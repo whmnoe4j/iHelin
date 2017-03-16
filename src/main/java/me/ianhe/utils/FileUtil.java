@@ -1,10 +1,14 @@
 package me.ianhe.utils;
 
+import com.beust.jcommander.internal.Lists;
+import com.beust.jcommander.internal.Maps;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -137,6 +143,32 @@ public class FileUtil {
         String key = UUID.randomUUID().toString();
         System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico", key));
 //        System.out.println(uploadFile(FileUtils.readFileToByteArray(file), UUID.randomUUID().toString()));
+    }
+
+    public static List<Map<String, Object>> getFileList() {
+        //构造一个带指定Zone对象的配置类
+        Zone zone = Zone.autoZone();
+        Configuration cfg = new Configuration(zone);
+        //...其他参数参考类注释
+        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        //文件名前缀
+        String prefix = "";
+        //每次迭代的长度限制，最大1000，推荐值 1000
+        int limit = 1000;
+        String delimiter = "";
+        BucketManager.FileListIterator fileListIterator = bucketManager
+                .createFileListIterator(BUCKET_NAME, prefix, limit, delimiter);
+        List<Map<String, Object>> fileInfoList = Lists.newArrayList();
+        while (fileListIterator.hasNext()) {
+            FileInfo[] items = fileListIterator.next();
+            for (FileInfo item : items) {
+                Map<String, Object> map = Maps.newHashMap();
+                map.put("key", item.key);
+                fileInfoList.add(map);
+            }
+        }
+        return fileInfoList;
     }
 
     /**
