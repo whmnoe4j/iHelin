@@ -4,6 +4,7 @@ import com.qiniu.storage.model.FileInfo;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by iHelin on 17/3/16.
@@ -11,10 +12,10 @@ import java.util.List;
 public class FileUtilTest {
     @Test
     public void getFileList() throws Exception {
-       /* List<FileInfo> files = FileUtil.getFileList();
-        for (FileInfo file : files) {
-            System.out.println(file.key + "<=====>" + file.fsize);
-        }*/
+        List<Map<String, Object>> files = FileUtil.getFileList();
+        for (Map<String, Object> file : files) {
+            System.out.println(file.get("key"));
+        }
     }
 
 }

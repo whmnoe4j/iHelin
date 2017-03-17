@@ -31,6 +31,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String indexPage(Model model) {
+        logger.info("123456");
         int PAGE_LENGTH = 5;
         int pageNum = 1;
         List<Article> articles = articleManager.listByCondition(null, (pageNum - 1)

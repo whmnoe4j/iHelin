@@ -51,7 +51,7 @@
         </property>
     </bean>
 
-    <!-- 3.配置SqlSessionFactory对象 -->
+    <!-- 配置SqlSessionFactory对象 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--引入数据库连接池-->
         <property name="dataSource" ref="dataSource"/>
@@ -63,7 +63,7 @@
         <property name="typeAliasesPackage" value="me.ianhe.db.entity"/>
     </bean>
 
-    <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+    <!-- 配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <!-- 定义mybatis接口路径 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="me.ianhe.db.mapper"/>
