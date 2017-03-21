@@ -28,7 +28,7 @@ public class PageController extends BaseController {
         }
         articleManager.addReadCount(article);
         model.addAttribute("article", article);
-        return "post";
+        return "article";
     }
 
     @RequestMapping(value = "about", method = RequestMethod.GET)
