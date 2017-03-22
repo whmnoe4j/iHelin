@@ -112,8 +112,8 @@
 <div class="am-g am-g-fixed">
     <div class="am-u-md-10 am-u-md-push-2">
         <div class="am-g">
-            <div class="am-u-sm-11 am-u-sm-centered">
-                <blockquote>
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <blockquote id="summary">
                 ${article.summary!''}
                 </blockquote>
                 <div class="am-cf am-article" id="content">
@@ -121,7 +121,7 @@
                 </div>
                 <p class="am-text-right"><span style="font-family: Georgia;">#{article.readNum!''}</span>阅</p>
                 <hr/>
-                <ul class="am-comments-list">
+                <ul class="am-comments-list" id="commont">
                     <li class="am-comment">
                         <a href="#link-to-user-home">
                             <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96/q/80"
@@ -168,11 +168,9 @@
         <div class="am-offcanvas" id="sidebar">
             <div class="am-offcanvas-bar">
                 <ul class="am-nav">
-                    <li><a href="#">${article.title!''}</a></li>
-                    <li class="am-nav-header">目录</li>
+                    <li><a href="#summary">摘要</a></li>
                     <li><a href="#content">原文</a></li>
-                    <li><a href="#">作者简介</a></li>
-                    <li><a href="#">读者评论</a></li>
+                    <li><a href="#commont">读者评论</a></li>
                 </ul>
             </div>
         </div>

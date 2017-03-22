@@ -1,4 +1,4 @@
-/*! Amaze UI v2.7.2 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-08-17T16:17:24+0800 */ 
+/*! Amaze UI v2.7.2 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-08-17T16:17:24+0800 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("jquery"));
@@ -190,8 +190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(window.DocumentTouch && document instanceof window.DocumentTouch) ||
 	(window.navigator['msPointerEnabled'] &&
 	window.navigator['msMaxTouchPoints'] > 0) || // IE 10
-	(window.navigator['pointerEnabled'] &&
-	window.navigator['maxTouchPoints'] > 0) || // IE >=11
+	(window.navigator['maxTouchPoints'] > 0) || // IE >=11
 	false);
 	/* eslint-enable dot-notation */
 
@@ -5386,7 +5385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  var $dropdown = this.$dropdown;
-	  
+
 	  // @see #873
 	  if (e && e.offset) {
 	    $dropdown.offset(e.offset);
