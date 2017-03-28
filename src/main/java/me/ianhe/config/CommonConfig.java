@@ -114,8 +114,8 @@ public class CommonConfig {
         return configEntry.key;
     }
 
-    public static File getWebInfDir() {
-        return new File(webappRoot, "WEB-INF");
+    public static File getClassPath() {
+        return new File(CommonConfig.class.getResource("/").getFile());
     }
 
     public static MailConfigEntry getMailEntry() {
@@ -123,7 +123,7 @@ public class CommonConfig {
     }
 
     public static <T> T loadConfig(String cfgFileName, Class<T> clazz) {
-        return loadConfig(new File(getWebInfDir(), cfgFileName), clazz);
+        return loadConfig(new File(getClassPath(), cfgFileName), clazz);
     }
 
     public static <T> T loadConfig(InputStream inputStream, Class<T> clazz) {

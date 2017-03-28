@@ -27,7 +27,7 @@ public class TemplateUtil {
         try {
             propMap.put("contextPath", CommonConfig.getContextUrl());
             Configuration config = new Configuration(Configuration.VERSION_2_3_23);
-            File dir = new File(CommonConfig.getWebInfDir(), TEMPLATE_DIR);
+            File dir = new File(CommonConfig.getClassPath(), TEMPLATE_DIR);
             config.setDirectoryForTemplateLoading(dir);
             Template template = config.getTemplate(templatePath, CharEncoding.UTF_8);
             StringWriter writer = new StringWriter();

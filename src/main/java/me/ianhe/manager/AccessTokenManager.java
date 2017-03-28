@@ -48,7 +48,7 @@ public class AccessTokenManager {
     }
 
     private void loadFile() {
-        File file = new File(CommonConfig.getWebInfDir(), fileName);
+        File file = new File(CommonConfig.getClassPath(), fileName);
         try {
             accessTokenMap = Yaml.loadType(file, HashMap.class);
         } catch (Exception e) {
@@ -127,7 +127,7 @@ public class AccessTokenManager {
         accessTokenMap.put(ACCESS_TOKEN, accessToken.getToken());
         accessTokenMap.put(GEN_TIME, accessToken.getGenTime());
         accessTokenMap.put(EXPIRES_TIME, accessToken.getExpiresTime());
-        File file = new File(CommonConfig.getWebInfDir(), fileName);
+        File file = new File(CommonConfig.getClassPath(), fileName);
         try {
             Yaml.dump(accessTokenMap, file);
             return 1;
