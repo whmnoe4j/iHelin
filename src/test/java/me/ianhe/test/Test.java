@@ -6,15 +6,16 @@ package me.ianhe.test;
  */
 public class Test {
 
-
     /**
      * 显示项目绝对路径
+     * 显示classpath路径
      *
      * @param args
      */
     public static void main(String[] args) {
         //获取当前项目绝对路径
         System.out.println(System.getProperty("user.dir"));
+        System.out.println(Test.class.getResource("/"));
     }
 
 }

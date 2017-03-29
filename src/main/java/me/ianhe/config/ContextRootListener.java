@@ -20,7 +20,7 @@ public class ContextRootListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         ServletContext context = event.getServletContext();
         CommonConfig.init(context.getRealPath("/"), context.getContextPath());
-        LOGGER.info("测试：context is initialized,root path: {}", context.getRealPath("/"));
+        LOGGER.info("context is initialized,root path: {}", context.getRealPath("/"));
     }
 
 }

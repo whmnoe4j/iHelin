@@ -11,6 +11,8 @@ import java.io.InputStream;
 public class CommonConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
+    private static final String MAIL_CONFIG_FILE = "mail_config.yml";
+    private static final String CONFIG_FILE = "config.yml";
 
     public static class ConfigEntry {
         public String admin_user;
@@ -50,21 +52,17 @@ public class CommonConfig {
         contextPath = contextName;
         webappRoot = rootPath;
         configEntry = loadConfig(ConfigEntry.class);
-
         try {
-            mailEntry = loadConfig("mail_config.yml", MailConfigEntry.class);
+            mailEntry = loadConfig(MAIL_CONFIG_FILE, MailConfigEntry.class);
         } catch (RuntimeException e) {
             logger.info("mail not configured", e);
         }
-
         if (configEntry == null || configEntry.domain_url == null) {
             throw new RuntimeException("Can not find domain_url in the config.yml.");
         }
-
         if (!configEntry.domain_url.startsWith("http")) {
             configEntry.domain_url = "http://" + configEntry.domain_url;
         }
-
         if (configEntry.domain_url.endsWith("/")) {
             configEntry.domain_url = configEntry.domain_url.substring(0, configEntry.domain_url.length() - 1);
         }
@@ -147,6 +145,6 @@ public class CommonConfig {
     }
 
     public static <T> T loadConfig(Class<T> clazz) {
-        return loadConfig("config.yml", clazz);
+        return loadConfig(CONFIG_FILE, clazz);
     }
 }
