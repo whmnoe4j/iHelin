@@ -63,10 +63,6 @@
             <mvc:mapping path="/admin/**"/>
             <bean class="me.ianhe.interceptor.AdminAuthInterceptor"></bean>
         </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/error/**"/>
-            <bean class="me.ianhe.interceptor.TestInterceptor"></bean>
-        </mvc:interceptor>
     </mvc:interceptors>
 
     <!-- freemarker配置 -->
