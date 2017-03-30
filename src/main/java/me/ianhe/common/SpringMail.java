@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
  * @author iHelin
  * @create 2017-03-14 22:32
  */
-public class SimpleMail {
+public class SpringMail {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

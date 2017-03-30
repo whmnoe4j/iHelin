@@ -1,7 +1,7 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.common.SimpleMail;
+import me.ianhe.common.SpringMail;
 import me.ianhe.model.Result;
 import me.ianhe.utils.CryptUtil;
 import me.ianhe.utils.JSON;
@@ -25,7 +25,7 @@ import java.util.Properties;
 public class TestController extends BaseController {
 
     @Autowired
-    private SimpleMail mimeMail;
+    private SpringMail mimeMail;
 
     @ResponseBody
     @RequestMapping(value = "mail", method = RequestMethod.GET)

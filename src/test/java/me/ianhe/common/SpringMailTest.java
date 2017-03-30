@@ -12,11 +12,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class) //spring的单元测试
 @ContextConfiguration({"classpath:spring/applicationContext.xml"})
-public class SimpleMailTest {
+public class SpringMailTest {
 
 
     @Autowired
-    private SimpleMail mimeMail;
+    private SpringMail mimeMail;
 
     @Test
     public void sendMail() throws Exception {

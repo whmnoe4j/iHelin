@@ -24,7 +24,7 @@
         </property>
     </bean>
 
-    <bean class="me.ianhe.common.SimpleMail">
+    <bean class="me.ianhe.common.SpringMail">
         <property name="mailSender" ref="mailSender"/>
     </bean>
 

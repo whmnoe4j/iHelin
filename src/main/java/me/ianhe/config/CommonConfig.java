@@ -10,9 +10,9 @@ import java.io.InputStream;
 
 public class CommonConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
-    private static final String MAIL_CONFIG_FILE = "mail_config.yml";
     private static final String CONFIG_FILE = "config.yml";
+    private static final String MAIL_CONFIG_FILE = "mail_config.yml";
+    private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
 
     public static class ConfigEntry {
         public String admin_user;
