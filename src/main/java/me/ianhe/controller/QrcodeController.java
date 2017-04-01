@@ -59,7 +59,7 @@ public class QrcodeController extends BaseController {
         qrcode.setPath(path);
         qrcodeManager.insert(qrcode);
         String fileName = qrcode.getId() + "." + format;
-        path = path + QRCode.generateQRCode(path, CommonConfig.getContextUrl() + "qrcode/" + +qrcode.getId(), fileName, format, 300, 300);
+        path = path + QRCode.generateQRCode(path, "qrcode/" + +qrcode.getId(), fileName, format, 300, 300);
         Map<String, Object> res = Maps.newHashMap();
         res.put("status", "success");
         res.put("url", path);

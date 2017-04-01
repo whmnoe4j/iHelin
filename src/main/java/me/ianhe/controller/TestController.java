@@ -1,14 +1,12 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.common.SpringMail;
 import me.ianhe.model.Result;
 import me.ianhe.utils.CryptUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.MailUtil;
 import me.ianhe.utils.ResponseUtil;
 import me.ianhe.utils.TemplateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +22,10 @@ import java.util.Properties;
 @Controller
 public class TestController extends BaseController {
 
-    @Autowired
-    private SpringMail mimeMail;
-
     @ResponseBody
-    @RequestMapping(value = "mail", method = RequestMethod.GET)
+    @RequestMapping(value = "tpl", method = RequestMethod.GET)
     public String mail() throws MessagingException {
-        String template = TemplateUtil.applyTemplate("/mail/mail_content.ftl");
+        String template = TemplateUtil.applyTemplate("/tpl/mail_content.ftl");
 //        mimeMail.sendMail("ihelin@outlook.com", "哈哈", template);
         MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
         return template;

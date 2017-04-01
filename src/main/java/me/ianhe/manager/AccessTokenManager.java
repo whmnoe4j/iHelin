@@ -1,10 +1,10 @@
 package me.ianhe.manager;
 
 import com.google.common.collect.Maps;
-import me.ianhe.config.CommonConfig;
 import me.ianhe.model.AccessToken;
 import me.ianhe.model.WXAccessToken;
 import me.ianhe.utils.DateTimeUtil;
+import me.ianhe.utils.Global;
 import me.ianhe.utils.WechatUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.ho.yaml.Yaml;
@@ -48,7 +48,7 @@ public class AccessTokenManager {
     }
 
     private void loadFile() {
-        File file = new File(CommonConfig.getClassPath(), fileName);
+        File file = new File(Global.getClassPath(), fileName);
         try {
             accessTokenMap = Yaml.loadType(file, HashMap.class);
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class AccessTokenManager {
 
     // 强制更新token
     public boolean forceUpdateAccessToken() {
-        WXAccessToken wxToken = WechatUtil.getAccessToken(CommonConfig.getAppID(), CommonConfig.getAppSecret());
+        WXAccessToken wxToken = WechatUtil.getAccessToken(Global.getAppId(), Global.getAppSecret());
         if (wxToken == null || StringUtils.isBlank(wxToken.getAccess_token())) {
             return false;
         }
@@ -110,12 +110,12 @@ public class AccessTokenManager {
     private synchronized void checkAndUpdate() {
         AccessToken accessToken = getAccessToken();
         if (accessToken == null) {
-            WXAccessToken wxToken = WechatUtil.getAccessToken(CommonConfig.getAppID(), CommonConfig.getAppSecret());
+            WXAccessToken wxToken = WechatUtil.getAccessToken(Global.getAppId(), Global.getAppSecret());
             accessToken = transAccessToken(wxToken);
             updateTokenToFile(accessToken);
         } else {
             if (accessToken.getLeftValidTimeMillis() < SAFE_TOKEN_RESERVE_TIME) {
-                WXAccessToken wxToken = WechatUtil.getAccessToken(CommonConfig.getAppID(), CommonConfig.getAppSecret());
+                WXAccessToken wxToken = WechatUtil.getAccessToken(Global.getAppId(), Global.getAppSecret());
                 accessToken = transAccessToken(wxToken);
                 updateTokenToFile(accessToken);
             }
@@ -127,7 +127,7 @@ public class AccessTokenManager {
         accessTokenMap.put(ACCESS_TOKEN, accessToken.getToken());
         accessTokenMap.put(GEN_TIME, accessToken.getGenTime());
         accessTokenMap.put(EXPIRES_TIME, accessToken.getExpiresTime());
-        File file = new File(CommonConfig.getClassPath(), fileName);
+        File file = new File(Global.getClassPath(), fileName);
         try {
             Yaml.dump(accessTokenMap, file);
             return 1;

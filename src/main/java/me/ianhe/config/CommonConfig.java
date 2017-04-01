@@ -1,5 +1,6 @@
 package me.ianhe.config;
 
+import me.ianhe.utils.Global;
 import org.ho.yaml.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,22 +11,8 @@ import java.io.InputStream;
 
 public class CommonConfig {
 
-    private static final String CONFIG_FILE = "config.yml";
     private static final String MAIL_CONFIG_FILE = "mail_config.yml";
-    private static final Logger logger = LoggerFactory.getLogger(CommonConfig.class);
-
-    public static class ConfigEntry {
-        public String admin_user;
-        public String admin_password;
-
-        public String domain_url;
-        public String system_name;
-
-        public String wx_appId;
-        public String wx_appSecret;
-        public String mch_id;//商户号
-        public String key;//微信支付的key
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonConfig.class);
 
     public static class MailConfigEntry {
         public String mail_server;
@@ -35,8 +22,6 @@ public class CommonConfig {
         public String mail_from_address;
         public String mail_from_name;
     }
-
-    private static ConfigEntry configEntry;
 
     public static MailConfigEntry mailEntry;
 
@@ -48,80 +33,26 @@ public class CommonConfig {
         return webappRoot;
     }
 
-    public static void init(String rootPath, String contextName) {
-        contextPath = contextName;
-        webappRoot = rootPath;
-        configEntry = loadConfig(ConfigEntry.class);
-        try {
-            mailEntry = loadConfig(MAIL_CONFIG_FILE, MailConfigEntry.class);
-        } catch (RuntimeException e) {
-            logger.info("mail not configured", e);
-        }
-        if (configEntry == null || configEntry.domain_url == null) {
-            throw new RuntimeException("Can not find domain_url in the config.yml.");
-        }
-        if (!configEntry.domain_url.startsWith("http")) {
-            configEntry.domain_url = "http://" + configEntry.domain_url;
-        }
-        if (configEntry.domain_url.endsWith("/")) {
-            configEntry.domain_url = configEntry.domain_url.substring(0, configEntry.domain_url.length() - 1);
-        }
-    }
-
-    public static String getDomainUrl() {
-        return configEntry.domain_url;
-    }
-
-    public static String getContextUrl() {
-        if (contextPath.endsWith("/")) {
-            return configEntry.domain_url + contextPath;
-        } else {
-            return configEntry.domain_url + contextPath + "/";
-        }
-    }
-
     public static String getContextPath() {
         return contextPath;
-    }
-
-    public static String getAdminUser() {
-        return configEntry.admin_user;
-    }
-
-    public static String getAdminPassword() {
-        return configEntry.admin_password;
-    }
-
-    public static String getSystemName() {
-        return configEntry.system_name;
-    }
-
-    public static String getAppID() {
-        return configEntry.wx_appId;
-    }
-
-    public static String getAppSecret() {
-        return configEntry.wx_appSecret;
-    }
-
-    public static String getMchId() {
-        return configEntry.mch_id;
-    }
-
-    public static String getKey() {
-        return configEntry.key;
-    }
-
-    public static File getClassPath() {
-        return new File(CommonConfig.class.getResource("/").getFile());
     }
 
     public static MailConfigEntry getMailEntry() {
         return mailEntry;
     }
 
+    public static void init(String rootPath, String contextName) {
+        contextPath = contextName;
+        webappRoot = rootPath;
+        try {
+            mailEntry = loadConfig(MAIL_CONFIG_FILE, MailConfigEntry.class);
+        } catch (RuntimeException e) {
+            LOGGER.warn("mail not configured", e);
+        }
+    }
+
     public static <T> T loadConfig(String cfgFileName, Class<T> clazz) {
-        return loadConfig(new File(getClassPath(), cfgFileName), clazz);
+        return loadConfig(new File(Global.getClassPath(), cfgFileName), clazz);
     }
 
     public static <T> T loadConfig(InputStream inputStream, Class<T> clazz) {
@@ -144,7 +75,4 @@ public class CommonConfig {
         }
     }
 
-    public static <T> T loadConfig(Class<T> clazz) {
-        return loadConfig(CONFIG_FILE, clazz);
-    }
 }

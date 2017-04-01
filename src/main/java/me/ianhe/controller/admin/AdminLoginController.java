@@ -1,7 +1,7 @@
 package me.ianhe.controller.admin;
 
-import me.ianhe.config.CommonConfig;
 import me.ianhe.model.AdminUser;
+import me.ianhe.utils.Global;
 import me.ianhe.utils.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -25,8 +24,8 @@ public class AdminLoginController extends BaseAdminController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(String username, String password, String from, HttpServletRequest request,
-                        HttpServletResponse response, HttpSession session, Model model) {
-        if (username.equals(CommonConfig.getAdminUser()) && password.equals(CommonConfig.getAdminPassword())) {
+                        HttpSession session, Model model) {
+        if (username.equals(Global.getAdminUser()) && password.equals(Global.getAdminPassword())) {
             AdminUser adminUser = new AdminUser();
             adminUser.setAdminId(username);
             adminUser.setNickName("Ian He");
@@ -34,9 +33,6 @@ public class AdminLoginController extends BaseAdminController {
             String rip = RequestUtil.getRealIp(request);
             adminUser.setLastLoginIp(rip);
             session.setAttribute(SESSION_KEY_ADMIN, adminUser);
-//            Cookie cookie = new Cookie("ihelin", UUID.randomUUID().toString());
-//            cookie.setMaxAge(60 * 60 * 24 * 7);
-//            response.addCookie(cookie);
             logger.info("Admin user: {} login success,ip : {}.", username, rip);
             if (StringUtils.isNotEmpty(from))
                 return "redirect:" + from;
