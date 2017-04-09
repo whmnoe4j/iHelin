@@ -3,53 +3,55 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 
-    <!-- load driver jar, must config local maven repo dir -->
-    <!--<classPathEntry location="/Users/iHelin/Public/tools/mysql-connector-java-5.1.19.jar"/>-->
+    <!-- 指定数据连接驱动jar地址, must config local maven repo dir -->
     <classPathEntry
             location="/Users/iHelin/.m2/repository/mysql/mysql-connector-java/5.1.19/mysql-connector-java-5.1.19.jar"/>
 
+    <!-- 一个数据库一个context -->
     <context id="Tuna" targetRuntime="MyBatis3">
         <!--设置编码格式-->
         <property name="javaFileEncoding" value="UTF-8"/>
-
         <commentGenerator>
+            <!-- 是否生成注释代时间戳-->
             <property name="suppressDate" value="true"/>
-            <!-- remove comments -->
+            <!-- 是否取消注释 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
-
+        <!-- jdbc连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://120.27.100.98:3306/iHelin?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"
-                        userId="root" password="246260"/>
-
+                        userId="ihelin" password="246260"/>
+        <!-- 类型转换 -->
         <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <!-- gem entity -->
+        <!-- 生成实体类地址 -->
         <javaModelGenerator targetPackage="me.ianhe.db.entity"
                             targetProject="src/main/java">
+            <!-- 是否在当前路径下新加一层schema,eg：false路径me.ianhe.db.entity， true:me.ianhe.db.entity.[schemaName] -->
             <property name="enableSubPackages" value="true"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
             <property name="trimStrings" value="false"/>
         </javaModelGenerator>
 
-        <!-- gem xml -->
+        <!-- 生成mapxml文件 -->
         <sqlMapGenerator targetPackage="mapper"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <!-- gem mapper -->
-        <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="me.ianhe.db.mapper" targetProject="src/main/java">
+        <!-- 生成mapxml对应client，也就是接口dao -->
+        <javaClientGenerator targetPackage="me.ianhe.db.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-
-        <table schema="iHelin" tableName="Activity" domainObjectName="Activity"
+        <!-- 配置表信息 -->
+        <table schema="iHelin" tableName="test" domainObjectName="Test"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-
     </context>
 </generatorConfiguration>
