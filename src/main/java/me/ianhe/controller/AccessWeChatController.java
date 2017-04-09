@@ -8,11 +8,9 @@ import me.ianhe.utils.CheckUtil;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +32,7 @@ public class AccessWeChatController extends BaseController {
     /**
      * get消息：消息服务器验证
      */
-    @RequestMapping(value = "access_wechat", method = RequestMethod.GET)
+    @GetMapping(value = "access_wechat")
     public void doGet(String signature, String timestamp, String nonce, String echostr,
                       HttpServletResponse response) throws IOException {
         logger.info("验证token");
@@ -50,7 +48,7 @@ public class AccessWeChatController extends BaseController {
      * post消息：消息处理
      */
     @ResponseBody
-    @RequestMapping(value = "access_wechat", method = RequestMethod.POST)
+    @PostMapping(value = "access_wechat")
     public String doPost(HttpServletRequest request) {
         Map<String, String> msgMap = WechatUtil.xml2Map(request);
         String msgType = msgMap.get("MsgType");
