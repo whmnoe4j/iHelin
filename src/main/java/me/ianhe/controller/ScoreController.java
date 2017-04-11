@@ -40,8 +40,8 @@ public class ScoreController extends BaseController {
         int total = myScoreManager.getMyTotalScore();
         res.put("total", total);
         String mailContent = TemplateUtil.applyTemplate("/tpl/score.ftl", res);
-        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + myScore + "分", mailContent);
-        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + myScore + "分", mailContent);
+        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
+        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
         Thread t1 = new Thread(m1);
         Thread t2 = new Thread(m2);
         t1.start();
