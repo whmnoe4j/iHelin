@@ -1,4 +1,4 @@
-package me.ianhe.db.mapper;
+package me.ianhe.dao;
 
 import me.ianhe.db.entity.Activity;
 import org.apache.ibatis.session.RowBounds;

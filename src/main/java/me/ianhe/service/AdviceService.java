@@ -1,14 +1,14 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import me.ianhe.db.entity.Advice;
-import me.ianhe.db.mapper.AdviceMapper;
+import me.ianhe.dao.AdviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AdviceManager {
+public class AdviceService {
 
     @Autowired
     private AdviceMapper adviceMapper;

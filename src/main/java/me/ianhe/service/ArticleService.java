@@ -1,8 +1,8 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.Article;
-import me.ianhe.db.mapper.ArticleMapper;
+import me.ianhe.dao.ArticleMapper;
 import me.ianhe.utils.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
  */
 @Service
-public class ArticleManager {
+public class ArticleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

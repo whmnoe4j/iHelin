@@ -1,7 +1,7 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.db.mapper.MyScoreMapper;
+import me.ianhe.dao.MyScoreMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2017-02-15 19:19
  */
 @Service
-public class ScoreManager {
+public class ScoreService {
 
     @Autowired
     private MyScoreMapper myScoreMapper;

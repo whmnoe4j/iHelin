@@ -1,10 +1,10 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.Activity;
 import me.ianhe.db.entity.Staff;
-import me.ianhe.db.mapper.ActivityMapper;
-import me.ianhe.db.mapper.StaffMapper;
+import me.ianhe.dao.ActivityMapper;
+import me.ianhe.dao.StaffMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Map;
  * @create 2017-02-18 12:47
  */
 @Service
-public class FinanceManager {
+public class FinanceService {
 
     @Autowired
     private StaffMapper staffMapper;

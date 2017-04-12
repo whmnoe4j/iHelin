@@ -1,14 +1,14 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.manager.AccessTokenManager;
-import me.ianhe.manager.AdviceManager;
-import me.ianhe.manager.ArticleManager;
-import me.ianhe.manager.FinanceManager;
-import me.ianhe.manager.QrcodeManager;
-import me.ianhe.manager.ScoreManager;
-import me.ianhe.manager.ServiceMenuMannger;
-import me.ianhe.manager.UserManager;
+import me.ianhe.service.AccessTokenService;
+import me.ianhe.service.AdviceService;
+import me.ianhe.service.ArticleService;
+import me.ianhe.service.FinanceService;
+import me.ianhe.service.QrcodeService;
+import me.ianhe.service.ScoreService;
+import me.ianhe.service.ServiceMenuService;
+import me.ianhe.service.UserService;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,21 +22,21 @@ import java.util.Map;
 public abstract class BaseController {
 
     @Autowired
-    protected AdviceManager adviceManager;
+    protected AdviceService adviceManager;
     @Autowired
-    protected AccessTokenManager accessTokenManager;
+    protected AccessTokenService accessTokenManager;
     @Autowired
-    protected UserManager userManager;
+    protected UserService userManager;
     @Autowired
-    protected ServiceMenuMannger serviceMenuMannger;
+    protected ServiceMenuService serviceMenuMannger;
     @Autowired
-    protected ArticleManager articleManager;
+    protected ArticleService articleManager;
     @Autowired
-    protected QrcodeManager qrcodeManager;
+    protected QrcodeService qrcodeManager;
     @Autowired
-    protected FinanceManager financeManager;
+    protected FinanceService financeManager;
     @Autowired
-    protected ScoreManager myScoreManager;
+    protected ScoreService myScoreManager;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

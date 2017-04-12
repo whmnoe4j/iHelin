@@ -43,7 +43,7 @@
         </sqlMapGenerator>
 
         <!-- 生成mapxml对应client，也就是接口dao -->
-        <javaClientGenerator targetPackage="me.ianhe.db.mapper"
+        <javaClientGenerator targetPackage="me.ianhe.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>

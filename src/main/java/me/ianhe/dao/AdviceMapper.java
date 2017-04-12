@@ -1,4 +1,4 @@
-package me.ianhe.db.mapper;
+package me.ianhe.dao;
 
 import java.util.List;
 

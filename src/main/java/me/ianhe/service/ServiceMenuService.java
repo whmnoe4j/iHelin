@@ -1,9 +1,9 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.ServiceMenu;
-import me.ianhe.db.mapper.ServiceMenuMapper;
+import me.ianhe.dao.ServiceMenuMapper;
 import me.ianhe.model.Button;
 import me.ianhe.model.ClickButton;
 import me.ianhe.model.Menu;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ServiceMenuMannger {
+public class ServiceMenuService {
     @Resource
     private ServiceMenuMapper serviceMenuMapper;
 

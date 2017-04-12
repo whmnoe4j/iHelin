@@ -1,4 +1,4 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import me.ianhe.db.entity.User;
-import me.ianhe.db.mapper.UserMapper;
+import me.ianhe.dao.UserMapper;
 import me.ianhe.model.WXUser;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 
 @Service
-public class UserManager {
+public class UserService {
 
 	@Resource
 	private UserMapper userMapper;

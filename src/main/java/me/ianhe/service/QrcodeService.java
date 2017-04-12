@@ -1,7 +1,7 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import me.ianhe.db.entity.Qrcode;
-import me.ianhe.db.mapper.QrcodeMapper;
+import me.ianhe.dao.QrcodeMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
  */
 @Service
-public class QrcodeManager {
+public class QrcodeService {
 
     @Resource
     private QrcodeMapper qrcodeMapper;

@@ -1,4 +1,4 @@
-package me.ianhe.manager;
+package me.ianhe.service;
 
 import com.google.common.collect.Maps;
 import me.ianhe.model.AccessToken;
@@ -23,11 +23,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Service
-public class AccessTokenManager {
+public class AccessTokenService {
 
     // access token 剩余时间预留安全值，半小时
     private static final long SAFE_TOKEN_RESERVE_TIME = 1000L * 30 * 60;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenService.class);
     public static final String fileName = "access_token.yml";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String GEN_TIME = "genTime";// 更新时间
