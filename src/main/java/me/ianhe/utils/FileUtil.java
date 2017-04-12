@@ -194,4 +194,8 @@ public class FileUtil {
         UploadManager uploadManager = new UploadManager(config);
         return uploadManager;
     }
+
+    private FileUtil() {
+
+    }
 }

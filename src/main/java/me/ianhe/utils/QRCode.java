@@ -50,4 +50,8 @@ public class QRCode {
         }
     }
 
+    private QRCode() {
+
+    }
+
 }

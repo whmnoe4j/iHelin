@@ -2,7 +2,7 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.utils.AutoSendMail;
+import me.ianhe.model.AutoSendMail;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
 import org.springframework.stereotype.Controller;

@@ -8,14 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
-import javax.mail.Address;
-import javax.mail.Authenticator;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -262,6 +255,10 @@ public class MailUtil {
         mailInfo.attchType = type;
         SimpleMailSender sms = new SimpleMailSender();
         return sms.sendHtmlMail(mailInfo);
+    }
+
+    private MailUtil() {
+
     }
 
 }

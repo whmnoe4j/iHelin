@@ -125,4 +125,8 @@ public class DateTimeUtil {
         c.set(Calendar.MILLISECOND, 999);
         return c.getTime();
     }
+
+    private DateTimeUtil() {
+
+    }
 }

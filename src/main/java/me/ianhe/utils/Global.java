@@ -1,6 +1,5 @@
 package me.ianhe.utils;
 
-import me.ianhe.config.CommonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +26,11 @@ public class Global {
     }
 
     public static String getAppId() {
-        return getValue("appId");
+        return getValue("wx.appId");
     }
 
     public static String getAppSecret() {
-        return getValue("appSecret");
+        return getValue("wx.appSecret");
     }
 
     public static String getAdminUser() {
@@ -48,6 +47,10 @@ public class Global {
 
     public static String getSystemName() {
         return getValue("systemName");
+    }
+
+    public static String getWXToken() {
+        return getValue("wx.token");
     }
 
     public static File getClassPath() {

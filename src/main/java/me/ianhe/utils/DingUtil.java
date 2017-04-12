@@ -30,8 +30,12 @@ public class DingUtil {
         LOGGER.info("Robut return {}", res);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         say("！");
+    }
+
+    private DingUtil() {
+
     }
 
 }

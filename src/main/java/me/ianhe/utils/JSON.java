@@ -99,4 +99,8 @@ public class JSON {
         }
         return null;
     }
+
+    private JSON() {
+
+    }
 }

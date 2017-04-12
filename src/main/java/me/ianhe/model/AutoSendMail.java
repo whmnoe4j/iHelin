@@ -1,5 +1,6 @@
-package me.ianhe.utils;
+package me.ianhe.model;
 
+import me.ianhe.utils.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AutoSendMail implements Runnable {
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final String MAIL_REG = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}" +

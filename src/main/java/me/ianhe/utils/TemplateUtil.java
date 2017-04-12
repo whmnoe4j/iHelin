@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.Map;
 
+/**
+ * freemarker模板方法
+ * 用模板中返回HTML字符串
+ */
 public class TemplateUtil {
 
     private static final String TEMPLATE_DIR = "templates";
@@ -37,5 +41,9 @@ public class TemplateUtil {
             LOGGER.warn("Error while process template: " + templatePath, e);
             return "";
         }
+    }
+
+    private TemplateUtil() {
+
     }
 }

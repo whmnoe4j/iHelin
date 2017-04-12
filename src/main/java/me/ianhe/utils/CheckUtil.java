@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class CheckUtil {
 
-    private static final String TOKEN = "ianhe";
+    private static final String TOKEN = Global.getWXToken();
 
     public static boolean checkSignature(String signature, String timestamp, String nonce) {
         String[] arr = new String[]{TOKEN, timestamp, nonce};
@@ -22,6 +22,10 @@ public class CheckUtil {
         // sha1加密
         String temp = CryptUtil.sha1(content.toString());
         return temp.equals(signature);
+    }
+
+    private CheckUtil() {
+        //工具类不允许实例化
     }
 
 }
