@@ -29,18 +29,23 @@
         </div>
     </header>
     <div class="am-g" style="margin-top: 10px;">
-        <div class="am-slider am-slider-default am-slider-carousel"
-             data-am-flexslider="{itemWidth: 200, itemMargin: 5, slideshow: false}">
-            <ul class="am-slides">
-            <#list fileInfos as file>
-                <#if file??>
-                    <li data-thumb="http://resource.ianhe.me/${file.key!}">
-                        <img src="http://resource.ianhe.me/${file.key!}"/>
-                    </li>
-                </#if>
-            </#list>
-            </ul>
-        </div>
+        <ul data-am-widget="gallery"
+            class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+            data-am-gallery="{ pureview: true }">
+        <#list fileInfos as file>
+            <#if file??>
+                <li>
+                    <div class="am-gallery-item">
+                        <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg" class="">
+                            <img src="http://resource.ianhe.me/${file.key!}" alt="${file.key!}"/>
+                            <h3 class="am-gallery-title">${file.key!}</h3>
+                            <div class="am-gallery-desc">${file.key!}</div>
+                        </a>
+                    </div>
+                </li>
+            </#if>
+        </#list>
+        </ul>
     </div>
 </div>
 </body>

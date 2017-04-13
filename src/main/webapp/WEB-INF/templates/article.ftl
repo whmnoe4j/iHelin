@@ -109,7 +109,7 @@
     </div>
 </header>
 <hr class="am-article-divider"/>
-<div class="am-g am-g-fixed">
+<div class="am-g">
     <div class="am-u-md-10 am-u-md-push-2">
         <div class="am-g">
             <div class="am-u-sm-12 am-u-sm-centered">
@@ -120,47 +120,43 @@
                 ${article.content!''}
                 </div>
                 <p class="am-text-right"><span style="font-family: Georgia;">#{article.readNum!''}</span>阅</p>
-            <#--<hr/>
-             <ul class="am-comments-list" id="commont">
-                 <li class="am-comment">
-                     <a href="#link-to-user-home">
-                         <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96/q/80"
-                              alt="" class="am-comment-avatar" width="48" height="48">
-                     </a>
-                     <div class="am-comment-main">
-                         <header class="am-comment-hd">
-                             <div class="am-comment-meta">
-                                 <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
-                                 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">
-                                     2014-7-12 15:30
-                                 </time>
-                             </div>
-                         </header>
-                         <div class="am-comment-bd">
-                             <p>《永远的蝴蝶》一文，还吸收散文特长，多采用第一人称，淡化情节，体现一种思想寄托和艺术追求。</p>
-                         </div>
-                     </div>
-                 </li>
-                 <li class="am-comment">
-                     <a href="#link-to-user-home">
-                         <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96/q/80"
-                              alt="" class="am-comment-avatar" width="48" height="48">
-                     </a>
-                     <div class="am-comment-main">
-                         <header class="am-comment-hd">
-                             <div class="am-comment-meta">
-                                 <a href="#link-to-user" class="am-comment-author">路人甲</a> 评论于
-                                 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">
-                                     2014-7-13 0:03
-                                 </time>
-                             </div>
-                         </header>
-                         <div class="am-comment-bd">
-                             <p>感觉仿佛是自身的遭遇一样，催人泪下</p>
-                         </div>
-                     </div>
-                 </li>
-             </ul>-->
+                <!--PC和WAP自适应版-->
+                <div id="SOHUCS" sid="${article.id!}"></div>
+                <script type="text/javascript">
+                    (function () {
+                        var appid = 'cysWz2225';
+                        var conf = '28580395836c063154ed2dbc8342f255';
+                        var width = window.innerWidth || document.documentElement.clientWidth;
+                        if (width < 960) {
+                            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                        } else {
+                            var loadJs = function (d, a) {
+                                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                                var b = document.createElement("script");
+                                b.setAttribute("type", "text/javascript");
+                                b.setAttribute("charset", "UTF-8");
+                                b.setAttribute("src", d);
+                                if (typeof a === "function") {
+                                    if (window.attachEvent) {
+                                        b.onreadystatechange = function () {
+                                            var e = b.readyState;
+                                            if (e === "loaded" || e === "complete") {
+                                                b.onreadystatechange = null;
+                                                a()
+                                            }
+                                        }
+                                    } else {
+                                        b.onload = a
+                                    }
+                                }
+                                c.appendChild(b)
+                            };
+                            loadJs("http://changyan.sohu.com/upload/changyan.js", function () {
+                                window.changyan.api.config({appid: appid, conf: conf})
+                            });
+                        }
+                    })();
+                </script>
             </div>
         </div>
     </div>
@@ -170,15 +166,23 @@
                 <ul class="am-nav">
                     <li><a href="#summary">摘要</a></li>
                     <li><a href="#content">原文</a></li>
-                    <li><a href="#commont">读者评论</a></li>
+                    <li><a href="#SOHUCS">读者评论</a></li>
+                    <li><a href="javascript:history.go(-1)">返回</a></li>
                 </ul>
             </div>
         </div>
     </div>
-    <a href="#sidebar" class="am-btn am-btn-sm am-btn-success am-icon-bars am-show-sm-only my-button" data-am-offcanvas><span
-            class="am-sr-only">侧栏导航</span></a>
+    <a href="#sidebar"
+       class="am-btn am-btn-sm am-btn-success am-icon-bars am-show-sm-only my-button" data-am-offcanvas>
+        <span class="am-sr-only">侧栏导航</span>
+    </a>
 </div>
-
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="回到顶部">
+        <span class="am-gotop-title">回到顶部</span>
+        <i class="am-gotop-icon am-icon-chevron-up"></i>
+    </a>
+</div>
 <footer class="my-footer">
     <p>皖ICP备16015099号<br>
         <small>Copyright © iHelin. ${.now?string('yyyy')}</small>

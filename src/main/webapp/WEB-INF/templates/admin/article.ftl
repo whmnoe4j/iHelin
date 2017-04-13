@@ -25,10 +25,10 @@
             });
         });
     }
-
 </script>
 </#assign>
 <@main.page title="文章管理">
+
 <div id="page-heading">
     <ol class="breadcrumb">
         <li><a href="${request.contextPath}/admin/index">首页</a></li>
