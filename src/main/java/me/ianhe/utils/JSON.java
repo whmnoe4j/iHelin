@@ -101,6 +101,6 @@ public class JSON {
     }
 
     private JSON() {
-
+        //工具类不允许实例化
     }
 }

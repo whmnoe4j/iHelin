@@ -9,20 +9,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Random;
 
 public class QRCode {
-
-    public static void main(String[] args) throws IOException {
-        int width = 300;
-        int height = 300;
-        String format = "png";
-        String content = "2";
-        String fileName = new Random().nextInt(1000000) + "." + format;
-        generateQRCode("/Users/ianhe/Documents/", content, fileName, format, width, height);
-    }
 
     /**
      * 二维码生成工具
@@ -51,7 +40,7 @@ public class QRCode {
     }
 
     private QRCode() {
-
+        //工具类不允许实例化
     }
 
 }

@@ -58,15 +58,8 @@ public class CryptUtil {
         return new String(bytes);
     }
 
-    public static void main(String[] args) {
-        String s = "246260";
-        System.out.println(md5(s));
-        System.out.println(encodeBase64(s));
-        System.out.println(decodeBase64(encodeBase64(s)));
-    }
-
     private CryptUtil() {
-
+        //工具类不允许实例化
     }
 
 }

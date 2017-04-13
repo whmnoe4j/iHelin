@@ -258,7 +258,7 @@ public class MailUtil {
     }
 
     private MailUtil() {
-
+        //工具类不允许实例化
     }
 
 }

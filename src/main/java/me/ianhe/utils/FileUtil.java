@@ -196,6 +196,6 @@ public class FileUtil {
     }
 
     private FileUtil() {
-
+        //工具类不允许实例化
     }
 }

@@ -68,4 +68,8 @@ public class Global {
         System.out.println(getAdminPassword());
     }
 
+    private Global() {
+        //工具类不允许实例化
+    }
+
 }

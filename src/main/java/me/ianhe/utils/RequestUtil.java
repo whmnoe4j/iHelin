@@ -111,6 +111,6 @@ public class RequestUtil {
     }
 
     private RequestUtil() {
-
+        //工具类不允许实例化
     }
 }

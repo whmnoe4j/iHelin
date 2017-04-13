@@ -67,6 +67,6 @@ public class ResponseUtil {
     }
 
     private ResponseUtil() {
-
+        //工具类不允许实例化
     }
 }
