@@ -183,8 +183,8 @@
         <i class="am-gotop-icon am-icon-chevron-up"></i>
     </a>
 </div>
-<footer class="my-footer">
-    <p>皖ICP备16015099号<br>
+<footer class="my-footer" style="background: #555;color: #fff;">
+    <p style="margin-top: 1.6rem;">皖ICP备16015099号<br>
         <small>Copyright © iHelin. ${.now?string('yyyy')}</small>
     </p>
 </footer>
