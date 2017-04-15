@@ -18,6 +18,7 @@
 - Log4J: 日志管理
 - Maven: 项目构建管理
 - Freemarker: 视图渲染
+- Redis: 缓存服务
 
 #### 前端技术
 
@@ -34,7 +35,7 @@
 - IntelliJ IDEA 2016.3
 - MySql: 数据库
 - jetty: 开发服务器
-- Tomcat: 应用服务器
+- Tomcat: 生产服务器
 - Git: 版本管理
 - Nginx: 反向代理服务器
 - Navicat for MySQL & MySQL Workbench: 数据库客户端

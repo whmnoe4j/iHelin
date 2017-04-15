@@ -28,4 +28,14 @@
 
     <!-- 配置基于注解的声明式事务 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--aop拦截service测试-->
+    <bean id="loggerTestAdvice" class="me.ianhe.advice.LoggerAdvice"></bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames" value="*Service"/>
+        <property name="interceptorNames" value="loggerTestAdvice"/>
+        <!--强制使用cglib代理技术-->
+        <property name="optimize" value="true"/>
+    </bean>
 </beans>

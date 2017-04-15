@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="greetingAround" class="me.ianhe.aop.GreetingInterceptor"></bean>
+    <bean id="greetingBefore" class="me.ianhe.aop.GreetingBeforeAdvice"></bean>
+    <bean id="greetingAfter" class="me.ianhe.aop.GreetingAfterAdvice"></bean>
+    <bean id="waiterTarget" class="me.ianhe.aop.NaiveWaiter"/>
+    <bean id="sellerTarget" class="me.ianhe.aop.Seller"/>
+
+    <!--jdk动态代理-->
+    <!--<bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--<property name="proxyInterfaces" value="me.ianhe.aop.Waiter"/>-->
+    <!--<property name="interceptorNames" value="greetingBefore"/>-->
+    <!--<property name="target" ref="waiterTarget"/>-->
+    <!--</bean>-->
+
+    <!--cglib动态代理，无需设置proxyInterfaces属性，即使设置了也会被ProxyFactoryBean忽略-->
+    <!--<bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="waiterTarget"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="interceptorNames" value="greetingBefore,greetingAfter"/>
+    </bean>-->
+
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="waiterTarget"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="interceptorNames" value="greetingAround"/>
+    </bean>
+
+    <bean id="transactionManager" class="me.ianhe.aop.TransactionManager"></bean>
+    <bean id="viewSpaceServiceTarget" class="me.ianhe.aop.ViewSpaceService"></bean>
+    <bean id="viewSpaceService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="transactionManager"/>
+        <property name="target" ref="viewSpaceServiceTarget"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <!--向切面注入一个前置增强-->
+    <bean id="greetingAdvisor" class="me.ianhe.aop.GreetingAdvisor">
+        <property name="advice" ref="greetingBefore"/>
+    </bean>
+
+    <!--通过一个父<bean>定义公共的配置信息-->
+    <bean id="parent" abstract="true" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="greetingAdvisor"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <!--waiter代理-->
+    <bean id="waiter1" parent="parent">
+        <property name="target" ref="waiterTarget"/>
+    </bean>
+
+    <!--seller代理-->
+    <bean id="seller" parent="parent">
+        <property name="target" ref="sellerTarget"/>
+    </bean>
+
+    <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="greetingBefore"/>
+        <property name="patterns">
+            <list>
+                <value>.*greet.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="waiter2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="regexpAdvisor"/>
+        <property name="target" ref="waiterTarget"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames" value="*erTarget"/>
+        <property name="interceptorNames" value="greetingBefore"/>
+        <!--强制使用cglib代理技术-->
+        <property name="optimize" value="true"/>
+    </bean>
+
+</beans>
