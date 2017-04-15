@@ -5,11 +5,10 @@ import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.AutoSendMail;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author iHelin
  * @create 2017-02-15 19:18
  */
-@Controller
+@RestController
 public class ScoreController extends BaseController {
 
     /**
@@ -30,7 +29,6 @@ public class ScoreController extends BaseController {
      * @param myScore
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "score", method = RequestMethod.POST)
     public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
@@ -39,7 +37,7 @@ public class ScoreController extends BaseController {
         res.put("score", myScore);
         int total = myScoreManager.getMyTotalScore();
         res.put("total", total);
-        String mailContent = TemplateUtil.applyTemplate("/tpl/score.ftl", res);
+        String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
         AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
         AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
         Thread t1 = new Thread(m1);
@@ -51,21 +49,18 @@ public class ScoreController extends BaseController {
         return success();
     }
 
-    @ResponseBody
     @RequestMapping(value = "score/all", method = RequestMethod.GET)
     public String getTotalScore() {
         int totalScore = myScoreManager.getMyTotalScore();
         return success(totalScore);
     }
 
-    @ResponseBody
     @RequestMapping(value = "score/{id}", method = RequestMethod.GET)
     public String getScore(@PathVariable Integer id) {
         MyScore myScore = myScoreManager.getById(id);
         return success(myScore);
     }
 
-    @ResponseBody
     @RequestMapping(value = "scores", method = RequestMethod.GET)
     public String getScores(Integer pageNum, Integer pageLength) {
         if (pageNum == null)

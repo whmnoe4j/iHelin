@@ -27,7 +27,7 @@ public class TestController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "tpl", method = RequestMethod.GET)
     public String mail() throws MessagingException {
-        String template = TemplateUtil.applyTemplate("/tpl/mail_content.ftl");
+        String template = TemplateUtil.applyTemplate("mail_content.ftl");
 //        mimeMail.sendMail("ihelin@outlook.com", "哈哈", template);
         MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
         return template;
@@ -53,12 +53,6 @@ public class TestController extends BaseController {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
-    }
-
-    public static void main(String[] args) {
-        String s = "123456";
-        System.out.println(CryptUtil.md5(s));
-        System.out.println(DigestUtils.md5DigestAsHex(s.getBytes()));
     }
 
 }

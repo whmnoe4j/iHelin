@@ -53,6 +53,10 @@ public class Global {
         return getValue("wx.token");
     }
 
+    public static String getMailTpl() {
+        return getValue("mail.tpl");
+    }
+
     public static File getClassPath() {
         return new File(Global.class.getResource("/").getFile());
     }

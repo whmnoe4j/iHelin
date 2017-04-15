@@ -1,6 +1,5 @@
 package me.ianhe.controller;
 
-import me.ianhe.config.CommonConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +34,6 @@ public class ScoreControllerTest extends AbstractJUnit4SpringContextTests {
     private MockMvc mockMvc;
     private MockHttpSession session;
 
-
     @Before
     public void setUp() throws Exception {
         this.session = new MockHttpSession();
@@ -47,7 +45,6 @@ public class ScoreControllerTest extends AbstractJUnit4SpringContextTests {
                 .andDo(print());*/
     }
 
-
     @Test
     public void addScore() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/score").session(this.session)
@@ -58,6 +55,20 @@ public class ScoreControllerTest extends AbstractJUnit4SpringContextTests {
                 .param("addWriter", "1"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getTotalScore() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/score/all"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void getScore() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/score/1"))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
 }
