@@ -61,7 +61,6 @@ public class DateTimeUtil {
         } catch (ParseException e) {
         }
         return null;
-
     }
 
     public static String formatSecond(Date time) {

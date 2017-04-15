@@ -1,5 +1,6 @@
 package me.ianhe.controller.admin;
 
+import com.google.code.kaptcha.Constants;
 import me.ianhe.model.AdminUser;
 import me.ianhe.utils.Global;
 import me.ianhe.utils.RequestUtil;
@@ -23,8 +24,19 @@ public class AdminLoginController extends BaseAdminController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(String username, String password, String from, HttpServletRequest request,
+    public String login(String username, String password, String captcha, String from, HttpServletRequest request,
                         HttpSession session, Model model) {
+        if (StringUtils.isEmpty(captcha)) {
+            model.addAttribute("error", "请填写验证码！");
+            model.addAttribute("from", from);
+            return ftl("login");
+        }
+        String sessionCaptcha = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if (!captcha.equalsIgnoreCase(sessionCaptcha)) {
+            model.addAttribute("error", "验证码不正确！");
+            model.addAttribute("from", from);
+            return ftl("login");
+        }
         if (username.equals(Global.getAdminUser()) && password.equals(Global.getAdminPassword())) {
             AdminUser adminUser = new AdminUser();
             adminUser.setAdminId(username);

@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
+import com.google.code.kaptcha.Constants;
 import me.ianhe.model.Result;
 import me.ianhe.utils.CryptUtil;
 import me.ianhe.utils.JSON;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -47,7 +49,7 @@ public class TestController extends BaseController {
     }
 
     @RequestMapping(value = "test1", method = RequestMethod.GET)
-    public void test1(HttpServletResponse response) throws IOException {
+    public void test1(HttpServletResponse response, HttpSession session) throws IOException {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
