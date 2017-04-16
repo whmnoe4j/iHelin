@@ -73,11 +73,15 @@
         <property name="proxyTargetClass" value="true"/>
     </bean>
 
+    <!--为容器中以erTarget结尾的bean自动生成代理对象，不需要如上的ProxyFactoryBean一个一个的生成代理对象-->
     <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames" value="*erTarget"/>
-        <property name="interceptorNames" value="greetingBefore"/>
+        <property name="interceptorNames" value="regexpAdvisor"/>
         <!--强制使用cglib代理技术-->
         <property name="optimize" value="true"/>
     </bean>
+
+    <!--为容器中所有advisor织入匹配的目标bean中（测试时要将上面的bean注释掉）-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>-->
 
 </beans>

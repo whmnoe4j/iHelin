@@ -81,4 +81,14 @@ public class AdviceTest {
         seller.greetTo("Tom");
     }
 
+    @Test
+    public void defaultCreator() throws Exception {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-aop.xml");
+        Waiter waiter = (Waiter) context.getBean("waiterTarget");
+        Seller seller = (Seller) context.getBean("sellerTarget");
+        waiter.greetTo("John");//这里实现了前置增强
+        waiter.serveTo("John");
+        seller.greetTo("Tom");
+    }
+
 }
