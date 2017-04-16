@@ -28,7 +28,7 @@ public class AdviceTest {
 
     @Test
     public void beforeAdvice() {
-        Waiter waiter = (NaiveWaiter) proxyFactory.getProxy();
+        Waiter waiter = (Waiter) proxyFactory.getProxy();
         waiter.greetTo("John");
         waiter.serveTo("Tom");
     }
