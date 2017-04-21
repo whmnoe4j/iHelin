@@ -34,10 +34,13 @@
     <logger name="me.ianhe">
         <level value="debug"/>
     </logger>
+    <logger name="org.mybatis">
+        <level value="info"/>
+    </logger>
 
     <!-- Root Logger -->
     <root>
-        <priority value="info"/>
+        <priority value="debug"/>
         <appender-ref ref="console"/>
         <appender-ref ref="default"/>
     </root>

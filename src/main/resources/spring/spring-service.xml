@@ -3,10 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
       http://www.springframework.org/schema/tx
       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
@@ -26,8 +29,26 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 配置基于注解的声明式事务 -->
+    <!-- 配置基于注解的声明式事务,注解高于aop -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 下面使用aop切面的方式来实现 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <!--配置事务传播性，隔离级别以及超时回滚等问题 -->
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="test*" propagation="REQUIRED"/>
+            <tx:method name="*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config proxy-target-class="true">
+        <!--配置事务切点 -->
+        <aop:pointcut id="txPointcutService" expression="execution(* me.ianhe.service.*.*(..))"/>
+        <aop:advisor pointcut-ref="txPointcutService" advice-ref="transactionAdvice"/>
+    </aop:config>
 
     <!--aop拦截service测试,拦截所有方法名包含add的方法-->
     <!--<bean id="loggerTestAdvice" class="me.ianhe.advice.LoggerAdvice"></bean>-->
