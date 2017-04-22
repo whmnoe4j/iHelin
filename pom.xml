@@ -192,7 +192,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring.version}</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
 
         <!-- servlet web相关依赖 -->
