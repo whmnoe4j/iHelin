@@ -74,5 +74,4 @@ public class CommonConfig {
             throw new RuntimeException("Can not find " + file.getAbsolutePath());
         }
     }
-
 }

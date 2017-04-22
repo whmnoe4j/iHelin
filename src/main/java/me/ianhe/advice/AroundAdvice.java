@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 环绕增强，在目标方法前后添加一行日志
+ *
  * @author iHelin
  * @create 2017-04-16 22:17
  */

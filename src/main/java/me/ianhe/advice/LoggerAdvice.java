@@ -7,6 +7,8 @@ import org.springframework.aop.MethodBeforeAdvice;
 import java.lang.reflect.Method;
 
 /**
+ * 前置增强，在目标方法前执行
+ *
  * @author iHelin
  * @create 2017-04-15 23:05
  */
