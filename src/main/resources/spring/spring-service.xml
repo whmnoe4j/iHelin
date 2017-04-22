@@ -29,18 +29,28 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 配置基于注解的声明式事务,注解高于aop -->
+    <!-- 配置基于注解的声明式事务，注解高于aop -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!-- 下面使用aop切面的方式来实现 -->
+    <!-- 使用aop切面的方式来实现事务 -->
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <!--配置事务传播性，隔离级别以及超时回滚等问题 -->
         <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="del*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="add*" propagation="REQUIRED"/>
-            <tx:method name="test*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="modify*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+
+            <tx:method name="get*" propagation="SUPPORTS"/>
+            <tx:method name="find*" propagation="SUPPORTS"/>
+            <tx:method name="load*" propagation="SUPPORTS"/>
+            <tx:method name="search*" propagation="SUPPORTS"/>
+            <tx:method name="select*" propagation="SUPPORTS"/>
+
             <tx:method name="*" rollback-for="Exception"/>
         </tx:attributes>
     </tx:advice>

@@ -4,9 +4,7 @@ import me.ianhe.dao.AdviceMapper;
 import me.ianhe.db.entity.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,17 +21,9 @@ public class AdviceService {
         return adviceMapper.selectAdviceByCondition();
     }
 
-    /**
-     * 事物测试
-     */
-    public void testTrans() {
-        Advice advice = new Advice();
-        advice.setEmail("email");
-        advice.setCreateTime(new Date());
-        advice.setMessage("msg");
-        advice.setName("name");
+    public int insertTest(Advice advice) {
         adviceMapper.insert(advice);
-        throw new RuntimeException("事物");
+        throw new RuntimeException("一个异常");//这里抛出了一个异常，看是否会回滚
     }
 
 }

@@ -52,7 +52,6 @@ public class TestController extends BaseController {
     public void test1(HttpServletResponse response, HttpSession session) throws IOException {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
-        adviceManager.testTrans();
         ResponseUtil.writeSuccessJSON(response, data);
     }
 
