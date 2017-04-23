@@ -25,7 +25,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -77,8 +78,9 @@ public class WechatUtil {
     public static String doGetStr(String url) {
         HttpGet httpGet = new HttpGet(url);
         try {
-            DefaultHttpClient client = new DefaultHttpClient();
-            HttpResponse httpResponse = client.execute(httpGet);
+            HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+            CloseableHttpClient httpClient = httpClientBuilder.build();
+            HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity entity = httpResponse.getEntity();
             return EntityUtils.toString(entity, CharEncoding.UTF_8);
         } catch (Exception e) {
@@ -93,10 +95,11 @@ public class WechatUtil {
     public static String doPostStr(String url, String outStr) {
         HttpPost httpPost = new HttpPost(url);
         try {
-            DefaultHttpClient client = new DefaultHttpClient();
+            HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+            CloseableHttpClient httpClient = httpClientBuilder.build();
             HttpEntity reqEntity = new StringEntity(outStr, ContentType.APPLICATION_JSON);
             httpPost.setEntity(reqEntity);
-            HttpResponse response = client.execute(httpPost);
+            HttpResponse response = httpClient.execute(httpPost);
             HttpEntity respEntity = response.getEntity();
             return EntityUtils.toString(respEntity, CharEncoding.UTF_8);
         } catch (Exception e) {
