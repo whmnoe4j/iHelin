@@ -72,14 +72,15 @@ public class WechatUtil {
     private static final String QUERY_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
     private static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 
+    private static final HttpClientBuilder HTTP_CLIENT_BUILDER = HttpClientBuilder.create();
+
     private static final Logger LOGGER = LoggerFactory.getLogger(WechatUtil.class);
 
     // get请求，返回String
     public static String doGetStr(String url) {
         HttpGet httpGet = new HttpGet(url);
         try {
-            HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-            CloseableHttpClient httpClient = httpClientBuilder.build();
+            CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
             HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity entity = httpResponse.getEntity();
             return EntityUtils.toString(entity, CharEncoding.UTF_8);
@@ -95,8 +96,7 @@ public class WechatUtil {
     public static String doPostStr(String url, String outStr) {
         HttpPost httpPost = new HttpPost(url);
         try {
-            HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-            CloseableHttpClient httpClient = httpClientBuilder.build();
+            CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
             HttpEntity reqEntity = new StringEntity(outStr, ContentType.APPLICATION_JSON);
             httpPost.setEntity(reqEntity);
             HttpResponse response = httpClient.execute(httpPost);
