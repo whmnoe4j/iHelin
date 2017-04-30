@@ -146,7 +146,7 @@ public class AccessWeChatController extends BaseController {
             user = userManager.transWXUserToUser(wxUser);
             userManager.insertUser(user);
         }
-        DingUtil.say("用户" + user.getNickName() + "发来消息：" + content);
+//        DingUtil.say("用户" + user.getNickName() + "发来消息：" + content);
         String message;
         switch (content) {
             case "1":

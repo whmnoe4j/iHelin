@@ -9,7 +9,7 @@ public class DingUtilTest {
 
     @Test
     public void say() throws Exception {
-        DingUtil.say("明天要上班啦！！！");
+        DingUtil.say("到了吗？");
     }
 
 }

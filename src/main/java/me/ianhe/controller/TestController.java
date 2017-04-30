@@ -6,6 +6,12 @@ import me.ianhe.utils.JSON;
 import me.ianhe.utils.MailUtil;
 import me.ianhe.utils.ResponseUtil;
 import me.ianhe.utils.TemplateUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.CharEncoding;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -60,6 +67,22 @@ public class TestController extends BaseController {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
+    }
+
+    /**
+     * 文件下载测试
+     *
+     * @author iHelin
+     * @create 2017-04-26 14:12
+     */
+    @ResponseBody
+    @RequestMapping("download")
+    public ResponseEntity<String> download() throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "access_token.yml");
+        return new ResponseEntity<String>(FileUtils.readFileToString(new File("/Users/iHelin/Documents/IdeaProjects/iHelin/src/main/resources/access_token.yml"), CharEncoding.UTF_8),
+                headers, HttpStatus.CREATED);
     }
 
 }
