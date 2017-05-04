@@ -31,6 +31,12 @@ import java.util.Properties;
 @Controller
 public class TestController extends BaseController {
 
+    /**
+     * 测试从模板中获取内容并发送邮件
+     *
+     * @author iHelin
+     * @create 2017-04-30 08:45
+     */
     @ResponseBody
     @GetMapping(value = "tpl")
     public String mail() throws MessagingException {

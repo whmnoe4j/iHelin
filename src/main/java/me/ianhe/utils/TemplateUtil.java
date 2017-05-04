@@ -38,7 +38,7 @@ public class TemplateUtil {
             template.process(propMap, writer);
             return writer.toString();
         } catch (Exception e) {
-            LOGGER.warn("Error while process template: " + templatePath, e);
+            LOGGER.warn("Error while process template：{} ", templatePath, e);
             return "";
         }
     }
