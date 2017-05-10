@@ -41,7 +41,7 @@ public class FileUploadController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String handleUpload(@RequestParam("file") MultipartFile file, Model model) {
+    public String handleUpload(MultipartFile file, Model model) {
         if (file.isEmpty()) {
             model.addAttribute("msg", "请选择文件……");
             return "upload";

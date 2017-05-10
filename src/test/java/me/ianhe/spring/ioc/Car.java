@@ -1,4 +1,4 @@
-package me.ianhe.ioc;
+package me.ianhe.spring.ioc;
 
 /**
  * Created by iHelin on 17/5/3 20:11.

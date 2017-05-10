@@ -1,4 +1,4 @@
-package me.ianhe.aop;
+package me.ianhe.spring.aop;
 
 import org.junit.Before;
 import org.junit.Test;

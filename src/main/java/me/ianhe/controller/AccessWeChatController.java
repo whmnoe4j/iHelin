@@ -5,7 +5,6 @@ import me.ianhe.db.entity.User;
 import me.ianhe.model.WXUser;
 import me.ianhe.model.req.LocationMessage;
 import me.ianhe.utils.CheckUtil;
-import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.springframework.stereotype.Controller;
@@ -116,7 +115,7 @@ public class AccessWeChatController extends BaseController {
         String eventType = msgMap.get("Event");
         String fromUserName = msgMap.get("FromUserName");
         String toUserName = msgMap.get("ToUserName");
-        String message = "";
+        String message = null;
         if (WechatUtil.MESSAGE_SUBSCRIBE.equals(eventType)) {
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, "感谢您的关注，我会继续努力！");// 关注事件
         } else if (WechatUtil.MESSAGE_VIEW.equals(eventType)) {
@@ -147,7 +146,7 @@ public class AccessWeChatController extends BaseController {
             userManager.insertUser(user);
         }
 //        DingUtil.say("用户" + user.getNickName() + "发来消息：" + content);
-        String message;
+        String message = null;
         switch (content) {
             case "1":
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName,

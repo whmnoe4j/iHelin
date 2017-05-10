@@ -1,14 +1,7 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.service.AccessTokenService;
-import me.ianhe.service.AdviceService;
-import me.ianhe.service.ArticleService;
-import me.ianhe.service.FinanceService;
-import me.ianhe.service.QrcodeService;
-import me.ianhe.service.ScoreService;
-import me.ianhe.service.ServiceMenuService;
-import me.ianhe.service.UserService;
+import me.ianhe.service.*;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +33,7 @@ public abstract class BaseController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected static final int DEFAULT_PAGE_LENGTH = 10;//分页大小
+    protected static final int DEFAULT_PAGE_LENGTH = 10;//默认分页大小
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
 

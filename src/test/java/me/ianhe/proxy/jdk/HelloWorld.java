@@ -1,4 +1,4 @@
-package me.ianhe.jdk.proxy;
+package me.ianhe.proxy.jdk;
 
 /**
  * PackageName:   com.seven.ianhe

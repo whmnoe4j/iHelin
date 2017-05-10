@@ -1,4 +1,4 @@
-package me.ianhe.aop;
+package me.ianhe.spring.aop;
 
 import java.sql.SQLException;
 

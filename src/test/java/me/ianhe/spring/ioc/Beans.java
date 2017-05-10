@@ -1,4 +1,4 @@
-package me.ianhe.ioc;
+package me.ianhe.spring.ioc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

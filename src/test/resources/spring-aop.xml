@@ -3,11 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="greetingAround" class="me.ianhe.aop.GreetingInterceptor"></bean>
-    <bean id="greetingBefore" class="me.ianhe.aop.GreetingBeforeAdvice"></bean>
-    <bean id="greetingAfter" class="me.ianhe.aop.GreetingAfterAdvice"></bean>
-    <bean id="waiterTarget" class="me.ianhe.aop.NaiveWaiter"/>
-    <bean id="sellerTarget" class="me.ianhe.aop.Seller"/>
+    <bean id="greetingAround" class="me.ianhe.spring.aop.GreetingInterceptor"></bean>
+    <bean id="greetingBefore" class="me.ianhe.spring.aop.GreetingBeforeAdvice"></bean>
+    <bean id="greetingAfter" class="me.ianhe.spring.aop.GreetingAfterAdvice"></bean>
+    <bean id="waiterTarget" class="me.ianhe.spring.aop.NaiveWaiter"/>
+    <bean id="sellerTarget" class="me.ianhe.spring.aop.Seller"/>
 
     <!--jdk动态代理-->
     <!--<bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">-->
@@ -29,8 +29,8 @@
         <property name="interceptorNames" value="greetingAround"/>
     </bean>
 
-    <bean id="transactionManager" class="me.ianhe.aop.TransactionManager"></bean>
-    <bean id="viewSpaceServiceTarget" class="me.ianhe.aop.ViewSpaceService"></bean>
+    <bean id="transactionManager" class="me.ianhe.spring.aop.TransactionManager"></bean>
+    <bean id="viewSpaceServiceTarget" class="me.ianhe.spring.aop.ViewSpaceService"></bean>
     <bean id="viewSpaceService" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="interceptorNames" value="transactionManager"/>
         <property name="target" ref="viewSpaceServiceTarget"/>
@@ -38,7 +38,7 @@
     </bean>
 
     <!--向切面注入一个前置增强-->
-    <bean id="greetingAdvisor" class="me.ianhe.aop.GreetingAdvisor">
+    <bean id="greetingAdvisor" class="me.ianhe.spring.aop.GreetingAdvisor">
         <property name="advice" ref="greetingBefore"/>
     </bean>
 

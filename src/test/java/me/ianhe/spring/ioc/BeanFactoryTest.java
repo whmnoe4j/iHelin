@@ -1,4 +1,4 @@
-package me.ianhe.ioc;
+package me.ianhe.spring.ioc;
 
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
