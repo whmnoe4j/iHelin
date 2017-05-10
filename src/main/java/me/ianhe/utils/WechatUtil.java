@@ -76,7 +76,12 @@ public class WechatUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WechatUtil.class);
 
-    // get请求，返回String
+    /**
+     * get请求，返回String
+     *
+     * @author iHelin
+     * @since 2017-05-10 16:54
+     */
     public static String doGetStr(String url) {
         HttpGet httpGet = new HttpGet(url);
         try {
@@ -85,14 +90,19 @@ public class WechatUtil {
             HttpEntity entity = httpResponse.getEntity();
             return EntityUtils.toString(entity, CharEncoding.UTF_8);
         } catch (Exception e) {
-            LOGGER.warn("error while doGet url:" + url, e);
+            LOGGER.warn("error while doGet url:{}", url, e);
             return null;
         } finally {
             httpGet.releaseConnection();
         }
     }
 
-    // post请求
+    /**
+     * post请求
+     *
+     * @author iHelin
+     * @since 2017-05-10 16:54
+     */
     public static String doPostStr(String url, String outStr) {
         HttpPost httpPost = new HttpPost(url);
         try {
@@ -103,7 +113,7 @@ public class WechatUtil {
             HttpEntity respEntity = response.getEntity();
             return EntityUtils.toString(respEntity, CharEncoding.UTF_8);
         } catch (Exception e) {
-            LOGGER.warn("error while doPost url:" + url, e);
+            LOGGER.warn("error while doPost url:{}", url, e);
             return null;
         } finally {
             httpPost.releaseConnection();

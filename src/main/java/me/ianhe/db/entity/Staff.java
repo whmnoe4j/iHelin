@@ -1,15 +1,8 @@
 package me.ianhe.db.entity;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Staff implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Staff {
 
     private Integer id;
 
@@ -79,29 +72,5 @@ public class Staff implements Serializable {
 
     public void setOther(BigDecimal other) {
         this.other = other;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(id).append(name).append(basicWage).append(subsidizedMeals)
-                .append(socialSecurity).append(accumulationFund).append(other).toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return EqualsBuilder.reflectionEquals(this, o, false);
-    }
-
-    public static void main(String[] args) {
-        Staff staff = new Staff();
-        staff.setName("seven");
-        staff.setId(1);
-        staff.setAccumulationFund(new BigDecimal("100.0"));
-        System.out.println(staff);
     }
 }

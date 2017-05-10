@@ -4,13 +4,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * PackageName:   com.seven.ianhe
- * ClassName:
- * Description:
- * Date           17/1/3
- * lastModified:
+ * 代理类
  *
- * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
+ * @author iHelin
+ * @since 2017-01-03 16:39
  */
 public class MyInvocationHandler implements InvocationHandler {
 
@@ -23,6 +20,8 @@ public class MyInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("method :" + method.getName() + "() is invoked!");
-        return method.invoke(target, args);
+        Object res = method.invoke(target, args);
+        System.out.println("After...");
+        return res;
     }
 }

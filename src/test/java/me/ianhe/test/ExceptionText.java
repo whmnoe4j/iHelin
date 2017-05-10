@@ -10,6 +10,7 @@ import java.io.IOException;
  * @create 2017-02-23 23:07
  */
 public class ExceptionText {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionText.class);
 
     public static void main(String[] args) {
