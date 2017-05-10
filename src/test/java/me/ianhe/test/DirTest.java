@@ -4,7 +4,7 @@ import org.junit.Test;
 
 /**
  * @author iHelin
- * @create 2017-02-06 21:47
+ * @create 2017-02-06
  */
 public class DirTest {
 
