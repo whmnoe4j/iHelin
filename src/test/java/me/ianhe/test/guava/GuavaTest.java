@@ -33,28 +33,4 @@ public class GuavaTest {
         System.out.println(Ints.max(ints));
     }
 
-    @Test
-    public void stringUtilTest() {
-        System.out.println(StringUtils.capitalize("string"));
-        System.out.println(StringUtils.isNumeric("12355.12"));
-        System.out.println(StringUtils.left("string", 3));
-        System.out.println(StringUtils.countMatches("abcdaaa", 'a'));//4
-        System.out.println(StringUtils.countMatches("abcdaaa", "ab"));//1
-    }
-
-    /**
-     * 随机数测试
-     *
-     * @author iHelin
-     * @since 2017-05-10 16:50
-     */
-    @Test
-    public void randomTest() {
-        System.out.println(RandomStringUtils.randomAlphabetic(4));
-        System.out.println(RandomStringUtils.randomAlphanumeric(6));
-        System.out.println(RandomStringUtils.randomNumeric(4));
-        System.out.println(RandomStringUtils.random(4, false, true));
-        System.out.println(WordUtils.capitalize("abc def"));//Abc Def
-    }
-
 }
