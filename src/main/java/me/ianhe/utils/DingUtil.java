@@ -14,24 +14,28 @@ import java.util.Map;
  */
 public class DingUtil {
 
-    //葫芦娃的机器人
-    private static final String DING_ROBOT_URL = "https://oapi.dingtalk.com/robot/send?access_token" +
-            "=0822db7059b63a7f73a12e0b665574310108c73649e256c87c646394e63fc6a2";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DingUtil.class);
+    private static final String ADDRESS = Global.getValue("ding.robot.url");
 
-    public static void say(String content) {
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("content", content);
+    /**
+     * 发送指定文本
+     *
+     * @author iHelin
+     * @since 2017/5/17 11:16
+     */
+    public static String say(String content) {
+        Map<String, Object> contentMap = Maps.newHashMap();
+        contentMap.put("content", content);
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "text");
-        data.put("text", map);
-        String res = WechatUtil.doPostStr(DING_ROBOT_URL, JSON.toJson(data));
-        LOGGER.info("Robut return {}", res);
+        data.put("text", contentMap);
+        return doSay(JSON.toJson(data));
     }
 
-    public static void main(String[] args) {
-        say("！");
+    public static String doSay(String data) {
+        String res = WechatUtil.doPostStr(ADDRESS, data);
+        LOGGER.info("Robot return {}", res);
+        return res;
     }
 
     private DingUtil() {

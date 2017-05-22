@@ -1,6 +1,7 @@
 package me.ianhe.utils;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -44,7 +45,6 @@ import java.util.Map;
 
 /**
  * 微信常用工具类
- * <p>
  * Created by iHelin on 16/11/4.
  */
 public class WechatUtil {
@@ -127,7 +127,7 @@ public class WechatUtil {
      * @return
      */
     public static Map<String, String> xml2Map(HttpServletRequest request) {
-        Map<String, String> msgMap = new HashMap<>();// 将解析结果存储在Map中
+        Map<String, String> msgMap = Maps.newHashMap();// 将解析结果存储在Map中
         // 从request中取得输入流
         try (InputStream inStream = request.getInputStream()) {
             SAXReader reader = new SAXReader();
@@ -153,7 +153,7 @@ public class WechatUtil {
         String url = ACCESS_TOKEN_URL.replace("APPID", appId).replace("APPSECRET", secret);
         String res = doGetStr(url);
         WXAccessToken token = JSON.parseObject(res, WXAccessToken.class);
-        LOGGER.info("从微信服务器获取token成功，有效期为" + token.getExpires_in() + "秒");
+        LOGGER.info("从微信服务器获取token成功，有效期为{}", token.getExpires_in());
         return token;
     }
 
