@@ -84,8 +84,8 @@ public class WechatUtil {
      */
     public static String doGetStr(String url) {
         HttpGet httpGet = new HttpGet(url);
+        CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
         try {
-            CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
             HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity entity = httpResponse.getEntity();
             return EntityUtils.toString(entity, CharEncoding.UTF_8);
@@ -105,10 +105,10 @@ public class WechatUtil {
      */
     public static String doPostStr(String url, String outStr) {
         HttpPost httpPost = new HttpPost(url);
+        CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
+        HttpEntity reqEntity = new StringEntity(outStr, ContentType.APPLICATION_JSON);
+        httpPost.setEntity(reqEntity);
         try {
-            CloseableHttpClient httpClient = HTTP_CLIENT_BUILDER.build();
-            HttpEntity reqEntity = new StringEntity(outStr, ContentType.APPLICATION_JSON);
-            httpPost.setEntity(reqEntity);
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity respEntity = response.getEntity();
             return EntityUtils.toString(respEntity, CharEncoding.UTF_8);
