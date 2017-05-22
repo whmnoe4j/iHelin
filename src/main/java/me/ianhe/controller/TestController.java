@@ -86,8 +86,8 @@ public class TestController extends BaseController {
     public ResponseEntity<String> download() throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", "access_token.yml");
-        return new ResponseEntity<String>(FileUtils.readFileToString(new File("/Users/iHelin/Documents/IdeaProjects/iHelin/src/main/resources/access_token.yml"), CharEncoding.UTF_8),
+        headers.setContentDispositionFormData("attachment", "test.yml");
+        return new ResponseEntity<String>("download test",
                 headers, HttpStatus.CREATED);
     }
 
