@@ -41,7 +41,6 @@ public class TestController extends BaseController {
     @GetMapping(value = "tpl")
     public String mail() throws MessagingException {
         String template = TemplateUtil.applyTemplate("mail_content.ftl");
-//        mimeMail.sendMail("ihelin@outlook.com", "哈哈", template);
         MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
         return template;
     }
@@ -86,9 +85,8 @@ public class TestController extends BaseController {
     public ResponseEntity<String> download() throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", "test.yml");
-        return new ResponseEntity<String>("download test",
-                headers, HttpStatus.CREATED);
+        headers.setContentDispositionFormData("attachment", "test.txt");
+        return new ResponseEntity<String>("download test", headers, HttpStatus.CREATED);
     }
 
 }
