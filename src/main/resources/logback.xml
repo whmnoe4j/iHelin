@@ -4,6 +4,8 @@
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="/logs/iHelin"/>
 
+    <property resource="config.properties"/>
+
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -24,7 +26,21 @@
         </encoder>
     </appender>
 
+    <!--日志记录到数据库 -->
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>${jdbc.driverClassName}</driverClass>
+            <url>${jdbc.url}</url>
+            <user>${jdbc.username}</user>
+            <password>${jdbc.password}</password>
+        </connectionSource>
+    </appender>
+
     <logger name="me.ianhe" level="DEBUG"/>
+
+    <logger name="me.ianhe.service" level="WARN">
+        <appender-ref ref="DB"/>
+    </logger>
 
     <!-- Root Logger -->
     <root level="INFO">
