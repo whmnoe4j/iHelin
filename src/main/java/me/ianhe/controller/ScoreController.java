@@ -30,18 +30,6 @@ public class ScoreController extends BaseController {
     public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
         myScoreManager.addRecord(myScore);
-        Map<String, Object> res = Maps.newHashMap();
-        res.put("score", myScore);
-        long total = myScoreManager.getMyTotalScore();
-        res.put("total", total);
-        String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
-        String title = "加分提醒:今天加了" + myScore.getScore() + "分";
-        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", title, mailContent);
-        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", title, mailContent);
-        Thread t1 = new Thread(m1);
-        Thread t2 = new Thread(m2);
-        t1.start();
-        t2.start();
         return success();
     }
 
