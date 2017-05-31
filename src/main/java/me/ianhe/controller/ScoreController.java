@@ -5,10 +5,7 @@ import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.AutoSendMail;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -35,23 +32,22 @@ public class ScoreController extends BaseController {
         myScoreManager.addRecord(myScore);
         Map<String, Object> res = Maps.newHashMap();
         res.put("score", myScore);
-        int total = myScoreManager.getMyTotalScore();
+        long total = myScoreManager.getMyTotalScore();
         res.put("total", total);
         String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
-        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
-        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", "加分提醒:今天加了" + myScore.getScore() + "分", mailContent);
+        String title = "加分提醒:今天加了" + myScore.getScore() + "分";
+        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", title, mailContent);
+        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", title, mailContent);
         Thread t1 = new Thread(m1);
         Thread t2 = new Thread(m2);
         t1.start();
         t2.start();
-        DingUtil.say("今天又加了" + myScore.getScore() + "分，理由是：" + myScore.getReason() + "，现在一共有"
-                + total + "分，加油，你们要继续努力呦！");
         return success();
     }
 
     @RequestMapping(value = "score/all", method = RequestMethod.GET)
     public String getTotalScore() {
-        int totalScore = myScoreManager.getMyTotalScore();
+        long totalScore = myScoreManager.getMyTotalScore();
         return success(totalScore);
     }
 
@@ -61,13 +57,10 @@ public class ScoreController extends BaseController {
         return success(myScore);
     }
 
-    @RequestMapping(value = "scores", method = RequestMethod.GET)
+    @GetMapping("scores")
     public String getScores(Integer pageNum, Integer pageLength) {
-        if (pageNum == null)
-            pageNum = 1;
-        if (pageLength == null) {
-            pageLength = 10;
-        }
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageLength = pageLength == null ? DEFAULT_PAGE_LENGTH : pageLength;
         List<MyScore> scores = myScoreManager.selectByCondition((pageNum - 1) * pageLength, pageLength);
         return success(scores);
     }

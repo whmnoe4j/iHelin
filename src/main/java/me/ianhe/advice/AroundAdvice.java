@@ -17,11 +17,10 @@ public class AroundAdvice implements MethodInterceptor {
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-//        Object[] args = invocation.getArguments();
         String methodName = invocation.getMethod().getName();
-        logger.debug(methodName + "方法执行前。");
+        logger.debug("{} 方法执行前。", methodName);
         Object obj = invocation.proceed();
-        logger.debug(methodName + "方法执行后");
+        logger.debug("{} 方法执行后，结果：{}", methodName, obj);
         return obj;
     }
 }

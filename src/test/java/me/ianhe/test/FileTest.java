@@ -1,7 +1,9 @@
 package me.ianhe.test;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,6 +31,11 @@ public class FileTest {
         out.flush();
         out.print('。');
         out.close();
+    }
+
+    @Test
+    public void testFile() throws IOException {
+        FileUtils.forceDelete(new File("employee.txt"));
     }
 
 

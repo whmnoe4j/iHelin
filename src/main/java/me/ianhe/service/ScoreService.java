@@ -22,7 +22,7 @@ public class ScoreService {
         return myScoreMapper.selectByPrimaryKey(id);
     }
 
-    public int getMyTotalScore() {
+    public long getMyTotalScore() {
         return myScoreMapper.getTotalScore();
     }
 

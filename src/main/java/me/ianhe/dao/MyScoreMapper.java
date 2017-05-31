@@ -20,7 +20,7 @@ public interface MyScoreMapper {
 
     int updateByPrimaryKey(MyScore record);
 
-    int getTotalScore();
+    long getTotalScore();
 
     List<MyScore> selectByCondition(RowBounds rowBounds);
 }

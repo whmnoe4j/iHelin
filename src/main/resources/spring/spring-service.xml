@@ -60,27 +60,28 @@
         <aop:advisor pointcut-ref="txPointcutService" advice-ref="transactionAdvice"/>
     </aop:config>
 
-    <!--aop拦截service测试,拦截所有方法名包含add的方法-->
-    <!--<bean id="loggerTestAdvice" class="me.ianhe.advice.LoggerAdvice"></bean>-->
+
+    <!--aop拦截service测试，拦截方法名中包含add的方法-->
     <bean id="aroundAdvice" class="me.ianhe.advice.AroundAdvice"></bean>
     <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice" ref="aroundAdvice"></property>
         <property name="patterns">
             <list>
-                <value>.*add.*</value>
+                <value>.*getMyTotalScore.*</value>
             </list>
         </property>
     </bean>
-
     <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames" value="*Service"/>
         <property name="interceptorNames">
             <list>
                 <value>regexpAdvisor</value>
-                <!--<value>loggerTestAdvice</value>-->
             </list>
         </property>
         <!--强制使用cglib代理技术-->
         <property name="optimize" value="true"/>
     </bean>
+
+    <aop:aspectj-autoproxy/>
+    <bean id="scoreAdvice" class="me.ianhe.advice.ScoreAfterAspect"></bean>
 </beans>

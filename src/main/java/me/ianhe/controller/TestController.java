@@ -6,8 +6,6 @@ import me.ianhe.utils.JSON;
 import me.ianhe.utils.MailUtil;
 import me.ianhe.utils.ResponseUtil;
 import me.ianhe.utils.TemplateUtil;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.CharEncoding;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -39,16 +34,29 @@ public class TestController extends BaseController {
      */
     @ResponseBody
     @GetMapping(value = "tpl")
-    public String mail() throws MessagingException {
+    public String mail() {
         String template = TemplateUtil.applyTemplate("mail_content.ftl");
         MailUtil.sendMail("ihelin@outlook.com", "iHelin", "哈哈", template);
         return template;
     }
 
+    /**
+     * aop测试
+     *
+     * @author iHelin
+     * @since 2017/5/31 16:26
+     */
+    @GetMapping("aop")
+    @ResponseBody
+    public String testAop() {
+        long total = myScoreManager.getMyTotalScore();
+        return String.valueOf(total);
+    }
+
     @ResponseBody
     @PostMapping("test_post")
     public String testPost(@RequestBody String hello) {
-        System.out.println("get:" + hello);
+        logger.debug("get:{}", hello);
         return "hahahhahahhah";
     }
 
@@ -67,8 +75,8 @@ public class TestController extends BaseController {
         return JSON.toJson(result);
     }
 
-    @RequestMapping(value = "test1", method = RequestMethod.GET)
-    public void test1(HttpServletResponse response, HttpSession session) throws IOException {
+    @GetMapping(value = "test1")
+    public void test1(HttpServletResponse response, HttpSession session) {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
@@ -82,11 +90,11 @@ public class TestController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("download")
-    public ResponseEntity<String> download() throws IOException {
+    public ResponseEntity<String> download() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", "test.txt");
-        return new ResponseEntity<String>("download test", headers, HttpStatus.CREATED);
+        return new ResponseEntity("download test", headers, HttpStatus.CREATED);
     }
 
 }

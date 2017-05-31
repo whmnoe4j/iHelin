@@ -92,7 +92,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="getTotalScore" resultType="int">
+    <select id="getTotalScore" resultType="long">
         select
         sum(score)
         from MyScore
