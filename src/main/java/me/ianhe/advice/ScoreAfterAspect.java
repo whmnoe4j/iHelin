@@ -3,13 +3,9 @@ package me.ianhe.advice;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.service.ScoreService;
 import me.ianhe.utils.DingUtil;
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +23,8 @@ public class ScoreAfterAspect {
     private ScoreService scoreService;
 
     @AfterReturning(value = "execution(* addRecord(..))")
-    public void invoke(JoinPoint joinPoint) throws Throwable {
+    public void afterReturningAdvice(JoinPoint joinPoint) {
         logger.debug("start...");
-
         MyScore myScore = (MyScore) joinPoint.getArgs()[0];
         long total = scoreService.getMyTotalScore();
         DingUtil.say("今天又加了" + myScore.getScore() + "分，理由是：" + myScore.getReason() + "，现在一共有"
