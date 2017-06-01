@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
+import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.Result;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.MailUtil;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -70,9 +72,7 @@ public class TestController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test() {
-        Result result = new Result();
-        result.setData("<h1>三个人请问abc123</h1>");
-        return JSON.toJson(result);
+        return success("<h1>三个人请问abc123</h1>");
     }
 
     @GetMapping(value = "test1")
@@ -80,6 +80,17 @@ public class TestController extends BaseController {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
+    }
+
+    @ResponseBody
+    @GetMapping("test2")
+    public MyScore test2() {
+        MyScore myScore = new MyScore();
+        myScore.setAddDate(new Date());
+        myScore.setAddWriter(1);
+        myScore.setReason("<h1>三个人请问abc123</h1>");
+        myScore.setScore(1);
+        return myScore;
     }
 
     /**

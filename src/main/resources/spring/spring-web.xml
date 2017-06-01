@@ -21,26 +21,21 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--解决@ResponseBody注解中文乱码问题-->
+    <!--解决@ResponseBody注解中文乱码问题，必须放在annotation-driven上面-->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
+                <!--返回字符串-->
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                     <property name="supportedMediaTypes">
                         <list>
                             <value>application/json;charset=UTF-8</value>
-                            <value>text/plain;charset=UTF-8</value>
+                            <!--<value>text/plain;charset=UTF-8</value>-->
                         </list>
                     </property>
                 </bean>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>text/plain;charset=UTF-8</value>
-                            <value>application/json;charset=UTF-8</value>
-                        </list>
-                    </property>
-                </bean>
+                <!--返回对象，转成json-->
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
             </list>
         </property>
     </bean>
@@ -76,7 +71,10 @@
                 <prop key="time_format">HH:mm:ss</prop>
                 <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
                 <prop key="whitespace_stripping">true</prop>
-                <prop key="number_format">0.##</prop><!-- 设置数字格式，防止出现,号，默认2位 -->
+                <!-- 设置数字格式，防止出现,号，默认2位 -->
+                <prop key="number_format">0.##</prop>
+                <!--模板碰到null时不提示异常-->
+                <prop key="classic_compatible">true</prop>
             </props>
         </property>
     </bean>
@@ -99,5 +97,6 @@
         <!-- the maximum in memory size allowed in bytes : 10M -->
         <property name="maxInMemorySize" value="10485760"/>
         <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSizePerFile" value="10485760"/>
     </bean>
 </beans>
