@@ -1,24 +1,16 @@
 package me.ianhe.controller;
 
-import com.google.common.collect.Maps;
-import me.ianhe.config.CommonConfig;
 import me.ianhe.db.entity.Qrcode;
-import me.ianhe.utils.JSON;
-import me.ianhe.utils.QRCode;
+import me.ianhe.utils.Global;
+import me.ianhe.utils.QRCodeUtil;
 import me.ianhe.utils.RequestUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * PackageName:   com.seven.ianhe.controller
@@ -32,12 +24,12 @@ import java.util.Map;
 @Controller
 public class QrcodeController extends BaseController {
 
-    @RequestMapping(value = "qrcode", method = RequestMethod.GET)
+    @GetMapping(value = "qrcode")
     public String qrcodePage() {
         return "qrcode";
     }
 
-    @RequestMapping(value = "qrcode/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "qrcode/{id}")
     public String qrcodePage(@PathVariable Integer id, Model model) {
         Qrcode qrcode = qrcodeManager.getQrcode(id);
         if (qrcode == null) {
@@ -50,8 +42,8 @@ public class QrcodeController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "generate_qrcode", method = RequestMethod.POST)
-    public String generateQRCode(String content, HttpServletRequest request, HttpServletResponse response) {
-        String path = "/zt/qrcode/";
+    public String generateQRCode(String content, HttpServletRequest request) {
+        String path = "zt/qrcode/";
         String format = "png";
         Qrcode qrcode = new Qrcode();
         qrcode.setContent(content);
@@ -59,12 +51,10 @@ public class QrcodeController extends BaseController {
         qrcode.setPath(path);
         qrcodeManager.insert(qrcode);
         String fileName = qrcode.getId() + "." + format;
-        path = path + QRCode.generateQRCode(path, "qrcode/" + +qrcode.getId(), fileName, format, 300, 300);
-        Map<String, Object> res = Maps.newHashMap();
-        res.put("status", "success");
-        res.put("url", path);
-        res.put("qrcode", qrcode);
-        logger.info("Success generate qrcode {},ip: {}", content, RequestUtil.getRealIp(request));
-        return JSON.toJson(res);
+        String qrCodeContent = Global.getDomainUrl() + "/qrcode/" + qrcode.getId();
+        path = QRCodeUtil.generateQRCode(path, qrCodeContent,
+                fileName, format);
+        logger.debug("Successing generate qrcode {},ip: {}", qrCodeContent, RequestUtil.getRealIp(request));
+        return success(path);
     }
 }

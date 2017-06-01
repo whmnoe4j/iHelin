@@ -16,7 +16,7 @@ public class QRCodeTest {
         String format = "png";
         String content = "2";
         String fileName = new Random().nextInt(1000000) + "." + format;
-        String name = QRCode.generateQRCode("", content, fileName, format, width, height);
+        String name = QRCodeUtil.generateQRCode("", content, fileName, format, width, height);
         System.out.println(name);
     }
 

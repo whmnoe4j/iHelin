@@ -5,11 +5,11 @@
     <title>二维码工具</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
+    <meta name="description" content="Ian He"/>
     <meta name="author" content=""/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link href="${request.contextPath}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type='text/css'
+    <link href="${request.contextPath}/css/bootstrap.css" rel="stylesheet" type='text/css'
           media="all"/>
     <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css'
           media="all"/>
@@ -40,7 +40,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="javascript:void(0);">二维码生成</a>
+            <a class="navbar-brand" href="javascript:void(0);">二维码工具</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -52,13 +52,6 @@
 <div class="container">
 
     <div class="jumbotron">
-    <#--<h1>Navbar example</h1>
-    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It
-        includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>To see the difference between static and fixed top navbars, just scroll.</p>
-    <p>
-        <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs »</a>
-    </p>-->
         <div class="row">
             <div class="col-sm-5">
                 <div class="form-group">
@@ -79,7 +72,7 @@
     </div>
 </div>
 
-<script type='text/javascript' src='${request.contextPath}/plugins/bootstrap/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='${request.contextPath}/js/bootstrap.min.js'></script>
 <script type='text/javascript' src='${request.contextPath}/plugins/form-parsley/parsley.min.js'></script>
 <script type='text/javascript' src='${request.contextPath}/js/formvalidation.js'></script>
 <script type="text/javascript" src="${request.contextPath}/plugins/simditor/module.js"></script>
@@ -99,8 +92,8 @@
         simditor = new Simditor({
             textarea: $('#content'),
             toolbarFloat: false,
-            markdown: true,
-            toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'table', 'image', 'alignment','|','markdown'],
+            markdown: false,
+            toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'table', 'image', 'alignment', '|', 'markdown'],
             upload: {
                 url: '${request.contextPath}/img_upload',
                 params: null,
@@ -125,16 +118,12 @@
         });
         $.post('${request.contextPath}/generate_qrcode', {content: content}, function (data) {
             layer.close(index);
-            data = JSON.parse(data);
-            console.log(data);
             if (data.status == 'success') {
-                var prefix = 'http://source.520lyx.cn/';
-                $('#img_id').attr("src", prefix + data.url);
+                $('#img_id').attr("src", data.data);
             } else {
                 layer.msg("生成失败");
             }
         });
-
     }
 </script>
 </body>

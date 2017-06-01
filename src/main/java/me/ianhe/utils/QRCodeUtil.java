@@ -11,7 +11,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
-public class QRCode {
+public class QRCodeUtil {
 
     /**
      * 二维码生成工具
@@ -39,7 +39,18 @@ public class QRCode {
         }
     }
 
-    private QRCode() {
+    /**
+     * 二维码生成
+     * 大小默认300像素
+     *
+     * @author iHelin
+     * @since 2017/6/1 15:12
+     */
+    public static String generateQRCode(String folder, String content, String fileName, String format) {
+        return generateQRCode(folder, content, fileName, format, 300, 300);
+    }
+
+    private QRCodeUtil() {
         //工具类不允许实例化
     }
 

@@ -96,7 +96,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-
     <select id="listByCondition" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

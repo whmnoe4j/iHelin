@@ -50,7 +50,7 @@ public class AdminLoginController extends BaseAdminController {
                 return "redirect:" + from;
             return "redirect:/admin/index";
         }
-        model.addAttribute("error", "用户名密码不正确！");
+        model.addAttribute("error", "用户名或密码不正确！");
         model.addAttribute("from", from);
         return ftl("login");
     }
