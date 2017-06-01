@@ -82,7 +82,7 @@
         <property name="optimize" value="true"/>
     </bean>
 
-    <!--aspectj 拦截加分方法-->
+    <!--aspectj 拦截加分方法，后置增强提醒-->
     <aop:aspectj-autoproxy/>
     <bean id="scoreAdvice" class="me.ianhe.advice.ScoreAfterAspect"></bean>
 </beans>

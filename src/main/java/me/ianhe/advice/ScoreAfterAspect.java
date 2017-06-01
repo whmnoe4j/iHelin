@@ -29,13 +29,20 @@ public class ScoreAfterAspect {
     @Autowired
     private ScoreService scoreService;
 
+    /**
+     * 加分成功后再发送提醒
+     *
+     * @author iHelin
+     * @since 2017/6/1 10:35
+     */
     @AfterReturning(value = "execution(* addRecord(..))")
-    public void afterReturningAdvice(JoinPoint joinPoint) {
-        logger.debug("start...");
+    public void afterAddScore(JoinPoint joinPoint) {
         MyScore myScore = (MyScore) joinPoint.getArgs()[0];
         long total = scoreService.getMyTotalScore();
-        DingUtil.say("今天又加了" + myScore.getScore() + "分，理由是：" + myScore.getReason() + "，现在一共有"
-                + total + "分，加油，你们要继续努力呦！");
+        String msg = String.format("今天又加了%d分，理由是：%s，现在一共有%d分，加油，你们要继续努力呦！", myScore.getScore(),
+                myScore.getReason(), total);
+        logger.debug(msg);
+        DingUtil.say(msg);
 
         Map<String, Object> res = Maps.newHashMap();
         res.put("score", myScore);
