@@ -7,6 +7,7 @@ import me.ianhe.model.req.LocationMessage;
 import me.ianhe.utils.CheckUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,15 +31,21 @@ public class AccessWeChatController extends BaseController {
     /**
      * get消息：消息服务器验证
      */
+    @ResponseBody
     @GetMapping(value = "access_wechat")
-    public void doGet(String signature, String timestamp, String nonce, String echostr,
-                      HttpServletResponse response) throws IOException {
-        logger.info("验证token");
+    public String doGet(String signature, String timestamp, String nonce, String echostr,
+                        HttpServletResponse response) {
+        logger.info("开始token验证...");
+        if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
+            logger.error("请求参数非法，请核实!");
+            return "请求参数非法";
+        }
         if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
             logger.info("验证成功");
-            response.getWriter().print(echostr);
+            return echostr;
         } else {
-            logger.info("验证失败，echostr：" + echostr);
+            logger.info("验证失败，echostr：{}", echostr);
+            return "请求非法";
         }
     }
 
@@ -57,7 +63,7 @@ public class AccessWeChatController extends BaseController {
         } else {
             respMessage = processMessage(msgMap); // 进入普通消息处理
         }
-        System.out.println(respMessage);
+        logger.debug(respMessage);
         return respMessage;
     }
 
@@ -70,7 +76,7 @@ public class AccessWeChatController extends BaseController {
         String toUserName = msgMap.get("ToUserName");
         String msgType = msgMap.get("MsgType");
         String content = msgMap.get("Content");
-        System.out.println("消息类型：" + msgType);
+        logger.debug("消息类型：{}", msgType);
         switch (msgType) {
             case WechatUtil.MESSAGE_TEXT:
                 // 处理文本消息
@@ -111,24 +117,21 @@ public class AccessWeChatController extends BaseController {
      * @return
      */
     public String processEvent(Map<String, String> msgMap) {
-        System.out.println(msgMap);
         String eventType = msgMap.get("Event");
         String fromUserName = msgMap.get("FromUserName");
         String toUserName = msgMap.get("ToUserName");
+        String eventKey = msgMap.get("EventKey");
         String message = null;
         if (WechatUtil.MESSAGE_SUBSCRIBE.equals(eventType)) {
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, "感谢您的关注，我会继续努力！");// 关注事件
         } else if (WechatUtil.MESSAGE_VIEW.equals(eventType)) {
             // view类型事件，访问网页
-            String url = msgMap.get("EventKey");
-            logger.info("用户正在访问：{}", url);
+            logger.info("用户正在访问：{}", eventKey);
         } else if (WechatUtil.MESSAGE_SCANCODE.equals(eventType)) {
             // 扫码事件
-            String key = msgMap.get("EventKey");
-            message = WechatUtil.sendTextMsg(toUserName, fromUserName, key);
+            message = WechatUtil.sendTextMsg(toUserName, fromUserName, eventKey);
         } else if (WechatUtil.MESSAGE_CLICK.equals(eventType)) {
-            String key = msgMap.get("EventKey");
-            ServiceMenu serviceMenu = serviceMenuMannger.getMenuById(Integer.valueOf(key));
+            ServiceMenu serviceMenu = serviceMenuMannger.getMenuById(Integer.valueOf(eventKey));
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, serviceMenu.getContent());
         }
         return message;
@@ -145,7 +148,6 @@ public class AccessWeChatController extends BaseController {
             user = userManager.transWXUserToUser(wxUser);
             userManager.insertUser(user);
         }
-//        DingUtil.say("用户" + user.getNickName() + "发来消息：" + content);
         String message = null;
         switch (content) {
             case "1":
