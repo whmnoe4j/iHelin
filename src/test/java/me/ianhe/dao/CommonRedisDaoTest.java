@@ -77,7 +77,7 @@ public class CommonRedisDaoTest extends AbstractJUnit4SpringContextTests {
     public void incrementLong() throws InterruptedException {
 //        commonRedisDao.saveExpireString("time", "qwert", 10L);
 //        Thread.currentThread().sleep(5);
-        commonRedisDao.incrementLong("time", 5L);
+//        commonRedisDao.incrementLong("time", 5L);
     }
 
     @Test

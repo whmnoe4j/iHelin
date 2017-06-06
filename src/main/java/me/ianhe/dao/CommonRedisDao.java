@@ -3,8 +3,6 @@ package me.ianhe.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -76,21 +74,13 @@ public class CommonRedisDao implements RedisDao {
 
     @Override
     public void saveExpireString(String key, String value, long liveTime) {
-        redisTemplate.execute(new RedisCallback() {
-            public Long doInRedis(RedisConnection connection) throws DataAccessException {
-                connection.set(key.getBytes(), value.getBytes());
-                if (liveTime > 0) {
-                    connection.expire(key.getBytes(), liveTime);
-                }
-                return 1L;
+        redisTemplate.execute((RedisCallback) connection -> {
+            connection.set(key.getBytes(), value.getBytes());
+            if (liveTime > 0) {
+                connection.expire(key.getBytes(), liveTime);
             }
+            return 1L;
         });
-    }
-
-    @Override
-    @Deprecated
-    public void incrementLong(String key, Long value) {
-        redisTemplate.boundValueOps(key).increment(value);
     }
 
     @Override
@@ -145,8 +135,8 @@ public class CommonRedisDao implements RedisDao {
     public void saveZSet(String key, String value, Integer size) {
         ZSetOperations<String, String> ops = redisTemplate.opsForZSet();
         ops.add(key, value, System.currentTimeMillis());
-        size = -1 - size;
-        ops.removeRange(key, 0, size);
+        Integer nSize = -1 - size;
+        ops.removeRange(key, 0, nSize);
     }
 
     @Override

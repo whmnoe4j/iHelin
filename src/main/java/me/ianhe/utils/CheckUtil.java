@@ -1,5 +1,7 @@
 package me.ianhe.utils;
 
+import me.ianhe.exception.SystemException;
+
 import java.util.Arrays;
 
 /**
@@ -14,8 +16,7 @@ public class CheckUtil {
         String[] arr = new String[]{TOKEN, timestamp, nonce};
         // 排序
         Arrays.sort(arr);
-        // Collections.sort(Arrays.asList(arr));
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         for (int i = 0; i < arr.length; i++) {
             content.append(arr[i]);
         }
@@ -25,7 +26,7 @@ public class CheckUtil {
     }
 
     private CheckUtil() {
-        //工具类不允许实例化
+        throw new SystemException("工具类不允许实例化！");
     }
 
 }

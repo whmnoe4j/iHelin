@@ -17,6 +17,9 @@ import java.util.Date;
 @Controller
 public class AdminLoginController extends BaseAdminController {
 
+    private static final String ERROR_MSG = "error";
+    private static final String FROM = "from";
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage(Model model, String from) {
         model.addAttribute("from", from);
@@ -27,13 +30,13 @@ public class AdminLoginController extends BaseAdminController {
     public String login(String username, String password, String captcha, String from, HttpServletRequest request,
                         HttpSession session, Model model) {
         if (StringUtils.isEmpty(captcha)) {
-            model.addAttribute("error", "请填写验证码！");
-            model.addAttribute("from", from);
+            model.addAttribute(ERROR_MSG, "请填写验证码！");
+            model.addAttribute(FROM, from);
             return ftl("login");
         }
         String sessionCaptcha = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (!captcha.equalsIgnoreCase(sessionCaptcha)) {
-            model.addAttribute("error", "验证码不正确！");
+            model.addAttribute(ERROR_MSG, "验证码不正确！");
             model.addAttribute("from", from);
             return ftl("login");
         }
@@ -50,7 +53,7 @@ public class AdminLoginController extends BaseAdminController {
                 return "redirect:" + from;
             return "redirect:/admin/index";
         }
-        model.addAttribute("error", "用户名或密码不正确！");
+        model.addAttribute(ERROR_MSG, "用户名或密码不正确！");
         model.addAttribute("from", from);
         return ftl("login");
     }

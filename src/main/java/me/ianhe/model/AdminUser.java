@@ -1,98 +1,102 @@
 package me.ianhe.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AdminUser {
-	private String adminId;
+public class AdminUser implements Serializable {
 
-	private String password;
+    private static final long serialVersionUID = 1L;
 
-	private String nickName;
+    private String adminId;
 
-	private String email;
+    private String password;
 
-	private Integer roleId;
+    private String nickName;
 
-	private String ips;
+    private String email;
 
-	private Date createTime;
+    private Integer roleId;
 
-	private Date lastLoginTime;
+    private String ips;
 
-	private String lastLoginIp;
+    private Date createTime;
+
+    private Date lastLoginTime;
+
+    private String lastLoginIp;
 
 
-	public String getAdminId() {
-		return adminId;
-	}
+    public String getAdminId() {
+        return adminId;
+    }
 
-	public void setAdminId(String adminId) {
-		this.adminId = adminId;
-	}
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Integer getRoleId() {
-		return roleId;
-	}
+    public Integer getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
-	public String getIps() {
-		return ips;
-	}
+    public String getIps() {
+        return ips;
+    }
 
-	public void setIps(String ips) {
-		this.ips = ips;
-	}
+    public void setIps(String ips) {
+        this.ips = ips;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
 
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
 
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
 
 
 }

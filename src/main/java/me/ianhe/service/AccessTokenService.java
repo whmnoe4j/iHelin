@@ -28,7 +28,7 @@ public class AccessTokenService {
     // access token 剩余时间预留安全值，半小时
     private static final long SAFE_TOKEN_RESERVE_TIME = 1000L * 30 * 60;
     private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenService.class);
-    public static final String fileName = "access_token.yml";
+    public static final String FILE_NAME = "access_token.yml";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String GEN_TIME = "genTime";// 更新时间
     public static final String EXPIRES_TIME = "expiresTime";// 过期时间
@@ -47,13 +47,13 @@ public class AccessTokenService {
         return accessToken;
     }
 
-    private void loadFile() {
-        File file = new File(Global.getClassPath(), fileName);
+    private static void loadFile() {
+        File file = new File(Global.getClassPath(), FILE_NAME);
         try {
             accessTokenMap = Yaml.loadType(file, HashMap.class);
         } catch (Exception e) {
             accessTokenMap = Maps.newHashMap();
-            LOGGER.warn("loading throws exception, file path: " + fileName, e);
+            LOGGER.warn("loading throws exception, file path: " + FILE_NAME, e);
         }
     }
 
@@ -127,7 +127,7 @@ public class AccessTokenService {
         accessTokenMap.put(ACCESS_TOKEN, accessToken.getToken());
         accessTokenMap.put(GEN_TIME, accessToken.getGenTime());
         accessTokenMap.put(EXPIRES_TIME, accessToken.getExpiresTime());
-        File file = new File(Global.getClassPath(), fileName);
+        File file = new File(Global.getClassPath(), FILE_NAME);
         try {
             Yaml.dump(accessTokenMap, file);
             return 1;

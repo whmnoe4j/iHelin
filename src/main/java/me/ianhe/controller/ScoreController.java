@@ -1,15 +1,10 @@
 package me.ianhe.controller;
 
-import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.model.AutoSendMail;
-import me.ianhe.utils.DingUtil;
-import me.ianhe.utils.TemplateUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 分数

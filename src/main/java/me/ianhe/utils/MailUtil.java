@@ -233,19 +233,19 @@ public class MailUtil {
 
     public static boolean sendMail(String toAddress, String toPersonalName, String subject, String content, String fileName,
                                    InputStream attachStream, String type) {
-        MailConfigEntry entry = CommonConfig.getMailEntry();
+        MailConfigEntry entry = CommonConfig.getMailConfigEntry();
         if (entry == null) {
             LOGGER.warn("Mail server is not configured. please check mail_config.yml");
             return false;
         }
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.mailServerHost = entry.mail_server;
-        mailInfo.mailServerPort = entry.mail_port;
+        mailInfo.mailServerHost = entry.mailServer;
+        mailInfo.mailServerPort = entry.mailPort;
         mailInfo.validate = true;
-        mailInfo.userName = entry.mail_user;
-        mailInfo.password = entry.mail_password;
-        mailInfo.fromAddress = entry.mail_from_address;
-        mailInfo.fromPersonalName = entry.mail_from_name;
+        mailInfo.userName = entry.mailUser;
+        mailInfo.password = entry.mailPassword;
+        mailInfo.fromAddress = entry.mailFromAddress;
+        mailInfo.fromPersonalName = entry.mailFromName;
         mailInfo.toPersonalName = toPersonalName;
         mailInfo.toAddress = toAddress;
         mailInfo.subject = subject;

@@ -10,13 +10,11 @@ import me.ianhe.model.Menu;
 import me.ianhe.model.ViewButton;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
-import org.apache.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +23,9 @@ public class ServiceMenuService {
     @Resource
     private ServiceMenuMapper serviceMenuMapper;
 
-    private static final Integer parentMenuId = 0;
+    private static final Integer PARENT_MENU_ID = 0;
 
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public int insertMenu(ServiceMenu menu) {
         return serviceMenuMapper.insert(menu);
@@ -50,9 +48,9 @@ public class ServiceMenuService {
     }
 
     // 同步微信菜单
-    public String syncServiceMenuToWeiXin(String token) throws ParseException, IOException {
+    public String syncServiceMenuToWeiXin(String token) {
         Menu menu = new Menu();
-        List<ServiceMenu> parentServiceMenus = getMenuByCondition(parentMenuId);
+        List<ServiceMenu> parentServiceMenus = getMenuByCondition(PARENT_MENU_ID);
         List<Button> pBtns = Lists.newArrayList();
         for (ServiceMenu pServiceMenu : parentServiceMenus) {
             List<ServiceMenu> subServiceMenus = getMenuByCondition(pServiceMenu.getId());
@@ -60,7 +58,7 @@ public class ServiceMenuService {
             if (pServiceMenu.getContentType() == ServiceMenu.TEXT_MENU) {
                 ClickButton pClickButton = new ClickButton();
                 pClickButton.setName(pServiceMenu.getName());
-                if (subServiceMenus.size() > 0) {
+                if (!subServiceMenus.isEmpty()) {
                     for (ServiceMenu subServiceMenu : subServiceMenus) {
                         if (subServiceMenu.getContentType() == ServiceMenu.TEXT_MENU) {
                             ClickButton subClickButton = new ClickButton();
@@ -85,7 +83,7 @@ public class ServiceMenuService {
             } else if (pServiceMenu.getContentType() == ServiceMenu.LINK_MENU) {
                 ViewButton patBtn = new ViewButton();
                 patBtn.setName(pServiceMenu.getName());
-                if (subServiceMenus.size() > 0) {
+                if (!subServiceMenus.isEmpty()) {
                     for (ServiceMenu subMenu : subServiceMenus) {
                         if (subMenu.getContentType() == ServiceMenu.TEXT_MENU) {
                             ClickButton subBtn = new ClickButton();
@@ -113,7 +111,7 @@ public class ServiceMenuService {
         }
         menu.setButton(pBtns);
         String res = WechatUtil.createMenu(token, JSON.toJson(menu));
-        LOGGER.info(res);
+        logger.info(res);
         return res;
     }
 

@@ -28,7 +28,7 @@ public class AdminMenuController extends BaseAdminController {
         try {
             serviceMenuMannger.syncServiceMenuToWeiXin(token);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("同步菜单出现异常", e);
         }
         return "redirect:menu_admin";
     }

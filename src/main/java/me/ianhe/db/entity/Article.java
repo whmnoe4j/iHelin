@@ -1,5 +1,7 @@
 package me.ianhe.db.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.Date;
 
 public class Article {
@@ -86,4 +88,10 @@ public class Article {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 }

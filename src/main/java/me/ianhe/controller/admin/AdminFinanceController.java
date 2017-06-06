@@ -11,14 +11,11 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -162,13 +159,9 @@ public class AdminFinanceController extends BaseAdminController {
         LocalDate localDate = LocalDate.now();
         String fileName = localDate.getYear() + "年" + localDate.getMonthValue() + "月工资表";
         OutputStream fOut = null;
-        try {
+        try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             response.setHeader("content-disposition", "attachment;filename="
                     + URLEncoder.encode(fileName, CharEncoding.UTF_8) + ".xls");
-
-            // 创建工作簿对象
-            HSSFWorkbook workbook = new HSSFWorkbook();
-
             //设置居中
             HSSFCellStyle hssfCellStyle = workbook.createCellStyle();
             hssfCellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -193,15 +186,8 @@ public class AdminFinanceController extends BaseAdminController {
             workbook.write(fOut);
         } catch (Exception e) {
             logger.error("生成excel异常", e);
-        } finally {
-            try {
-                if (fOut != null) {
-                    fOut.close();
-                }
-            } catch (IOException e) {
-            }
         }
-        System.out.println("文件生成...");
+        logger.debug("文件生成...");
     }
 
     Sheet buildFirstSheet(HSSFWorkbook workbook, String fileName, HSSFCellStyle cellStyle,

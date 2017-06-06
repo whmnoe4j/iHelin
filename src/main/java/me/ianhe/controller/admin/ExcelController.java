@@ -28,23 +28,19 @@ public class ExcelController extends BaseController {
         response.setContentType("application/vnd.ms-excel");
         String codedFileName;
         OutputStream fOut = null;
-        try {
+        try (HSSFWorkbook workbook = new HSSFWorkbook()) {
             // 进行转码，使其支持中文文件名
             codedFileName = URLEncoder.encode("test", "UTF-8");
             response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xls");
-            // response.addHeader("Content-Disposition", "attachment;   filename=" + codedFileName + ".xls");
-            // 产生工作簿对象
-            HSSFWorkbook workbook = new HSSFWorkbook();
             //产生工作表对象
             HSSFSheet sheet = workbook.createSheet("工资表");
-            HSSFSheet sheet2 = workbook.createSheet("赖玉霞");
             sheet.setDefaultColumnWidth(10);
             sheet.setDefaultRowHeight((short) 400);
             HSSFCellStyle hssfCellStyle = workbook.createCellStyle();
             hssfCellStyle.setAlignment(HorizontalAlignment.CENTER);
             hssfCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
             HSSFRow row0 = sheet.createRow(0);
-            HSSFCell cell0 = row0.createCell(0,CellType.STRING);
+            HSSFCell cell0 = row0.createCell(0, CellType.STRING);
             HSSFFont font = workbook.createFont();
             font.setFontName("微软雅黑");
             font.setBold(true);//粗体显示
@@ -53,13 +49,13 @@ public class ExcelController extends BaseController {
             hssfCellStyle.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
             hssfCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             cell0.setCellStyle(hssfCellStyle);
-            sheet.addMergedRegion(new CellRangeAddress(0,(short)0,0,(short)9));
+            sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) 9));
             cell0.setCellValue("2017年01月工资表");
-            HSSFCellStyle hlink_style = workbook.createCellStyle();
-            HSSFFont hlink_font = workbook.createFont();
-            hlink_font.setUnderline(HSSFFont.U_SINGLE);
-            hlink_font.setColor(HSSFColor.BLUE.index);
-            hlink_style.setFont(hlink_font);
+            HSSFCellStyle hlinkStyle = workbook.createCellStyle();
+            HSSFFont hlinkFont = workbook.createFont();
+            hlinkFont.setUnderline(HSSFFont.U_SINGLE);
+            hlinkFont.setColor(HSSFColor.BLUE.index);
+            hlinkStyle.setFont(hlinkFont);
             for (int i = 1; i <= 20; i++) {
                 HSSFRow row = sheet.createRow(i);//创建一行
                 HSSFCell cell = row.createCell(0);//创建一列
@@ -69,19 +65,12 @@ public class ExcelController extends BaseController {
                 cell.setCellType(CellType.STRING);
                 cell.setCellValue("test" + i);
                 cell.setHyperlink(link);
-                cell.setCellStyle(hlink_style);
+                cell.setCellStyle(hlinkStyle);
 //                cell.setCellFormula("HYPERLINK(\"[test.xls]'赖玉霞'!A1\",\"homepage\")");
             }
             fOut = response.getOutputStream();
             workbook.write(fOut);
-        } catch (UnsupportedEncodingException e1) {
         } catch (Exception e) {
-        } finally {
-            try {
-                fOut.flush();
-                fOut.close();
-            } catch (IOException e) {
-            }
         }
         System.out.println("文件生成...");
     }

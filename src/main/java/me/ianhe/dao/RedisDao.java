@@ -75,15 +75,6 @@ public interface RedisDao {
     void saveExpireString(String key, String value, long liveTime);
 
     /**
-     * 更新Long，没有则会新增
-     *
-     * @param key
-     * @param value
-     */
-    @Deprecated
-    void incrementLong(String key, Long value);
-
-    /**
      * 保存Set<String>
      *
      * @param key

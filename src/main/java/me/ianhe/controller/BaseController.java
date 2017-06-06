@@ -36,30 +36,32 @@ public abstract class BaseController {
     protected static final int DEFAULT_PAGE_LENGTH = 10;//默认分页大小
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
+    private static final String STATUS = "status";
+    private static final String DATA = "data";
 
     protected String success() {
         Map<String, Object> res = Maps.newHashMap();
-        res.put("status", SUCCESS);
+        res.put(STATUS, SUCCESS);
         return JSON.toJson(res);
     }
 
     protected <T> String success(T model) {
         Map<String, Object> res = Maps.newHashMap();
-        res.put("status", SUCCESS);
-        res.put("data", model);
+        res.put(STATUS, SUCCESS);
+        res.put(DATA, model);
         return JSON.toJson(res);
     }
 
     protected String error() {
         Map<String, Object> res = Maps.newHashMap();
-        res.put("status", ERROR);
+        res.put(STATUS, ERROR);
         return JSON.toJson(res);
     }
 
     protected <T> String error(T model) {
         Map<String, Object> res = Maps.newHashMap();
-        res.put("status", ERROR);
-        res.put("data", model);
+        res.put(STATUS, ERROR);
+        res.put(DATA, model);
         return JSON.toJson(res);
     }
 

@@ -2,11 +2,8 @@ package me.ianhe.controller.admin;
 
 import me.ianhe.db.entity.Article;
 import me.ianhe.db.plugin.Pagination;
-import me.ianhe.utils.JSON;
 import me.ianhe.utils.ResponseUtil;
 import org.apache.commons.lang3.CharEncoding;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,7 +84,7 @@ public class AdminArticleController extends BaseAdminController {
      */
     @RequestMapping(value = "article/edit", method = RequestMethod.POST)
     public void editArticle(Article article, HttpServletResponse response) {
-        logger.info("article is {}", JSON.toJson(article));
+        logger.info("article is {}", article);
         if (article == null || article.getId() == null) {
             logger.error("no article found {}", article);
             ResponseUtil.writeFailedJSON(response, "文章不存在！");

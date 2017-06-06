@@ -12,7 +12,7 @@ import java.util.List;
 public class AdminAdviceController extends BaseAdminController {
 
     @RequestMapping(value = "advice", method = RequestMethod.GET)
-    public String Advice(Model model) {
+    public String advice(Model model) {
         List<Advice> advices = adviceManager.selectAdviceByCondition();
         model.addAttribute("advices", advices);
         return "admin/advice_manager";
