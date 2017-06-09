@@ -39,8 +39,13 @@ public class ScoreAfterAspect {
     public void afterAddScore(JoinPoint joinPoint) {
         MyScore myScore = (MyScore) joinPoint.getArgs()[0];
         long total = scoreService.getMyTotalScore();
-        String msg = String.format("今天又加了%d分，理由是：%s，现在一共有%d分，加油，你们要继续努力呦！", myScore.getScore(),
-                myScore.getReason(), total);
+        String msg;
+        if (total >= 5201314) {
+            msg = "恭喜你们达标啦！！！";
+        } else {
+            msg = String.format("今天又加了%d分，理由是：%s，现在一共有%d分，加油，你们要继续努力呦！", myScore.getScore(),
+                    myScore.getReason(), total);
+        }
         logger.debug(msg);
         DingUtil.say(msg);
 

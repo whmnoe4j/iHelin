@@ -9,14 +9,14 @@
     <description>spring-security配置</description>
 
     <security:http auto-config="true">
-        <security:intercept-url pattern="/security/**" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/test/**" access="hasRole('ROLE_USER')"/>
     </security:http>
 
     <security:authentication-manager>
         <security:authentication-provider>
             <security:user-service>
-                <security:user name="user" password="user" authorities="ROLE_USER"/>
-                <security:user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>
+                <security:user name="iHelin" password="246260" authorities="ROLE_USER"/>
+                <security:user name="admin" password="246260" authorities="ROLE_USER, ROLE_ADMIN"/>
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
