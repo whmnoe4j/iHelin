@@ -11,6 +11,7 @@
     <security:http auto-config="true">
         <security:intercept-url pattern="/test/**" access="hasRole('ROLE_USER')"/>
     </security:http>
+    <security:csrf disabled="true"/>
 
     <security:authentication-manager>
         <security:authentication-provider>
