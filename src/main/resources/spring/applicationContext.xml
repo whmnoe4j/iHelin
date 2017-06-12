@@ -18,7 +18,8 @@
 
     <import resource="spring-service.xml"/>
     <import resource="spring-dao.xml"/>
-    <import resource="spring-web.xml"/>
+    <!--web.xml中已配置，这里不需要再次导入，否则启动两次-->
+    <!--<import resource="spring-web.xml"/>-->
     <import resource="spring-redis.xml"/>
     <!--<import resource="spring-security.xml"/>-->
 </beans>
