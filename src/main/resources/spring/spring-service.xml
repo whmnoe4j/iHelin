@@ -62,7 +62,7 @@
 
 
     <!--aop拦截service测试，拦截方法名中包含add的方法-->
-    <bean id="aroundAdvice" class="me.ianhe.advice.AroundAdvice"></bean>
+    <!--<bean id="aroundAdvice" class="me.ianhe.advice.AroundAdvice"></bean>
     <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice" ref="aroundAdvice"></property>
         <property name="patterns">
@@ -78,11 +78,11 @@
                 <value>regexpAdvisor</value>
             </list>
         </property>
-        <!--强制使用cglib代理技术-->
+        &lt;!&ndash;强制使用cglib代理技术&ndash;&gt;
         <property name="optimize" value="true"/>
-    </bean>
+    </bean>-->
 
-    <!--aspectj 拦截加分方法，后置增强提醒-->
+    <!--aspectj 拦截加分方法，后置增强：提醒功能-->
     <aop:aspectj-autoproxy/>
     <bean id="scoreAdvice" class="me.ianhe.advice.ScoreAfterAspect"></bean>
 </beans>
