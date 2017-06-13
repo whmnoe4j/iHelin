@@ -26,10 +26,10 @@ public class DailyService {
     public void init() {
         Timer t = new Timer("daily post");
         Date date = new Date();
-        DateUtils.setHours(date, 18);
-        DateUtils.setMinutes(date, 0);
-        DateUtils.setSeconds(date, 0);
-        DateUtils.setMilliseconds(date, 0);
+        date = DateUtils.setHours(date, 18);
+        date = DateUtils.setMinutes(date, 0);
+        date = DateUtils.setSeconds(date, 0);
+        date = DateUtils.setMilliseconds(date, 0);
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -55,7 +55,14 @@ public class DailyService {
     }
 
     public static void main(String[] args) {
-        englishDaily();
+//        englishDaily();
+        Date date = new Date();
+        date = DateUtils.setHours(date, 18);
+        date = DateUtils.setMinutes(date, 0);
+        date = DateUtils.setSeconds(date, 0);
+        date = DateUtils.setMilliseconds(date, 0);
+        System.out.println(date);
     }
+
 
 }
