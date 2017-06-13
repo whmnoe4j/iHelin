@@ -1,7 +1,6 @@
 package me.ianhe.service;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.model.AccessTokenTimerTask;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
