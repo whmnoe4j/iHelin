@@ -2,7 +2,6 @@ package me.ianhe.controller.admin;
 
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.ServiceMenu;
-import me.ianhe.model.AccessTokenTimerTask;
 import me.ianhe.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ public class AdminMenuController extends BaseAdminController {
 
     @RequestMapping(value = "service_menu_sync", method = RequestMethod.GET)
     public String syncMenu() {
-        String token = new AccessTokenTimerTask().getAccessToken().getToken();
+        String token = accessTokenManager.getAccessToken().getToken();
         try {
             serviceMenuMannger.syncServiceMenuToWeiXin(token);
         } catch (Exception e) {

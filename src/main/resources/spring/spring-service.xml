@@ -60,28 +60,6 @@
         <aop:advisor pointcut-ref="txPointcutService" advice-ref="transactionAdvice"/>
     </aop:config>
 
-
-    <!--aop拦截service测试，拦截方法名中包含add的方法-->
-    <!--<bean id="aroundAdvice" class="me.ianhe.advice.AroundAdvice"></bean>
-    <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
-        <property name="advice" ref="aroundAdvice"></property>
-        <property name="patterns">
-            <list>
-                <value>.*getMyTotalScore.*</value>
-            </list>
-        </property>
-    </bean>
-    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-        <property name="beanNames" value="*Service"/>
-        <property name="interceptorNames">
-            <list>
-                <value>regexpAdvisor</value>
-            </list>
-        </property>
-        &lt;!&ndash;强制使用cglib代理技术&ndash;&gt;
-        <property name="optimize" value="true"/>
-    </bean>-->
-
     <!--aspectj 拦截加分方法，后置增强：提醒功能-->
     <aop:aspectj-autoproxy/>
     <bean id="scoreAdvice" class="me.ianhe.advice.ScoreAfterAspect"></bean>

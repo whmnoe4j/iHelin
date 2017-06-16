@@ -38,9 +38,9 @@
 
     <logger name="me.ianhe" level="DEBUG"/>
 
-    <logger name="me.ianhe.service" level="WARN">
+    <!--<logger name="me.ianhe.service" level="WARN">
         <appender-ref ref="DB"/>
-    </logger>
+    </logger>-->
 
     <!-- Root Logger -->
     <root level="INFO">

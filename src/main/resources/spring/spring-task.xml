@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <description>整合quartz</description>
+
+    <task:scheduler id="taskScheduler" pool-size="100"/>
+
+    <task:scheduled-tasks scheduler="taskScheduler">
+        <task:scheduled ref="accessTokenService" method="run" initial-delay="10000" fixed-delay="1800000"/>
+        <task:scheduled ref="dailyService" method="run" cron="0 0 18 ? * MON-FRI"/>
+    </task:scheduled-tasks>
+</beans>

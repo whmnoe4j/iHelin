@@ -2,7 +2,6 @@ package me.ianhe.controller;
 
 import me.ianhe.db.entity.ServiceMenu;
 import me.ianhe.db.entity.User;
-import me.ianhe.model.AccessTokenTimerTask;
 import me.ianhe.model.WXUser;
 import me.ianhe.model.req.LocationMessage;
 import me.ianhe.utils.CheckUtil;
@@ -144,12 +143,12 @@ public class AccessWeChatController extends BaseController {
     public String textMessage(String content, String toUserName, String fromUserName) {
         User user = userManager.selectUserByOpenId(fromUserName);
         if (user == null) {
-            String accessToken = new AccessTokenTimerTask().getAccessToken().getToken();
+            String accessToken = accessTokenManager.getAccessToken().getToken();
             WXUser wxUser = userManager.selectWXUserByOpenId(fromUserName, accessToken);
             user = userManager.transWXUserToUser(wxUser);
             userManager.insertUser(user);
         }
-        String message = null;
+        String message;
         switch (content) {
             case "1":
                 message = WechatUtil.sendTextMsg(toUserName, fromUserName,

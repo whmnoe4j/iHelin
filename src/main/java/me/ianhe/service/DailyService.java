@@ -4,12 +4,10 @@ import com.beust.jcommander.internal.Maps;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -21,24 +19,7 @@ public class DailyService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // 设置定时器，定期检查
-    @PostConstruct
-    public void init() {
-        Timer t = new Timer("daily post");
-        Date date = new Date();
-        date = DateUtils.setHours(date, 18);
-        date = DateUtils.setMinutes(date, 0);
-        date = DateUtils.setSeconds(date, 0);
-        date = DateUtils.setMilliseconds(date, 0);
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                englishDaily();
-            }
-        }, date, 1000L * 60 * 60 * 24);
-    }
-
-    private static void englishDaily() {
+    public void run() {
         Map<String, Object> contentMap = Maps.newHashMap();
         String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
         Map<String, Object> resMap = JSON.parseMap(res);
@@ -51,18 +32,9 @@ public class DailyService {
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "markdown");
         data.put("markdown", contentMap);
-        DingUtil.doSay(JSON.toJson(data));
+        String jsonData = JSON.toJson(data);
+        logger.debug("每日一句：{}", jsonData);
+        DingUtil.doSay(jsonData);
     }
-
-    public static void main(String[] args) {
-//        englishDaily();
-        Date date = new Date();
-        date = DateUtils.setHours(date, 18);
-        date = DateUtils.setMinutes(date, 0);
-        date = DateUtils.setSeconds(date, 0);
-        date = DateUtils.setMilliseconds(date, 0);
-        System.out.println(date);
-    }
-
 
 }

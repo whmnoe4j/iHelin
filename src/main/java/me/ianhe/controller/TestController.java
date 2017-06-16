@@ -2,7 +2,6 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.model.AccessTokenTimerTask;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.MailUtil;
 import me.ianhe.utils.ResponseUtil;
@@ -106,20 +105,6 @@ public class TestController extends BaseController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", "test.txt");
         return new ResponseEntity("download test", headers, HttpStatus.CREATED);
-    }
-
-    @ResponseBody
-    @GetMapping("cancel")
-    public String cancelAccessToken(){
-        accessTokenManager.cancel();
-        return new AccessTokenTimerTask().getAccessToken().getToken();
-    }
-
-    @ResponseBody
-    @GetMapping("start")
-    public String startAccessToken(){
-        accessTokenManager.init();
-        return new AccessTokenTimerTask().getAccessToken().getToken();
     }
 
 }
