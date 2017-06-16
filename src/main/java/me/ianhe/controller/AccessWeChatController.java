@@ -2,8 +2,8 @@ package me.ianhe.controller;
 
 import me.ianhe.db.entity.ServiceMenu;
 import me.ianhe.db.entity.User;
-import me.ianhe.model.WXUser;
-import me.ianhe.model.req.LocationMessage;
+import me.ianhe.model.wx.LocationMessage;
+import me.ianhe.model.wx.WXUser;
 import me.ianhe.utils.CheckUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;

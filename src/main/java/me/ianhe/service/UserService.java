@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 import me.ianhe.db.entity.User;
 import me.ianhe.dao.UserMapper;
-import me.ianhe.model.WXUser;
+import me.ianhe.model.wx.WXUser;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.apache.commons.lang3.StringUtils;

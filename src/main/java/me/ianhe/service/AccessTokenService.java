@@ -1,8 +1,8 @@
 package me.ianhe.service;
 
 import com.google.common.collect.Maps;
-import me.ianhe.model.AccessToken;
-import me.ianhe.model.WXAccessToken;
+import me.ianhe.model.wx.AccessToken;
+import me.ianhe.model.wx.WXAccessToken;
 import me.ianhe.utils.DateTimeUtil;
 import me.ianhe.utils.Global;
 import me.ianhe.utils.WechatUtil;
@@ -30,7 +30,7 @@ public class AccessTokenService {
 
     public void run() {
         try {
-            logger.info("check accessToken...");
+            logger.debug("checking accessToken...");
             File file = new File(Global.getClassPath(), FILE_NAME);
             accessTokenMap = Yaml.loadType(file, HashMap.class);
             accessTokenMap = Maps.newHashMap();

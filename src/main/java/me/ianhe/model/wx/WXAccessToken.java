@@ -1,4 +1,4 @@
-package me.ianhe.model;
+package me.ianhe.model.wx;
 
 public class WXAccessToken {
 	private String access_token;

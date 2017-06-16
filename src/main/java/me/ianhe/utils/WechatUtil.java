@@ -2,22 +2,20 @@ package me.ianhe.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.riversoft.weixin.common.message.Article;
+import com.riversoft.weixin.common.message.MsgType;
+import com.riversoft.weixin.common.message.News;
+import com.riversoft.weixin.common.message.Text;
+import com.riversoft.weixin.common.message.xml.ImageXmlMessage;
+import com.riversoft.weixin.common.message.xml.NewsXmlMessage;
+import com.riversoft.weixin.common.message.xml.TextXmlMessage;
+import com.riversoft.weixin.common.message.xml.VoiceXmlMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import me.ianhe.model.Button;
-import me.ianhe.model.ClickButton;
-import me.ianhe.model.Menu;
-import me.ianhe.model.ViewButton;
-import me.ianhe.model.WXAccessToken;
-import me.ianhe.model.req.LocationMessage;
-import me.ianhe.model.resp.Article;
-import me.ianhe.model.resp.ImageMessage;
-import me.ianhe.model.resp.MusicMessage;
-import me.ianhe.model.resp.NewsMessage;
-import me.ianhe.model.resp.TextMessage;
+import me.ianhe.model.wx.*;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -38,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.io.Writer;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -166,13 +164,13 @@ public class WechatUtil {
      * @return
      */
     public static String sendTextMsg(String toUserName, String fromUserName, String content) {
-        TextMessage text = new TextMessage();
-        text.setFromUserName(toUserName);
-        text.setToUserName(fromUserName);
-        text.setMsgType(MESSAGE_TEXT);
-        text.setCreateTime(System.currentTimeMillis());
+        TextXmlMessage text = new TextXmlMessage();
+        text.setFromUser(toUserName);
+        text.setToUser(fromUserName);
+        text.setMsgType(MsgType.text);
+        text.setCreateTime(new Date());
         text.setContent(content);
-        xstream.alias("xml", TextMessage.class);
+        xstream.alias("xml", TextXmlMessage.class);
         return xstream.toXML(text);
     }
 
@@ -183,10 +181,10 @@ public class WechatUtil {
      * @param fromUserName
      * @return
      */
-    public static String sendArticleMsg(String toUserName, String fromUserName, NewsMessage newsMessage) {
-        newsMessage.setToUserName(fromUserName);
-        newsMessage.setFromUserName(toUserName);
-        xstream.alias("xml", NewsMessage.class);
+    public static String sendArticleMsg(String toUserName, String fromUserName, NewsXmlMessage newsMessage) {
+        newsMessage.setToUser(fromUserName);
+        newsMessage.setFromUser(toUserName);
+        xstream.alias("xml", NewsXmlMessage.class);
         xstream.alias("item", Article.class);
         return xstream.toXML(newsMessage);
 
@@ -199,22 +197,22 @@ public class WechatUtil {
      * @param fromUserName
      * @return
      */
-    public static String sendImageMsg(String toUserName, String fromUserName, ImageMessage imageMessage) {
-        imageMessage.setFromUserName(toUserName);
-        imageMessage.setToUserName(fromUserName);
-        xstream.alias("xml", ImageMessage.class);
+    public static String sendImageMsg(String toUserName, String fromUserName, ImageXmlMessage imageMessage) {
+        imageMessage.setFromUser(toUserName);
+        imageMessage.setToUser(fromUserName);
+        xstream.alias("xml", ImageXmlMessage.class);
         return xstream.toXML(imageMessage);
     }
 
     /**
      * 音乐消息转XML
      *
-     * @param musicMessage
+     * @param voiceXmlMessage
      * @return
      */
-    public static String musicMessageToXml(MusicMessage musicMessage) {
-        xstream.alias("xml", MusicMessage.class);
-        return xstream.toXML(musicMessage);
+    public static String musicMessageToXml(VoiceXmlMessage voiceXmlMessage) {
+        xstream.alias("xml", VoiceXmlMessage.class);
+        return xstream.toXML(voiceXmlMessage);
     }
 
     public static String map2XML(Map<String, Object> map) {
@@ -302,7 +300,7 @@ public class WechatUtil {
 
         Button button = new Button();
         button.setName("新菜单");
-        button.setSub_button(subButtons);
+        button.setSubButton(subButtons);
         buttons.add(button);
 
         menu.setButton(buttons);
@@ -331,8 +329,8 @@ public class WechatUtil {
     public static LocationMessage MapToLocation(Map<String, String> map) {
         LocationMessage location = new LocationMessage();
         location.setLabel(map.get("Label"));
-        location.setLocation_X(map.get("Location_X"));
-        location.setLocation_Y(map.get("Location_Y"));
+        location.setLocationX(map.get("Location_X"));
+        location.setLocationY(map.get("Location_Y"));
         location.setScale(Integer.parseInt(map.get("Scale")));
         location.setMsgId(Long.valueOf(map.get("MsgId")));
         return location;

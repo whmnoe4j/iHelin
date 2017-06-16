@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.ServiceMenu;
 import me.ianhe.dao.ServiceMenuMapper;
-import me.ianhe.model.Button;
-import me.ianhe.model.ClickButton;
-import me.ianhe.model.Menu;
-import me.ianhe.model.ViewButton;
+import me.ianhe.model.wx.Button;
+import me.ianhe.model.wx.ClickButton;
+import me.ianhe.model.wx.Menu;
+import me.ianhe.model.wx.ViewButton;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
@@ -74,7 +74,7 @@ public class ServiceMenuService {
                             subBtns.add(subViewButton);
                         }
                     }
-                    pClickButton.setSub_button(subBtns);
+                    pClickButton.setSubButton(subBtns);
                 } else {
                     pClickButton.setType("click");
                     pClickButton.setKey(pServiceMenu.getId() + "");
@@ -99,7 +99,7 @@ public class ServiceMenuService {
                             subBtns.add(subBtn);
                         }
                     }
-                    patBtn.setSub_button(subBtns);
+                    patBtn.setSubButton(subBtns);
                 } else {
                     patBtn.setType("view");
                     patBtn.setUrl(pServiceMenu.getContent());

@@ -1,23 +1,13 @@
-package me.ianhe.model;
+package me.ianhe.model.wx;
 
 import java.util.Date;
 
 public class AccessToken {
-	private Integer id;
-
 	private String token;
 
 	private Date genTime;
 
 	private Date expiresTime;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getToken() {
 		return token;

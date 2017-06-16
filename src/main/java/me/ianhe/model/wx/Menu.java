@@ -1,4 +1,4 @@
-package me.ianhe.model;
+package me.ianhe.model.wx;
 
 import java.util.List;
 

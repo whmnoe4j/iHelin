@@ -1,4 +1,6 @@
-package me.ianhe.model;
+package me.ianhe.model.wx;
+
+import me.ianhe.model.wx.Item;
 
 import java.util.List;
 

@@ -1,4 +1,6 @@
-package me.ianhe.model;
+package me.ianhe.model.wx;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 多客服
@@ -12,40 +14,44 @@ package me.ianhe.model;
  */
 public class CustomerMessage {
 
-    private String ToUserName;
-    private String FromUserName;
-    private long CreateTime;
-    private String MsgType;
+    @JsonProperty("ToUserName")
+    private String toUserName;
+    @JsonProperty("FromUserName")
+    private String fromUserName;
+    @JsonProperty("CreateTime")
+    private long createTime;
+    @JsonProperty("MsgType")
+    private String msgType;
 
     public String getToUserName() {
-        return ToUserName;
+        return toUserName;
     }
 
     public void setToUserName(String toUserName) {
-        ToUserName = toUserName;
+        this.toUserName = toUserName;
     }
 
     public String getFromUserName() {
-        return FromUserName;
+        return fromUserName;
     }
 
     public void setFromUserName(String fromUserName) {
-        FromUserName = fromUserName;
+        this.fromUserName = fromUserName;
     }
 
     public long getCreateTime() {
-        return CreateTime;
+        return createTime;
     }
 
     public void setCreateTime(long createTime) {
-        CreateTime = createTime;
+        this.createTime = createTime;
     }
 
     public String getMsgType() {
-        return MsgType;
+        return msgType;
     }
 
     public void setMsgType(String msgType) {
-        MsgType = msgType;
+        this.msgType = msgType;
     }
 }
