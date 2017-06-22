@@ -12,7 +12,7 @@
 
     <description>本配置文件由DispatcherServlet使用，提供其相关的Spring MVC配置</description>
 
-    <!-- spring mvc 注解，配置了context:component-scan就不需要了 -->
+    <!-- spring mvc 注解，配置了context:component-scan就不需要以下配置了 -->
     <!--<context:annotation-config/>-->
 
     <!-- DispatcherServlet上下文，只扫描@Controller类型的bean，忽略其他类型的bean -->
@@ -62,7 +62,7 @@
 
     <!-- freemarker配置 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/templates/"/>
+        <property name="templateLoaderPath" value="/WEB-INF/templates"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="freemarkerSettings">
             <props>
@@ -73,8 +73,8 @@
                 <prop key="whitespace_stripping">true</prop>
                 <!-- 设置数字格式，防止出现,号，默认2位 -->
                 <prop key="number_format">0.##</prop>
-                <!--模板碰到null时不提示异常-->
-                <prop key="classic_compatible">true</prop>
+                <!--模板碰到null时不提示异常，但admin里导入frame会报错-->
+                <!--<prop key="classic_compatible">true</prop>-->
             </props>
         </property>
     </bean>

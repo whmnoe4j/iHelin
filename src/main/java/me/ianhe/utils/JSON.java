@@ -35,7 +35,7 @@ public class JSON {
      */
     public static String toJson(Object object) {
         try {
-            OBJECT_MAPPER.writeValue(System.out, object);
+//            OBJECT_MAPPER.writeValue(System.out, object);
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonGenerationException e) {
             LOGGER.error("encode(Object)", e);
