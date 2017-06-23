@@ -16,18 +16,18 @@ import javax.jms.Destination;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext.xml")
-public class ProducerConsumerTest {
+public class JMSTest {
 
     @Autowired
     private JMSProducerService producerService;
 
     @Autowired
-    @Qualifier("queueDestination")
+    @Qualifier("sevenQueue")
     private Destination destination;
 
     @Test
     public void testSend() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             producerService.sendMessage(destination, "Hello World！这是消息：" + (i + 1));
         }
     }

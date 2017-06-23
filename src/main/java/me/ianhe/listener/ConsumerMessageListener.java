@@ -2,6 +2,9 @@ package me.ianhe.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -12,11 +15,13 @@ import javax.jms.TextMessage;
  * @author iHelin
  * @since 2017/6/23 09:51
  */
-public class ConsumerMessageListener implements MessageListener {
+@Component
+@EnableJms
+public class ConsumerMessageListener {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Override
+    @JmsListener(containerFactory="jmsListenerContainerFactory",destination = "seven")
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;
         logger.debug("接收到一个纯文本消息。");

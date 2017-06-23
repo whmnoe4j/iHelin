@@ -23,7 +23,7 @@ public class JMSProducerService {
     private JmsTemplate jmsTemplate;
 
     public void sendMessage(Destination destination, final String message) {
-        logger.debug("---------------生产者发送了一个消息：{}", message);
+        logger.debug("-----生产者发送了一个消息：{}", message);
         jmsTemplate.send(destination, session -> session.createTextMessage(message));
     }
 }
