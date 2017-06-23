@@ -27,8 +27,6 @@ public class JMSTest {
 
     @Test
     public void testSend() {
-        for (int i = 0; i < 5; i++) {
-            producerService.sendMessage(destination, "Hello World！这是消息：" + (i + 1));
-        }
+        producerService.sendMessage(destination, "Hello World!");
     }
 }
