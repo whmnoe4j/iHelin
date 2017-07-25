@@ -150,6 +150,7 @@
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
     <session-config>
+        <!-- 单位为分钟 -->
         <session-timeout>300</session-timeout>
     </session-config>
     <error-page>
