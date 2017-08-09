@@ -184,7 +184,7 @@
                             </tbody>
                         </table>
                         <#import "pagination.ftl" as pager>
-                        <#assign currentUrl>finance/staff/#{staff.id}?</#assign>
+                        <#assign currentUrl>?</#assign>
                         <@pager.pageul pagination=pagination url="${currentUrl}" />
                     </div>
                 </div>

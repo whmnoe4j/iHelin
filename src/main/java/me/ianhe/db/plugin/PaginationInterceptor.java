@@ -3,18 +3,9 @@ package me.ianhe.db.plugin;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.mapping.MappedStatement.Builder;
-import org.apache.ibatis.mapping.ParameterMap;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.SqlSource;
-import org.apache.ibatis.mapping.StatementType;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
-import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -55,7 +46,7 @@ public class PaginationInterceptor implements Interceptor {
                 BoundSql newBoundSql = createBoundSql(ms, boundSql, sql, rowBounds);
                 MappedStatement newMs = createMappedStatement(ms, newBoundSql);
                 queryArgs[MAPPED_STATEMENT_INDEX] = newMs;
-                queryArgs[ROWBOUNDS_INDEX] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
+                queryArgs[ROWBOUNDS_INDEX] = new RowBounds();
             }
         }
         return invocation.proceed();
@@ -108,7 +99,7 @@ public class PaginationInterceptor implements Interceptor {
      * create mapped statement
      *
      * @param ms
-     * @param MappedStatement
+     * @param newBoundSql
      * @return
      */
     private MappedStatement createMappedStatement(MappedStatement ms, final BoundSql newBoundSql) {

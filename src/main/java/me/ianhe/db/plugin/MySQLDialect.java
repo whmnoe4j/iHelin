@@ -13,15 +13,17 @@ public class MySQLDialect extends Dialect {
     }
 
     public String getLimitString(String sql, int offset, String offsetPlaceholder, int limit, String limitPlaceholder) {
-        String limitStr = StringUtils.EMPTY;
+        sql = sql.trim();
+        StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);
+        pagingSelect.append(sql);
         if (StringUtils.isNotBlank(sql)) {
-            limitStr = sql + DEF_SQL_LIMIT;
+            pagingSelect.append(DEF_SQL_LIMIT);
             if (offset > 0) {
-                limitStr += offsetPlaceholder + DEF_SQL_LIMIT_CONNECTOR + limitPlaceholder;
+                pagingSelect.append(offsetPlaceholder).append(DEF_SQL_LIMIT_CONNECTOR).append(limitPlaceholder);
             } else {
-                limitStr += limitPlaceholder;
+                pagingSelect.append(limitPlaceholder);
             }
         }
-        return limitStr;
+        return pagingSelect.toString();
     }
 }

@@ -1,6 +1,5 @@
 package me.ianhe.service;
 
-import com.google.common.collect.Maps;
 import me.ianhe.model.wx.AccessToken;
 import me.ianhe.model.wx.WXAccessToken;
 import me.ianhe.utils.DateTimeUtil;
@@ -12,9 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AccessTokenService {
@@ -29,13 +33,17 @@ public class AccessTokenService {
     private Map<String, Object> accessTokenMap;
 
     public void run() {
+        logger.debug("checking accessToken...");
+        checkAndUpdate();
+    }
+
+    @PostConstruct
+    public void init() {
+        logger.debug("init checking accessToken");
+        File file = new File(Global.getClassPath(), FILE_NAME);
         try {
-            logger.debug("checking accessToken...");
-            File file = new File(Global.getClassPath(), FILE_NAME);
             accessTokenMap = Yaml.loadType(file, HashMap.class);
-            accessTokenMap = Maps.newHashMap();
-            checkAndUpdate();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             logger.error("update access token error", e);
         }
     }

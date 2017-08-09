@@ -12,7 +12,7 @@ public abstract class Dialect {
 
     public enum Type {
 
-        MYSQL;
+        MYSQL, ORACLE;
 
         public static Dialect getDialet(String dialectType) {
             if (StringUtils.isBlank(dialectType)) {
@@ -22,6 +22,7 @@ public abstract class Dialect {
             switch (valueOf(dialectType.trim().toUpperCase())) {
                 case MYSQL:
                     return new MySQLDialect();
+                case ORACLE:
                 default:
                     throw new RuntimeException("The dialect is not supported!");
             }
