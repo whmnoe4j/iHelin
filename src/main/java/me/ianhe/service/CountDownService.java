@@ -19,7 +19,7 @@ public class CountDownService {
         long nowLong = System.currentTimeMillis();
         long between_days = (examDateLong - nowLong) / (1000L * 3600 * 24) + 1;
         if (between_days > 0) {
-            DingUtil.say("今天距离考试还剩" + between_days + "天");
+            DingUtil.say("今天距离考试还剩" + between_days + "天！");
         }
     }
 
