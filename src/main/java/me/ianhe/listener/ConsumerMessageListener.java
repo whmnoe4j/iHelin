@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 /**
@@ -21,7 +20,7 @@ public class ConsumerMessageListener {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @JmsListener(containerFactory="jmsListenerContainerFactory",destination = "seven")
+    @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "seven")
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;
         logger.debug("接收到一个纯文本消息。");

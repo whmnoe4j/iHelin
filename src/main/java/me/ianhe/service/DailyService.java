@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * @author iHelin
@@ -24,7 +24,7 @@ public class DailyService {
         String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
         Map<String, Object> resMap = JSON.parseMap(res);
         contentMap.put("title", "葫芦娃学英语");
-        String text = "## 葫芦娃英语\n" +
+        String text = "## 葫芦娃学英语\n" +
                 "![screenshot](" + resMap.get("picture") + ")\n" +
                 "##### " + resMap.get("content") + " \n" +
                 "> " + resMap.get("note") + " \n";

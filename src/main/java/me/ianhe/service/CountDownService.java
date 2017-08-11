@@ -23,8 +23,4 @@ public class CountDownService {
         }
     }
 
-    public static void main(String[] args) {
-        new CountDownService().run();
-    }
-
 }

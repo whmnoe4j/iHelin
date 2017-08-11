@@ -1,6 +1,5 @@
-package me.ianhe.test;
+package me.ianhe.service;
 
-import me.ianhe.service.JMSProducerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,11 @@ import javax.jms.Destination;
 
 /**
  * @author iHelin
- * @since 2017/6/23 09:54
+ * @since 2017/8/11 09:10
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext.xml")
-public class JMSTest {
+public class JMSProducerServiceTest {
 
     @Autowired
     private JMSProducerService producerService;
@@ -26,7 +25,8 @@ public class JMSTest {
     private Destination destination;
 
     @Test
-    public void testSend() {
+    public void testSendMessage() throws Exception {
         producerService.sendMessage(destination, "Hello World!");
     }
+
 }
