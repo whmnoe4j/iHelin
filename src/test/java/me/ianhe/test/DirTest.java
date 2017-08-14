@@ -16,7 +16,9 @@ public class DirTest {
     public void dirTest() {
         //获取当前项目绝对路径
         System.out.println(System.getProperty("user.dir"));
+        // /Users/iHelin/Documents/IdeaProjects/iHelin
         System.out.println(DirTest.class.getResource("/"));
+        // file:/Users/iHelin/Documents/IdeaProjects/iHelin/target/test-classes/
     }
 
 }
