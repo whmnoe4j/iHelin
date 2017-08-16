@@ -119,7 +119,7 @@
                 <div class="am-cf am-article" id="content">
                 ${article.content!''}
                 </div>
-                <p class="am-text-right"><span style="font-family: Georgia;">#{article.readNum!''}</span>阅</p>
+                <p class="am-text-right"><span style="font-family: Georgia;">#{readCount!''}</span>阅</p>
                 <!--PC和WAP自适应版-->
                 <div id="SOHUCS" sid="${article.id!}"></div>
                 <script type="text/javascript">

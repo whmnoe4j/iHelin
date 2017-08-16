@@ -14,6 +14,8 @@ import java.util.List;
 @Controller
 public class PageController extends BaseController {
 
+    private static final String READ_COUNT_KEY = "article:readCount:";
+
     @RequestMapping(value = "post/{id}", method = RequestMethod.GET)
     public String postPage(@PathVariable Integer id, Model model) {
         Article article = null;
@@ -24,9 +26,15 @@ public class PageController extends BaseController {
             article = articleManager.selectArticleById(id);
         }
         if (article == null) {
-            return "post";
+            return "article";
         }
-        articleManager.addReadCount(article);
+        Integer count = commonRedisDao.getInt(READ_COUNT_KEY + id);
+        if (count == null) {
+            count = 0;
+        }
+        count++;
+        commonRedisDao.set(READ_COUNT_KEY + id, String.valueOf(count));
+        model.addAttribute("readCount", count);
         model.addAttribute("article", article);
         return "article";
     }

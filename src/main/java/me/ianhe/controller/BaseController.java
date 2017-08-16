@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
+import me.ianhe.dao.CommonRedisDao;
 import me.ianhe.service.*;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
@@ -30,6 +31,8 @@ public abstract class BaseController {
     protected FinanceService financeManager;
     @Autowired
     protected ScoreService myScoreManager;
+    @Autowired
+    protected CommonRedisDao commonRedisDao;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
