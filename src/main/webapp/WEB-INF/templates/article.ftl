@@ -10,6 +10,8 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link rel="stylesheet" href="${request.contextPath}/plugins/amazeui/css/amazeui.css"/>
+    <script src="${request.contextPath}/js/vue.js"></script>
+    <script src="${request.contextPath}/js/vue-resource.js"></script>
     <style>
         @media only screen and (min-width: 641px) {
             .am-offcanvas {
@@ -109,7 +111,7 @@
     </div>
 </header>
 <hr class="am-article-divider"/>
-<div class="am-g">
+<div class="am-g" id="wrap">
     <div class="am-u-md-10 am-u-md-push-2">
         <div class="am-g">
             <div class="am-u-sm-12 am-u-sm-centered">
@@ -119,44 +121,9 @@
                 <div class="am-cf am-article" id="content">
                 ${article.content!''}
                 </div>
-                <p class="am-text-right"><span style="font-family: Georgia;">#{readCount!''}</span>阅</p>
+                <p class="am-text-right"><span style="font-family: Georgia;">{{readCount}}</span>阅</p>
                 <!--PC和WAP自适应版-->
                 <div id="SOHUCS" sid="${article.id!}"></div>
-                <script type="text/javascript">
-                    (function () {
-                        var appid = 'cysWz2225';
-                        var conf = '28580395836c063154ed2dbc8342f255';
-                        var width = window.innerWidth || document.documentElement.clientWidth;
-                        if (width < 960) {
-                            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
-                        } else {
-                            var loadJs = function (d, a) {
-                                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-                                var b = document.createElement("script");
-                                b.setAttribute("type", "text/javascript");
-                                b.setAttribute("charset", "UTF-8");
-                                b.setAttribute("src", d);
-                                if (typeof a === "function") {
-                                    if (window.attachEvent) {
-                                        b.onreadystatechange = function () {
-                                            var e = b.readyState;
-                                            if (e === "loaded" || e === "complete") {
-                                                b.onreadystatechange = null;
-                                                a()
-                                            }
-                                        }
-                                    } else {
-                                        b.onload = a
-                                    }
-                                }
-                                c.appendChild(b)
-                            };
-                            loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-                                window.changyan.api.config({appid: appid, conf: conf})
-                            });
-                        }
-                    })();
-                </script>
             </div>
         </div>
     </div>
@@ -188,8 +155,56 @@
         <small>Copyright © iHelin. ${.now?string('yyyy')}</small>
     </p>
 </footer>
-
+</body>
 <script src="${request.contextPath}/js/jquery-2.2.1.min.js"></script>
 <script src="${request.contextPath}/plugins/amazeui/js/amazeui.js"></script>
-</body>
+<script type="text/javascript">
+    new Vue({
+        el: '#wrap',
+        data: {
+            id: #{article.id!},
+            readCount: 0
+        },
+        mounted: function () {
+            var vm = this;
+            Vue.http.get("${request.contextPath}/article/readCount/" + vm.id).then(function (res) {
+                vm.readCount = res.data.data;
+            });
+        }
+    });
+
+    (function () {
+        var appid = 'cysWz2225';
+        var conf = '28580395836c063154ed2dbc8342f255';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+        } else {
+            var loadJs = function (d, a) {
+                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                var b = document.createElement("script");
+                b.setAttribute("type", "text/javascript");
+                b.setAttribute("charset", "UTF-8");
+                b.setAttribute("src", d);
+                if (typeof a === "function") {
+                    if (window.attachEvent) {
+                        b.onreadystatechange = function () {
+                            var e = b.readyState;
+                            if (e === "loaded" || e === "complete") {
+                                b.onreadystatechange = null;
+                                a()
+                            }
+                        }
+                    } else {
+                        b.onload = a
+                    }
+                }
+                c.appendChild(b)
+            };
+            loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                window.changyan.api.config({appid: appid, conf: conf})
+            });
+        }
+    })();
+</script>
 </html>

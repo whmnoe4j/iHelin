@@ -39,5 +39,8 @@
     <bean id="sevenQueue" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg value="seven"/>
     </bean>
+    <bean id="articleQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="article"/>
+    </bean>
 
 </beans>
