@@ -131,7 +131,7 @@ public class AccessWeChatController extends BaseController {
             // 扫码事件
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, eventKey);
         } else if (WechatUtil.MESSAGE_CLICK.equals(eventType)) {
-            ServiceMenu serviceMenu = serviceMenuMannger.getMenuById(Integer.valueOf(eventKey));
+            ServiceMenu serviceMenu = serviceMenuManager.getMenuById(Integer.valueOf(eventKey));
             message = WechatUtil.sendTextMsg(toUserName, fromUserName, serviceMenu.getContent());
         }
         return message;

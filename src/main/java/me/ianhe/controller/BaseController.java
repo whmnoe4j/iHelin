@@ -20,7 +20,7 @@ public abstract class BaseController {
     @Autowired
     protected UserService userManager;
     @Autowired
-    protected ServiceMenuService serviceMenuMannger;
+    protected ServiceMenuService serviceMenuManager;
     @Autowired
     protected ArticleService articleManager;
     @Autowired

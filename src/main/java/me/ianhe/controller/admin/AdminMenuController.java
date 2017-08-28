@@ -17,7 +17,7 @@ public class AdminMenuController extends BaseAdminController {
 
     @RequestMapping(value = "menu_admin", method = RequestMethod.GET)
     public String menuAdmin(Model model) {
-        List<ServiceMenu> menus = serviceMenuMannger.getAllMenus();
+        List<ServiceMenu> menus = serviceMenuManager.getAllMenus();
         model.addAttribute("menus", menus);
         return ftl("menu_admin");
     }
@@ -26,7 +26,7 @@ public class AdminMenuController extends BaseAdminController {
     public String syncMenu() {
         String token = accessTokenManager.getAccessToken().getToken();
         try {
-            serviceMenuMannger.syncServiceMenuToWeiXin(token);
+            serviceMenuManager.syncServiceMenuToWeiXin(token);
         } catch (Exception e) {
             logger.error("同步菜单出现异常", e);
         }
@@ -53,9 +53,9 @@ public class AdminMenuController extends BaseAdminController {
             if (sort == null)
                 sort = 100;
             menu.setSort(sort);
-            serviceMenuMannger.insertMenu(menu);
+            serviceMenuManager.insertMenu(menu);
         } else {
-            ServiceMenu menu = serviceMenuMannger.getMenuById(menuId);
+            ServiceMenu menu = serviceMenuManager.getMenuById(menuId);
             menu.setName(menuName);
             if (menuType == ServiceMenu.TEXT_MENU) {
                 menu.setContent(content);
@@ -69,28 +69,28 @@ public class AdminMenuController extends BaseAdminController {
             if (sort == null)
                 sort = 100;
             menu.setSort(sort);
-            serviceMenuMannger.updateMenu(menu);
+            serviceMenuManager.updateMenu(menu);
         }
         return "redirect:menu_admin";
     }
 
     @RequestMapping(value = "delete_menu", method = RequestMethod.POST)
     public void deleteMenu(Integer id, HttpServletResponse response) {
-        ServiceMenu menu = serviceMenuMannger.getMenuById(id);
+        ServiceMenu menu = serviceMenuManager.getMenuById(id);
         if (menu.getParentId() == null) {
-            List<ServiceMenu> subMenus = serviceMenuMannger.getMenusByParentId(id);
+            List<ServiceMenu> subMenus = serviceMenuManager.getMenusByParentId(id);
             for (ServiceMenu serviceMenu : subMenus) {
-                serviceMenuMannger.deleteMenu(serviceMenu.getId());
+                serviceMenuManager.deleteMenu(serviceMenu.getId());
             }
         }
-        serviceMenuMannger.deleteMenu(id);
+        serviceMenuManager.deleteMenu(id);
         ResponseUtil.writeSuccessJSON(response);
     }
 
     @RequestMapping(value = "get_menu_by_id", method = RequestMethod.GET)
     public void getMenuById(Integer id, HttpServletResponse response) {
         Map<String, Object> res = Maps.newHashMap();
-        ServiceMenu menu = serviceMenuMannger.getMenuById(id);
+        ServiceMenu menu = serviceMenuManager.getMenuById(id);
         res.put("menu", menu);
         ResponseUtil.writeSuccessJSON(response, res);
     }
