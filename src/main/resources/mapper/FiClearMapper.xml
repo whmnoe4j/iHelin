@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.ianhe.dao.FiClearMapper">
+    <resultMap id="BaseResultMap" type="me.ianhe.db.entity.FiClear">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="summary_ID" property="summaryId" jdbcType="INTEGER"/>
+        <result column="company_ID" property="companyId" jdbcType="INTEGER"/>
+        <result column="paymentID" property="paymentID" jdbcType="INTEGER"/>
+        <result column="actual_amt" property="actualAmt" jdbcType="DECIMAL"/>
+        <result column="before_balance" property="beforeBalance" jdbcType="DECIMAL"/>
+        <result column="after_balance" property="afterBalance" jdbcType="DECIMAL"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, summary_ID, company_ID,paymentID, actual_amt, before_balance, after_balance, remark
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from fi_clear
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from fi_clear
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="me.ianhe.db.entity.FiClear" useGeneratedKeys="true" keyProperty="id">
+        insert into fi_clear (summary_ID, company_ID,paymentID, actual_amt, before_balance, after_balance,
+        remark)
+        values (#{summaryId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
+        #{paymentID,jdbcType=INTEGER},
+        #{actualAmt,jdbcType=DECIMAL}, #{beforeBalance,jdbcType=DECIMAL}, #{afterBalance,jdbcType=DECIMAL},
+        #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="me.ianhe.db.entity.FiClear" useGeneratedKeys="true" keyProperty="id">
+        insert into fi_clear
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="summaryId != null">
+                summary_ID,
+            </if>
+            <if test="companyId != null">
+                company_ID,
+            </if>
+            <if test="paymentID != null">
+                paymentID,
+            </if>
+            <if test="actualAmt != null">
+                actual_amt,
+            </if>
+            <if test="beforeBalance != null">
+                before_balance,
+            </if>
+            <if test="afterBalance != null">
+                after_balance,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="summaryId != null">
+                #{summaryId,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="paymentID != null">
+                #{paymentID,jdbcType=INTEGER},
+            </if>
+            <if test="actualAmt != null">
+                #{actualAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="beforeBalance != null">
+                #{beforeBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="afterBalance != null">
+                #{afterBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.FiClear">
+        update fi_clear
+        <set>
+            <if test="summaryId != null">
+                summary_ID = #{summaryId,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                company_ID = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="paymentID != null">
+                paymentID = #{paymentID,jdbcType=INTEGER},
+            </if>
+            <if test="actualAmt != null">
+                actual_amt = #{actualAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="beforeBalance != null">
+                before_balance = #{beforeBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="afterBalance != null">
+                after_balance = #{afterBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.FiClear">
+        update fi_clear
+        set summary_ID = #{summaryId,jdbcType=INTEGER},
+        company_ID = #{companyId,jdbcType=INTEGER},
+        paymentID = #{paymentID,jdbcType=INTEGER},
+        actual_amt = #{actualAmt,jdbcType=DECIMAL},
+        before_balance = #{beforeBalance,jdbcType=DECIMAL},
+        after_balance = #{afterBalance,jdbcType=DECIMAL},
+        remark = #{remark,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="listByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fi_clear
+    </select>
+    <select id="listCount" resultType="int">
+        select
+        count(id)
+        from fi_clear
+    </select>
+</mapper>

@@ -3,144 +3,169 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>${title!} - 管理后台</title>
+    <title>${title!} - Ian He 管理后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link href="${request.contextPath}/css/styles.css" rel="stylesheet"/>
-    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-    <script src='${request.contextPath}/js/jquery.min.js'></script>
-    <script src="${request.contextPath}/plugins/layer/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/iview/iview.css">
+    <style scoped>
+        .layout {
+            background: #f5f7f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layout-breadcrumb {
+            padding: 10px 15px 0;
+        }
+
+        .layout-content {
+            min-height: 456px;
+            margin: 15px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 4px;
+        }
+
+        .layout-content-main {
+            padding: 10px;
+        }
+
+        .layout-copy {
+            text-align: center;
+            padding: 10px 0 20px;
+            color: #9ea7b4;
+        }
+
+        .layout-menu-left {
+            background: #464c5b;
+        }
+
+        .layout-header {
+            height: 60px;
+            background: #fff;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        }
+
+        .layout-logo-left {
+            width: 90%;
+            height: 30px;
+            background: #5b6270;
+            border-radius: 3px;
+            margin: 15px auto;
+        }
+
+        .layout-ceiling-main a {
+            color: #9ba7b5;
+        }
+
+    </style>
 </head>
 <body>
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-    <a id="leftmenu-trigger" class="pull-left tips" data-toggle="tooltip" data-placement="bottom" title="打开/关闭侧边栏"></a>
-    <div class="navbar-header pull-left">
-        <a class="navbar-brand" href="${request.contextPath}/admin/index"
-           style='background:url("${request.contextPath}/favicon.ico") no-repeat center center;background-size: contain'></a>
-    </div>
-    <ul class="nav navbar-nav pull-left">
-        <li class="dropdown">
-            <a href="index" class="username"><span class="hidden-xs">Ian He</span></a>
-        </li>
-    </ul>
-    <ul class="nav navbar-nav  pull-right toolbar">
-        <li id="right_dropdown" class="dropdown ">
-            <a href="javascript:;" class="dropdown-toggle username"
-               data-toggle="dropdown"><#if (adminUser.nickName)??>${adminUser.nickName?html}</#if> <i
-                    class="fa fa-caret-down fa-scale"></i></a>
-            <ul class="dropdown-menu userinfo arrow">
-                <li class="username">
-                    <a href="javascript:;">
-                        <div class="pull-left"><h5>您好, <#if (adminUser.nickName)??>${adminUser.nickName?html}<#else>
-                            未设置昵称</#if>!</h5></div>
+<div id="app">
+    <div class="layout">
+        <Row type="flex">
+            <i-col :span="4" class="layout-menu-left">
+                <i-menu :active-name="active" theme="dark" width="auto" accordion>
+                    <div class="layout-logo-left"></div>
+                    <a href="${request.contextPath}/admin/index">
+                        <Menu-item name="index">
+                            <Icon type="ios-navigate" :size="14"></Icon>
+                            <span class="layout-text">首页</span>
+                        </Menu-item>
                     </a>
-                </li>
-                <li class="userlinks">
-                    <ul class="dropdown-menu">
-                        <li><a href="${request.contextPath}/admin/logout" class="text-right">退出</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</header>
-
-<div id="page-container">
-    <nav id="page-leftbar" role="navigation">
-        <!-- BEGIN SIDEBAR MENU -->
-        <ul class="acc-menu" id="sidebar">
-            <li>
-                <a href="${request.contextPath}/admin/index">
-                    <i class="fa fa-home"></i><span>首页</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/article"><i class="fa fa-file"></i>
-                    <span>文章管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/user_admin"><i class="fa fa-user"></i>
-                    <span>用户管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/menu_admin"><i class="fa fa-th"></i>
-                    <span>自定义菜单</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/advice"><i class="fa fa-envelope"></i>
-                    <span>留言管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/qrcode"><i class="fa fa-qrcode"></i>
-                    <span>二维码</span>
-                </a>
-            </li>
-            <li>
-                <a href="${request.contextPath}/admin/finance"><i class="fa fa-dollar"></i>
-                    <span>财务管理</span>
-                </a>
-            </li>
-        </ul>
-        <!-- END SIDEBAR MENU -->
-    </nav>
-    <div id="page-content">
-        <div id='wrap'>
-            <#nested>
-        </div>
+                    <Menu-group title="财务">
+                        <a href="${request.contextPath}/admin/fi/customer">
+                            <Menu-item name="fi/customer">
+                                <Icon type="document-text" :size="14"></Icon>
+                                客户管理
+                            </Menu-item>
+                        </a>
+                        <a href="${request.contextPath}/admin/fi/summary">
+                            <Menu-item name="fi/summary">
+                                <Icon type="chatbubbles" :size="14"></Icon>
+                                应收明细
+                            </Menu-item>
+                        </a>
+                        <a href="${request.contextPath}/admin/fi/analysis">
+                            <Menu-item name="fi/analysis">
+                                <Icon type="chatbubbles" :size="14"></Icon>
+                                账龄分析
+                            </Menu-item>
+                        </a>
+                    </Menu-group>
+                </i-menu>
+            </i-col>
+            <i-col :span="20">
+                <div class="layout-header">
+                </div>
+                <#nested>
+                <div class="layout-copy">
+                    Copyright &copy; iHelin ${.now?string('yyyy')}
+                </div>
+            </i-col>
+        </Row>
     </div>
-    <footer role="contentinfo">
-        <div class="clearfix">
-            <ul class="list-unstyled list-inline">
-                <li>Ian He &copy; ${.now?string('yyyy')}</li>
-                <button class="pull-right btn btn-inverse btn-xs" id="back-to-top"
-                        style="margin-top: -1px; text-transform: uppercase;"><i class="fa fa-arrow-up"></i></button>
-            </ul>
-        </div>
-    </footer>
-</div> <!-- page-container -->
-<script src='${request.contextPath}/js/bootstrap.min.js'></script>
-<script src='${request.contextPath}/js/enquire.js'></script>
-<script src='${request.contextPath}/js/jquery.cookie.js'></script>
-<script src='${request.contextPath}/js/jquery.touchSwipe.min.js'></script>
-<script src='${request.contextPath}/js/jquery.nicescroll.min.js'></script>
-<script src='${request.contextPath}/js/application.js'></script>
-<script src='${request.contextPath}/plugins/form-parsley/parsley.min.js'></script>
-<script src='${request.contextPath}/js/formvalidation.js'></script>
+</div>
 <script src="${request.contextPath}/js/vue.js"></script>
 <script src="${request.contextPath}/js/vue-resource.js"></script>
-<script type='text/javascript'>
-    $(function () {
-        $('.tips').tooltip();
+<script src="${request.contextPath}/iview/iview.js"></script>
 
-        Date.prototype.format = function (format) {
-            var date = {
-                "M+": this.getMonth() + 1,
-                "d+": this.getDate(),
-                "h+": this.getHours(),
-                "m+": this.getMinutes(),
-                "s+": this.getSeconds(),
-                "q+": Math.floor((this.getMonth() + 3) / 3),
-                "S+": this.getMilliseconds()
-            };
-            if (/(y+)/i.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+<script type='text/javascript'>
+    Vue.http.interceptors.push((request, next) => {
+        iview.LoadingBar.start();
+        next(res => {
+            switch (res.status) {
+                case 200:
+                    iview.LoadingBar.finish();
+                    if (res.data.status != "success") {
+                        iview.Message.error(res.data.data);
+                    }
+                    break;
+                case 404:
+                    console.log("404");
+                default:
+                    iview.LoadingBar.error();
+                    break;
             }
-            for (var k in date) {
-                if (new RegExp("(" + k + ")").test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
-                            ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
-                }
-            }
-            return format;
+        });
+    });
+
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(), //day
+            "H+": this.getHours(), //hour
+            "m+": this.getMinutes(), //minute
+            "s+": this.getSeconds(), //second
+            "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+            "S": this.getMilliseconds() //millisecond
         }
+
+        if (/(y+)/i.test(format)) {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }
+
+    Vue.mixin({
+        data() {
+            let a = window.location.href.substr(window.location.href.indexOf('admin') + 6);
+            return {
+                active: a
+            }
+        },
+        computed: {},
+        methods: {}
     });
 </script>
 ${html_other_script!}

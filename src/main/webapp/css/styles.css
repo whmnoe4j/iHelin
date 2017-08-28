@@ -8478,7 +8478,7 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
 }
 
 .navbar-fixed-top {
-    z-index: 1030;
+    z-index: 10;
     top: 0;
 }
 

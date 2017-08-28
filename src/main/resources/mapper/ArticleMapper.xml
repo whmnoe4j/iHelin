@@ -12,8 +12,8 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, title, author, summary, read_num, create_time, update_time,content
-  </sql>
+        id, title, author, summary, read_num, create_time, update_time,content
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -21,17 +21,17 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Article
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from Article
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" keyProperty="id" parameterType="me.ianhe.db.entity.Article" useGeneratedKeys="true">
-    insert into Article (title, author, summary, 
-      read_num, create_time, update_time, 
-      content)
-    values (#{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
-      #{readNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
+        insert into Article (title, author, summary,
+        read_num, create_time, update_time,
+        content)
+        values (#{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+        #{readNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{content,jdbcType=LONGVARCHAR})
+    </insert>
     <insert id="insertSelective" keyProperty="id" parameterType="me.ianhe.db.entity.Article"
             useGeneratedKeys="true">
         insert into Article
@@ -110,16 +110,16 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.Article">
-    update Article
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      read_num = #{readNum,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update Article
+        set title = #{title,jdbcType=VARCHAR},
+        author = #{author,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+        read_num = #{readNum,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        content = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 
     <select id="listByCondition" resultMap="BaseResultMap">

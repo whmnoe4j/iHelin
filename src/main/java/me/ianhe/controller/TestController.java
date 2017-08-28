@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -36,26 +38,6 @@ public class TestController extends BaseController {
         return template;
     }
 
-    /**
-     * aop测试
-     *
-     * @author iHelin
-     * @since 2017/5/31 16:26
-     */
-    @GetMapping("aop")
-    @ResponseBody
-    public String testAop() {
-        long total = myScoreManager.getMyTotalScore();
-        return String.valueOf(total);
-    }
-
-    @ResponseBody
-    @PostMapping("test_post")
-    public String testPost(@RequestBody String hello) {
-        logger.debug("get:{}", hello);
-        return "hahahhahahhah";
-    }
-
     @ResponseBody
     @RequestMapping(value = "console", method = RequestMethod.GET)
     public String getProperties() {
@@ -63,14 +45,13 @@ public class TestController extends BaseController {
         return JSON.toJson(props);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "test", method = RequestMethod.GET)
+    @GetMapping("test")
     public String test() {
-        return success("<h1>三个人请问abc123</h1>");
+        return "test";
     }
 
     @GetMapping(value = "test1")
-    public void test1(HttpServletResponse response, HttpSession session) {
+    public void test1(HttpServletResponse response) {
         Map<String, Object> data = Maps.newHashMap();
         data.put("data", "<h1>三个人请前雾灯无问abc123</h1>");
         ResponseUtil.writeSuccessJSON(response, data);
@@ -100,6 +81,13 @@ public class TestController extends BaseController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", "test.txt");
         return new ResponseEntity("download test", headers, HttpStatus.CREATED);
+    }
+
+    @GetMapping("dateTest")
+    @ResponseBody
+    public String dateTest(Date date) {
+        System.out.println(date);
+        return date.toString();
     }
 
 }

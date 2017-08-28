@@ -1,13 +1,10 @@
 package me.ianhe.model;
 
-import me.ianhe.db.entity.Staff;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.junit.Test;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * Model - Person

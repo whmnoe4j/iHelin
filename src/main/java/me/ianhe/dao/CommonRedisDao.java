@@ -27,10 +27,22 @@ public class CommonRedisDao {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 获取String类型值
+     *
+     * @author iHelin
+     * @since 2017/8/19 15:01
+     */
     public String get(String key) {
         return stringRedisTemplate.opsForValue().get(key);
     }
 
+    /**
+     * 设置String类型值
+     *
+     * @author iHelin
+     * @since 2017/8/19 15:01
+     */
     public void set(String key, String val) {
         stringRedisTemplate.opsForValue().set(key, val);
     }
@@ -165,7 +177,7 @@ public class CommonRedisDao {
      * @date 2016年8月10日
      */
     public void delMapField(String key, String... field) {
-        BoundHashOperations<String, String, ?> boundHashOperations = stringRedisTemplate.boundHashOps(key);
+        BoundHashOperations<String, String, Object> boundHashOperations = stringRedisTemplate.boundHashOps(key);
         boundHashOperations.delete(field);
     }
 
@@ -194,7 +206,7 @@ public class CommonRedisDao {
     }
 
     /**
-     * 删除set集合中的对象
+     * 删除Set集合中的对象
      *
      * @param key
      * @param value
@@ -204,7 +216,7 @@ public class CommonRedisDao {
     }
 
     /**
-     * set重命名
+     * Set重命名
      *
      * @param oldKey
      * @param newKey

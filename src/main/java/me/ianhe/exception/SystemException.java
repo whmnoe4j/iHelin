@@ -24,4 +24,8 @@ public class SystemException extends RuntimeException {
         super(cause);
     }
 
+    @Override
+    public String getMessage() {
+        return super.getMessage();
+    }
 }

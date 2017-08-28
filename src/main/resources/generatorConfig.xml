@@ -19,7 +19,7 @@
         </commentGenerator>
         <!-- jdbc连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://120.27.100.98:3306/iHelin?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"
+                        connectionURL="jdbc:mysql://112.74.203.130:3306/iHelin?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"
                         userId="ihelin" password="246260"/>
         <!-- 类型转换 -->
         <javaTypeResolver>
@@ -48,7 +48,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 配置表信息 -->
-        <table schema="iHelin" tableName="test" domainObjectName="Test"
+        <table schema="iHelin" tableName="fi_payment" domainObjectName="FiPayment"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>

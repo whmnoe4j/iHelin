@@ -1,13 +1,13 @@
 package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.dao.CommonRedisDao;
 import me.ianhe.service.*;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -15,8 +15,6 @@ import java.util.Map;
  */
 public abstract class BaseController {
 
-    @Autowired
-    protected AdviceService adviceManager;
     @Autowired
     protected AccessTokenService accessTokenManager;
     @Autowired
@@ -28,11 +26,7 @@ public abstract class BaseController {
     @Autowired
     protected QrcodeService qrcodeManager;
     @Autowired
-    protected FinanceService financeManager;
-    @Autowired
     protected ScoreService myScoreManager;
-    @Autowired
-    protected CommonRedisDao commonRedisDao;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -41,10 +35,19 @@ public abstract class BaseController {
     private static final String ERROR = "error";
     private static final String STATUS = "status";
     private static final String DATA = "data";
+    private static final String TOTAL = "total";
 
     protected String success() {
         Map<String, Object> res = Maps.newHashMap();
         res.put(STATUS, SUCCESS);
+        return JSON.toJson(res);
+    }
+
+    protected String page(Collection model, Integer count) {
+        Map<String, Object> res = Maps.newHashMap();
+        res.put(STATUS, SUCCESS);
+        res.put(DATA, model);
+        res.put(TOTAL, count);
         return JSON.toJson(res);
     }
 
