@@ -1,12 +1,18 @@
 package me.ianhe.controller;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Maps;
 import me.ianhe.db.entity.Article;
 import me.ianhe.utils.FileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -18,18 +24,11 @@ import java.util.Properties;
 @Controller
 public class IndexController extends BaseController {
 
-    @RequestMapping(value = "/")
-    public String defaultPage() {
-        logger.info("forward to index");
-        return "forward:/index";
-    }
+    @Autowired
+    private RequestMappingHandlerMapping handlerMapping;
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String homePage() {
-        return "home";
-    }
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @GetMapping(value = {"/", "index"})
     public String indexPage(Model model) {
         int pageLength = 5;
         int pageNum = 1;
@@ -39,18 +38,40 @@ public class IndexController extends BaseController {
         return "index";
     }
 
-    @RequestMapping(value = "config", method = RequestMethod.GET)
+    @GetMapping(value = "home")
+    public String homePage() {
+        return "home";
+    }
+
+    @GetMapping(value = "config")
     public String configPage(Model model) {
         Properties props = System.getProperties();
         model.addAttribute("props", props);
         return "config";
     }
 
-    @RequestMapping(value = "image", method = RequestMethod.GET)
+    @GetMapping(value = "image")
     public String imagePage(Model model) {
         List<Map<String, Object>> fileInfos = FileUtil.getFileList();
         model.addAttribute("fileInfos", fileInfos);
         return "image";
+    }
+
+    @GetMapping("mapping")
+    public String showMappings(Model model) {
+        Map<RequestMappingInfo, HandlerMethod> map = handlerMapping.getHandlerMethods();
+        List<Map> array = new ArrayList();
+        for (RequestMappingInfo key : map.keySet()) {
+            Map<String, Object> modelMap = Maps.newHashMap();
+            String urls = Joiner.on(',').join(key.getPatternsCondition().getPatterns());
+            modelMap.put("url", urls);
+            modelMap.put("method", Joiner.on(',').join(key.getMethodsCondition().getMethods()));
+            modelMap.put("className", map.get(key).getBeanType().getName());
+            modelMap.put("classMethod", map.get(key).getMethod().getName());
+            array.add(modelMap);
+        }
+        model.addAttribute("mappings", array);
+        return "mapping";
     }
 
 }

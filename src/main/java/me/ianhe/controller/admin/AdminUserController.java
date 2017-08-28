@@ -2,13 +2,12 @@ package me.ianhe.controller.admin;
 
 import me.ianhe.db.entity.User;
 import me.ianhe.db.plugin.Pagination;
-import me.ianhe.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -27,10 +26,16 @@ public class AdminUserController extends BaseAdminController {
         return ftl("user_admin");
     }
 
-    @RequestMapping(value = "delete_user", method = RequestMethod.POST)
-    public void deleteProduct(Integer id, HttpServletResponse response) {
+    /**
+     * 删除用户
+     *
+     * @author iHelin
+     * @since 2017/8/28 13:31
+     */
+    @DeleteMapping(value = "user")
+    public String deleteProduct(Integer id) {
         userManager.deleteUserById(id);
-        ResponseUtil.writeSuccessJSON(response);
+        return success();
     }
 
 }

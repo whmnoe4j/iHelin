@@ -71,6 +71,10 @@
             this.init();
         },
         methods: {
+            pageSizeChange(pageSize){
+                this.pageSize = pageSize;
+                this.init(1);
+            },
             init(pageNum){
                 if (pageNum) {
                     this.pageNum = pageNum;
@@ -138,7 +142,9 @@
               :page-size="pageSize"
               :total="total"
               show-total
+              show-sizer
               style="margin-top: 5px;"
+              @on-page-size-change="pageSizeChange"
               @on-change="init"></Page>
         <Modal v-model="visible"
                @on-ok="handleAdd()"

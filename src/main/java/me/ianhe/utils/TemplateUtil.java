@@ -23,8 +23,7 @@ public class TemplateUtil {
 
     public static String applyTemplate(String templatePath) {
         Map<String, Object> res = Maps.newHashMap();
-        String result = applyTemplate(templatePath, res);
-        return result;
+        return applyTemplate(templatePath, res);
     }
 
     public static String applyTemplate(String templatePath, Map<String, Object> propMap) {

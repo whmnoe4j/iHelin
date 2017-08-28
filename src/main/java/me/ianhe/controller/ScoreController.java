@@ -21,7 +21,7 @@ public class ScoreController extends BaseController {
      * @param myScore
      * @return
      */
-    @RequestMapping(value = "score", method = RequestMethod.POST)
+    @PostMapping(value = "score")
     public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
         myScoreManager.addRecord(myScore);

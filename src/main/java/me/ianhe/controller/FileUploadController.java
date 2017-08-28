@@ -7,8 +7,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public class FileUploadController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    @GetMapping("upload")
     public String uploadPage(String src, Model model) {
         if (StringUtils.isNotBlank(src)) {
             model.addAttribute("msg", "上传成功！");
@@ -40,7 +40,7 @@ public class FileUploadController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @PostMapping(value = "upload")
     public String handleUpload(MultipartFile file, Model model) {
         if (file.isEmpty()) {
             model.addAttribute("msg", "请选择文件……");
@@ -57,8 +57,8 @@ public class FileUploadController extends BaseController {
      * @param file
      * @return
      */
-    @RequestMapping(value = "img_upload", method = RequestMethod.POST)
     @ResponseBody
+    @PostMapping(value = "img_upload")
     public String imgUpload(@RequestParam("file") MultipartFile file) {
         Map<String, Object> res = Maps.newHashMap();
         if (file.isEmpty()) {

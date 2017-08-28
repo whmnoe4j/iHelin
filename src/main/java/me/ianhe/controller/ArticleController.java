@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController extends BaseController {
 
     private static final String READ_COUNT_KEY = "article:readCount:";
+
     @Autowired
     private CommonRedisDao commonRedisDao;
 

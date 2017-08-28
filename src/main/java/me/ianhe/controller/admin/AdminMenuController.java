@@ -1,16 +1,13 @@
 package me.ianhe.controller.admin;
 
-import com.google.common.collect.Maps;
 import me.ianhe.db.entity.ServiceMenu;
-import me.ianhe.utils.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AdminMenuController extends BaseAdminController {
@@ -74,8 +71,8 @@ public class AdminMenuController extends BaseAdminController {
         return "redirect:menu_admin";
     }
 
-    @RequestMapping(value = "delete_menu", method = RequestMethod.POST)
-    public void deleteMenu(Integer id, HttpServletResponse response) {
+    @PostMapping("delete_menu")
+    public String deleteMenu(Integer id) {
         ServiceMenu menu = serviceMenuManager.getMenuById(id);
         if (menu.getParentId() == null) {
             List<ServiceMenu> subMenus = serviceMenuManager.getMenusByParentId(id);
@@ -84,15 +81,6 @@ public class AdminMenuController extends BaseAdminController {
             }
         }
         serviceMenuManager.deleteMenu(id);
-        ResponseUtil.writeSuccessJSON(response);
+        return success();
     }
-
-    @RequestMapping(value = "get_menu_by_id", method = RequestMethod.GET)
-    public void getMenuById(Integer id, HttpServletResponse response) {
-        Map<String, Object> res = Maps.newHashMap();
-        ServiceMenu menu = serviceMenuManager.getMenuById(id);
-        res.put("menu", menu);
-        ResponseUtil.writeSuccessJSON(response, res);
-    }
-
 }

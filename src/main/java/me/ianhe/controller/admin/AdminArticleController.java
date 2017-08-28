@@ -2,32 +2,30 @@ package me.ianhe.controller.admin;
 
 import me.ianhe.db.entity.Article;
 import me.ianhe.db.plugin.Pagination;
-import me.ianhe.utils.ResponseUtil;
 import org.apache.commons.lang3.CharEncoding;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 文章管理Controller
- * PackageName:   com.seven.ianhe.controller.admin
- * ClassName:     AdminArticleController
- * Description:
- * Date           16/12/26
- * lastModified:
+ * 文章管理
  *
- * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
+ * @author iHelin
+ * @since 2017/8/28 13:26
  */
 @Controller
 public class AdminArticleController extends BaseAdminController {
 
-    @RequestMapping(value = "article", method = RequestMethod.GET)
+    /**
+     * 文章管理页
+     *
+     * @author iHelin
+     * @since 2017/8/28 13:24
+     */
+    @GetMapping(value = "article")
     public String articleAdminPage(Model model, String title, Integer pageNum) {
         if (pageNum == null)
             pageNum = 1;
@@ -43,7 +41,8 @@ public class AdminArticleController extends BaseAdminController {
     /**
      * 新增文章页面
      *
-     * @return
+     * @author iHelin
+     * @since 2017/8/28 13:25
      */
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
     public String articleAddPage() {
@@ -53,9 +52,8 @@ public class AdminArticleController extends BaseAdminController {
     /**
      * 编辑文章页面
      *
-     * @param articleId
-     * @param model
-     * @return
+     * @author iHelin
+     * @since 2017/8/28 13:26
      */
     @RequestMapping(value = "article/edit/{articleId}", method = RequestMethod.GET)
     public String articleEditPage(@PathVariable Integer articleId, Model model) {
@@ -67,47 +65,46 @@ public class AdminArticleController extends BaseAdminController {
     /**
      * 新增文章
      *
-     * @param article
-     * @param response
+     * @author iHelin
+     * @since 2017/8/28 13:26
      */
-    @RequestMapping(value = "article", method = RequestMethod.POST)
-    public void addArticle(Article article, HttpServletResponse response) {
+    @ResponseBody
+    @PostMapping("article")
+    public String addArticle(Article article) {
         articleManager.addArticle(article);
-        ResponseUtil.writeSuccessJSON(response);
+        return success();
     }
 
     /**
      * 编辑文章
      *
-     * @param article
-     * @param response
+     * @author iHelin
+     * @since 2017/8/28 13:28
      */
-    @RequestMapping(value = "article/edit", method = RequestMethod.POST)
-    public void editArticle(Article article, HttpServletResponse response) {
+    @PutMapping(value = "article")
+    public String editArticle(Article article) {
         logger.info("article is {}", article);
         if (article == null || article.getId() == null) {
-            logger.error("no article found {}", article);
-            ResponseUtil.writeFailedJSON(response, "文章不存在！");
-            return;
+            return error("文章不存在");
         }
         Article newArticle = articleManager.selectArticleById(article.getId());
         newArticle.setTitle(HtmlUtils.htmlEscape(article.getTitle(), CharEncoding.UTF_8));
         newArticle.setSummary(HtmlUtils.htmlEscape(article.getSummary(), CharEncoding.UTF_8));
         newArticle.setContent(article.getContent());
         articleManager.editArticle(newArticle);
-        ResponseUtil.writeSuccessJSON(response);
+        return success();
     }
 
     /**
      * 删除文章
      *
-     * @param articleId
-     * @param response
+     * @author iHelin
+     * @since 2017/8/28 13:29
      */
-    @RequestMapping(value = "article/{articleId}", method = RequestMethod.DELETE)
-    public void deleteProduct(@PathVariable Integer articleId, HttpServletResponse response) {
+    @DeleteMapping(value = "article/{articleId}")
+    public String deleteProduct(@PathVariable Integer articleId) {
         articleManager.deleteById(articleId);
-        ResponseUtil.writeSuccessJSON(response);
+        return success();
     }
 
 }

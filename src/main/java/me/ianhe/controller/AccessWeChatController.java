@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,7 @@ public class AccessWeChatController extends BaseController {
      */
     @ResponseBody
     @GetMapping(value = "access_wechat")
-    public String doGet(String signature, String timestamp, String nonce, String echostr,
-                        HttpServletResponse response) {
+    public String doGet(String signature, String timestamp, String nonce, String echostr) {
         logger.info("开始token验证...");
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
             logger.error("请求参数非法，请核实!");

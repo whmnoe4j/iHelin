@@ -125,6 +125,10 @@
                     this.handleReset();
                 });
             },
+            pageSizeChange(pageSize){
+                this.pageSize = pageSize;
+                this.init(1);
+            },
             init(pageNum){
                 if (pageNum) {
                     this.pageNum = pageNum;
@@ -190,6 +194,8 @@
               :page-size="pageSize"
               :total="total"
               show-total
+              show-sizer
+              @on-page-size-change="pageSizeChange"
               style="margin-top: 5px;"
               @on-change="init"></Page>
     </div>
