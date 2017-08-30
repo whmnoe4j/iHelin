@@ -35,7 +35,7 @@ public class ScoreAfterAspect {
     @Autowired
     private JMSProducerService producerService;
     @Autowired
-    @Qualifier("articleQueue")
+    @Qualifier("mailQueue")
     private Destination destination;
 
     /**
