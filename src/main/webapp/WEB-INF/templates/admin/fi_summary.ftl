@@ -195,6 +195,7 @@
               :total="total"
               show-total
               show-sizer
+              placement="top"
               @on-page-size-change="pageSizeChange"
               style="margin-top: 5px;"
               @on-change="init"></Page>

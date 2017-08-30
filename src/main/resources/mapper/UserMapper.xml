@@ -3,8 +3,9 @@
 <mapper namespace="me.ianhe.dao.UserMapper">
     <resultMap id="BaseResultMap" type="me.ianhe.db.entity.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
         <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
         <result column="gender" property="gender" jdbcType="INTEGER"/>
@@ -24,7 +25,7 @@
         <result column="is_bind" property="isBind" jdbcType="BIT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, account, password, open_id, nick_name, gender, city, province, country, headimgurl,
+        id, username, password,enabled, open_id, nick_name, gender, city, province, country, headimgurl,
         subscribe_time, status, subscribe, language, unionid, remark, groupid, tagid_list,
         phone, is_bind
     </sql>
@@ -39,14 +40,15 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="me.ianhe.db.entity.User" useGeneratedKeys="true" keyProperty="id">
-        insert into User (account, password, open_id,
+        insert into User (username, password,enabled, open_id,
         nick_name, gender, city,
         province, country, headimgurl,
         subscribe_time, status, subscribe,
         language, unionid, remark,
         groupid, tagid_list, phone,
         is_bind)
-        values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+        values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{enabled,jdbcType=BIT},
+        #{openId,jdbcType=VARCHAR},
         #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR},
         #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR},
         #{subscribeTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{subscribe,jdbcType=INTEGER},
@@ -58,11 +60,14 @@
             keyProperty="id">
         insert into User
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="account != null">
-                account,
+            <if test="username != null">
+                username,
             </if>
             <if test="password != null">
                 password,
+            </if>
+            <if test="enabled != null">
+                enabled,
             </if>
             <if test="openId != null">
                 open_id,
@@ -117,11 +122,14 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="account != null">
-                #{account,jdbcType=VARCHAR},
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
             </if>
             <if test="openId != null">
                 #{openId,jdbcType=VARCHAR},
@@ -179,11 +187,14 @@
     <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.User">
         update User
         <set>
-            <if test="account != null">
-                account = #{account,jdbcType=VARCHAR},
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
             </if>
             <if test="openId != null">
                 open_id = #{openId,jdbcType=VARCHAR},
@@ -241,8 +252,9 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.User">
         update User
-        set account = #{account,jdbcType=VARCHAR},
+        set username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
+        enabled = #{enabled,jdbcType=BIT},
         open_id = #{openId,jdbcType=VARCHAR},
         nick_name = #{nickName,jdbcType=VARCHAR},
         gender = #{gender,jdbcType=INTEGER},
@@ -281,16 +293,25 @@
             <if test="status!=null">and status = #{status}</if>
         </where>
     </select>
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from User
+        where username = #{username,jdbcType=VARCHAR}
+        limit 1
+    </select>
     <select id="selectByOpenId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from User
         where open_id = #{openId,jdbcType=VARCHAR}
+        limit 1
     </select>
     <select id="selectByPhone" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from User
         where phone = #{phone,jdbcType=VARCHAR}
+        limit 1
     </select>
 </mapper>

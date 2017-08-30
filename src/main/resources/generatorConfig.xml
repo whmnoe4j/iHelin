@@ -48,7 +48,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 配置表信息 -->
-        <table schema="iHelin" tableName="fi_payment" domainObjectName="FiPayment"
+        <table schema="iHelin" tableName="authorities" domainObjectName="Authorities"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>

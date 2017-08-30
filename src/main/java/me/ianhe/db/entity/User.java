@@ -1,16 +1,22 @@
 package me.ianhe.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
-public class User {
+public class User implements UserDetails {
     private Integer id;
 
-    private String account;
+    private String username;
 
     @JsonIgnore
     private String password;
+
+    private Boolean enabled;
 
     private String openId;
 
@@ -54,12 +60,8 @@ public class User {
         this.id = id;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Boolean getBind() {
@@ -213,4 +215,40 @@ public class User {
     public void setIsBind(Boolean isBind) {
         this.isBind = isBind;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        GrantedAuthority a1 = new Authorities("admin", "ROLE_ADMIN");
+        return Arrays.asList(new GrantedAuthority[]{a1});
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
 }

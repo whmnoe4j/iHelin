@@ -1,18 +1,12 @@
 package me.ianhe.controller.admin;
 
-import com.google.code.kaptcha.Constants;
-import me.ianhe.model.AdminUser;
-import me.ianhe.utils.Global;
-import me.ianhe.utils.RequestUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 @Controller
 public class AdminLoginController extends BaseAdminController {
@@ -20,13 +14,13 @@ public class AdminLoginController extends BaseAdminController {
     private static final String ERROR_MSG = "error";
     private static final String FROM = "from";
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @GetMapping(value = "login")
     public String loginPage(Model model, String from) {
         model.addAttribute("from", from);
         return "admin/login";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    /*@PostMapping(value = "login")
     public String login(String username, String password, String captcha, String from, HttpServletRequest request,
                         HttpSession session, Model model) {
         if (StringUtils.isEmpty(captcha)) {
@@ -56,7 +50,7 @@ public class AdminLoginController extends BaseAdminController {
         model.addAttribute(ERROR_MSG, "用户名或密码不正确！");
         model.addAttribute("from", from);
         return ftl("login");
-    }
+    }*/
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {

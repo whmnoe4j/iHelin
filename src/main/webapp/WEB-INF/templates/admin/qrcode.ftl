@@ -2,7 +2,7 @@
 <#assign html_other_script in main>
 <script>
     var app = new Vue({
-        el: '#wrap',
+        el: '#app',
         data: {
             url: '',
             content: null

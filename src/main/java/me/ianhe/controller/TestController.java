@@ -16,7 +16,7 @@ import java.util.Date;
 @Controller
 public class TestController extends BaseController {
 
-    @GetMapping("test")
+    @GetMapping("test/agent")
     public String testPage(@RequestHeader("User-Agent") String userAgent) {
         System.out.println(userAgent);
         return "test";
