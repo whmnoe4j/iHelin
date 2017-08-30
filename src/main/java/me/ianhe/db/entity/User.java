@@ -1,10 +1,10 @@
 package me.ianhe.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -218,8 +218,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority a1 = new Authorities("admin", "ROLE_ADMIN");
-        return Arrays.asList(new GrantedAuthority[]{a1});
+//        GrantedAuthority a1 = new Authorities("admin", "ROLE_ADMIN");
+//        return Arrays.asList(new GrantedAuthority[]{a1});
+        return Lists.newArrayList();
     }
 
     @Override

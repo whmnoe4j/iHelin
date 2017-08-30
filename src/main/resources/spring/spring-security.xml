@@ -10,17 +10,27 @@
     <security:http pattern="/admin/login" security="none"/>
     <security:http entry-point-ref="authenticationEntryPoint">
         <security:csrf disabled="true"/>
-        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <security:custom-filter ref="captchaProcessingFilter" before="FORM_LOGIN_FILTER"/>
-        <security:logout invalidate-session="true"
-                         logout-url="/admin/logout"
-                         logout-success-url="/admin/login"/>
+        <security:custom-filter ref="customerFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <security:access-denied-handler error-page="/403.jsp"/>
     </security:http>
+
+    <bean id="customerFilter" class="me.ianhe.security.CustomerFilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="myAccessDecisionManagerBean"/>
+        <property name="securityMetadataSource" ref="securityMetadataSource"/>
+    </bean>
 
     <security:authentication-manager alias="authenticationManager">
         <security:authentication-provider ref="authenticationProvider">
         </security:authentication-provider>
     </security:authentication-manager>
+
+    <!--访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
+    <bean id="myAccessDecisionManagerBean" class="me.ianhe.security.MyAccessDecisionManager"/>
+
+    <!--资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问 -->
+    <bean id="securityMetadataSource" class="me.ianhe.security.MyInvocationSecurityMetadataSource"/>
 
     <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="hideUserNotFoundExceptions" value="false"/>
@@ -39,12 +49,14 @@
         <property name="filterProcessesUrl" value="/admin/login.do"/>
     </bean>
 
-    <bean id="authenticationSuccessHandler" class="me.ianhe.security.FrontAuthenticationSuccessHandler">
-        <constructor-arg value="/admin/index"/>
+    <bean id="authenticationSuccessHandler"
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <property name="defaultTargetUrl" value="/admin/index"/>
     </bean>
+
     <bean id="authenticationFailureHandler"
-          class="me.ianhe.security.FrontAuthenticationFailureHandler">
-        <constructor-arg value="/admin/login"/>
+          class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <property name="defaultFailureUrl" value="/admin/login"/>
     </bean>
 
 </beans>
