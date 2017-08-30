@@ -1,6 +1,10 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.MyScore;
+import me.ianhe.model.MailModel;
+import me.ianhe.service.JMSProducerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,14 +15,22 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.jms.Destination;
 import java.util.Date;
 
 @Controller
 public class TestController extends BaseController {
+    @Autowired
+    private JMSProducerService producerService;
+    @Autowired
+    @Qualifier("mailQueue")
+    private Destination destination;
 
     @GetMapping("test/agent")
     public String testPage(@RequestHeader("User-Agent") String userAgent) {
         System.out.println(userAgent);
+        MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "葫芦娃", "2345", "测试服二个人");
+        producerService.sendMessage(destination, mail);
         return "test";
     }
 
