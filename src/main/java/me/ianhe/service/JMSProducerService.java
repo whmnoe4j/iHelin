@@ -1,5 +1,6 @@
 package me.ianhe.service;
 
+import org.apache.activemq.command.ActiveMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.jms.Destination;
+import javax.jms.JMSException;
 import java.io.Serializable;
 
 /**
@@ -23,13 +25,13 @@ public class JMSProducerService {
     @Qualifier("jmsQueueTemplate")
     private JmsTemplate jmsTemplate;
 
-    public void sendMessage(Destination destination, final String message) {
-        logger.debug("-----生产者发送了一个消息--------");
+    public void sendMessage(Destination destination, final String message) throws JMSException {
+        logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
         jmsTemplate.send(destination, session -> session.createTextMessage(message));
     }
 
-    public void sendMessage(Destination destination, final Serializable message) {
-        logger.debug("-----生产者发送了一个消息--------");
+    public void sendMessage(Destination destination, final Serializable message) throws JMSException {
+        logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
         jmsTemplate.send(destination, session -> session.createObjectMessage(message));
     }
 }
