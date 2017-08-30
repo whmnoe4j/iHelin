@@ -11,14 +11,14 @@
 #### 后端技术
 
 - Spring Framework
+- Spring Security
 - Spring MVC: MVC框架
 - MyBatis: ORM框架
-- MyBatis Generator: 代码生成
 - Druid: 数据库连接池
-- Log4J: 日志管理
+- Logback: 日志管理
 - Maven: 项目构建管理
-- Freemarker: 视图渲染
 - Redis: 缓存服务
+- ActiveMQ: 消息队列
 
 #### 前端技术
 
@@ -26,17 +26,15 @@
 - jQuery
 - Bootstrap
 - Font-awesome
-- Simditor: 富文本编辑器
 - ...
+
+> 项目正准备前后端分离
 
 ### 环境搭建
 #### 开发工具
 
-- IntelliJ IDEA 2016.3
-- MySql: 数据库
-- jetty: 开发服务器
-- Tomcat: 生产服务器
-- Git: 版本管理
+- IntelliJ IDEA
+- Git
 - Nginx: 反向代理服务器
 - Navicat for MySQL & MySQL Workbench: 数据库客户端
 
