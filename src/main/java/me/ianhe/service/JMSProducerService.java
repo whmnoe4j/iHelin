@@ -25,13 +25,21 @@ public class JMSProducerService {
     @Qualifier("jmsQueueTemplate")
     private JmsTemplate jmsTemplate;
 
-    public void sendMessage(Destination destination, final String message) throws JMSException {
-        logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
-        jmsTemplate.send(destination, session -> session.createTextMessage(message));
+    public void sendMessage(Destination destination, final String message) {
+        try {
+            logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
+            jmsTemplate.send(destination, session -> session.createTextMessage(message));
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void sendMessage(Destination destination, final Serializable message) throws JMSException {
-        logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
-        jmsTemplate.send(destination, session -> session.createObjectMessage(message));
+    public void sendMessage(Destination destination, final Serializable message) {
+        try {
+            logger.debug("-----生产者发送了一个消息，队列：{}--------", ((ActiveMQQueue) destination).getQueueName());
+            jmsTemplate.send(destination, session -> session.createObjectMessage(message));
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 }
