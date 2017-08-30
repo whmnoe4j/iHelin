@@ -1,5 +1,7 @@
 package me.ianhe.service;
 
+import me.ianhe.model.MailModel;
+import me.ianhe.utils.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,13 @@ public class JMSProducerServiceTest {
     private JMSProducerService producerService;
 
     @Autowired
-    @Qualifier("sevenQueue")
+    @Qualifier("mailQueue")
     private Destination destination;
 
     @Test
     public void testSendMessage() throws Exception {
-        producerService.sendMessage(destination, "Hello World!");
+        MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "何霖", "测试一下", "你号码");
+        producerService.sendMessage(destination, JSON.toJson(mail));
     }
 
 }

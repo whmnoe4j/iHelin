@@ -2,9 +2,11 @@ package me.ianhe.advice;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
-import me.ianhe.model.AutoSendMail;
+import me.ianhe.model.MailModel;
+import me.ianhe.service.JMSProducerService;
 import me.ianhe.service.ScoreService;
 import me.ianhe.utils.DingUtil;
+import me.ianhe.utils.JSON;
 import me.ianhe.utils.TemplateUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -12,7 +14,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.jms.Destination;
 import java.util.Map;
 
 /**
@@ -28,6 +32,11 @@ public class ScoreAfterAspect {
 
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private JMSProducerService producerService;
+    @Autowired
+    @Qualifier("articleQueue")
+    private Destination destination;
 
     /**
      * 加分成功后再发送提醒
@@ -54,12 +63,8 @@ public class ScoreAfterAspect {
         res.put("total", total);
         String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
         String title = "加分提醒:今天加了" + myScore.getScore() + "分";
-        AutoSendMail m1 = new AutoSendMail("ahaqhelin@163.com", "何霖", title, mailContent);
-        AutoSendMail m2 = new AutoSendMail("1018954240@qq.com", "葫芦娃", title, mailContent);
-        Thread t1 = new Thread(m1);
-        Thread t2 = new Thread(m2);
-        t1.start();
-        t2.start();
+        MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "葫芦娃", title, mailContent);
+        producerService.sendMessage(destination, JSON.toJson(mail));
     }
 
 }

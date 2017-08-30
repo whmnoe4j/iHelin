@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AutoSendMail implements Runnable {
+public class MailModel {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -19,16 +19,18 @@ public class AutoSendMail implements Runnable {
     private String title;
     private String content;
 
-    public AutoSendMail(String toAddress, String toName, String title, String content) {
+    public MailModel() {
+
+    }
+
+    public MailModel(String toAddress, String toName, String title, String content) {
         this.toAddress = toAddress;
         this.toName = toName;
         this.title = title;
         this.content = content;
     }
 
-    @Override
-    public void run() {
-        Thread.currentThread().setName("mail-send-thread");
+    public void send() {
         logger.info("Send mail address {},User is {}: ", toAddress, toName);
         Pattern pattern = Pattern.compile(MAIL_REG);
         Matcher matcher = pattern.matcher(toAddress);
@@ -41,4 +43,35 @@ public class AutoSendMail implements Runnable {
         }
     }
 
+    public String getToAddress() {
+        return toAddress;
+    }
+
+    public void setToAddress(String toAddress) {
+        this.toAddress = toAddress;
+    }
+
+    public String getToName() {
+        return toName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

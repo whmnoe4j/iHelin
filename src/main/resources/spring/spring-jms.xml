@@ -45,5 +45,8 @@
     <bean id="articleQueue" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg value="article"/>
     </bean>
+    <bean id="mailQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="mail"/>
+    </bean>
 
 </beans>
