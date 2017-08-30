@@ -8,6 +8,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.jms.Destination;
+import java.io.Serializable;
 
 /**
  * @author iHelin
@@ -23,7 +24,12 @@ public class JMSProducerService {
     private JmsTemplate jmsTemplate;
 
     public void sendMessage(Destination destination, final String message) {
-        logger.debug("-----生产者发送了一个消息：{}", message);
+        logger.debug("-----生产者发送了一个消息--------");
         jmsTemplate.send(destination, session -> session.createTextMessage(message));
+    }
+
+    public void sendMessage(Destination destination, final Serializable message) {
+        logger.debug("-----生产者发送了一个消息--------");
+        jmsTemplate.send(destination, session -> session.createObjectMessage(message));
     }
 }

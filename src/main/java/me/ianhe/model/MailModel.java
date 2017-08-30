@@ -4,10 +4,11 @@ import me.ianhe.utils.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MailModel {
+public class MailModel implements Serializable {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -18,6 +19,8 @@ public class MailModel {
     private String toName;
     private String title;
     private String content;
+    private static final long serialVersionUID = 1L;
+
 
     public MailModel() {
 

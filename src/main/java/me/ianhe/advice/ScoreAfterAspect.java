@@ -6,7 +6,6 @@ import me.ianhe.model.MailModel;
 import me.ianhe.service.JMSProducerService;
 import me.ianhe.service.ScoreService;
 import me.ianhe.utils.DingUtil;
-import me.ianhe.utils.JSON;
 import me.ianhe.utils.TemplateUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.jms.Destination;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -45,7 +45,7 @@ public class ScoreAfterAspect {
      * @since 2017/6/1 10:35
      */
     @AfterReturning(value = "execution(* addRecord(..))")
-    public void afterAddScore(JoinPoint joinPoint) {
+    public void afterAddScore(JoinPoint joinPoint) throws UnsupportedEncodingException {
         MyScore myScore = (MyScore) joinPoint.getArgs()[0];
         long total = scoreService.getMyTotalScore();
         String msg;
@@ -64,7 +64,7 @@ public class ScoreAfterAspect {
         String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
         String title = "加分提醒:今天加了" + myScore.getScore() + "分";
         MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "葫芦娃", title, mailContent);
-        producerService.sendMessage(destination, JSON.toJson(mail));
+        producerService.sendMessage(destination, mail);
     }
 
 }
