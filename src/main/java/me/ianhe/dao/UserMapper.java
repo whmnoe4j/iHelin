@@ -1,11 +1,8 @@
 package me.ianhe.dao;
 
-import me.ianhe.db.entity.Authorities;
 import me.ianhe.db.entity.User;
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

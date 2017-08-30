@@ -3,12 +3,14 @@ package me.ianhe.db.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class User implements UserDetails {
+
     private Integer id;
 
     private String username;
@@ -51,6 +53,8 @@ public class User implements UserDetails {
     private String phone;
 
     private Boolean isBind;
+
+    private List<SysRole> sysRoles;
 
     public Integer getId() {
         return id;
@@ -216,11 +220,27 @@ public class User implements UserDetails {
         this.isBind = isBind;
     }
 
+    public List<SysRole> getSysRoles() {
+        return sysRoles;
+    }
+
+    public void setSysRoles(List<SysRole> sysRoles) {
+        this.sysRoles = sysRoles;
+    }
+
+    /**
+     * 获取用户的所有权限
+     *
+     * @author iHelin
+     * @since 2017/8/30 21:49
+     */
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        GrantedAuthority a1 = new Authorities("admin", "ROLE_ADMIN");
-//        return Arrays.asList(new GrantedAuthority[]{a1});
-        return Lists.newArrayList();
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = Lists.newArrayList();
+        for (SysRole role : sysRoles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     @Override
@@ -235,12 +255,12 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     public void setEnabled(Boolean enabled) {

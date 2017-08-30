@@ -24,6 +24,19 @@
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
         <result column="is_bind" property="isBind" jdbcType="BIT"/>
     </resultMap>
+
+    <resultMap id="UserRoleResultMap" type="me.ianhe.db.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <collection property="sysRoles" ofType="me.ianhe.db.entity.SysRole">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </collection>
+    </resultMap>
+
+
     <sql id="Base_Column_List">
         id, username, password,enabled, open_id, nick_name, gender, city, province, country, headimgurl,
         subscribe_time, status, subscribe, language, unionid, remark, groupid, tagid_list,
@@ -293,13 +306,6 @@
             <if test="status!=null">and status = #{status}</if>
         </where>
     </select>
-    <select id="selectByUsername" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from User
-        where username = #{username,jdbcType=VARCHAR}
-        limit 1
-    </select>
     <select id="selectByOpenId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -313,5 +319,13 @@
         from User
         where phone = #{phone,jdbcType=VARCHAR}
         limit 1
+    </select>
+
+    <select id="selectByUsername" resultMap="UserRoleResultMap">
+        select user.*,role.*
+        from User user
+        left join sys_role_user ru on user.id = ru.userID
+        left join sys_role role on role.id = ru.roleID
+        where user.username = #{username,jdbcType=VARCHAR}
     </select>
 </mapper>
