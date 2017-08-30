@@ -8,20 +8,43 @@
        http://www.springframework.org/schema/security/spring-security.xsd">
 
     <security:http pattern="/admin/login" security="none"/>
-    <security:http auto-config="true" use-expressions="true">
+    <security:http entry-point-ref="authenticationEntryPoint">
         <security:csrf disabled="true"/>
         <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-        <security:form-login login-page="/admin/login"
-                             default-target-url="/admin/index"
-                             login-processing-url="/admin/login.do"/>
+        <security:custom-filter ref="captchaProcessingFilter" before="FORM_LOGIN_FILTER"/>
         <security:logout invalidate-session="true"
                          logout-url="/admin/logout"
                          logout-success-url="/admin/login"/>
     </security:http>
 
-    <security:authentication-manager>
-        <security:authentication-provider user-service-ref="sysUserDetailsService">
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="authenticationProvider">
         </security:authentication-provider>
     </security:authentication-manager>
+
+    <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="hideUserNotFoundExceptions" value="false"/>
+        <property name="userDetailsService" ref="sysUserDetailsService"/>
+    </bean>
+
+    <bean id="authenticationEntryPoint"
+          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg value="/admin/login"/>
+    </bean>
+
+    <bean id="captchaProcessingFilter" class="me.ianhe.security.CaptchaProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+        <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+        <property name="filterProcessesUrl" value="/admin/login.do"/>
+    </bean>
+
+    <bean id="authenticationSuccessHandler" class="me.ianhe.security.FrontAuthenticationSuccessHandler">
+        <constructor-arg value="/admin/index"/>
+    </bean>
+    <bean id="authenticationFailureHandler"
+          class="me.ianhe.security.FrontAuthenticationFailureHandler">
+        <constructor-arg value="/admin/login"/>
+    </bean>
 
 </beans>

@@ -28,18 +28,14 @@ public class SysUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
         System.out.println("username is " + username);
         User user = userMapper.selectByUsername(username);
-        if (user == null) throw new UsernameNotFoundException("user not found");
+        if (user == null) throw new UsernameNotFoundException("无此用户");
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 user.isEnabled(), true, true, true, getGrantedAuthorities(user));
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-//        for (UserProfile userProfile : user.getUserProfiles()) {
-//            System.out.println("UserProfile : " + userProfile);
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//        }
         System.out.println("authorities :" + authorities);
         return authorities;
     }

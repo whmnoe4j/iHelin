@@ -47,6 +47,9 @@
                     </div>
                 </div>
             <#if error??><span class="text-danger">${error!}</span></#if>
+            <#if SPRING_SECURITY_LAST_EXCEPTION??>
+                <span class="text-danger">${SPRING_SECURITY_LAST_EXCEPTION.message!}</span>
+            </#if>
             </div>
             <div class="panel-footer">
                 <div class="pull-right">
