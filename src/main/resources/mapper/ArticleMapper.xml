@@ -17,15 +17,15 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from Article
+        from article
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from Article
+        delete from article
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" keyProperty="id" parameterType="me.ianhe.db.entity.Article" useGeneratedKeys="true">
-        insert into Article (title, author, summary,
+        insert into article (title, author, summary,
         read_num, create_time, update_time,
         content)
         values (#{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
@@ -34,7 +34,7 @@
     </insert>
     <insert id="insertSelective" keyProperty="id" parameterType="me.ianhe.db.entity.Article"
             useGeneratedKeys="true">
-        insert into Article
+        insert into article
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null">
                 title,
@@ -83,7 +83,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.Article">
-        update Article
+        update article
         <set>
             <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
@@ -110,7 +110,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.Article">
-        update Article
+        update article
         set title = #{title,jdbcType=VARCHAR},
         author = #{author,jdbcType=VARCHAR},
         summary = #{summary,jdbcType=VARCHAR},
@@ -125,7 +125,7 @@
     <select id="listByCondition" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from Article
+        from article
         <where>
             <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
         </where>
@@ -134,7 +134,7 @@
     <select id="listCount" resultType="int" parameterType="java.util.Map">
         select
         count(id)
-        from Article
+        from article
         <where>
             <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
         </where>
