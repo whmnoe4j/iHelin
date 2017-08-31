@@ -19,7 +19,7 @@ public abstract class BaseController {
     @Autowired
     protected AccessTokenService accessTokenManager;
     @Autowired
-    protected UserService userManager;
+    protected SysUserDetailsService userManager;
     @Autowired
     protected ServiceMenuService serviceMenuManager;
     @Autowired

@@ -2,10 +2,9 @@ package me.ianhe.controller.admin;
 
 import me.ianhe.utils.QRCodeUtil;
 import me.ianhe.utils.RequestUtil;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,16 +18,17 @@ import java.util.Random;
  *
  * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
  */
-@Controller
+@RestController
+@RequestMapping("admin/qrcode")
 public class AdminQRCodeController extends BaseAdminController {
 
-    @RequestMapping(value = "qrcode", method = RequestMethod.GET)
-    public String qRCode() {
-        return ftl("qrcode");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "qrcode/generate", method = RequestMethod.POST)
+    /**
+     * 生成二维码
+     *
+     * @author iHelin
+     * @since 2017/8/31 22:24
+     */
+    @PostMapping(value = "generate")
     public String generateQRCode(String content, HttpServletRequest request, HttpServletResponse response) {
         String path = "qrcode/";
         String format = "png";

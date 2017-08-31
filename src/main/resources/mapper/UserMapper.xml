@@ -45,15 +45,15 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from User
+        from sys_user
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from User
+        delete from sys_user
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="me.ianhe.db.entity.User" useGeneratedKeys="true" keyProperty="id">
-        insert into User (username, password,enabled, open_id,
+        insert into sys_user (username, password,enabled, open_id,
         nick_name, gender, city,
         province, country, headimgurl,
         subscribe_time, status, subscribe,
@@ -71,7 +71,7 @@
     </insert>
     <insert id="insertSelective" parameterType="me.ianhe.db.entity.User" useGeneratedKeys="true"
             keyProperty="id">
-        insert into User
+        insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null">
                 username,
@@ -198,7 +198,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="me.ianhe.db.entity.User">
-        update User
+        update sys_user
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
@@ -264,7 +264,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.db.entity.User">
-        update User
+        update sys_user
         set username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
         enabled = #{enabled,jdbcType=BIT},
@@ -291,7 +291,7 @@
     <select id="listUserByCondition" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from User
+        from sys_user
         <where>
             <if test="nickName!=null">nick_name like "%"#{nickName,jdbcType=VARCHAR}"%"</if>
             <if test="status!=null">and status = #{status}</if>
@@ -300,7 +300,7 @@
     <select id="listUserCount" resultType="int" parameterType="java.util.Map">
         select
         count(id)
-        from User
+        from sys_user
         <where>
             <if test="nickName!=null">nick_name like "%"#{nickName,jdbcType=VARCHAR}"%"</if>
             <if test="status!=null">and status = #{status}</if>
@@ -309,21 +309,21 @@
     <select id="selectByOpenId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from User
+        from sys_user
         where open_id = #{openId,jdbcType=VARCHAR}
         limit 1
     </select>
     <select id="selectByPhone" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from User
+        from sys_user
         where phone = #{phone,jdbcType=VARCHAR}
         limit 1
     </select>
 
     <select id="selectByUsername" resultMap="UserRoleResultMap">
         select user.*,role.*
-        from User user
+        from sys_user user
         left join sys_role_user ru on user.id = ru.userID
         left join sys_role role on role.id = ru.roleID
         where user.username = #{username,jdbcType=VARCHAR}
