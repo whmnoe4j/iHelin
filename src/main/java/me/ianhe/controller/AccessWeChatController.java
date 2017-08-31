@@ -38,7 +38,7 @@ public class AccessWeChatController extends BaseController {
             logger.error("请求参数非法，请核实!");
             return "请求参数非法";
         }
-        if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
+        if (CheckUtil.checkSignature(global.getWXToken(), signature, timestamp, nonce)) {
             logger.info("验证成功");
             return echostr;
         } else {

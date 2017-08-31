@@ -44,6 +44,7 @@ public class TestController extends BaseController {
         myScore.setAddWriter(1);
         myScore.setReason("<h1>三个人请问abc123</h1>");
         myScore.setScore(1);
+        System.out.println(global.getSystemName());
         return myScore;
     }
 

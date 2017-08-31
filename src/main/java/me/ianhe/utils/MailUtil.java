@@ -6,6 +6,7 @@ import me.ianhe.config.CommonConfig.MailConfigEntry;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
@@ -16,6 +17,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 import javax.mail.util.ByteArrayDataSource;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -27,16 +29,16 @@ public class MailUtil {
     static class MailSenderInfo {
         // 发送邮件的服务器的IP和端口
         private String mailServerHost;
-        private String mailServerPort = "25";
+        private String mailServerPort;
         // 邮件发送者的地址
         private String fromAddress;
         // 邮件接收者的地址
         private String toAddress;
-        // 登陆邮件发送服务器的用户名和密码
-        private String userName;
+        // 登录邮件发送服务器的用户名和密码
+        private String username;
         private String password;
         // 是否需要身份验证
-        private boolean validate = false;
+        private boolean validate;
         // 邮件主题
         private String subject;
         // 邮件的文本内容
@@ -65,10 +67,6 @@ public class MailUtil {
         String userName = null;
         String password = null;
 
-        public MyAuthenticator() {
-            // 保留无参构造函数
-        }
-
         public MyAuthenticator(String username, String password) {
             this.userName = username;
             this.password = password;
@@ -88,13 +86,12 @@ public class MailUtil {
         public boolean sendTextMail(MailSenderInfo mailInfo) {
             // 判断是否需要身份认证
             MyAuthenticator authenticator = null;
-            Properties pro = mailInfo.getProperties();
             if (mailInfo.validate) {
                 // 如果需要身份认证，则创建一个密码验证器
-                authenticator = new MyAuthenticator(mailInfo.userName, mailInfo.password);
+                authenticator = new MyAuthenticator(mailInfo.username, mailInfo.password);
             }
             // 根据邮件会话属性和密码验证器构造一个发送邮件的session
-            Session sendMailSession = Session.getDefaultInstance(pro, authenticator);
+            Session sendMailSession = Session.getDefaultInstance(mailInfo.getProperties(), authenticator);
             try {
                 // 根据session创建一个邮件消息
                 Message mailMessage = new MimeMessage(sendMailSession);
@@ -140,8 +137,8 @@ public class MailUtil {
                 return true;
             } catch (Exception ex) {
                 LOGGER.warn("Error while send mail to: " + mailInfo.toAddress, ex);
+                return false;
             }
-            return false;
         }
 
         /**
@@ -155,7 +152,7 @@ public class MailUtil {
             Properties pro = mailInfo.getProperties();
             // 如果需要身份认证，则创建一个密码验证器
             if (mailInfo.validate) {
-                authenticator = new MyAuthenticator(mailInfo.userName, mailInfo.password);
+                authenticator = new MyAuthenticator(mailInfo.username, mailInfo.password);
             }
             // 根据邮件会话属性和密码验证器构造一个发送邮件的session
             Session sendMailSession = Session.getDefaultInstance(pro, authenticator);
@@ -163,34 +160,32 @@ public class MailUtil {
                 // 根据session创建一个邮件消息
                 Message mailMessage = new MimeMessage(sendMailSession);
                 // 创建邮件发送者地址
-                Address from = new InternetAddress(mailInfo.fromAddress, mailInfo.fromPersonalName);
+                Address fromAddress = new InternetAddress(mailInfo.fromAddress, mailInfo.fromPersonalName);
                 // 设置邮件消息的发送者
-                mailMessage.setFrom(from);
+                mailMessage.setFrom(fromAddress);
 
                 // 创建邮件的接收者地址，并设置到邮件消息中
                 // Message.RecipientType.TO属性表示接收者的类型为TO
 
-                List<String> addrList = Lists.newArrayList();
-                for (String addrStr : mailInfo.toAddress.split(";")) {
-                    if (StringUtils.isNotBlank(addrStr)) {
-                        addrList.add(addrStr.trim());
-                    }
-                }
-                int receSize = addrList.size();
-                if (receSize < 1) {
+                String[] addresses = mailInfo.toAddress.split(";");
+                int length = addresses.length;
+                if (length < 1) {
                     LOGGER.warn("没有收件邮箱地址。");
                     return false;
-                }
-                if (receSize == 1) {
-                    String addrStr = addrList.get(0);
-                    Address address = new InternetAddress(addrStr, mailInfo.toPersonalName);
-                    mailMessage.setRecipient(Message.RecipientType.TO, address);
                 } else {
-                    Address[] addrArr = new Address[receSize];
-                    int inx = 0;
-                    for (String addrStr : addrList)
-                        addrArr[inx++] = new InternetAddress(addrStr, addrStr);
-                    mailMessage.setRecipients(Message.RecipientType.TO, addrArr);
+                    if (length == 1) {
+                        String addressStr = addresses[0].trim();
+                        Address toAddress = new InternetAddress(addressStr, mailInfo.toPersonalName);
+                        mailMessage.setRecipient(Message.RecipientType.TO, toAddress);
+                    } else {
+                        List<Address> addressList = new ArrayList<>(length);
+                        for (String addressStr : addresses) {
+                            addressStr = addressStr.trim();
+                            addressList.add(new InternetAddress(addressStr, addressStr));
+                        }
+                        Address[] addressArr = new Address[length];
+                        mailMessage.setRecipients(Message.RecipientType.TO, addressList.toArray(addressArr));
+                    }
                 }
 
                 // 设置邮件消息的主题
@@ -203,7 +198,7 @@ public class MailUtil {
                 // 创建一个包含HTML内容的MimeBodyPart
                 BodyPart html = new MimeBodyPart();
                 // 设置HTML内容
-                html.setContent(mailInfo.content, "text/html; charset=utf-8");
+                html.setContent(mailInfo.content, MediaType.TEXT_HTML_VALUE + ";charset=UTF-8");
                 mainPart.addBodyPart(html);
                 // 将MiniMultipart对象设置为邮件内容
                 mailMessage.setContent(mainPart);
@@ -211,10 +206,10 @@ public class MailUtil {
                 if (mailInfo.attachStream != null && StringUtils.isNotBlank(mailInfo.attchType)) {
                     ByteArrayDataSource byteArrDataSrc = new ByteArrayDataSource(mailInfo.attachStream,
                             mailInfo.attchType);
-                    MimeBodyPart attchPart = new MimeBodyPart();
-                    attchPart.setDataHandler(new DataHandler(byteArrDataSrc));
-                    attchPart.setFileName(MimeUtility.encodeWord(mailInfo.fileName == null ? "附件" : mailInfo.fileName));
-                    mainPart.addBodyPart(attchPart);
+                    MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                    mimeBodyPart.setDataHandler(new DataHandler(byteArrDataSrc));
+                    mimeBodyPart.setFileName(MimeUtility.encodeWord(mailInfo.fileName == null ? "附件" : mailInfo.fileName));
+                    mainPart.addBodyPart(mimeBodyPart);
                 }
                 // 发送邮件
                 Transport.send(mailMessage);
@@ -222,8 +217,8 @@ public class MailUtil {
                 return true;
             } catch (Exception e) {
                 LOGGER.warn("Error while send mail to: " + mailInfo.toAddress, e);
+                return false;
             }
-            return false;
         }
     }
 
@@ -242,7 +237,7 @@ public class MailUtil {
         mailInfo.mailServerHost = entry.mailServer;
         mailInfo.mailServerPort = entry.mailPort;
         mailInfo.validate = true;
-        mailInfo.userName = entry.mailUser;
+        mailInfo.username = entry.mailUser;
         mailInfo.password = entry.mailPassword;
         mailInfo.fromAddress = entry.mailFromAddress;
         mailInfo.fromPersonalName = entry.mailFromName;

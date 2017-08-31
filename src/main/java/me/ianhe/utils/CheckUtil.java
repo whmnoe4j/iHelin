@@ -10,10 +10,8 @@ import java.util.Arrays;
  */
 public class CheckUtil {
 
-    private static final String TOKEN = Global.getWXToken();
-
-    public static boolean checkSignature(String signature, String timestamp, String nonce) {
-        String[] arr = new String[]{TOKEN, timestamp, nonce};
+    public static boolean checkSignature(String token,String signature, String timestamp, String nonce) {
+        String[] arr = new String[]{token, timestamp, nonce};
         // 排序
         Arrays.sort(arr);
         StringBuilder content = new StringBuilder();

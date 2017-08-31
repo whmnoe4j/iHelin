@@ -15,7 +15,7 @@ import java.util.Map;
 public class DingUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DingUtil.class);
-    private static final String ADDRESS = Global.getValue("ding.robot.url");
+    private static final String ADDRESS = Global.get("ding.robot.url");
 
     /**
      * 发送指定文本

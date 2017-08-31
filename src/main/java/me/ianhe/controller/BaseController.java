@@ -2,6 +2,7 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.service.*;
+import me.ianhe.utils.Global;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,8 @@ public abstract class BaseController {
     protected QrcodeService qrcodeManager;
     @Autowired
     protected ScoreService myScoreManager;
+    @Autowired
+    protected Global global;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

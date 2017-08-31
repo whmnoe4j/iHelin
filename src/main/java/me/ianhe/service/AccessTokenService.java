@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.ho.yaml.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,9 @@ public class AccessTokenService {
     public static final String EXPIRES_TIME = "expiresTime";// 过期时间
     private Map<String, Object> accessTokenMap;
 
+    @Autowired
+    private Global global;
+
     public void run() {
         logger.debug("checking accessToken...");
         checkAndUpdate();
@@ -54,7 +58,7 @@ public class AccessTokenService {
     private synchronized void checkAndUpdate() {
         AccessToken accessToken = getAccessToken();
         if (accessToken == null || accessToken.getLeftValidTimeMillis() < SAFE_TOKEN_RESERVE_TIME) {
-            WXAccessToken wxToken = WechatUtil.getAccessToken(Global.getAppId(), Global.getAppSecret());
+            WXAccessToken wxToken = WechatUtil.getAccessToken(global.getAppId(), global.getAppSecret());
             accessToken = transAccessToken(wxToken);
             updateTokenToFile(accessToken);
         }
