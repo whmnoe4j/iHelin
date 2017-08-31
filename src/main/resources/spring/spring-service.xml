@@ -60,7 +60,6 @@
         <aop:advisor pointcut-ref="txPointcutService" advice-ref="transactionAdvice"/>
     </aop:config>
 
-    <!--aspectj 拦截加分方法，后置增强：提醒功能-->
     <aop:aspectj-autoproxy/>
-    <bean id="scoreAdvice" class="me.ianhe.advice.ScoreAfterAspect"></bean>
+    <!--<bean id="scoreAdvice" class="me.ianhe.aspect.ScoreAfterAspect"></bean>-->
 </beans>

@@ -33,14 +33,6 @@ public class Global {
         return getValue("wx.appSecret");
     }
 
-    public static String getAdminUser() {
-        return getValue("adminUser");
-    }
-
-    public static String getAdminPassword() {
-        return getValue("adminPassword");
-    }
-
     public static String getDomainUrl() {
         return getValue("domainUrl");
     }
@@ -66,10 +58,6 @@ public class Global {
      */
     public static String getValue(String key) {
         return properties.getProperty(key);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getAdminPassword());
     }
 
     private Global() {

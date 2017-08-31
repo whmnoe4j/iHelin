@@ -3,7 +3,7 @@
 <script>
     new Vue({
         el: '#app',
-        data(){
+        data: function () {
             let vm = this;
             return {
                 pageNum: 1,

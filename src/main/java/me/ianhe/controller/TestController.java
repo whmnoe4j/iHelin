@@ -20,8 +20,10 @@ import java.util.Date;
 
 @Controller
 public class TestController extends BaseController {
+
     @Autowired
     private JMSProducerService producerService;
+
     @Autowired
     @Qualifier("mailQueue")
     private Destination destination;

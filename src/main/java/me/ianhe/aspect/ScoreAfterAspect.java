@@ -1,4 +1,4 @@
-package me.ianhe.advice;
+package me.ianhe.aspect;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import javax.jms.Destination;
 import java.io.UnsupportedEncodingException;
@@ -26,14 +27,17 @@ import java.util.Map;
  * @since 2017/5/31 16:51
  */
 @Aspect
+@Component
 public class ScoreAfterAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private ScoreService scoreService;
+
     @Autowired
     private JMSProducerService producerService;
+
     @Autowired
     @Qualifier("mailQueue")
     private Destination destination;

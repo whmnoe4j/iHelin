@@ -21,27 +21,6 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--解决@ResponseBody注解中文乱码问题，必须放在annotation-driven上面-->
-    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                &lt;!&ndash;返回字符串&ndash;&gt;
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>application/json;charset=UTF-8</value>
-                        </list>
-                    </property>
-                </bean>
-                &lt;!&ndash;返回对象，转成json&ndash;&gt;
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-            </list>
-        </property>
-    </bean>-->
-
-    <!-- 扩充了mvc注解驱动，可以将请求参数绑定到控制器参数，简化配置：
-        (1)自动注册DefaultAnnotationHandlerMapping,AnotationMethodHandlerAdapter
-        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持-->
     <mvc:annotation-driven conversion-service="dateConverter">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -51,7 +30,14 @@
                     </list>
                 </property>
             </bean>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
 

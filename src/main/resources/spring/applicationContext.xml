@@ -16,7 +16,7 @@
         </property>
     </bean>
 
-    <!--web.xml中已配置，这里不需要再次导入，否则启动两次-->
+    <!--web.xml中已配置，这里不需要再次导入，否则会初始化两次-->
     <!--<import resource="spring-web.xml"/>-->
 
     <import resource="spring-service.xml"/>
