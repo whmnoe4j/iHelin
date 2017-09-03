@@ -57,4 +57,11 @@
         sys_role role,sys_role_user ru
         where role.`id` = ru.`roleID` and ru.`userID` = #{userID,jdbcType=INTEGER}
     </select>
+    <select id="getAllRoles" resultType="me.ianhe.db.entity.SysRole">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        sys_role
+    </select>
+
 </mapper>

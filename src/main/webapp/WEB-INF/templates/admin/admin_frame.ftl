@@ -125,6 +125,9 @@
                         iview.Message.error(res.data.data);
                     }
                     break;
+                case 403:
+                    iview.Message.error("权限不足！");
+                    break;
                 case 404:
                     console.log("404");
                 default:

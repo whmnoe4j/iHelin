@@ -2,6 +2,7 @@ package me.ianhe.security;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import me.ianhe.dao.SysAuthMapper;
 import me.ianhe.db.entity.SysAuth;
 import me.ianhe.db.entity.SysRole;
@@ -13,11 +14,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import javax.annotation.PostConstruct;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author iHelin
@@ -25,34 +22,20 @@ import java.util.Map;
  */
 public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    @Autowired(required = false)
+    @Autowired
     private SysAuthMapper sysAuthMapper;
-
-    private PathMatcher pathMatcher = new AntPathMatcher();
+    private static PathMatcher pathMatcher = new AntPathMatcher();
     private static Map<String, Collection<ConfigAttribute>> resourceMap = Maps.newHashMap();
 
-    public MyInvocationSecurityMetadataSource() {
-//        loadAuthAndRole();
-    }
-
     /**
-     * 刷新系统权限 - 加载所有url和权限的对应关系
+     * 刷新系统权限
      *
      * @author iHelin
      * @since 2017/8/31 22:19
      */
-    @PostConstruct
     public void loadAuthAndRole() {
         resourceMap.clear();
-        List<SysAuth> sysAuths = sysAuthMapper.selectSysAuth();
-        for (SysAuth sysAuth : sysAuths) {
-            Collection<ConfigAttribute> configAttributes = Lists.newArrayList();
-            List<SysRole> sysRoles = sysAuth.getSysRoles();
-            for (SysRole sysRole : sysRoles) {
-                configAttributes.add(new SecurityConfig(sysRole.getName()));
-            }
-            resourceMap.put(sysAuth.getAuth(), configAttributes);
-        }
+        //TODO
     }
 
     /**
@@ -77,7 +60,24 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
         return true;
     }
 
+    /**
+     * Spring容器启动时自动调用的, 返回所有权限的集合.
+     *
+     * @author iHelin
+     * @since 2017/9/1 15:04
+     */
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return null;
+        Set<ConfigAttribute> allConfigAttributes = Sets.newHashSet();
+        List<SysAuth> sysAuthList = sysAuthMapper.selectSysAuth();
+        for (SysAuth sysAuth : sysAuthList) {
+            List<SysRole> sysRoles = sysAuth.getSysRoles();
+            List<ConfigAttribute> configAttributes = Lists.newArrayList();
+            for (SysRole sysRole : sysRoles) {
+                configAttributes.add(new SecurityConfig(sysRole.getName()));
+            }
+            allConfigAttributes.addAll(configAttributes);
+            resourceMap.put(sysAuth.getAuth(), configAttributes);
+        }
+        return allConfigAttributes;
     }
 }

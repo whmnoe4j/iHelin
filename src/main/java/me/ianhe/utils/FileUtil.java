@@ -62,7 +62,7 @@ public class FileUtil {
      * 以文件形式上传
      * 上传成功返回文件访问路径
      *
-     * @param bytes
+     * @param file
      * @param key
      * @return
      */
@@ -83,7 +83,7 @@ public class FileUtil {
      * 以字节流上传
      * 上传成功返回文件访问路径
      *
-     * @param bytes
+     * @param inputStream
      * @param key
      * @return
      */
@@ -139,10 +139,8 @@ public class FileUtil {
     }
 
     public static void main(String args[]) throws IOException {
-//        File file = new File("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico");
         String key = UUID.randomUUID().toString();
         System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico", key));
-//        System.out.println(uploadFile(FileUtils.readFileToByteArray(file), UUID.randomUUID().toString()));
     }
 
     public static List<Map<String, Object>> getFileList() {

@@ -2,10 +2,11 @@ package me.ianhe.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.riversoft.weixin.common.menu.Menu;
+import com.riversoft.weixin.common.menu.MenuItem;
+import com.riversoft.weixin.common.menu.MenuType;
 import com.riversoft.weixin.common.message.Article;
 import com.riversoft.weixin.common.message.MsgType;
-import com.riversoft.weixin.common.message.News;
-import com.riversoft.weixin.common.message.Text;
 import com.riversoft.weixin.common.message.xml.ImageXmlMessage;
 import com.riversoft.weixin.common.message.xml.NewsXmlMessage;
 import com.riversoft.weixin.common.message.xml.TextXmlMessage;
@@ -272,38 +273,38 @@ public class WechatUtil {
     // 组装菜单
     public static Menu initMenu() {
         Menu menu = new Menu();
-        List<Button> buttons = Lists.newArrayList();
-        ClickButton button11 = new ClickButton();
+        List<MenuItem> buttons = Lists.newArrayList();
+        MenuItem button11 = new MenuItem();
         button11.setName("click菜单");
-        button11.setType("click");
+        button11.setType(MenuType.click);
         button11.setKey("11");
         buttons.add(button11);
 
-        ViewButton button2 = new ViewButton();
+        MenuItem button2 = new MenuItem();
         button2.setName("官方网站");
-        button2.setType("view");
+        button2.setType(MenuType.view);
         button2.setUrl("http://www.tcqcw.cn");
         buttons.add(button2);
 
-        List<Button> subButtons = Lists.newArrayList();
-        ClickButton button31 = new ClickButton();
+        List<MenuItem> subButtons = Lists.newArrayList();
+        MenuItem button31 = new MenuItem();
         button31.setName("扫码");
-        button31.setType("scancode_push");
+        button31.setType(MenuType.scancode_push);
         button31.setKey("31");
         subButtons.add(button31);
 
-        ClickButton button32 = new ClickButton();
+        MenuItem button32 = new MenuItem();
         button32.setName("地理位置");
-        button32.setType("location_select");
+        button32.setType(MenuType.location_select);
         button32.setKey("32");
         subButtons.add(button32);
 
-        Button button = new Button();
+        MenuItem button = new MenuItem();
         button.setName("新菜单");
-        button.setSubButton(subButtons);
+        button.setSubItems(subButtons);
         buttons.add(button);
 
-        menu.setButton(buttons);
+        menu.setMenus(buttons);
         return menu;
     }
 

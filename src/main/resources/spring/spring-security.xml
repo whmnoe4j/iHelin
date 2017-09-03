@@ -11,21 +11,29 @@
     <security:http pattern="/admin/login" security="none"/>
     <security:http entry-point-ref="authenticationEntryPoint">
         <security:csrf disabled="true"/>
-        <security:custom-filter ref="captchaProcessingFilter" before="FORM_LOGIN_FILTER"/>
-        <security:custom-filter ref="customerFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <security:custom-filter ref="captchaAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+        <security:custom-filter ref="securityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
         <security:access-denied-handler error-page="/403.jsp"/>
     </security:http>
 
-    <bean id="customerFilter" class="me.ianhe.security.CustomerFilterSecurityInterceptor">
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="authenticationProvider"/>
+    </security:authentication-manager>
+
+    <bean id="captchaAuthenticationFilter" class="me.ianhe.security.CaptchaAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+        <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+        <property name="filterProcessesUrl" value="/admin/login.do"/>
+        <property name="captchaParameter" value="captcha"/>
+    </bean>
+
+    <!--比较坑，这里会有有两个FilterSecurityInterceptor，不能禁用默认的（参考手册讲的 %>_<%）-->
+    <bean id="securityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="accessDecisionManager" ref="myAccessDecisionManagerBean"/>
         <property name="securityMetadataSource" ref="securityMetadataSource"/>
     </bean>
-
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider ref="authenticationProvider">
-        </security:authentication-provider>
-    </security:authentication-manager>
 
     <!--访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
     <bean id="myAccessDecisionManagerBean" class="me.ianhe.security.MyAccessDecisionManager"/>
@@ -36,18 +44,12 @@
     <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="hideUserNotFoundExceptions" value="false"/>
         <property name="userDetailsService" ref="sysUserDetailsService"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>
 
     <bean id="authenticationEntryPoint"
           class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
         <constructor-arg value="/admin/login"/>
-    </bean>
-
-    <bean id="captchaProcessingFilter" class="me.ianhe.security.CaptchaProcessingFilter">
-        <property name="authenticationManager" ref="authenticationManager"/>
-        <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
-        <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
-        <property name="filterProcessesUrl" value="/admin/login.do"/>
     </bean>
 
     <bean id="authenticationSuccessHandler"
@@ -60,4 +62,10 @@
         <property name="defaultFailureUrl" value="/admin/login"/>
     </bean>
 
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:message/messages_zh_CN"/>
+    </bean>
 </beans>

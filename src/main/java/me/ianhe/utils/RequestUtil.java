@@ -1,9 +1,11 @@
 package me.ianhe.utils;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -13,6 +15,12 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Set;
 
+/**
+ * request工具类
+ *
+ * @author iHelin
+ * @since 2017/9/1 17:14
+ */
 public class RequestUtil {
 
     private static Logger logger = LoggerFactory.getLogger(RequestUtil.class);
@@ -25,14 +33,12 @@ public class RequestUtil {
         return getRequest().getSession();
     }
 
-    @SuppressWarnings("unchecked")
     public static String getCompleteRequestURL(HttpServletRequest request, Set<String> rpSet) {
-        if (request == null) {
-            return "";
-        }
-        String url = "";
-        url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-                + request.getContextPath() + request.getServletPath();
+        Assert.notNull(request, "请求不能为null");
+        StringBuilder sb = new StringBuilder(256);
+        sb.append(request.getScheme()).append("://").append(request.getServerName())
+                .append(':').append(request.getServerPort()).append(request.getContextPath())
+                .append(request.getServletPath());
         Enumeration<String> names = request.getParameterNames();
         int i = 0;
         if (names != null) {
@@ -42,24 +48,22 @@ public class RequestUtil {
                 if (value == null || (rpSet != null && rpSet.contains(name))) {
                     continue;
                 }
-                url = url + (i++ == 0 ? "?" : "&") + name + "=" + value;
+                sb.append(i++ == 0 ? '?' : '&').append(name).append('=').append(value);
             }
         }
-        return url;
+        return sb.toString();
     }
 
     public static String getCompleteRequestURL(HttpServletRequest request) {
         return getCompleteRequestURL(request, (String) null);
     }
 
-    @SuppressWarnings("unchecked")
     public static String getCompleteRequestURL(HttpServletRequest request, String rmParam) {
-        if (request == null) {
-            return "";
-        }
-        String url = "";
-        url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-                + request.getContextPath() + request.getServletPath();
+        Assert.notNull(request, "请求不能为null");
+        StringBuilder sb = new StringBuilder(256);
+        sb.append(request.getScheme()).append("://").append(request.getServerName())
+                .append(':').append(request.getServerPort()).append(request.getContextPath())
+                .append(request.getServletPath());
         Enumeration<String> names = request.getParameterNames();
         int i = 0;
         if (names != null) {
@@ -69,10 +73,10 @@ public class RequestUtil {
                 if (value == null || name.equals(rmParam)) {
                     continue;
                 }
-                url = url + (i++ == 0 ? "?" : "&") + name + "=" + value;
+                sb.append(i++ == 0 ? '?' : '&').append(name).append('=').append(value);
             }
         }
-        return url;
+        return sb.toString();
     }
 
     public static String getRequestData(HttpServletRequest request) {
@@ -80,7 +84,7 @@ public class RequestUtil {
             return null;
         String data = null;
         try {
-            data = IOUtils.toString(request.getInputStream(), "utf-8");
+            data = IOUtils.toString(request.getInputStream(), Charsets.UTF_8);
         } catch (IOException e1) {
             logger.info("getInputStream throw IOException: " + e1.getMessage() + ", request's complete url: "
                     + getCompleteRequestURL(request));
@@ -88,6 +92,12 @@ public class RequestUtil {
         return data;
     }
 
+    /**
+     * 获取请求真实ip
+     *
+     * @author iHelin
+     * @since 2017/9/1 15:59
+     */
     public static String getRealIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Real-IP");
         if (StringUtils.isNotBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
@@ -105,9 +115,15 @@ public class RequestUtil {
         return request.getRemoteAddr();
     }
 
+    /**
+     * 判断是否是ajax请求
+     *
+     * @author iHelin
+     * @since 2017/9/1 15:55
+     */
     public static boolean isAjaxRequest(HttpServletRequest request) {
-        return (request.getHeader("X-Requested-With") != null
-                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString()));
+        return (StringUtils.isNotBlank(request.getHeader("X-Requested-With"))
+                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
     }
 
     private RequestUtil() {
