@@ -11,10 +11,6 @@ public class MailModel implements Serializable {
     private String title;
     private String content;
 
-    public MailModel() {
-
-    }
-
     public MailModel(String toAddress, String toName, String title, String content) {
         this.toAddress = toAddress;
         this.toName = toName;

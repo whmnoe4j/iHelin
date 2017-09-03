@@ -1,8 +1,6 @@
 package me.ianhe.utils;
 
 import com.google.common.collect.Lists;
-import me.ianhe.config.CommonConfig;
-import me.ianhe.config.CommonConfig.MailConfigEntry;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +8,7 @@ import org.springframework.http.MediaType;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimeUtility;
+import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -67,7 +61,7 @@ public class MailUtil {
         String userName = null;
         String password = null;
 
-        public MyAuthenticator(String username, String password) {
+        MyAuthenticator(String username, String password) {
             this.userName = username;
             this.password = password;
         }
@@ -146,7 +140,7 @@ public class MailUtil {
          *
          * @param mailInfo 待发送的邮件信息
          */
-        public boolean sendHtmlMail(MailSenderInfo mailInfo) {
+        boolean sendHtmlMail(MailSenderInfo mailInfo) {
             // 判断是否需要身份认证
             MyAuthenticator authenticator = null;
             Properties pro = mailInfo.getProperties();
@@ -222,25 +216,32 @@ public class MailUtil {
         }
     }
 
+    /**
+     * 发送html邮件
+     *
+     * @author iHelin
+     * @since 2017/9/3 11:44
+     */
     public static boolean sendMail(String toAddress, String toPersonalName, String subject, String content) {
         return sendMail(toAddress, toPersonalName, subject, content, null, null, null);
     }
 
+    /**
+     * 发送html邮件
+     *
+     * @author iHelin
+     * @since 2017/9/3 11:44
+     */
     public static boolean sendMail(String toAddress, String toPersonalName, String subject, String content, String fileName,
                                    InputStream attachStream, String type) {
-        MailConfigEntry entry = CommonConfig.getMailConfigEntry();
-        if (entry == null) {
-            LOGGER.warn("Mail server is not configured. please check mail_config.yml");
-            return false;
-        }
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.mailServerHost = entry.mailServer;
-        mailInfo.mailServerPort = entry.mailPort;
+        mailInfo.mailServerHost = Global.get("mail.server");
+        mailInfo.mailServerPort = Global.get("mail.port");
         mailInfo.validate = true;
-        mailInfo.username = entry.mailUser;
-        mailInfo.password = entry.mailPassword;
-        mailInfo.fromAddress = entry.mailFromAddress;
-        mailInfo.fromPersonalName = entry.mailFromName;
+        mailInfo.username = Global.get("mail.user");
+        mailInfo.password = Global.get("mail.password");
+        mailInfo.fromAddress = Global.get("mail.fromAddress");
+        mailInfo.fromPersonalName = Global.get("mail.fromName");
         mailInfo.toPersonalName = toPersonalName;
         mailInfo.toAddress = toAddress;
         mailInfo.subject = subject;

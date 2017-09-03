@@ -3,7 +3,6 @@ package me.ianhe.utils;
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import me.ianhe.config.CommonConfig;
 import org.apache.commons.codec.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class TemplateUtil {
 
     public static String applyTemplate(String templatePath, Map<String, Object> propMap) {
         try {
-            propMap.put("contextPath", CommonConfig.getContextPath());
+            propMap.put("contextPath", RequestUtil.getRequest().getContextPath());
             Configuration config = new Configuration(Configuration.VERSION_2_3_23);
             File dir = new File(Global.getClassPath(), TEMPLATE_DIR);
             config.setDirectoryForTemplateLoading(dir);

@@ -31,7 +31,7 @@ public class TestController extends BaseController {
     @GetMapping("test/agent")
     public String testPage(@RequestHeader("User-Agent") String userAgent) {
         System.out.println(userAgent);
-        MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "葫芦娃", "2345", "测试服二个人");
+        MailModel mail = new MailModel("ahaqhelin@163.com", "葫芦娃", "2345", "测试服二个人");
         producerService.sendMessage(destination, mail);
         return "test";
     }
@@ -52,7 +52,7 @@ public class TestController extends BaseController {
      * 文件下载测试
      *
      * @author iHelin
-     * @create 2017-04-26 14:12
+     * @since 2017-04-26 14:12
      */
     @ResponseBody
     @RequestMapping("download")
