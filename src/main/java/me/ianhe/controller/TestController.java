@@ -3,6 +3,7 @@ package me.ianhe.controller;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.MailModel;
 import me.ianhe.service.JMSProducerService;
+import me.ianhe.utils.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +45,7 @@ public class TestController extends BaseController {
         myScore.setAddWriter(1);
         myScore.setReason("<h1>三个人请问abc123</h1>");
         myScore.setScore(1);
-        System.out.println(global.getSystemName());
+        System.out.println(Global.getSystemName());
         return myScore;
     }
 

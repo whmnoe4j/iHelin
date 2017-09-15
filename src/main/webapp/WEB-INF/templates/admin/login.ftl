@@ -13,7 +13,7 @@
 <body class="focusedform">
 <div class="verticalcenter">
     <div class="panel panel-primary">
-        <form action="${request.contextPath}/admin/login.do" method="post" class="form-horizontal"
+        <form action="${request.contextPath}/admin/auth" method="post" class="form-horizontal"
               style="margin-bottom: 0px !important;">
             <input type="hidden" name="from" value="${from!}">
             <div class="panel-body">

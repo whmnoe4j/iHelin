@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TemplateUtil {
 
-    private static final String TEMPLATE_DIR = Global.get("mail.tpl");
+    private static final String TEMPLATE_DIR = Global.getMailTpl();
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateUtil.class);
 
     public static String applyTemplate(String templatePath) {

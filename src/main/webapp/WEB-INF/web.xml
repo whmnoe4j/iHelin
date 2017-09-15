@@ -59,8 +59,8 @@
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
-        <!--<dispatcher>REQUEST</dispatcher>-->
-        <!--<dispatcher>FORWARD</dispatcher>-->
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <servlet>
@@ -96,10 +96,6 @@
             <param-name>kaptcha.textproducer.char.length</param-name>
             <param-value>4</param-value>
         </init-param>
-        <!--<init-param>
-            <param-name>kaptcha.textproducer.char.string</param-name>
-            <param-value>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</param-value>
-        </init-param>-->
     </servlet>
     <servlet-mapping>
         <servlet-name>Kaptcha</servlet-name>

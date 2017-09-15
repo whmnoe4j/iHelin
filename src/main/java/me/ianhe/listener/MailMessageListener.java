@@ -28,7 +28,7 @@ public class MailMessageListener {
         logger.debug("接收到一条邮件消息。");
         try {
             MailModel mail = (MailModel) message.getObject();
-            MailUtil.sendMail(mail.getToAddress(), mail.getToName(), mail.getTitle(), mail.getContent());
+            MailUtil.sendHTMLMail(mail.getToAddress(), mail.getToPersonalName(), mail.getSubject(), mail.getContent());
         } catch (JMSException e) {
             logger.error("消息接收异常！", e);
         }

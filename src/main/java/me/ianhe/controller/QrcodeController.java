@@ -50,7 +50,7 @@ public class QrcodeController extends BaseController {
         qrcode.setPath(path);
         qrcodeManager.insert(qrcode);
         String fileName = qrcode.getId() + "." + format;
-        String qrCodeContent = global.getDomainUrl() + "/qrcode/" + qrcode.getId();
+        String qrCodeContent = Global.getDomainUrl() + "/qrcode/" + qrcode.getId();
         path = QRCodeUtil.generateQRCode(path, qrCodeContent,
                 fileName, format);
         logger.debug("Successing generate qrcode {},ip: {}", qrCodeContent, RequestUtil.getRealIp(request));

@@ -24,8 +24,6 @@ public abstract class BaseController {
     protected QrcodeService qrcodeManager;
     @Autowired
     protected ScoreService myScoreManager;
-    @Autowired
-    protected Global global;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

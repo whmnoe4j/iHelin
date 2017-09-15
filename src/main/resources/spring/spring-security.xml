@@ -13,7 +13,7 @@
         <security:csrf disabled="true"/>
         <security:custom-filter ref="captchaAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
         <security:custom-filter ref="securityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <security:access-denied-handler error-page="/403.jsp"/>
+        <security:access-denied-handler error-page="/error/403.jsp"/>
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
@@ -24,7 +24,7 @@
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
         <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
-        <property name="filterProcessesUrl" value="/admin/login.do"/>
+        <property name="filterProcessesUrl" value="/admin/auth"/>
         <property name="captchaParameter" value="captcha"/>
     </bean>
 

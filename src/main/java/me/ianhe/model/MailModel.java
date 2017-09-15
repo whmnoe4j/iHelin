@@ -1,5 +1,6 @@
 package me.ianhe.model;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 public class MailModel implements Serializable {
@@ -7,14 +8,14 @@ public class MailModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String toAddress;
-    private String toName;
-    private String title;
+    private String toPersonalName;
+    private String subject;
     private String content;
 
-    public MailModel(String toAddress, String toName, String title, String content) {
+    public MailModel(String toAddress, String toPersonalName, String subject, String content) {
         this.toAddress = toAddress;
-        this.toName = toName;
-        this.title = title;
+        this.toPersonalName = toPersonalName;
+        this.subject = subject;
         this.content = content;
     }
 
@@ -26,22 +27,6 @@ public class MailModel implements Serializable {
         this.toAddress = toAddress;
     }
 
-    public String getToName() {
-        return toName;
-    }
-
-    public void setToName(String toName) {
-        this.toName = toName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getContent() {
         return content;
     }
@@ -49,4 +34,21 @@ public class MailModel implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getToPersonalName() {
+        return toPersonalName;
+    }
+
+    public void setToPersonalName(String toPersonalName) {
+        this.toPersonalName = toPersonalName;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
 }
