@@ -3,7 +3,6 @@ package me.ianhe.service;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.UserMapper;
 import me.ianhe.db.entity.User;
-import me.ianhe.model.wx.WXUser;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -79,31 +78,6 @@ public class SysUserDetailsService implements UserDetailsService {
             res.put("status", status);
         }
         return userMapper.listUserCount(res);
-    }
-
-    public WXUser selectWXUserByOpenId(String openId, String accessToken) {
-        String api = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + accessToken + "&openid=" + openId
-                + "&lang=zh_CN";
-        String res = WechatUtil.doGetStr(api);
-        return JSON.parseObject(res, WXUser.class);
-    }
-
-    public User transWXUserToUser(WXUser wxUser) {
-        User user = new User();
-        user.setCity(wxUser.getCity());
-        user.setCountry(wxUser.getCountry());
-        user.setGender(wxUser.getSex());
-        user.setGroupid(wxUser.getGroupid());
-        user.setHeadimgurl(wxUser.getHeadimgurl());
-        user.setLanguage(wxUser.getLanguage());
-        user.setNickName(wxUser.getNickname());
-        user.setOpenId(wxUser.getOpenid());
-        user.setProvince(wxUser.getProvince());
-        user.setRemark(wxUser.getRemark());
-        user.setSubscribe(wxUser.getSubscribe());
-        user.setSubscribeTime(new Date(wxUser.getSubscribe_time() * 1000));
-        user.setTagidList(JSON.toJson(wxUser.getTagid_list()));
-        return user;
     }
 
 }

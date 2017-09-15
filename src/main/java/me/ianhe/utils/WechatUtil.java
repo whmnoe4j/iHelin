@@ -1,24 +1,12 @@
 package me.ianhe.utils;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.riversoft.weixin.common.menu.Menu;
-import com.riversoft.weixin.common.menu.MenuItem;
-import com.riversoft.weixin.common.menu.MenuType;
-import com.riversoft.weixin.common.message.Article;
-import com.riversoft.weixin.common.message.MsgType;
-import com.riversoft.weixin.common.message.xml.ImageXmlMessage;
-import com.riversoft.weixin.common.message.xml.NewsXmlMessage;
-import com.riversoft.weixin.common.message.xml.TextXmlMessage;
-import com.riversoft.weixin.common.message.xml.VoiceXmlMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import me.ianhe.model.wx.*;
 import org.apache.commons.lang3.CharEncoding;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -47,29 +35,6 @@ import java.util.Map;
  * Created by iHelin on 16/11/4.
  */
 public class WechatUtil {
-
-    public static final String MESSAGE_TEXT = "text";
-    public static final String MESSAGE_NEWS = "news";
-    public static final String MESSAGE_IMAGE = "image";
-    public static final String MESSAGE_VOICE = "voice";
-    public static final String MESSAGE_MUSIC = "music";
-    public static final String MESSAGE_VIDEO = "video";
-    public static final String MESSAGE_LINK = "link";
-    public static final String MESSAGE_LOCATION = "location";
-    public static final String MESSAGE_EVNET = "event";
-    public static final String MESSAGE_SUBSCRIBE = "subscribe";
-    public static final String MESSAGE_UNSUBSCRIBE = "unsubscribe";
-    public static final String MESSAGE_CLICK = "CLICK";
-    public static final String MESSAGE_VIEW = "VIEW";
-    public static final String MESSAGE_SCANCODE = "scancode_push";
-
-    private static final String MEDIA_COUNT_URL = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=ACCESS_TOKEN";
-    private static final String GET_MEDIA_URL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
-    private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-    private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
-    private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-    private static final String QUERY_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
-    private static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 
     private static final HttpClientBuilder HTTP_CLIENT_BUILDER = HttpClientBuilder.create();
 
@@ -144,78 +109,6 @@ public class WechatUtil {
         return msgMap;
     }
 
-    // 获取微信access_token
-    public static WXAccessToken getAccessToken(String appId, String secret) {
-        if (StringUtils.isBlank(appId) || StringUtils.isBlank(secret)) {
-            throw new RuntimeException("appId or secret is empty,please check your configuration!");
-        }
-        String url = ACCESS_TOKEN_URL.replace("APPID", appId).replace("APPSECRET", secret);
-        String res = doGetStr(url);
-        WXAccessToken token = JSON.parseObject(res, WXAccessToken.class);
-        LOGGER.info("从微信服务器获取token成功，有效期为{}", token.getExpires_in());
-        return token;
-    }
-
-    /**
-     * 文本消息组装
-     *
-     * @param toUserName
-     * @param fromUserName
-     * @param content
-     * @return
-     */
-    public static String sendTextMsg(String toUserName, String fromUserName, String content) {
-        TextXmlMessage text = new TextXmlMessage();
-        text.setFromUser(toUserName);
-        text.setToUser(fromUserName);
-        text.setMsgType(MsgType.text);
-        text.setCreateTime(new Date());
-        text.setContent(content);
-        xstream.alias("xml", TextXmlMessage.class);
-        return xstream.toXML(text);
-    }
-
-    /**
-     * 图文消息组装
-     *
-     * @param toUserName
-     * @param fromUserName
-     * @return
-     */
-    public static String sendArticleMsg(String toUserName, String fromUserName, NewsXmlMessage newsMessage) {
-        newsMessage.setToUser(fromUserName);
-        newsMessage.setFromUser(toUserName);
-        xstream.alias("xml", NewsXmlMessage.class);
-        xstream.alias("item", Article.class);
-        return xstream.toXML(newsMessage);
-
-    }
-
-    /**
-     * 图片消息组装
-     *
-     * @param toUserName
-     * @param fromUserName
-     * @return
-     */
-    public static String sendImageMsg(String toUserName, String fromUserName, ImageXmlMessage imageMessage) {
-        imageMessage.setFromUser(toUserName);
-        imageMessage.setToUser(fromUserName);
-        xstream.alias("xml", ImageXmlMessage.class);
-        return xstream.toXML(imageMessage);
-    }
-
-    /**
-     * 音乐消息转XML
-     *
-     * @param voiceXmlMessage
-     * @return
-     */
-    public static String musicMessageToXml(VoiceXmlMessage voiceXmlMessage) {
-        xstream.alias("xml", VoiceXmlMessage.class);
-        return xstream.toXML(voiceXmlMessage);
-    }
-
     public static String map2XML(Map<String, Object> map) {
         String xml = "<xml>";
         Iterator<Map.Entry<String, Object>> iter = map.entrySet().iterator();
@@ -268,73 +161,6 @@ public class WechatUtil {
             return false;
         }
         return true;
-    }
-
-    // 组装菜单
-    public static Menu initMenu() {
-        Menu menu = new Menu();
-        List<MenuItem> buttons = Lists.newArrayList();
-        MenuItem button11 = new MenuItem();
-        button11.setName("click菜单");
-        button11.setType(MenuType.click);
-        button11.setKey("11");
-        buttons.add(button11);
-
-        MenuItem button2 = new MenuItem();
-        button2.setName("官方网站");
-        button2.setType(MenuType.view);
-        button2.setUrl("http://www.tcqcw.cn");
-        buttons.add(button2);
-
-        List<MenuItem> subButtons = Lists.newArrayList();
-        MenuItem button31 = new MenuItem();
-        button31.setName("扫码");
-        button31.setType(MenuType.scancode_push);
-        button31.setKey("31");
-        subButtons.add(button31);
-
-        MenuItem button32 = new MenuItem();
-        button32.setName("地理位置");
-        button32.setType(MenuType.location_select);
-        button32.setKey("32");
-        subButtons.add(button32);
-
-        MenuItem button = new MenuItem();
-        button.setName("新菜单");
-        button.setSubItems(subButtons);
-        buttons.add(button);
-
-        menu.setMenus(buttons);
-        return menu;
-    }
-
-    // 创建菜单
-    public static String createMenu(String accessToken, String menu) {
-        String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", accessToken);
-        return doPostStr(url, menu);
-    }
-
-    // 查询菜单
-    public static String queryMenu(String token) {
-        String url = QUERY_MENU_URL.replace("ACCESS_TOKEN", token);
-        return doGetStr(url);
-    }
-
-    // 删除菜单
-    public static String deleteMenu(String token) {
-        String url = DELETE_MENU_URL.replace("ACCESS_TOKEN", token);
-        return doGetStr(url);
-    }
-
-    // 组装地理位置消息
-    public static LocationMessage MapToLocation(Map<String, String> map) {
-        LocationMessage location = new LocationMessage();
-        location.setLabel(map.get("Label"));
-        location.setLocationX(map.get("Location_X"));
-        location.setLocationY(map.get("Location_Y"));
-        location.setScale(Integer.parseInt(map.get("Scale")));
-        location.setMsgId(Long.valueOf(map.get("MsgId")));
-        return location;
     }
 
     private WechatUtil() {

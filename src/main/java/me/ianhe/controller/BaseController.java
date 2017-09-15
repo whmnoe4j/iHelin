@@ -17,11 +17,7 @@ import java.util.Map;
 public abstract class BaseController {
 
     @Autowired
-    protected AccessTokenService accessTokenManager;
-    @Autowired
     protected SysUserDetailsService userManager;
-    @Autowired
-    protected ServiceMenuService serviceMenuManager;
     @Autowired
     protected ArticleService articleManager;
     @Autowired
