@@ -48,7 +48,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 配置表信息 -->
-        <table schema="iHelin" tableName="sys_auth" domainObjectName="SysAuth"
+        <table schema="iHelin" tableName="poem" domainObjectName="Poem"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>

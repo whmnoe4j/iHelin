@@ -1,11 +1,14 @@
 package me.ianhe.service;
 
 import com.beust.jcommander.internal.Maps;
+import me.ianhe.dao.PoemMapper;
+import me.ianhe.db.entity.Poem;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JSON;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -19,7 +22,19 @@ public class DailyService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private PoemMapper poemMapper;
+
     public void run() {
+        dailyEnglish();
+    }
+
+    public void poemRun() {
+        Poem poem = poemMapper.getByRandom();
+        DingUtil.say(poem.getContent() + "      --" + poem.getTitle());
+    }
+
+    private void dailyEnglish() {
         Map<String, Object> contentMap = Maps.newHashMap();
         String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
         Map<String, Object> resMap = JSON.parseMap(res);

@@ -12,6 +12,7 @@
 
     <task:scheduled-tasks scheduler="taskScheduler">
         <task:scheduled ref="dailyService" method="run" cron="0 0 18 ? * MON-FRI"/>
+        <task:scheduled ref="dailyService" method="poemRun" cron="0 0 16 ? * MON-FRI"/>
         <task:scheduled ref="countDownService" method="run" cron="0 30 8 * * *"/>
     </task:scheduled-tasks>
 </beans>
