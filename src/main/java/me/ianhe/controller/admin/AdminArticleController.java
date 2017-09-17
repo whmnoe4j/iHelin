@@ -22,7 +22,7 @@ public class AdminArticleController extends BaseAdminController {
      */
     @PostMapping("article")
     public String addArticle(Article article) {
-        articleManager.addArticle(article);
+        articleService.addArticle(article);
         return success();
     }
 
@@ -37,11 +37,11 @@ public class AdminArticleController extends BaseAdminController {
         if (article == null || article.getId() == null) {
             return error("文章不存在");
         }
-        Article newArticle = articleManager.selectArticleById(article.getId());
+        Article newArticle = articleService.selectArticleById(article.getId());
         newArticle.setTitle(HtmlUtils.htmlEscape(article.getTitle(), CharEncoding.UTF_8));
         newArticle.setSummary(HtmlUtils.htmlEscape(article.getSummary(), CharEncoding.UTF_8));
         newArticle.setContent(article.getContent());
-        articleManager.editArticle(newArticle);
+        articleService.editArticle(newArticle);
         return success();
     }
 
@@ -53,7 +53,7 @@ public class AdminArticleController extends BaseAdminController {
      */
     @DeleteMapping(value = "article/{articleId}")
     public String deleteProduct(@PathVariable Integer articleId) {
-        articleManager.deleteById(articleId);
+        articleService.deleteById(articleId);
         return success();
     }
 

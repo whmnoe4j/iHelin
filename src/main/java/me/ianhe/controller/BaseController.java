@@ -2,7 +2,6 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.service.*;
-import me.ianhe.utils.Global;
 import me.ianhe.utils.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +16,15 @@ import java.util.Map;
 public abstract class BaseController {
 
     @Autowired
-    protected SysUserDetailsService userManager;
+    protected SysUserDetailsService userDetailsService;
     @Autowired
-    protected ArticleService articleManager;
+    protected ArticleService articleService;
     @Autowired
-    protected QrcodeService qrcodeManager;
+    protected QrcodeService qrcodeService;
     @Autowired
-    protected ScoreService myScoreManager;
+    protected ScoreService scoreService;
+    @Autowired
+    protected JMSProducerService producerService;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

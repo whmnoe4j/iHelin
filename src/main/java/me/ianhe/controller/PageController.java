@@ -30,10 +30,10 @@ public class PageController extends BaseController {
     public String articlePage(@PathVariable Integer id, Model model) {
         Article article;
         if (id == null || id == 0) {
-            List<Article> articles = articleManager.listByCondition(null, 0, 1);
+            List<Article> articles = articleService.listByCondition(null, 0, 1);
             article = articles.get(0);
         } else {
-            article = articleManager.selectArticleById(id);
+            article = articleService.selectArticleById(id);
         }
         if (article != null) {
             producerService.sendMessage(destination, String.valueOf(article.getId()));

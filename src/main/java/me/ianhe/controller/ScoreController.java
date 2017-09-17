@@ -24,19 +24,19 @@ public class ScoreController extends BaseController {
     @PostMapping(value = "score")
     public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
-        myScoreManager.addRecord(myScore);
+        scoreService.addRecord(myScore);
         return success();
     }
 
     @RequestMapping(value = "score/all", method = RequestMethod.GET)
     public String getTotalScore() {
-        long totalScore = myScoreManager.getMyTotalScore();
+        long totalScore = scoreService.getMyTotalScore();
         return success(totalScore);
     }
 
     @RequestMapping(value = "score/{id}", method = RequestMethod.GET)
     public String getScore(@PathVariable Integer id) {
-        MyScore myScore = myScoreManager.getById(id);
+        MyScore myScore = scoreService.getById(id);
         return success(myScore);
     }
 
@@ -44,7 +44,7 @@ public class ScoreController extends BaseController {
     public String getScores(Integer pageNum, Integer pageLength) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageLength = pageLength == null ? DEFAULT_PAGE_LENGTH : pageLength;
-        List<MyScore> scores = myScoreManager.selectByCondition((pageNum - 1) * pageLength, pageLength);
+        List<MyScore> scores = scoreService.selectByCondition((pageNum - 1) * pageLength, pageLength);
         return success(scores);
     }
 

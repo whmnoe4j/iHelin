@@ -30,7 +30,7 @@ public class QrcodeController extends BaseController {
 
     @GetMapping(value = "qrcode/{id}")
     public String qrcodePage(@PathVariable Integer id, Model model) {
-        Qrcode qrcode = qrcodeManager.getQrcode(id);
+        Qrcode qrcode = qrcodeService.getQrcode(id);
         if (qrcode == null) {
             model.addAttribute("msg", "二维码不存在！");
             return "h5/error";
@@ -48,7 +48,7 @@ public class QrcodeController extends BaseController {
         qrcode.setContent(content);
         qrcode.setCreateTime(new Date());
         qrcode.setPath(path);
-        qrcodeManager.insert(qrcode);
+        qrcodeService.insert(qrcode);
         String fileName = qrcode.getId() + "." + format;
         String qrCodeContent = Global.getDomainUrl() + "/qrcode/" + qrcode.getId();
         path = QRCodeUtil.generateQRCode(path, qrCodeContent,

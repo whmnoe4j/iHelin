@@ -2,7 +2,6 @@ package me.ianhe.controller;
 
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.MailModel;
-import me.ianhe.service.JMSProducerService;
 import me.ianhe.utils.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,16 +22,19 @@ import java.util.Date;
 public class TestController extends BaseController {
 
     @Autowired
-    private JMSProducerService producerService;
-
-    @Autowired
     @Qualifier("mailQueue")
     private Destination destination;
+
+    @GetMapping("test")
+    public String testPage() {
+        return "test";
+    }
 
     @GetMapping("test/agent")
     public String testPage(@RequestHeader("User-Agent") String userAgent) {
         System.out.println(userAgent);
-        MailModel mail = new MailModel("ahaqhelin@163.com", "葫芦娃", "2345", "测试服二个人");
+        MailModel mail = new MailModel("ahaqhelin@163.com", "iHelin", "User-Agent",
+                userAgent);
         producerService.sendMessage(destination, mail);
         return "test";
     }

@@ -62,8 +62,8 @@ public class CommonRedisDao {
     /**
      * 取得Integer值
      *
-     * @param key
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:17
      */
     public Integer getInt(String key) {
         String value = stringRedisTemplate.boundValueOps(key).get();
@@ -73,6 +73,12 @@ public class CommonRedisDao {
         return 0;
     }
 
+    /**
+     * 获取long类型
+     *
+     * @author iHelin
+     * @since 2017/9/16 17:17
+     */
     public Long getLong(String key) {
         String value = stringRedisTemplate.boundValueOps(key).get();
         if (StringUtils.isNotBlank(value)) {
@@ -84,9 +90,9 @@ public class CommonRedisDao {
     /**
      * 获取
      *
-     * @param key
      * @param retain 是否保留
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:17
      */
     public String get(String key, boolean retain) {
         String value = stringRedisTemplate.boundValueOps(key).get();
@@ -99,14 +105,19 @@ public class CommonRedisDao {
     /**
      * 递增操作
      *
-     * @param key
-     * @param by
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     public double incr(String key, double by) {
         return stringRedisTemplate.opsForValue().increment(key, by);
     }
 
+    /**
+     * 递增操作
+     *
+     * @author iHelin
+     * @since 2017/9/16 17:17
+     */
     public Long incr(String key, long by) {
         return stringRedisTemplate.opsForValue().increment(key, by);
     }
@@ -115,8 +126,8 @@ public class CommonRedisDao {
      * 递增1
      * key不存在时默认为0，返回1
      *
-     * @param key
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     public Long incr(String key) {
         return stringRedisTemplate.boundValueOps(key).increment(1L);
@@ -125,8 +136,8 @@ public class CommonRedisDao {
     /**
      * 将map写入缓存
      *
-     * @param key
-     * @param map
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     public <T> void setMap(String key, Map<String, T> map) {
         stringRedisTemplate.opsForHash().putAll(key, map);
@@ -135,9 +146,8 @@ public class CommonRedisDao {
     /**
      * 向key对应的map中添加缓存对象
      *
-     * @param key   cache对象key
-     * @param field map对应的key
-     * @param value 值
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     public void addMap(String key, String field, String value) {
         stringRedisTemplate.opsForHash().put(key, field, value);
@@ -146,9 +156,8 @@ public class CommonRedisDao {
     /**
      * 获取map缓存
      *
-     * @param key
-     * @param clazz
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     public <T> Map<String, T> mget(String key, Class<T> clazz) {
         BoundHashOperations<String, String, T> boundHashOperations = stringRedisTemplate.boundHashOps(key);
@@ -159,9 +168,8 @@ public class CommonRedisDao {
     /**
      * 获取map缓存中的某个对象
      *
-     * @param key
-     * @param field
-     * @return
+     * @author iHelin
+     * @since 2017/9/16 17:16
      */
     @SuppressWarnings("unchecked")
     public <T> T getMapField(String key, String field) {
@@ -171,12 +179,10 @@ public class CommonRedisDao {
     /**
      * 删除map中的某个对象
      *
-     * @param key   map对应的key
-     * @param field map中该对象的key
-     * @author lh
-     * @date 2016年8月10日
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
-    public void delMapField(String key, String... field) {
+    public void delMapField(String key, Object... field) {
         BoundHashOperations<String, String, Object> boundHashOperations = stringRedisTemplate.boundHashOps(key);
         boundHashOperations.delete(field);
     }
@@ -184,10 +190,8 @@ public class CommonRedisDao {
     /**
      * 指定缓存的失效时间
      *
-     * @param key     缓存KEY
-     * @param timeout 失效时间(秒)
-     * @author FangJun
-     * @date 2016年8月14日
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
     public void setExpire(String key, long timeout) {
         if (timeout > 0) {
@@ -198,8 +202,8 @@ public class CommonRedisDao {
     /**
      * 添加set
      *
-     * @param key
-     * @param values
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
     public void addSet(String key, String... values) {
         stringRedisTemplate.boundSetOps(key).add(values);
@@ -208,18 +212,18 @@ public class CommonRedisDao {
     /**
      * 删除Set集合中的对象
      *
-     * @param key
-     * @param value
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
-    public void delSet(String key, String... value) {
+    public void delSet(String key, Object... value) {
         stringRedisTemplate.boundSetOps(key).remove(value);
     }
 
     /**
      * Set重命名
      *
-     * @param oldKey
-     * @param newKey
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
     public void renameSet(String oldKey, String newKey) {
         stringRedisTemplate.boundSetOps(oldKey).rename(newKey);
@@ -227,6 +231,9 @@ public class CommonRedisDao {
 
     /**
      * key是否存在
+     *
+     * @author iHelin
+     * @since 2017/9/16 17:15
      */
     public boolean exists(String key) {
         return stringRedisTemplate.hasKey(key);
@@ -238,8 +245,7 @@ public class CommonRedisDao {
      * @author iHelin
      * @since 2017/8/17 16:32
      */
-    public void setTimeout(String key, String value, Long timeout,
-                           TimeUnit unit) {
+    public void setTimeout(String key, String value, Long timeout, TimeUnit unit) {
         if (value == null) {
             return;
         }

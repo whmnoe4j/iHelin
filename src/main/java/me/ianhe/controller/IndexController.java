@@ -32,7 +32,7 @@ public class IndexController extends BaseController {
     public String indexPage(Model model) {
         int pageLength = 5;
         int pageNum = 1;
-        List<Article> articles = articleManager.listByCondition(null, (pageNum - 1)
+        List<Article> articles = articleService.listByCondition(null, (pageNum - 1)
                 * pageLength, pageLength);
         model.addAttribute("articles", articles);
         return "index";

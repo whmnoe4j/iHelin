@@ -12,6 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminPageController extends BaseAdminController {
 
     /**
+     * 前端项目
+     *
+     * @author iHelin
+     * @since 2017/9/17 10:36
+     */
+    @GetMapping("")
+    public String admin() {
+        return ftl("index");
+    }
+
+    /**
      * 控制台首页
      *
      * @author iHelin
@@ -19,7 +30,7 @@ public class AdminPageController extends BaseAdminController {
      */
     @GetMapping("index")
     public String indexPage(Model model) {
-        int userCount = userManager.listUserCount(null, null);
+        int userCount = userDetailsService.listUserCount(null, null);
         model.addAttribute("userCount", userCount);
         return ftl("index");
     }
