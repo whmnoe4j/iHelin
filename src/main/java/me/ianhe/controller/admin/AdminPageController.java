@@ -1,7 +1,6 @@
 package me.ianhe.controller.admin;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -29,10 +28,8 @@ public class AdminPageController extends BaseAdminController {
      * @since 2017/8/31 22:23
      */
     @GetMapping("index")
-    public String indexPage(Model model) {
-        int userCount = userDetailsService.listUserCount(null, null);
-        model.addAttribute("userCount", userCount);
-        return ftl("index");
+    public String indexPage() {
+        return "redirect:/admin";
     }
 
     /**
