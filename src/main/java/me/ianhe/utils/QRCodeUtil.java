@@ -9,6 +9,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class QRCodeUtil {
@@ -25,7 +26,7 @@ public class QRCodeUtil {
      */
     public static String generateQRCode(String folder, String content, String fileName, String format, int width, int height) {
         HashMap<EncodeHintType, Object> hints = Maps.newHashMap();
-        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        hints.put(EncodeHintType.CHARACTER_SET, StandardCharsets.UTF_8.name());
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
         hints.put(EncodeHintType.MARGIN, 2);
         try {

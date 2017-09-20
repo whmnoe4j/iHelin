@@ -1,6 +1,5 @@
 package me.ianhe.utils;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -12,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Set;
 
@@ -84,7 +84,7 @@ public class RequestUtil {
             return null;
         String data = null;
         try {
-            data = IOUtils.toString(request.getInputStream(), Charsets.UTF_8);
+            data = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e1) {
             logger.info("getInputStream throw IOException: " + e1.getMessage() + ", request's complete url: "
                     + getCompleteRequestURL(request));

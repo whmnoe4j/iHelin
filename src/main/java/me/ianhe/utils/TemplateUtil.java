@@ -3,12 +3,12 @@ package me.ianhe.utils;
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.apache.commons.codec.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -31,7 +31,7 @@ public class TemplateUtil {
             Configuration config = new Configuration(Configuration.VERSION_2_3_23);
             File dir = new File(Global.getClassPath(), TEMPLATE_DIR);
             config.setDirectoryForTemplateLoading(dir);
-            Template template = config.getTemplate(templatePath, CharEncoding.UTF_8);
+            Template template = config.getTemplate(templatePath, StandardCharsets.UTF_8.name());
             StringWriter writer = new StringWriter();
             template.process(propMap, writer);
             return writer.toString();

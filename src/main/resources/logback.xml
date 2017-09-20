@@ -7,7 +7,7 @@
     <property resource="config.properties"/>
 
     <!-- 控制台输出 -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%d{yy/MM/dd HH:mm:ss:SSS} %-5level [%thread] %logger{30} - %msg%n</pattern>
             <charset>UTF-8</charset>
@@ -37,6 +37,7 @@
     </appender>
 
     <logger name="me.ianhe" level="DEBUG"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
 
     <!--<logger name="me.ianhe.service" level="WARN">
         <appender-ref ref="DB"/>
@@ -44,7 +45,7 @@
 
     <!-- Root Logger -->
     <root level="INFO">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="console"/>
         <appender-ref ref="FILE"/>
     </root>
 
