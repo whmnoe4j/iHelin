@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.MyScore;
+import me.ianhe.exception.SystemException;
 import me.ianhe.model.MailModel;
 import me.ianhe.utils.Global;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,6 @@ public class TestController extends BaseController {
         return "test";
     }
 
-    @GetMapping("test/agent")
-    public String testPage(@RequestHeader("User-Agent") String userAgent) {
-        System.out.println(userAgent);
-        MailModel mail = new MailModel("ahaqhelin@163.com", "iHelin", "User-Agent",
-                userAgent);
-        producerService.sendMessage(destination, mail);
-        return "test";
-    }
-
     @ResponseBody
     @GetMapping("test2")
     public MyScore test2() {
@@ -49,6 +41,20 @@ public class TestController extends BaseController {
         myScore.setScore(1);
         System.out.println(Global.getSystemName());
         return myScore;
+    }
+
+    @GetMapping("test3")
+    public String test3() {
+        throw new SystemException("hhhh");
+    }
+
+    @GetMapping("test/agent")
+    public String testPage(@RequestHeader("User-Agent") String userAgent) {
+        System.out.println(userAgent);
+        MailModel mail = new MailModel("ahaqhelin@163.com", "iHelin", "User-Agent",
+                userAgent);
+        producerService.sendMessage(destination, mail);
+        return "test";
     }
 
     /**
