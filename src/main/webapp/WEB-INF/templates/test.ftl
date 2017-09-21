@@ -8,9 +8,6 @@
     <meta name="author" content="iHelin">
     <title>index | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
-    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
-    <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
     <style scoped>
         .layout {
             border: 1px solid #d7dde4;
@@ -55,35 +52,7 @@
 <body>
 <div id="app">
     <div class="layout">
-        <i-menu mode="horizontal" theme="light" active-name="1">
-            <div class="layout-logo">
-                <img src="${request.contextPath}/favicon.ico" alt="">
-            </div>
-            <div class="layout-nav">
-                <Menu-item name="1">
-                    <Icon type="ios-home"></Icon>
-                    首页
-                </Menu-item>
-                <Menu-item name="2">
-                    <Icon type="ios-paper"></Icon>
-                    文章
-                </Menu-item>
-                <Menu-item name="3">
-                    <Icon type="music-note"></Icon>
-                    音乐
-                </Menu-item>
-                <Menu-item name="4">
-                    <Icon type="paper-airplane"></Icon>
-                    关于我
-                </Menu-item>
-            </div>
-        </i-menu>
-        <div class="layout-content">
-            内容区域
-        </div>
-        <div class="layout-copy">
-            Copyright &copy; iHelin ${.now?string('yyyy')}
-        </div>
+        <img src="${request.contextPath}/img/tmp.png" alt="">
     </div>
 </div>
 <script>

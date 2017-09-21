@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
@@ -43,23 +45,24 @@ public class QQController extends BaseController {
     }
 
     @GetMapping("qq")
-    public void qqLogin(HttpServletResponse response) {
+    public String qqLogin(HttpServletRequest request) {
         logger.debug("smart-qq");
-        response.setContentType("image/png");
-        response.setDateHeader("expries", -1);
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Pragma", "no-cache");
+        String savePath = request.getServletContext().getRealPath("/img");
+        File file = new File(savePath);
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdir();
+        }
+        System.out.println(savePath);
         smartQQClient.login(true, listenerAction -> {
             try {
-                OutputStream os = response.getOutputStream();
+                OutputStream os = new FileOutputStream(savePath + "/tmp.png");
                 ImageIO.write((BufferedImage) listenerAction.getData(), "png", os);
-                os.flush();
                 os.close();
-                response.flushBuffer();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }, listenerAction -> logger.debug("登录成功"));
+        return "test";
     }
 
     @ResponseBody
