@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.Article;
 import me.ianhe.utils.FileUtil;
@@ -12,7 +13,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -60,7 +60,7 @@ public class IndexController extends BaseController {
     @GetMapping("mapping")
     public String showMappings(Model model) {
         Map<RequestMappingInfo, HandlerMethod> map = handlerMapping.getHandlerMethods();
-        List<Map> array = new ArrayList();
+        List<Map> array = Lists.newArrayList();
         for (RequestMappingInfo key : map.keySet()) {
             Map<String, Object> modelMap = Maps.newHashMap();
             String urls = Joiner.on(',').join(key.getPatternsCondition().getPatterns());

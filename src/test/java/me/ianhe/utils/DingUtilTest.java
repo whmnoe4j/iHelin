@@ -20,7 +20,7 @@ public class DingUtilTest {
     @Test
     public void atTest() throws Exception {
         Map<String, Object> contentMap = Maps.newHashMap();
-        contentMap.put("content", "我要上天！");
+        contentMap.put("content", "根本无心上班，一心想为祖国母亲庆生！");
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "text");
         data.put("text", contentMap);
