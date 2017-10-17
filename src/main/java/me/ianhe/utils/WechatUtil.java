@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * 微信常用工具类
@@ -70,29 +68,13 @@ public class WechatUtil {
         }
     }
 
-    public static String map2XML(Map<String, Object> map) {
-        String xml = "<xml>";
-        Iterator<Map.Entry<String, Object>> iter = map.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<String, Object> entry = iter.next();
-            String key = entry.getKey();
-            String val = entry.getValue().toString();
-            if (IsNumeric(val)) {
-                xml += "<" + key + ">" + val + "</" + key + ">";
-            } else
-                xml += "<" + key + "><![CDATA[" + val + "]]></" + key + ">";
-        }
-        xml += "</xml>";
-        return xml;
-    }
-
     /**
      * 判断是否为number
      *
      * @param str
      * @return
      */
-    public static boolean IsNumeric(String str) {
+    public static boolean isNumeric(String str) {
         try {
             Long.parseLong(str);
         } catch (Exception e) {

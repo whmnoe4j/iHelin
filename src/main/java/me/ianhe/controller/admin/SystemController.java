@@ -19,7 +19,6 @@ public class SystemController extends BaseAdminController {
 
     @PostMapping("authRole")
     public String loadAuthRole() {
-//        securityMetadataSource.loadAuthAndRole();
         return success();
     }
 

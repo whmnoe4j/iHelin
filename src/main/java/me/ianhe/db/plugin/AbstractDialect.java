@@ -2,7 +2,7 @@ package me.ianhe.db.plugin;
 
 import org.apache.commons.lang3.StringUtils;
 
-public abstract class Dialect {
+public abstract class AbstractDialect {
 
     public static final String DEF_SQL_PLACEHOLDER = "?";
 
@@ -12,9 +12,16 @@ public abstract class Dialect {
 
     public enum Type {
 
-        MYSQL, ORACLE;
+        /**
+         * MySQL
+         */
+        MYSQL,
+        /**
+         * Oracle
+         */
+        ORACLE;
 
-        public static Dialect getDialet(String dialectType) {
+        public static AbstractDialect getDialet(String dialectType) {
             if (StringUtils.isBlank(dialectType)) {
                 throw new RuntimeException("The value of the dialect property of plugin in mybatis-config.xml " +
                         "is not defined!");

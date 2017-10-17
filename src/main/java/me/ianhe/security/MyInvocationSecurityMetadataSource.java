@@ -44,6 +44,7 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
      * @author iHelin
      * @since 2017/8/30 19:59
      */
+    @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         String url = ((FilterInvocation) object).getRequestUrl();
         Iterator<String> ite = resourceMap.keySet().iterator();
@@ -56,6 +57,7 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
         return null;
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return true;
     }
@@ -66,6 +68,7 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
      * @author iHelin
      * @since 2017/9/1 15:04
      */
+    @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
         Set<ConfigAttribute> allConfigAttributes = Sets.newHashSet();
         List<SysAuth> sysAuthList = sysAuthMapper.selectSysAuth();

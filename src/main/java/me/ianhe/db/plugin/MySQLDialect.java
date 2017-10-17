@@ -2,16 +2,19 @@ package me.ianhe.db.plugin;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class MySQLDialect extends Dialect {
+public class MySQLDialect extends AbstractDialect {
 
+    @Override
     public boolean supportsLimitOffset() {
         return true;
     }
 
+    @Override
     public boolean supportsLimit() {
         return true;
     }
 
+    @Override
     public String getLimitString(String sql, int offset, String offsetPlaceholder, int limit, String limitPlaceholder) {
         sql = sql.trim();
         StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);

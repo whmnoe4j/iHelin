@@ -22,6 +22,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
      * @author iHelin
      * @since 2017/8/30 19:56
      */
+    @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
             throws AccessDeniedException, InsufficientAuthenticationException {
         if (configAttributes == null) {

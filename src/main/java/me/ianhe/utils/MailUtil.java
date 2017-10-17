@@ -37,6 +37,7 @@ public class MailUtil {
             this.password = password;
         }
 
+        @Override
         protected PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(userName, password);
         }
@@ -165,26 +166,28 @@ public class MailUtil {
 
             // 创建邮件的接收者地址，并设置到邮件消息中
             // Message.RecipientType.TO属性表示接收者的类型为TO
-            List<String> addrList = Lists.newArrayList();
-            for (String addrStr : toAddressStr.split(";")) {
-                if (StringUtils.isNotBlank(addrStr)) {
-                    addrList.add(addrStr.trim());
+            List<String> addressStrList = Lists.newArrayList();
+            String addressSeparator = ";";
+            for (String addressStr : toAddressStr.split(addressSeparator)) {
+                if (StringUtils.isNotBlank(addressStr)) {
+                    addressStrList.add(addressStr.trim());
                 }
             }
-            int receSize = addrList.size();
-            if (receSize < 1) {
+            int receiveSize = addressStrList.size();
+            if (receiveSize < 1) {
                 LOGGER.warn("没有收件邮箱地址。");
                 return false;
             }
-            if (receSize == 1) {
-                String addrStr = addrList.get(0);
+            if (receiveSize == 1) {
+                String addrStr = addressStrList.get(0);
                 Address address = new InternetAddress(addrStr, toPersonalName);
                 mailMessage.setRecipient(Message.RecipientType.TO, address);
             } else {
-                Address[] addrArr = new Address[receSize];
+                Address[] addrArr = new Address[receiveSize];
                 int inx = 0;
-                for (String addrStr : addrList)
+                for (String addrStr : addressStrList) {
                     addrArr[inx++] = new InternetAddress(addrStr, addrStr);
+                }
                 mailMessage.setRecipients(Message.RecipientType.TO, addrArr);
             }
 

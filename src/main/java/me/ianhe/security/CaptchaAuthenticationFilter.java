@@ -2,6 +2,7 @@ package me.ianhe.security;
 
 import com.google.code.kaptcha.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,7 +46,7 @@ public class CaptchaAuthenticationFilter extends AbstractAuthenticationProcessin
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
-        if (!request.getMethod().equals("POST")) {
+        if (!HttpMethod.POST.name().equals(request.getMethod())) {
             throw new AuthenticationServiceException("不支持的验证方法: " + request.getMethod());
         }
 

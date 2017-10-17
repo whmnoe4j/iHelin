@@ -43,7 +43,7 @@
 
     <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="hideUserNotFoundExceptions" value="false"/>
-        <property name="userDetailsService" ref="sysUserDetailsService"/>
+        <property name="userDetailsService" ref="userDetailsServiceImpl"/>
         <property name="passwordEncoder" ref="passwordEncoder"/>
     </bean>
 

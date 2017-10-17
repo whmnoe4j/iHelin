@@ -27,8 +27,9 @@ public class PaginationInterceptor implements Interceptor {
 
     private static final String PROP_DIALECT_KEY = "dialect";
 
-    private Dialect dialect;
+    private AbstractDialect dialect;
 
+    @Override
     public Object intercept(Invocation invocation) throws Exception {
         Object[] queryArgs = invocation.getArgs();
         RowBounds rowBounds = (RowBounds) queryArgs[ROWBOUNDS_INDEX];
@@ -63,13 +64,11 @@ public class PaginationInterceptor implements Interceptor {
      */
     private String createOffsetLimitSql(int offset, int limit, StatementType statementType, BoundSql boundSql) {
         String sql = boundSql.getSql().trim();
-//        LOGGER.debug("original sql : {}", sql);
         if (dialect.supportsLimitOffset()) {
             sql = dialect.getLimitString(sql, offset, limit);
         } else {
             sql = dialect.getLimitString(sql, 0, limit);
         }
-//        LOGGER.debug("pagination sql: {}", sql);
         return sql;
     }
 
@@ -103,11 +102,8 @@ public class PaginationInterceptor implements Interceptor {
      * @return
      */
     private MappedStatement createMappedStatement(MappedStatement ms, final BoundSql newBoundSql) {
-        Builder statementBuilder = new MappedStatement.Builder(ms.getConfiguration(), ms.getId(), new SqlSource() {
-            public BoundSql getBoundSql(Object parameterObject) {
-                return newBoundSql;
-            }
-        }, ms.getSqlCommandType());
+        Builder statementBuilder = new MappedStatement.Builder(ms.getConfiguration(), ms.getId(),
+                parameterObject -> newBoundSql, ms.getSqlCommandType());
         statementBuilder.resource(ms.getResource());
         statementBuilder.fetchSize(ms.getFetchSize());
         statementBuilder.statementType(ms.getStatementType());
@@ -126,13 +122,15 @@ public class PaginationInterceptor implements Interceptor {
         return statementBuilder.build();
     }
 
+    @Override
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
+    @Override
     public void setProperties(Properties properties) {
         String dialectType = properties.getProperty(PROP_DIALECT_KEY);
-        dialect = Dialect.Type.getDialet(dialectType);
+        dialect = AbstractDialect.Type.getDialet(dialectType);
     }
 
 }

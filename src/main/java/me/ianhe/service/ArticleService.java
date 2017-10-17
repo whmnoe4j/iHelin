@@ -1,8 +1,8 @@
 package me.ianhe.service;
 
 import com.google.common.collect.Maps;
-import me.ianhe.db.entity.Article;
 import me.ianhe.dao.ArticleMapper;
+import me.ianhe.db.entity.Article;
 import me.ianhe.utils.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -59,15 +59,17 @@ public class ArticleService {
 
     public List<Article> listByCondition(String title, int offset, int size) {
         Map<String, Object> res = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(title))
+        if (StringUtils.isNotEmpty(title)) {
             res.put("title", title);
+        }
         return articleMapper.listByCondition(res, new RowBounds(offset, size));
     }
 
     public int listCount(String title) {
         Map<String, Object> res = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(title))
+        if (StringUtils.isNotEmpty(title)) {
             res.put("title", title);
+        }
         return articleMapper.listCount(res);
     }
 

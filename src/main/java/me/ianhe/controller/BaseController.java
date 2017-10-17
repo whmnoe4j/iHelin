@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class BaseController {
 
     @Autowired
-    protected SysUserDetailsService userDetailsService;
+    protected UserDetailsServiceImpl userDetailsService;
     @Autowired
     protected ArticleService articleService;
     @Autowired

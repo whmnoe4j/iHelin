@@ -76,6 +76,7 @@ public class User implements UserDetails {
         isBind = bind;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }

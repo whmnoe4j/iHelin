@@ -80,8 +80,10 @@ public class RequestUtil {
     }
 
     public static String getRequestData(HttpServletRequest request) {
-        if (request == null)
+        if (request == null){
             return null;
+        }
+
         String data = null;
         try {
             data = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);

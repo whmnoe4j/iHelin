@@ -135,7 +135,7 @@ public class FileUtil {
         return uploadFile(file, key);
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         String key = UUID.randomUUID().toString();
         System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico", key));
     }

@@ -3,8 +3,6 @@ package me.ianhe.service;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.UserMapper;
 import me.ianhe.db.entity.User;
-import me.ianhe.utils.JSON;
-import me.ianhe.utils.WechatUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +19,7 @@ import java.util.Map;
  * @since 2017/8/29 17:36
  */
 @Service
-public class SysUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
@@ -62,8 +59,9 @@ public class SysUserDetailsService implements UserDetailsService {
 
     public List<User> listUserByCondition(String nickName, Integer status, int offset, int size) {
         Map<String, Object> res = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(nickName))
+        if (StringUtils.isNotEmpty(nickName)) {
             res.put("nickName", nickName);
+        }
         if (status != null) {
             res.put("status", status);
         }
@@ -72,8 +70,9 @@ public class SysUserDetailsService implements UserDetailsService {
 
     public int listUserCount(String nickName, Integer status) {
         Map<String, Object> res = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(nickName))
+        if (StringUtils.isNotEmpty(nickName)) {
             res.put("nickName", nickName);
+        }
         if (status != null) {
             res.put("status", status);
         }
