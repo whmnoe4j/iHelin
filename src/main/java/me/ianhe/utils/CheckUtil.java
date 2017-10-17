@@ -6,7 +6,9 @@ import java.util.Arrays;
 
 /**
  * 微信签名验证
- * Created by Ian He on 16/11/4.
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:28
  */
 public class CheckUtil {
 

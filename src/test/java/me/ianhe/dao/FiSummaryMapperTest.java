@@ -1,6 +1,6 @@
 package me.ianhe.dao;
 
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ public class FiSummaryMapperTest {
     public void getIntervalSummary() throws Exception {
         List<HashMap> hashMapList = fiSummaryMapper.getIntervalSummary(null);
         Assert.assertNotNull(hashMapList);
-        System.out.println(JSON.toJson(hashMapList));
+        System.out.println(JsonUtil.toJson(hashMapList));
     }
 
 }

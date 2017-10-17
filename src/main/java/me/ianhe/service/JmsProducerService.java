@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @since 2017/6/23 09:56
  */
 @Service
-public class JMSProducerService {
+public class JmsProducerService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

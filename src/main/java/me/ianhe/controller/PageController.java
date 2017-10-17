@@ -1,7 +1,7 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.Article;
-import me.ianhe.service.JMSProducerService;
+import me.ianhe.service.JmsProducerService;
 import me.ianhe.utils.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +20,7 @@ import java.util.List;
 public class PageController extends BaseController {
 
     @Autowired
-    private JMSProducerService producerService;
+    private JmsProducerService producerService;
 
     @Autowired
     @Qualifier("articleQueue")

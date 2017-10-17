@@ -28,7 +28,7 @@ public class DingUtilTest {
         String[] mobiles = new String[]{"15395551819"};
         atMobiles.put("atMobiles", mobiles);
         data.put("at", atMobiles);
-        System.out.println(DingUtil.doSay(JSON.toJson(data)));
+        System.out.println(DingUtil.doSay(JsonUtil.toJson(data)));
     }
 
 }

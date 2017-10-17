@@ -3,6 +3,12 @@ package me.ianhe.db.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * FiPayment
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:29
+ */
 public class FiPayment {
     private Integer id;
 

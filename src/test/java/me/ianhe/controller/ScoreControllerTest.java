@@ -1,6 +1,6 @@
 package me.ianhe.controller;
 
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,7 +76,7 @@ public class ScoreControllerTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/score/all"))
                 .andExpect(status().isOk())
                 .andDo(print()).andReturn();
-        Map<String, Object> resultMap = JSON.parseMap(result.getResponse().getContentAsString());
+        Map<String, Object> resultMap = JsonUtil.parseMap(result.getResponse().getContentAsString());
         System.out.println(resultMap.get("data"));
     }
 

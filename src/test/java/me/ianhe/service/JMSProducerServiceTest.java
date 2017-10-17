@@ -1,7 +1,6 @@
 package me.ianhe.service;
 
 import me.ianhe.model.MailModel;
-import me.ianhe.utils.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import javax.jms.Destination;
 public class JMSProducerServiceTest {
 
     @Autowired
-    private JMSProducerService producerService;
+    private JmsProducerService producerService;
 
     @Autowired
     @Qualifier("mailQueue")

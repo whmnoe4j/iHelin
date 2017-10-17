@@ -1,7 +1,7 @@
 package me.ianhe.config;
 
 import com.beust.jcommander.internal.Maps;
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +26,7 @@ public class ExceptionHandlerAdvice {
         res.put("status", "error");
         res.put("data", e.getMessage());
         try {
-            response.getWriter().print(JSON.toJson(res));
+            response.getWriter().print(JsonUtil.toJson(res));
         } catch (IOException e1) {
             e1.printStackTrace();
         }

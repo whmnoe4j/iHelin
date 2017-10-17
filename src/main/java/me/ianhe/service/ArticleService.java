@@ -3,7 +3,7 @@ package me.ianhe.service;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.ArticleMapper;
 import me.ianhe.db.entity.Article;
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -38,13 +38,13 @@ public class ArticleService {
         Date now = new Date();
         article.setCreateTime(now);
         article.setUpdateTime(now);
-        logger.info("create a new article:{}", JSON.toJson(article));
+        logger.info("create a new article:{}", JsonUtil.toJson(article));
         return articleMapper.insert(article);
     }
 
     public int editArticle(Article article) {
         article.setUpdateTime(new Date());
-        logger.info("update article:{}", JSON.toJson(article));
+        logger.info("update article:{}", JsonUtil.toJson(article));
         return articleMapper.updateByPrimaryKey(article);
     }
 

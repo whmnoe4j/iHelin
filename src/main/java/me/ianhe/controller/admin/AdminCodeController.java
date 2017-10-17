@@ -1,6 +1,6 @@
 package me.ianhe.controller.admin;
 
-import me.ianhe.utils.QRCodeUtil;
+import me.ianhe.utils.QrCodeUtil;
 import me.ianhe.utils.RequestUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,6 @@ import java.util.Random;
 
 /**
  * 二维码图片生成
- * <p>
  * Date           16/12/20
  * lastModified:
  *
@@ -20,7 +19,7 @@ import java.util.Random;
  */
 @RestController
 @RequestMapping("admin/qrcode")
-public class AdminQRCodeController extends BaseAdminController {
+public class AdminCodeController extends BaseAdminController {
 
     /**
      * 生成二维码
@@ -33,7 +32,7 @@ public class AdminQRCodeController extends BaseAdminController {
         String path = "qrcode/";
         String format = "png";
         String fileName = new Random().nextInt(1000000) + "." + format;
-        path = QRCodeUtil.generateQRCode(path, content, fileName, format, 300, 300);
+        path = QrCodeUtil.generateQRCode(path, content, fileName, format, 300, 300);
         logger.info("Success generate qrcode {},ip is {}", content, RequestUtil.getRealIp(request));
         return success(path);
     }

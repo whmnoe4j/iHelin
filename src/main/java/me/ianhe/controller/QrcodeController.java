@@ -2,7 +2,7 @@ package me.ianhe.controller;
 
 import me.ianhe.db.entity.Qrcode;
 import me.ianhe.utils.Global;
-import me.ianhe.utils.QRCodeUtil;
+import me.ianhe.utils.QrCodeUtil;
 import me.ianhe.utils.RequestUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- * PackageName:   com.seven.ianhe.controller
- * ClassName:
- * Description:
- * Date           17/1/5
- * lastModified:
+ * 二维码
  *
- * @author <href mailto="mailto:ihelin@outlook.com">iHelin</href>
+ * @author iHelin
+ * @since 2017/10/17 15:25
  */
 @Controller
 public class QrcodeController extends BaseController {
@@ -51,7 +48,7 @@ public class QrcodeController extends BaseController {
         qrcodeService.insert(qrcode);
         String fileName = qrcode.getId() + "." + format;
         String qrCodeContent = Global.getDomainUrl() + "/qrcode/" + qrcode.getId();
-        path = QRCodeUtil.generateQRCode(path, qrCodeContent,
+        path = QrCodeUtil.generateQRCode(path, qrCodeContent,
                 fileName, format);
         logger.debug("Successing generate qrcode {},ip: {}", qrCodeContent, RequestUtil.getRealIp(request));
         return success(path);

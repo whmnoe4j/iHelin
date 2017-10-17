@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
-import java.util.Set;
 
 /**
  * request工具类
@@ -31,27 +30,6 @@ public class RequestUtil {
 
     public static HttpSession getSession() {
         return getRequest().getSession();
-    }
-
-    public static String getCompleteRequestURL(HttpServletRequest request, Set<String> rpSet) {
-        Assert.notNull(request, "请求不能为null");
-        StringBuilder sb = new StringBuilder(256);
-        sb.append(request.getScheme()).append("://").append(request.getServerName())
-                .append(':').append(request.getServerPort()).append(request.getContextPath())
-                .append(request.getServletPath());
-        Enumeration<String> names = request.getParameterNames();
-        int i = 0;
-        if (names != null) {
-            while (names.hasMoreElements()) {
-                String name = names.nextElement();
-                String value = request.getParameter(name);
-                if (value == null || (rpSet != null && rpSet.contains(name))) {
-                    continue;
-                }
-                sb.append(i++ == 0 ? '?' : '&').append(name).append('=').append(value);
-            }
-        }
-        return sb.toString();
     }
 
     public static String getCompleteRequestURL(HttpServletRequest request) {
@@ -80,7 +58,7 @@ public class RequestUtil {
     }
 
     public static String getRequestData(HttpServletRequest request) {
-        if (request == null){
+        if (request == null) {
             return null;
         }
 
@@ -102,11 +80,12 @@ public class RequestUtil {
      */
     public static String getRealIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Real-IP");
-        if (StringUtils.isNotBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+        String unknownStr = "unknown";
+        if (StringUtils.isNotBlank(ip) && !unknownStr.equalsIgnoreCase(ip)) {
             return ip;
         }
         ip = request.getHeader("X-Forwarded-For");
-        if (StringUtils.isNotBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+        if (StringUtils.isNotBlank(ip) && !unknownStr.equalsIgnoreCase(ip)) {
             int index = ip.indexOf(',');
             if (index != -1) {
                 return ip.substring(0, index);

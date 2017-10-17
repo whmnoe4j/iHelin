@@ -2,9 +2,13 @@ package me.ianhe.db.plugin;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * SQL Dialect
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:26
+ */
 public abstract class AbstractDialect {
-
-    public static final String DEF_SQL_PLACEHOLDER = "?";
 
     protected static final String DEF_SQL_LIMIT = " limit ";
 
@@ -28,7 +32,7 @@ public abstract class AbstractDialect {
             }
             switch (valueOf(dialectType.trim().toUpperCase())) {
                 case MYSQL:
-                    return new MySQLDialect();
+                    return new MysqlDialect();
                 case ORACLE:
                 default:
                     throw new RuntimeException("The dialect is not supported!");

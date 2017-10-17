@@ -8,8 +8,6 @@ import org.apache.ibatis.mapping.MappedStatement.Builder;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -17,8 +15,6 @@ import java.util.Properties;
 @Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class,
         ResultHandler.class})})
 public class PaginationInterceptor implements Interceptor {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PaginationInterceptor.class);
 
     private static final int MAPPED_STATEMENT_INDEX = 0;
     private static final int PARAMETER_INDEX = 1;

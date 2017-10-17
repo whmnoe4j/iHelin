@@ -4,7 +4,7 @@ import com.beust.jcommander.internal.Maps;
 import me.ianhe.dao.PoemMapper;
 import me.ianhe.db.entity.Poem;
 import me.ianhe.utils.DingUtil;
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class DailyService {
     private void dailyEnglish() {
         Map<String, Object> contentMap = Maps.newHashMap();
         String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
-        Map<String, Object> resMap = JSON.parseMap(res);
+        Map<String, Object> resMap = JsonUtil.parseMap(res);
         contentMap.put("title", "葫芦娃学英语");
         String text = "## 葫芦娃学英语\n" +
                 "![screenshot](" + resMap.get("picture") + ")\n" +
@@ -48,7 +48,7 @@ public class DailyService {
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "markdown");
         data.put("markdown", contentMap);
-        String jsonData = JSON.toJson(data);
+        String jsonData = JsonUtil.toJson(data);
         logger.debug("每日一句：{}", jsonData);
         DingUtil.doSay(jsonData);
     }

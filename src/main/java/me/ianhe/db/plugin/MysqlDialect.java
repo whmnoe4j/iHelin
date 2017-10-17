@@ -2,7 +2,7 @@ package me.ianhe.db.plugin;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class MySQLDialect extends AbstractDialect {
+public class MysqlDialect extends AbstractDialect {
 
     @Override
     public boolean supportsLimitOffset() {

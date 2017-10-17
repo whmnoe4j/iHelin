@@ -1,5 +1,11 @@
 package me.ianhe.db.entity;
 
+/**
+ * FiCustomer
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:28
+ */
 public class FiCustomer {
     private Integer id;
 

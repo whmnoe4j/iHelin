@@ -6,6 +6,12 @@ import org.apache.ibatis.session.RowBounds;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ArticleMapper
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:27
+ */
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
 

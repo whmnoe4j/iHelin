@@ -14,11 +14,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JSON {
+/**
+ * JsonUtil
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:29
+ */
+public class JsonUtil {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JSON.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 
     static {
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
@@ -99,7 +105,7 @@ public class JSON {
         return null;
     }
 
-    private JSON() {
+    private JsonUtil() {
         //工具类不允许实例化
     }
 }

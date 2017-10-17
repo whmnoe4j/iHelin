@@ -2,7 +2,7 @@ package me.ianhe.controller;
 
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.utils.FileUtil;
-import me.ianhe.utils.JSON;
+import me.ianhe.utils.JsonUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * FileUploadController
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:29
+ */
 @Controller
 public class FileUploadController extends BaseController {
 
@@ -64,7 +70,7 @@ public class FileUploadController extends BaseController {
         if (file.isEmpty()) {
             res.put("success", false);
             res.put("msg", "文件不存在！");
-            return JSON.toJson(res);
+            return JsonUtil.toJson(res);
         }
         //扩展名
         String fileExt = FilenameUtils.getExtension(file.getOriginalFilename());
@@ -79,7 +85,7 @@ public class FileUploadController extends BaseController {
         String realFullPath = FileUtil.uploadFile(file, fileName);
         res.put("success", true);
         res.put("file_path", realFullPath);
-        return JSON.toJson(res);
+        return JsonUtil.toJson(res);
     }
 
 }

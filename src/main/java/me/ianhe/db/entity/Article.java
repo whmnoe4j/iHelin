@@ -4,6 +4,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
+/**
+ * Article
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:27
+ */
 public class Article {
     private Integer id;
 

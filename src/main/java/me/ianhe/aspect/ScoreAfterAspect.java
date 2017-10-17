@@ -3,7 +3,7 @@ package me.ianhe.aspect;
 import com.beust.jcommander.internal.Maps;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.MailModel;
-import me.ianhe.service.JMSProducerService;
+import me.ianhe.service.JmsProducerService;
 import me.ianhe.service.ScoreService;
 import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.TemplateUtil;
@@ -36,7 +36,7 @@ public class ScoreAfterAspect {
     private ScoreService scoreService;
 
     @Autowired
-    private JMSProducerService producerService;
+    private JmsProducerService producerService;
 
     @Autowired
     @Qualifier("mailQueue")

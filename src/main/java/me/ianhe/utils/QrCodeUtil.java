@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-public class QRCodeUtil {
+public class QrCodeUtil {
 
     /**
      * 二维码生成工具
@@ -51,7 +51,7 @@ public class QRCodeUtil {
         return generateQRCode(folder, content, fileName, format, 300, 300);
     }
 
-    private QRCodeUtil() {
+    private QrCodeUtil() {
         //工具类不允许实例化
     }
 

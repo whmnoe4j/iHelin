@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.jms.Destination;
 import java.util.Date;
 
+/**
+ * 测试控制类
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:24
+ */
 @Controller
 public class TestController extends BaseController {
 

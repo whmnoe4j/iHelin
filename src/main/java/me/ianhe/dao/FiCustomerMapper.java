@@ -6,6 +6,12 @@ import org.apache.ibatis.session.RowBounds;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * FiCustomerMapper
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:28
+ */
 public interface FiCustomerMapper {
     int deleteByPrimaryKey(Integer id);
 

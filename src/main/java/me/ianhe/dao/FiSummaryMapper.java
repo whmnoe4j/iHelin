@@ -8,6 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * FiSummaryMapper
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:29
+ */
 public interface FiSummaryMapper {
     int deleteByPrimaryKey(Integer id);
 

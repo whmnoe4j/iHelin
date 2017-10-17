@@ -20,7 +20,9 @@ public class MailUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailUtil.class);
 
-    // 发送邮件的服务器的IP和端口
+    /**
+     * 发送邮件的服务器的IP和端口
+     */
     private static final String MAIL_SERVER_HOST = Global.get("mail.server");
     private static final String MAIL_SERVER_PORT = Global.get("mail.port");
     private static final String MAIL_USERNAME = Global.get("mail.user");

@@ -26,7 +26,9 @@ import java.util.UUID;
  */
 public class FileUtil {
 
-    // 要上传的空间bucket
+    /**
+     * 要上传的空间bucket
+     */
     private static final String BUCKET_NAME = "ihelin";
     private static final String PREFIX = "http://resource.ianhe.me/";
     private static final String ACCESS_KEY = "XRWyYeG0mx7jS_DRCj08bOHDweU44WeyjlbZxPFC";

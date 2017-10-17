@@ -29,7 +29,7 @@ public class DingUtil {
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "text");
         data.put("text", contentMap);
-        return doSay(JSON.toJson(data));
+        return doSay(JsonUtil.toJson(data));
     }
 
     public static String doSay(String data) {

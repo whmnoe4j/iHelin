@@ -2,6 +2,12 @@ package me.ianhe.db.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * FiClear
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:28
+ */
 public class FiClear {
     private Integer id;
 
