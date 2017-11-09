@@ -1,8 +1,13 @@
 package me.ianhe.model;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
+/**
+ * MailModel
+ *
+ * @author iHelin
+ * @since 2017/10/17 15:51
+ */
 public class MailModel implements Serializable {
 
     private static final long serialVersionUID = 1L;

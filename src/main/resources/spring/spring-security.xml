@@ -6,6 +6,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
+
     <description>整合spring security</description>
 
     <security:http pattern="/admin/login" security="none"/>

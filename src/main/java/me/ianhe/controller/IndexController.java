@@ -27,7 +27,6 @@ public class IndexController extends BaseController {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
-
     @GetMapping(value = {"/", "index"})
     public String indexPage(Model model) {
         int pageLength = 5;
