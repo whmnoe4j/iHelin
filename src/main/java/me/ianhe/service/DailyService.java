@@ -25,6 +25,10 @@ public class DailyService {
     @Autowired
     private PoemMapper poemMapper;
 
+    public Poem getPoemByRandom(){
+        return poemMapper.getByRandom();
+    }
+
     public void run() {
         dailyEnglish();
     }

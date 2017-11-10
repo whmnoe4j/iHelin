@@ -21,7 +21,7 @@
         <security:authentication-provider ref="authenticationProvider"/>
     </security:authentication-manager>
 
-    <bean id="captchaAuthenticationFilter" class="me.ianhe.security.CaptchaAuthenticationFilter">
+    <bean id="captchaAuthenticationFilter" class="me.ianhe.config.CaptchaAuthenticationFilter">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
         <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>

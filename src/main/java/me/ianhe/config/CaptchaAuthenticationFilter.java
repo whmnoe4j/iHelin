@@ -1,4 +1,4 @@
-package me.ianhe.security;
+package me.ianhe.config;
 
 import com.google.code.kaptcha.Constants;
 import org.apache.commons.lang3.StringUtils;

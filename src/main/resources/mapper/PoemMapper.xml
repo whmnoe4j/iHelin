@@ -27,7 +27,7 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from poem order by rand() LIMIT 1
+        from poem order by rand(date(now())) LIMIT 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from poem

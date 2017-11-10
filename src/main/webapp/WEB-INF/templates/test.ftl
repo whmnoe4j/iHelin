@@ -8,57 +8,76 @@
     <meta name="author" content="iHelin">
     <title>index | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <style scoped>
-        .layout {
-            border: 1px solid #d7dde4;
-            background: #f5f7f9;
-        }
-
-        .layout-logo {
-            width: 100px;
-            height: 30px;
-            background: #5b6270;
-            border-radius: 3px;
-            float: left;
+    <link rel="stylesheet" href="${request.contextPath}/plugins/elementui/index.css">
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
             position: relative;
-            top: 15px;
-            left: 20px;
-        }
-
-        .layout-nav {
-            width: 420px;
-            margin: 0 auto;
-        }
-
-        .layout-content {
-            min-height: 200px;
-            margin: 15px;
             overflow: hidden;
-            background: #fff;
-            border-radius: 4px;
         }
 
-        .layout-content-main {
-            padding: 10px;
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
         }
 
-        .layout-copy {
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
             text-align: center;
-            padding: 10px 0 20px;
-            color: #9ea7b4;
+        }
+
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <div class="layout">
-        <img src="${request.contextPath}/img/tmp.png" alt="">
-    </div>
+    <el-upload
+            class="avatar-uploader"
+            action="${request.contextPath}/upload2"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
 </div>
+</body>
+<script src="${request.contextPath}/plugins/vue/vue.js"></script>
+<script src="${request.contextPath}/plugins/elementui/index.js"></script>
 <script>
     new Vue({
-        el: '#app'
+        el: '#app',
+        data: function () {
+            return {
+                imageUrl: ''
+            }
+        },
+        methods: {
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = res;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt10M = file.size / 1024 / 1024 < 10;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt10M) {
+                    this.$message.error('上传头像图片大小不能超过 10MB!');
+                }
+                return isJPG && isLt10M;
+            }
+        }
     })
 </script>
-</body>
 </html>

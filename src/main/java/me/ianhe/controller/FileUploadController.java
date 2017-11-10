@@ -57,6 +57,22 @@ public class FileUploadController extends BaseController {
     }
 
     /**
+     * 上传到七牛服务器
+     *
+     * @param file  待上传的文件
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("upload2")
+    public String handleUpload2(MultipartFile file) {
+        if (file.isEmpty()) {
+            return "请选择文件……";
+        }
+        String res = FileUtil.uploadFile(file, "test-" + UUID.randomUUID().toString());
+        return res;
+    }
+
+    /**
      * simditor
      * 富文本编辑器图片文件上传接口
      *

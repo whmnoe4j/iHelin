@@ -10,8 +10,8 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link rel="stylesheet" href="${request.contextPath}/plugins/amazeui/css/amazeui.css"/>
-    <script src="${request.contextPath}/js/vue.js"></script>
-    <script src="${request.contextPath}/js/vue-resource.js"></script>
+    <script src="${request.contextPath}/plugins/vue/vue.js"></script>
+    <script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
     <style>
         @media only screen and (min-width: 641px) {
             .am-offcanvas {
