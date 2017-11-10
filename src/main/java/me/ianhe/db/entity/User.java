@@ -9,6 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * User
+ *
+ * @author iHelin
+ * @since 2017/11/9 19:44
+ */
 public class User implements UserDetails {
 
     private Integer id;
