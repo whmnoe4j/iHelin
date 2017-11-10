@@ -12,18 +12,21 @@ import org.apache.ibatis.session.RowBounds;
 import java.util.List;
 import java.util.Properties;
 
-@Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class,
-        ResultHandler.class})})
+/**
+ * 分页拦截器
+ *
+ * @author iHelin
+ * @since 2017/11/10 14:58
+ */
+@Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
+        RowBounds.class, ResultHandler.class})})
 public class PaginationInterceptor implements Interceptor {
 
     private static final int MAPPED_STATEMENT_INDEX = 0;
     private static final int PARAMETER_INDEX = 1;
     private static final int ROWBOUNDS_INDEX = 2;
-    private static final int RESULT_HANDLER_INDEX = 3;
 
-    private static final String PROP_DIALECT_KEY = "dialect";
-
-    private AbstractDialect dialect;
+    private MysqlDialect dialect;
 
     @Override
     public Object intercept(Invocation invocation) throws Exception {
@@ -125,8 +128,7 @@ public class PaginationInterceptor implements Interceptor {
 
     @Override
     public void setProperties(Properties properties) {
-        String dialectType = properties.getProperty(PROP_DIALECT_KEY);
-        dialect = AbstractDialect.Type.getDialet(dialectType);
+        dialect = new MysqlDialect();
     }
 
 }

@@ -29,7 +29,7 @@ public class AdminPageController extends BaseAdminController {
      */
     @GetMapping("index")
     public String indexPage() {
-        return "redirect:/admin";
+        return ftl("index");
     }
 
     /**

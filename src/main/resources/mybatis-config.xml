@@ -18,7 +18,6 @@
     </settings>
     <plugins>
         <plugin interceptor="me.ianhe.db.plugin.PaginationInterceptor">
-            <property name="dialect" value="MYSQL"/>
         </plugin>
     </plugins>
 </configuration>
