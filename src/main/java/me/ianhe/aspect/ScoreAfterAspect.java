@@ -1,6 +1,6 @@
 package me.ianhe.aspect;
 
-import com.beust.jcommander.internal.Maps;
+import com.google.common.collect.Maps;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.MailModel;
 import me.ianhe.service.JmsProducerService;

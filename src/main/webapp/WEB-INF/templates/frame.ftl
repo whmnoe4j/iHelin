@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="iHelin 的博客">
-    <meta name="author" content="iHelin">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="细心在任何时候都不是多余的"/>
+    <meta name="author" content="Ian He"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>${title} | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link href="${request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +48,7 @@
                     <a href="${request.contextPath}/about">About</a>
                 </li>
                 <li>
-                    <a href="${request.contextPath}/post/0">Article</a>
+                    <a href="${request.contextPath}/article/0">Article</a>
                 </li>
                 <li>
                     <a href="${request.contextPath}/music">Music</a>

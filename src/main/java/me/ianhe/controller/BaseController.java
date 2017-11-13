@@ -1,9 +1,9 @@
 package me.ianhe.controller;
 
-import com.beust.jcommander.internal.Maps;
+import com.google.common.collect.Maps;
 import me.ianhe.service.ArticleService;
+import me.ianhe.service.FileService;
 import me.ianhe.service.JmsProducerService;
-import me.ianhe.service.QrcodeService;
 import me.ianhe.service.ScoreService;
 import me.ianhe.utils.JsonUtil;
 import org.slf4j.Logger;
@@ -24,9 +24,9 @@ public abstract class BaseController {
     @Autowired
     protected ArticleService articleService;
     @Autowired
-    protected QrcodeService qrcodeService;
-    @Autowired
     protected ScoreService scoreService;
+    @Autowired
+    protected FileService fileService;
     @Autowired
     protected JmsProducerService producerService;
 

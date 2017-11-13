@@ -1,23 +1,17 @@
 package me.ianhe.utils;
 
-import com.beust.jcommander.internal.Lists;
-import com.beust.jcommander.internal.Maps;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * 图片工具类（使用七牛云存储服务）
@@ -135,31 +129,6 @@ public class FileUtil {
     public static String uploadFile(String pathToFile, String key) {
         File file = new File(pathToFile);
         return uploadFile(file, key);
-    }
-
-    public static void main(String[] args) throws IOException {
-        String key = UUID.randomUUID().toString();
-        System.out.println(uploadFile("/Users/iHelin/Documents/IdeaProjects/iHelin/target/favicon.ico", key));
-    }
-
-    public static List<Map<String, Object>> getFileList() {
-        //文件名前缀
-        String prefix = "";
-        //每次迭代的长度限制，最大1000，推荐值 1000
-        int limit = 1000;
-        String delimiter = "";
-        BucketManager.FileListIterator fileListIterator = BUCKET_MANAGER
-                .createFileListIterator(BUCKET_NAME, prefix, limit, delimiter);
-        List<Map<String, Object>> fileInfoList = Lists.newArrayList();
-        while (fileListIterator.hasNext()) {
-            FileInfo[] items = fileListIterator.next();
-            for (FileInfo item : items) {
-                Map<String, Object> map = Maps.newHashMap();
-                map.put("key", item.key);
-                fileInfoList.add(map);
-            }
-        }
-        return fileInfoList;
     }
 
     private FileUtil() {

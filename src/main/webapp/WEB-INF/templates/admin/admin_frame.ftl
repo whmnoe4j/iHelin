@@ -6,132 +6,70 @@
     <title>${title!} - Ian He 管理后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
+    <meta name="description" content="细心在任何时候都不是多余的"/>
+    <meta name="author" content="Ian He"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="${request.contextPath}/iview/iview.css">
-    <style scoped>
-        .layout {
-            background: #f5f7f9;
-            position: relative;
-            overflow: hidden;
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/elementui/index.css">
+    <style>
+        body {
+            margin: 0;
         }
-
-        .layout-breadcrumb {
-            padding: 10px 15px 0;
-        }
-
-        .layout-content {
-            min-height: 456px;
-            margin: 15px;
-            overflow: hidden;
-            background: #fff;
-            border-radius: 4px;
-        }
-
-        .layout-content-main {
-            padding: 10px;
-        }
-
-        .layout-copy {
-            text-align: center;
-            padding: 10px 0 20px;
-            color: #9ea7b4;
-        }
-
-        .layout-menu-left {
-            background: #464c5b;
-        }
-
-        .layout-header {
-            height: 60px;
-            background: #fff;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        }
-
-        .layout-logo-left {
-            width: 90%;
-            height: 30px;
-            background: #5b6270;
-            border-radius: 3px;
-            margin: 15px auto;
-        }
-
-        .layout-ceiling-main a {
-            color: #9ba7b5;
-        }
-
     </style>
 </head>
 <body>
 <div id="app">
-    <div class="layout">
-        <Row type="flex">
-            <i-col :span="4" class="layout-menu-left">
-                <i-menu :active-name="active" theme="dark" width="auto" accordion>
-                    <div class="layout-logo-left"></div>
-                    <a href="${request.contextPath}/admin/index">
-                        <Menu-item name="index">
-                            <Icon type="ios-navigate" :size="14"></Icon>
-                            <span class="layout-text">首页</span>
-                        </Menu-item>
-                    </a>
-                    <Menu-group title="财务">
-                        <a href="${request.contextPath}/admin/fi/customer">
-                            <Menu-item name="fi/customer">
-                                <Icon type="document-text" :size="14"></Icon>
-                                客户管理
-                            </Menu-item>
-                        </a>
-                        <a href="${request.contextPath}/admin/fi/summary">
-                            <Menu-item name="fi/summary">
-                                <Icon type="chatbubbles" :size="14"></Icon>
-                                应收明细
-                            </Menu-item>
-                        </a>
-                        <a href="${request.contextPath}/admin/fi/analysis">
-                            <Menu-item name="fi/analysis">
-                                <Icon type="chatbubbles" :size="14"></Icon>
-                                账龄分析
-                            </Menu-item>
-                        </a>
-                    </Menu-group>
-                </i-menu>
-            </i-col>
-            <i-col :span="20">
-                <div class="layout-header">
-                </div>
-                <#nested>
-                <div class="layout-copy">
-                    Copyright &copy; iHelin ${.now?string('yyyy')}
-                </div>
-            </i-col>
-        </Row>
-    </div>
+    <el-row class="tac">
+        <el-col :span="4">
+            <el-menu
+                    :default-active="defaultActiveTag"
+                    class="el-menu-vertical-demo"
+                    @select="handleSelect"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b">
+                <el-menu-item index="index">
+                    <i class="el-icon-info"></i>
+                    <span slot="title">首页</span>
+                </el-menu-item>
+                <el-menu-item index="users">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">用户</span>
+                </el-menu-item>
+                <el-menu-item index="articles">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">文章</span>
+                </el-menu-item>
+            </el-menu>
+        </el-col>
+        <el-col :span="20">
+            <#nested>
+        </el-col>
+    </el-row>
 </div>
-<script src="${request.contextPath}/js/vue.js"></script>
-<script src="${request.contextPath}/js/vue-resource.js"></script>
-<script src="${request.contextPath}/iview/iview.js"></script>
+<script src="${request.contextPath}/plugins/vue/vue.js"></script>
+<script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
+<script src="${request.contextPath}/plugins/elementui/index.js"></script>
 
 <script type='text/javascript'>
     Vue.http.interceptors.push((request, next) => {
-        iview.LoadingBar.start();
+//        iview.LoadingBar.start();
         next(res => {
             switch (res.status) {
                 case 200:
-                    iview.LoadingBar.finish();
-                    if (res.data.status != "success") {
-                        iview.Message.error(res.data.data);
-                    }
+                    console.log("ok");
+//                    iview.LoadingBar.finish();
+//                    if (res.data.status != "success") {
+//                        iview.Message.error(res.data.data);
+//                    }
                     break;
                 case 403:
-                    iview.Message.error("权限不足！");
+//                    iview.Message.error("权限不足！");
                     break;
                 case 404:
                     console.log("404");
                 default:
-                    iview.LoadingBar.error();
+//                    iview.LoadingBar.error();
                     break;
             }
         });
@@ -162,13 +100,17 @@
 
     Vue.mixin({
         data() {
-            let a = window.location.href.substr(window.location.href.indexOf('admin') + 6);
             return {
-                active: a
+                defaultActiveTag: 'index'
             }
         },
         computed: {},
-        methods: {}
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+                window.location.href = '${request.contextPath}/admin/' + key;
+            }
+        },
     });
 </script>
 ${html_other_script!}

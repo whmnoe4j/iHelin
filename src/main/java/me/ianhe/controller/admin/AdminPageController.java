@@ -16,19 +16,8 @@ public class AdminPageController extends BaseAdminController {
      * @author iHelin
      * @since 2017/9/17 10:36
      */
-    @GetMapping("")
-    public String admin() {
-        return ftl("index");
-    }
-
-    /**
-     * 控制台首页
-     *
-     * @author iHelin
-     * @since 2017/8/31 22:23
-     */
-    @GetMapping("index")
-    public String indexPage() {
+    @GetMapping(value = {"", "index"})
+    public String adminIndex() {
         return ftl("index");
     }
 
@@ -52,6 +41,32 @@ public class AdminPageController extends BaseAdminController {
     @GetMapping(value = "qrcode")
     public String qRCode() {
         return ftl("qrcode");
+    }
+
+    @GetMapping(value = "users")
+    public String users() {
+        return ftl("users");
+    }
+
+    @GetMapping(value = "articles")
+    public String articles() {
+        return ftl("articles");
+    }
+
+    @GetMapping("image")
+    public String imagePage() {
+        return ftl("image");
+    }
+
+    /**
+     * 文件上传页面
+     *
+     * @author iHelin
+     * @since 2017/11/13 17:48
+     */
+    @GetMapping(value = "upload")
+    public String upload() {
+        return ftl("upload");
     }
 
 }

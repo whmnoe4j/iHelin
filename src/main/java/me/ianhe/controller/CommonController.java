@@ -1,7 +1,7 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.Poem;
-import me.ianhe.service.DailyService;
+import me.ianhe.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController extends BaseController {
 
     @Autowired
-    private DailyService dailyService;
+    private TaskService dailyService;
 
     /**
      * 古诗接口

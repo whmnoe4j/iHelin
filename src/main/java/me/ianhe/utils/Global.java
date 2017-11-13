@@ -7,7 +7,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
@@ -52,6 +51,10 @@ public class Global {
 
     public static String get(String key) {
         return properties.getProperty(key);
+    }
+
+    public String getValue(String key) {
+        return get(key);
     }
 
 }

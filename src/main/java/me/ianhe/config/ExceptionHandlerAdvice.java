@@ -1,6 +1,6 @@
 package me.ianhe.config;
 
-import com.beust.jcommander.internal.Maps;
+import com.google.common.collect.Maps;
 import me.ianhe.utils.JsonUtil;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

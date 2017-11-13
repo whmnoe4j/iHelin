@@ -26,20 +26,21 @@ public class MysqlDialect {
      * getLimitString(sql, offset, Integer.toString(offset), limit, Integer.toString(limit))
      *
      * @param sql
-     * @param offset
-     * @param limit
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    public String getLimitString(String sql, int offset, int limit) {
+    public String getLimitString(String sql, int pageNum, int pageSize) {
+        int offset = (pageNum - 1) * pageSize;
         sql = sql.trim();
         StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);
         pagingSelect.append(sql);
         if (StringUtils.isNotBlank(sql)) {
             pagingSelect.append(DEF_SQL_LIMIT);
             if (offset > 0) {
-                pagingSelect.append(offset).append(DEF_SQL_LIMIT_CONNECTOR).append(limit);
+                pagingSelect.append(offset).append(DEF_SQL_LIMIT_CONNECTOR).append(pageSize);
             } else {
-                pagingSelect.append(limit);
+                pagingSelect.append(pageSize);
             }
         }
         return pagingSelect.toString();

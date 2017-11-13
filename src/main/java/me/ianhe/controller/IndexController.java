@@ -4,11 +4,11 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.Article;
-import me.ianhe.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -27,33 +27,21 @@ public class IndexController extends BaseController {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
-    @GetMapping(value = {"/", "index"})
-    public String indexPage(Model model) {
+    @GetMapping(value = {"", "index"})
+    public String indexPage(Model model, @RequestHeader("User-Agent") String userAgent) {
         int pageLength = 5;
         int pageNum = 1;
-        List<Article> articles = articleService.listByCondition(null, (pageNum - 1)
-                * pageLength, pageLength);
+        List<Article> articles = articleService.listByCondition(null, pageNum, pageLength);
         model.addAttribute("articles", articles);
+        logger.debug("userAgent:{}", userAgent);
         return "index";
     }
 
-    @GetMapping(value = "home")
-    public String homePage() {
-        return "home";
-    }
-
-    @GetMapping(value = "config")
+    @GetMapping("config")
     public String configPage(Model model) {
         Properties props = System.getProperties();
         model.addAttribute("props", props);
         return "config";
-    }
-
-    @GetMapping(value = "image")
-    public String imagePage(Model model) {
-        List<Map<String, Object>> fileInfos = FileUtil.getFileList();
-        model.addAttribute("fileInfos", fileInfos);
-        return "image";
     }
 
     @GetMapping("mapping")

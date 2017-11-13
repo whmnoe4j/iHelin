@@ -42,7 +42,7 @@
 <div id="app">
     <el-upload
             class="avatar-uploader"
-            action="${request.contextPath}/upload2"
+            action="${request.contextPath}/admin/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">

@@ -10,7 +10,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <title>System Config</title>
-    <link rel="icon" type="image/png" href="${request.contextPath}/favicon.png">
+    <link rel="icon" type="image/png" href="${request.contextPath}/favicon.ico">
     <link rel="stylesheet" href="${request.contextPath}/plugins/amazeui/css/amazeui.css"/>
 </head>
 <body>

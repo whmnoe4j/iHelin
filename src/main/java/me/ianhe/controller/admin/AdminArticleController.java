@@ -1,10 +1,11 @@
 package me.ianhe.controller.admin;
 
 import me.ianhe.db.entity.Article;
+import org.apache.commons.lang3.CharEncoding;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 文章管理
@@ -27,6 +28,12 @@ public class AdminArticleController extends BaseAdminController {
         return success();
     }
 
+    @GetMapping("articleList")
+    public List<Article> getArticles(Integer pageNum, Integer pageSize) {
+        List<Article> articles = articleService.listByCondition(null, pageNum, pageSize);
+        return articles;
+    }
+
     /**
      * 编辑文章
      *
@@ -39,8 +46,8 @@ public class AdminArticleController extends BaseAdminController {
             return error("文章不存在");
         }
         Article newArticle = articleService.selectArticleById(article.getId());
-        newArticle.setTitle(HtmlUtils.htmlEscape(article.getTitle(), StandardCharsets.UTF_8.name()));
-        newArticle.setSummary(HtmlUtils.htmlEscape(article.getSummary(), StandardCharsets.UTF_8.name()));
+        newArticle.setTitle(HtmlUtils.htmlEscape(article.getTitle(), CharEncoding.UTF_8));
+        newArticle.setSummary(HtmlUtils.htmlEscape(article.getSummary(), CharEncoding.UTF_8));
         newArticle.setContent(article.getContent());
         articleService.editArticle(newArticle);
         return success();

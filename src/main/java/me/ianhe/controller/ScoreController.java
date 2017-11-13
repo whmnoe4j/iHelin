@@ -1,7 +1,10 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.MyScore;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
@@ -21,20 +24,20 @@ public class ScoreController extends BaseController {
      * @param myScore
      * @return
      */
-    @PostMapping(value = "score")
+    @PostMapping("score")
     public String addScore(MyScore myScore) {
         myScore.setAddDate(new Date());
         scoreService.addRecord(myScore);
         return success();
     }
 
-    @RequestMapping(value = "score/all", method = RequestMethod.GET)
+    @GetMapping("score/all")
     public String getTotalScore() {
         long totalScore = scoreService.getMyTotalScore();
         return success(totalScore);
     }
 
-    @RequestMapping(value = "score/{id}", method = RequestMethod.GET)
+    @GetMapping("score/{id}")
     public String getScore(@PathVariable Integer id) {
         MyScore myScore = scoreService.getById(id);
         return success(myScore);
@@ -44,7 +47,7 @@ public class ScoreController extends BaseController {
     public String getScores(Integer pageNum, Integer pageLength) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageLength = pageLength == null ? DEFAULT_PAGE_LENGTH : pageLength;
-        List<MyScore> scores = scoreService.selectByCondition((pageNum - 1) * pageLength, pageLength);
+        List<MyScore> scores = scoreService.selectByCondition(pageNum, pageLength);
         return success(scores);
     }
 

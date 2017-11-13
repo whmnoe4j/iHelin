@@ -1,5 +1,11 @@
 package me.ianhe.db.plugin;
 
+/**
+ * 分页信息
+ *
+ * @author iHelin
+ * @since 2017/11/13 17:30
+ */
 public class Pagination {
 
     private int totalCount;

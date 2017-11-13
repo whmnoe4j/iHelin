@@ -1,5 +1,6 @@
 package me.ianhe.utils;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -11,8 +12,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * 微信常用工具类
@@ -36,7 +35,7 @@ public class WechatUtil {
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity entity = httpResponse.getEntity();
-            return EntityUtils.toString(entity, StandardCharsets.UTF_8.name());
+            return EntityUtils.toString(entity, CharEncoding.UTF_8);
         } catch (Exception e) {
             LOGGER.warn("error while doGet url:{}", url, e);
             return null;
@@ -59,7 +58,7 @@ public class WechatUtil {
         try {
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity respEntity = response.getEntity();
-            return EntityUtils.toString(respEntity, StandardCharsets.UTF_8.name());
+            return EntityUtils.toString(respEntity, CharEncoding.UTF_8);
         } catch (Exception e) {
             LOGGER.warn("error while doPost url:{}", url, e);
             return null;

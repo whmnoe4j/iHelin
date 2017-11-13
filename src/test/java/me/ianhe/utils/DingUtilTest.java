@@ -1,6 +1,6 @@
 package me.ianhe.utils;
 
-import com.beust.jcommander.internal.Maps;
+import com.google.common.collect.Maps;
 import org.junit.Assert;
 import org.junit.Test;
 

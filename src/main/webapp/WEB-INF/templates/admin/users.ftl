@@ -3,18 +3,12 @@
 <script>
     new Vue({
         el: '#app',
-        data: function () {
-            return {
-
-            }
-        },
         mounted: function () {
-
+            this.defaultActiveTag = 'users';
         }
-
     })
 </script>
 </#assign>
 <@main.page title="首页">
-<div>index</div>
+<div>users</div>
 </@main.page>
