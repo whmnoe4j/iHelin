@@ -1,12 +1,14 @@
 package me.ianhe.controller.admin;
 
 import com.qiniu.storage.model.FileInfo;
-import me.ianhe.utils.FileUtil;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,12 +32,30 @@ public class AdminFileController extends BaseAdminController {
         if (file.isEmpty()) {
             return error("请选择文件...");
         }
-        return FileUtil.uploadFile(file, "test/" + UUID.randomUUID().toString());
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            logger.error("文件上传失败", e);
+        }
+        return fileService.uploadFile("admin/image/" + UUID.randomUUID().toString(), inputStream);
     }
 
     @GetMapping("files")
     public List<FileInfo> getFileInfoList() {
-        return fileService.getFileInfoList();
+        return fileService.getFileInfoList("", "");
+    }
+
+    /**
+     * 删除文件
+     *
+     * @author iHelin
+     * @since 2017/11/13 23:08
+     */
+    @DeleteMapping("files")
+    public String deleteFile(String key) {
+        fileService.deleteFile(key);
+        return success();
     }
 
 }

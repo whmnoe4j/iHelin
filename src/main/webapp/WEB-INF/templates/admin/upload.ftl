@@ -1,58 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="iHelin 的博客">
-    <meta name="author" content="iHelin">
-    <title>index | Ian He</title>
-    <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link rel="stylesheet" href="${request.contextPath}/plugins/elementui/index.css">
-    <style>
-        .avatar-uploader .el-upload {
-            border: 1px dashed #d9d9d9;
-            border-radius: 6px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
+<#import "admin_frame.ftl" as main>
+<#assign html_other_script in main>
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 
-        .avatar-uploader .el-upload:hover {
-            border-color: #409EFF;
-        }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
 
-        .avatar-uploader-icon {
-            font-size: 28px;
-            color: #8c939d;
-            width: 178px;
-            height: 178px;
-            line-height: 178px;
-            text-align: center;
-        }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
 
-        .avatar {
-            width: 178px;
-            height: 178px;
-            display: block;
-        }
-    </style>
-</head>
-<body>
-<div id="app">
-    <el-upload
-            class="avatar-uploader"
-            action="${request.contextPath}/admin/upload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
-</div>
-</body>
-<script src="${request.contextPath}/plugins/vue/vue.js"></script>
-<script src="${request.contextPath}/plugins/elementui/index.js"></script>
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+</style>
 <script>
     new Vue({
         el: '#app',
@@ -80,4 +55,19 @@
         }
     })
 </script>
-</html>
+</#assign>
+<@main.page title="文件上传">
+<el-row>
+    <el-col :span="24">
+        <el-upload
+                class="avatar-uploader"
+                action="${request.contextPath}/admin/upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+    </el-col>
+</el-row>
+</@main.page>

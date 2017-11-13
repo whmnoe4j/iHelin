@@ -40,10 +40,27 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">文章</span>
                 </el-menu-item>
+                <el-menu-item index="qrcode">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">二维码</span>
+                </el-menu-item>
+                <el-menu-item index="image">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">文件</span>
+                </el-menu-item>
+                <el-menu-item index="upload">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">上传</span>
+                </el-menu-item>
             </el-menu>
         </el-col>
         <el-col :span="20">
-            <#nested>
+            <el-card style="min-height: 500px;">
+                <div slot="header" class="clearfix">
+                    <span>${title!}</span>
+                </div>
+                <#nested>
+            </el-card>
         </el-col>
     </el-row>
 </div>

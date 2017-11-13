@@ -9,6 +9,6 @@
     })
 </script>
 </#assign>
-<@main.page title="首页">
+<@main.page title="用户">
 <div>users</div>
 </@main.page>

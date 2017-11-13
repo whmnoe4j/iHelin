@@ -1,10 +1,7 @@
 package me.ianhe.controller;
 
 import com.google.common.collect.Maps;
-import me.ianhe.service.ArticleService;
-import me.ianhe.service.FileService;
-import me.ianhe.service.JmsProducerService;
-import me.ianhe.service.ScoreService;
+import me.ianhe.service.*;
 import me.ianhe.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,8 @@ public abstract class BaseController {
     protected FileService fileService;
     @Autowired
     protected JmsProducerService producerService;
+    @Autowired
+    protected QrcodeService qrcodeService;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
