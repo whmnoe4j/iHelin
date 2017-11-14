@@ -1,4 +1,4 @@
-package me.ianhe.listener;
+package me.ianhe.component;
 
 import me.ianhe.dao.CommonRedisDao;
 import org.slf4j.Logger;

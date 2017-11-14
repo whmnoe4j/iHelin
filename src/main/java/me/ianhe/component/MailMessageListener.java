@@ -1,4 +1,4 @@
-package me.ianhe.listener;
+package me.ianhe.component;
 
 import me.ianhe.model.MailModel;
 import me.ianhe.utils.MailUtil;

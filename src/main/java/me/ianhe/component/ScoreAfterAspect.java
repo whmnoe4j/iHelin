@@ -1,4 +1,4 @@
-package me.ianhe.aspect;
+package me.ianhe.component;
 
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.MyScore;
