@@ -24,7 +24,7 @@
             <#if articles??>
                 <#list articles as article>
                     <div class="post-preview">
-                        <a href="${request.contextPath}/post/#{article.id!}">
+                        <a href="${request.contextPath}/article/#{article.id!}">
                             <h2 class="post-title">
                             ${article.title!''}
                             </h2>
