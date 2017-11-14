@@ -35,7 +35,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 菜单 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="${request.contextPath}/home">Starting</a>
+            <a class="navbar-brand" href="${request.contextPath}">Starting</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
