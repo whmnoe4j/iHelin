@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("admin")
 public abstract class BaseAdminController extends BaseController {
 
-    protected static final String NAMESPACE = "admin";
+    private static final String NAMESPACE = "admin";
 
     @Override
     protected String ftl(String ftlFileName) {

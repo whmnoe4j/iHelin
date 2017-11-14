@@ -32,11 +32,11 @@
                     <i class="el-icon-info"></i>
                     <span slot="title">首页</span>
                 </el-menu-item>
-                <el-menu-item index="users">
+                <el-menu-item index="user">
                     <i class="el-icon-menu"></i>
                     <span slot="title">用户</span>
                 </el-menu-item>
-                <el-menu-item index="articles">
+                <el-menu-item index="article">
                     <i class="el-icon-setting"></i>
                     <span slot="title">文章</span>
                 </el-menu-item>
@@ -44,13 +44,17 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">二维码</span>
                 </el-menu-item>
-                <el-menu-item index="image">
+                <el-menu-item index="file">
                     <i class="el-icon-setting"></i>
-                    <span slot="title">文件</span>
+                    <span slot="title">文件管理</span>
                 </el-menu-item>
-                <el-menu-item index="upload">
+                <el-menu-item index="property">
                     <i class="el-icon-setting"></i>
-                    <span slot="title">上传</span>
+                    <span slot="title">系统属性</span>
+                </el-menu-item>
+                <el-menu-item index="mapping">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">请求路径</span>
                 </el-menu-item>
             </el-menu>
         </el-col>
@@ -70,23 +74,16 @@
 
 <script type='text/javascript'>
     Vue.http.interceptors.push((request, next) => {
-//        iview.LoadingBar.start();
         next(res => {
             switch (res.status) {
                 case 200:
                     console.log("ok");
-//                    iview.LoadingBar.finish();
-//                    if (res.data.status != "success") {
-//                        iview.Message.error(res.data.data);
-//                    }
                     break;
                 case 403:
-//                    iview.Message.error("权限不足！");
                     break;
                 case 404:
                     console.log("404");
                 default:
-//                    iview.LoadingBar.error();
                     break;
             }
         });
@@ -101,19 +98,19 @@
             "s+": this.getSeconds(), //second
             "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
             "S": this.getMilliseconds() //millisecond
-        }
+        };
 
         if (/(y+)/i.test(format)) {
             format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         }
 
-        for (var k in o) {
+        for (let k in o) {
             if (new RegExp("(" + k + ")").test(format)) {
                 format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
             }
         }
         return format;
-    }
+    };
 
     Vue.mixin({
         data() {
@@ -124,7 +121,7 @@
         computed: {},
         methods: {
             handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+//                console.log(key, keyPath);
                 window.location.href = '${request.contextPath}/admin/' + key;
             }
         },

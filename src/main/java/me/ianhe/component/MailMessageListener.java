@@ -1,9 +1,10 @@
 package me.ianhe.component;
 
 import me.ianhe.model.MailModel;
-import me.ianhe.utils.MailUtil;
+import me.ianhe.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,15 @@ public class MailMessageListener {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private MailService mailService;
+
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "mail")
     public void onMessage(ObjectMessage message) {
         logger.debug("接收到一条邮件消息。");
         try {
             MailModel mail = (MailModel) message.getObject();
-            MailUtil.sendHTMLMail(mail.getToAddress(), mail.getToPersonalName(), mail.getSubject(), mail.getContent());
+            mailService.sendHTMLMail(mail.getToAddress(), mail.getSubject(), mail.getContent());
         } catch (JMSException e) {
             logger.error("消息接收异常！", e);
         }

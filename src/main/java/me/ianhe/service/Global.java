@@ -1,4 +1,4 @@
-package me.ianhe.utils;
+package me.ianhe.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +19,10 @@ import java.util.Properties;
 public class Global {
 
     private static final String CONFIG_NAME = "config.properties";
-    private static final Logger logger = LoggerFactory.getLogger(Global.class);
-    private static Properties properties;
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Properties properties;
 
-    static {
+    public Global() {
         properties = new Properties();
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource(CONFIG_NAME);
@@ -33,28 +33,19 @@ public class Global {
         }
     }
 
-    public static String getDomainUrl() {
-        return get("domainUrl");
-    }
-
-    public static String getSystemName() {
-        return get("systemName");
-    }
-
-    public static String getMailTpl() {
-        return get("mail.tpl");
-    }
-
     public static File getClassPath() {
         return new File(Global.class.getResource("/").getFile());
     }
 
-    public static String get(String key) {
+    public String getValue(String key) {
         return properties.getProperty(key);
     }
 
-    public String getValue(String key) {
-        return get(key);
+    public Properties getProperties() {
+        return properties;
     }
 
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
 }

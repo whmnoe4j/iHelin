@@ -4,7 +4,7 @@
     new Vue({
         el: '#app',
         mounted: function () {
-            this.defaultActiveTag = 'users';
+            this.defaultActiveTag = 'user';
         }
     })
 </script>

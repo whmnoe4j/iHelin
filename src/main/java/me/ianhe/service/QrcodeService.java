@@ -10,8 +10,6 @@ import me.ianhe.model.MatrixToImageWriter;
 import org.apache.commons.lang3.CharEncoding;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
@@ -22,11 +20,6 @@ import java.util.Map;
  */
 @Service
 public class QrcodeService {
-//    private Logger logger = LoggerFactory.getLogger(getClass());
-
-    public boolean generate(String content, int size, String format, OutputStream outputStream) throws IOException, WriterException {
-        return generate(content, size, size, format, outputStream);
-    }
 
     /**
      * 二维码生成
@@ -40,16 +33,15 @@ public class QrcodeService {
      * @throws IOException
      * @author iHelin
      */
-    private boolean generate(String content, int width, int height, String format, OutputStream outputStream)
-            throws WriterException, IOException {
+    public void generate(String content, int width, int height, String format, OutputStream outputStream)
+            throws IOException, WriterException {
         Map<EncodeHintType, Object> hints = Maps.newHashMap();
         hints.put(EncodeHintType.CHARACTER_SET, CharEncoding.UTF_8);
         hints.put(EncodeHintType.MARGIN, 1);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE,
                 width, height, hints);
-        BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
-        return ImageIO.write(image, format, outputStream);
+        MatrixToImageWriter.writeToStream(bitMatrix, format, outputStream);
     }
 
 }

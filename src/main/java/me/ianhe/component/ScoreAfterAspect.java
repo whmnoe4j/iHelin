@@ -3,10 +3,10 @@ package me.ianhe.component;
 import com.google.common.collect.Maps;
 import me.ianhe.db.entity.MyScore;
 import me.ianhe.model.MailModel;
+import me.ianhe.service.DingService;
 import me.ianhe.service.JmsProducerService;
 import me.ianhe.service.ScoreService;
-import me.ianhe.utils.DingUtil;
-import me.ianhe.utils.TemplateUtil;
+import me.ianhe.service.TemplateService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,6 +42,12 @@ public class ScoreAfterAspect {
     @Qualifier("mailQueue")
     private Destination destination;
 
+    @Autowired
+    private DingService dingService;
+
+    @Autowired
+    private TemplateService templateService;
+
     /**
      * 加分成功后再发送提醒
      *
@@ -61,12 +67,12 @@ public class ScoreAfterAspect {
                     myScore.getReason(), total);
         }
         logger.debug(msg);
-        DingUtil.say(msg);
+        dingService.say(msg);
 
         Map<String, Object> res = Maps.newHashMap();
         res.put("score", myScore);
         res.put("total", total);
-        String mailContent = TemplateUtil.applyTemplate("score.ftl", res);
+        String mailContent = templateService.applyTemplate("score.ftl", res);
         String title = "加分提醒:今天加了" + myScore.getScore() + "分";
         MailModel mail = new MailModel("ahaqhelin@163.com;1018954240@qq.com", "葫芦娃", title, mailContent);
         producerService.sendMessage(destination, mail);

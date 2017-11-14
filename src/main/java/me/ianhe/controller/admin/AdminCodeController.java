@@ -25,12 +25,12 @@ public class AdminCodeController extends BaseAdminController {
      * @author iHelin
      * @since 2017/8/31 22:24
      */
-    @GetMapping(value = "generate")
+    @GetMapping("generate")
     public void generateQRCode(String content, HttpServletRequest request, HttpServletResponse response) {
         String format = "png";
         logger.info("Success generate qrcode： {},ip is {}", content, RequestUtil.getRealIp(request));
         try {
-            qrcodeService.generate(content, 300, format, response.getOutputStream());
+            qrcodeService.generate(content, 300, 300, format, response.getOutputStream());
         } catch (Exception e) {
             logger.error("生成二维码失败", e);
         }

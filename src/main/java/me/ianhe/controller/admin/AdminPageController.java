@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminPageController extends BaseAdminController {
 
     /**
-     * 前端项目
+     * 首页
      *
      * @author iHelin
-     * @since 2017/9/17 10:36
+     * @since 2017/11/14 16:44
      */
     @GetMapping(value = {"", "index"})
-    public String adminIndex() {
+    public String index() {
         return ftl("index");
     }
 
@@ -33,40 +33,69 @@ public class AdminPageController extends BaseAdminController {
     }
 
     /**
-     * 二维码页面
+     * 二维码页
      *
      * @author iHelin
      * @since 2017/8/31 22:24
      */
-    @GetMapping(value = "qrcode")
-    public String qRCode() {
+    @GetMapping("qrcode")
+    public String qrcode() {
         return ftl("qrcode");
     }
 
-    @GetMapping(value = "users")
-    public String users() {
-        return ftl("users");
-    }
-
-    @GetMapping(value = "articles")
-    public String articles() {
-        return ftl("articles");
-    }
-
-    @GetMapping("image")
-    public String imagePage() {
-        return ftl("image");
+    /**
+     * 用户页
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:54
+     */
+    @GetMapping("user")
+    public String user() {
+        return ftl("user");
     }
 
     /**
-     * 文件上传页面
+     * 文章页
      *
      * @author iHelin
-     * @since 2017/11/13 17:48
+     * @since 2017/11/14 15:54
      */
-    @GetMapping(value = "upload")
-    public String upload() {
-        return ftl("upload");
+    @GetMapping("article")
+    public String article() {
+        return ftl("article");
+    }
+
+    /**
+     * 文件管理页
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:54
+     */
+    @GetMapping("file")
+    public String file() {
+        return ftl("file");
+    }
+
+    /**
+     * 系统属性页
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:22
+     */
+    @GetMapping("property")
+    public String property() {
+        return ftl("property");
+    }
+
+    /**
+     * 请求路径页
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:22
+     */
+    @GetMapping("mapping")
+    public String mapping() {
+        return ftl("mapping");
     }
 
 }

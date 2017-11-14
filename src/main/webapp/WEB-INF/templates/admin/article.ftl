@@ -9,12 +9,15 @@
             }
         },
         mounted: function () {
-            this.defaultActiveTag = 'articles';
-            this.$http.get('${request.contextPath}/admin/articleList?pageNum=1&pageSize=10').then(res => {
-                this.tableData = res.data;
-            });
+            this.defaultActiveTag = 'article';
+            this.init();
         },
         methods: {
+            init: function () {
+                this.$http.get('${request.contextPath}/admin/articleList?pageNum=1&pageSize=10').then(res => {
+                    this.tableData = res.data;
+                });
+            },
             dateFormat: function (row, column, cellValue) {
                 return new Date(cellValue).format('yyyy-MM-dd HH:mm')
             },

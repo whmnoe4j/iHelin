@@ -1,5 +1,6 @@
 package me.ianhe.utils;
 
+import me.ianhe.service.Global;
 import org.junit.Assert;
 import org.junit.Test;
 

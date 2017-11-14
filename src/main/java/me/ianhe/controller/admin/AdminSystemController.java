@@ -1,14 +1,11 @@
-package me.ianhe.controller;
+package me.ianhe.controller.admin;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import me.ianhe.db.entity.Article;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -19,35 +16,35 @@ import java.util.Properties;
 
 /**
  * @author iHelin
- * @create 2017-03-15 19:36
+ * @since 2017/11/14 15:50
  */
-@Controller
-public class IndexController extends BaseController {
-
+@RestController
+public class AdminSystemController extends BaseAdminController {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
-    @GetMapping(value = {"", "index"})
-    public String indexPage(Model model, @RequestHeader("User-Agent") String userAgent) {
-        int pageLength = 5;
-        int pageNum = 1;
-        List<Article> articles = articleService.listByCondition(null, pageNum, pageLength);
-        model.addAttribute("articles", articles);
-        logger.debug("userAgent:{}", userAgent);
-        return "index";
-    }
-
-    @GetMapping("config")
-    public String configPage(Model model) {
+    /**
+     * 系统属性
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:52
+     */
+    @GetMapping("props")
+    public String props() {
         Properties props = System.getProperties();
-        model.addAttribute("props", props);
-        return "config";
+        return success(props);
     }
 
-    @GetMapping("mapping")
-    public String showMappings(Model model) {
+    /**
+     * 请求路径
+     *
+     * @author iHelin
+     * @since 2017/11/14 15:52
+     */
+    @GetMapping("mappings")
+    public String mappings() {
         Map<RequestMappingInfo, HandlerMethod> map = handlerMapping.getHandlerMethods();
-        List<Map> array = Lists.newArrayList();
+        List<Map> mappingList = Lists.newArrayList();
         for (RequestMappingInfo key : map.keySet()) {
             Map<String, Object> modelMap = Maps.newHashMap();
             String urls = Joiner.on(',').join(key.getPatternsCondition().getPatterns());
@@ -55,10 +52,8 @@ public class IndexController extends BaseController {
             modelMap.put("method", Joiner.on(',').join(key.getMethodsCondition().getMethods()));
             modelMap.put("className", map.get(key).getBeanType().getName());
             modelMap.put("classMethod", map.get(key).getMethod().getName());
-            array.add(modelMap);
+            mappingList.add(modelMap);
         }
-        model.addAttribute("mappings", array);
-        return "mapping";
+        return success(mappingList);
     }
-
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController extends BaseController {
 
     @Autowired
-    private TaskService dailyService;
+    private TaskService taskService;
 
     /**
      * 古诗接口
@@ -24,7 +24,7 @@ public class CommonController extends BaseController {
      */
     @GetMapping("poem")
     public Poem getPoemByRandom() {
-        return dailyService.getPoemByRandom();
+        return taskService.getPoemByRandom();
     }
 
 }

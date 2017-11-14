@@ -9,7 +9,7 @@
             }
         },
         mounted: function () {
-
+            this.defaultActiveTag = 'index';
         }
 
     })

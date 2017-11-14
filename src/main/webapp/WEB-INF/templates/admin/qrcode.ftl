@@ -9,6 +9,9 @@
                 content: null
             }
         },
+        mounted: function () {
+            this.defaultActiveTag = 'qrcode';
+        },
         methods: {
             generate: function () {
                 if (!this.form.content) {

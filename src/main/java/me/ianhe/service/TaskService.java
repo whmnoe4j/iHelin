@@ -3,7 +3,6 @@ package me.ianhe.service;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.PoemMapper;
 import me.ianhe.db.entity.Poem;
-import me.ianhe.utils.DingUtil;
 import me.ianhe.utils.JsonUtil;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
@@ -26,6 +25,9 @@ public class TaskService {
     @Autowired
     private PoemMapper poemMapper;
 
+    @Autowired
+    private DingService dingService;
+
     public Poem getPoemByRandom() {
         return poemMapper.getByRandom();
     }
@@ -43,7 +45,7 @@ public class TaskService {
     public void poemRun() {
         Poem poem = poemMapper.getByRandom();
         String msg = poem.getContent() + "      --" + poem.getTitle();
-        DingUtil.say(msg);
+        dingService.say(msg);
     }
 
     /**
@@ -67,7 +69,7 @@ public class TaskService {
         data.put("markdown", contentMap);
         String jsonData = JsonUtil.toJson(data);
         logger.debug("每日一句：{}", jsonData);
-        DingUtil.doSay(jsonData);
+        dingService.doSay(jsonData);
     }
 
     /**
@@ -83,7 +85,7 @@ public class TaskService {
         long nowLong = System.currentTimeMillis();
         long betweenDays = (examDateLong - nowLong) / (1000L * 3600 * 24) + 1;
         if (betweenDays > 0) {
-            DingUtil.say("今天距离考试还剩" + betweenDays + "天！");
+            dingService.say("今天距离考试还剩" + betweenDays + "天！");
         }
     }
 
