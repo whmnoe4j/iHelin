@@ -3,6 +3,8 @@ package me.ianhe.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -10,9 +12,11 @@ import java.io.Serializable;
  * Model - Person
  * Created by iHelin on 17/5/10 15:56.
  */
+@Component
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Value("${mail.fromName}")
     private String name;
     private int age;
 
