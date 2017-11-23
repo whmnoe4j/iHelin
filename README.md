@@ -22,7 +22,7 @@
 
 #### 前端技术
 
-- Vue: 前段渐进式框架
+- Vue: 前端渐进式框架
 - jQuery
 - Bootstrap
 - Font-awesome
