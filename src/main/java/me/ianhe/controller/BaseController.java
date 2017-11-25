@@ -29,7 +29,7 @@ public abstract class BaseController {
     @Autowired
     protected QrcodeService qrcodeService;
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 默认分页大小

@@ -10,7 +10,7 @@
     <meta name="author" content="Ian He"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/elementui/index.css">
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/element-ui/index.css">
     <style>
         body {
             margin: 0;
@@ -70,14 +70,14 @@
 </div>
 <script src="${request.contextPath}/plugins/vue/vue.js"></script>
 <script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
-<script src="${request.contextPath}/plugins/elementui/index.js"></script>
+<script src="${request.contextPath}/plugins/element-ui/index.js"></script>
 
 <script type='text/javascript'>
     Vue.http.interceptors.push((request, next) => {
         next(res => {
             switch (res.status) {
                 case 200:
-                    console.log("ok");
+//                    console.log("ok");
                     break;
                 case 403:
                     break;
