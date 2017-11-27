@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.jms.Destination;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author iHelin
@@ -72,8 +73,9 @@ public class PageController extends BaseController {
 
     @ResponseBody
     @PostMapping("ws")
-    public String sendMessage() {
-        webSocket.sendMessage("测试消息111");
+    public String sendMessage(@RequestBody Map<String, String> data) {
+        System.out.println(data.get("data"));
+        webSocket.sendMessage(data.get("data"));
         return success();
     }
 

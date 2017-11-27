@@ -14,22 +14,23 @@
 <body>
 <div id="app">
     <h1>WebSocket Test</h1>
-    <el-button @click="send">默认按钮</el-button>
+    <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="data">
+    </el-input>
+    <el-button @click="send">发送</el-button>
 </div>
 <script src="${request.contextPath}/plugins/vue/vue.js"></script>
 <script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
 <script src="${request.contextPath}/plugins/element-ui/index.js"></script>
 <script>
-
-
-    /* window.onbeforeunload = function () {
-
-     };*/
-
     new Vue({
         el: '#app',
         data: {
-            webSocket: null
+            webSocket: null,
+            data: 'test'
         },
         mounted: function () {
             this.init();
@@ -39,7 +40,9 @@
         },
         methods: {
             send: function () {
-                this.$http.post('${request.contextPath}/ws').then(res => {
+                this.$http.post('${request.contextPath}/ws', {
+                    data: this.data
+                }).then(res => {
 //                    console.log(res);
                 });
             },
