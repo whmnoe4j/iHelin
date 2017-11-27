@@ -49,7 +49,7 @@
             init: function () {
                 var that = this;
                 if ('WebSocket' in window) {
-                    this.webSocket = new WebSocket('wss://${serverName!}${request.contextPath}/webSocket');
+                    this.webSocket = new WebSocket('ws://${serverName!}${request.contextPath}/webSocket');
                 } else {
                     alert("该浏览器不支持webSocket！");
                 }
