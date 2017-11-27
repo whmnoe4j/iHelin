@@ -28,6 +28,8 @@ public abstract class BaseController {
     protected JmsProducerService producerService;
     @Autowired
     protected QrcodeService qrcodeService;
+    @Autowired
+    protected WebSocket webSocket;
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 

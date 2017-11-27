@@ -32,6 +32,13 @@ public class RequestUtil {
         return getRequest().getSession();
     }
 
+    public static String getDomain(HttpServletRequest request) {
+        StringBuilder sb = new StringBuilder(256);
+        sb.append(request.getServerName())
+                .append(':').append(request.getServerPort());
+        return sb.toString();
+    }
+
     public static String getCompleteRequestURL(HttpServletRequest request) {
         return getCompleteRequestURL(request, (String) null);
     }

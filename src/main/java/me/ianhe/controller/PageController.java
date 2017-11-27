@@ -1,15 +1,15 @@
 package me.ianhe.controller;
 
 import me.ianhe.db.entity.Article;
+import me.ianhe.utils.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import javax.jms.Destination;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -62,6 +62,19 @@ public class PageController extends BaseController {
     @GetMapping("music")
     public String musicPage() {
         return "music";
+    }
+
+    @GetMapping("ws")
+    public String webSocketPage(HttpServletRequest request, Model model) {
+        model.addAttribute("serverName", RequestUtil.getDomain(request));
+        return "webSocket";
+    }
+
+    @ResponseBody
+    @PostMapping("ws")
+    public String sendMessage() {
+        webSocket.sendMessage("测试消息111");
+        return success();
     }
 
 }
