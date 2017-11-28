@@ -48,9 +48,9 @@
             <el-form-item>
                 <el-row type="flex" justify="space-between">
                     <el-col :span="12">
-                        <img src="${request.contextPath}/kaptcha"
+                        <img :src="kaptchaSrc"
                              style="width: 100%;"
-                             onclick="this.src='${request.contextPath}/kaptcha'">
+                             @click="changeKaptcha">
                     </el-col>
                     <el-col :span="11">
                         <el-input
@@ -97,14 +97,19 @@
                     username: '',
                     password: ''
                 },
+                display: false,
+                kaptchaSrc: '${request.contextPath}/kaptcha'
             };
         },
         methods: {
             handleSubmit: function () {
                 this.logining = true;
+            },
+            changeKaptcha: function () {
+                this.kaptchaSrc = '${request.contextPath}/kaptcha?t=' + Math.random();
             }
         },
-        mounted:function () {
+        mounted: function () {
             this.display = true;
         }
     });
