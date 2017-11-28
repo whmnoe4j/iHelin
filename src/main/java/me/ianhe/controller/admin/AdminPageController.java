@@ -1,6 +1,7 @@
 package me.ianhe.controller.admin;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -72,7 +73,8 @@ public class AdminPageController extends BaseAdminController {
      * @since 2017/11/14 15:54
      */
     @GetMapping("file")
-    public String file() {
+    public String file(Model model) {
+        model.addAttribute("prefix",global.getValue("qiniu.prefix"));
         return ftl("file");
     }
 

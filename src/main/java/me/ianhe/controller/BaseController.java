@@ -30,6 +30,8 @@ public abstract class BaseController {
     protected QrcodeService qrcodeService;
     @Autowired
     protected WebSocket webSocket;
+    @Autowired
+    protected Global global;
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 

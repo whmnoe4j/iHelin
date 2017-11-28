@@ -141,7 +141,7 @@
 <el-row :gutter="10">
     <el-col :span="6" v-for="file in files" :key="file.key" v-if="file.mimeType.indexOf('image')>=0">
         <el-card :body-style="{ padding: '0px' }">
-            <img :src="'http://resource.ianhe.me/'+file.key" :alt="file.key" class="image">
+            <img :src="'${prefix!}'+file.key" :alt="file.key" class="image">
             <div style="padding: 14px;">
                 <span>{{file.key}}</span>
                 <div class="bottom clearfix">
