@@ -6,60 +6,108 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="iHelin">
-    <link rel="stylesheet" href="${request.contextPath}/css/styles.css">
-    <link href="${request.contextPath}/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type='text/css'
-          media="all"/>
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/element-ui/index.css">
+    <style>
+        .login-container {
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            background-clip: padding-box;
+            margin: 180px auto;
+            width: 350px;
+            padding: 10px 35px 15px 35px;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 0 25px #cac6c6;
+
+        .title {
+            margin: 0px auto 40px auto;
+            text-align: center;
+            color: #505458;
+        }
+
+    </style>
 </head>
-<body class="focusedform">
-<div class="verticalcenter">
+<body>
+<div id="app" style="display: none;" v-show="display">
     <div class="panel panel-primary">
-        <form action="${request.contextPath}/admin/auth" method="post" class="form-horizontal"
-              style="margin-bottom: 0px !important;">
-            <input type="hidden" name="from" value="${from!}">
-            <div class="panel-body">
-                <h4 class="text-center" style="margin-bottom: 25px;">管理后台</h4>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="用户名" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                            <input type="password" class="form-control" name="password" placeholder="密码" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
+        <el-form :model="loginForm"
+                 action="${request.contextPath}/admin/auth"
+                 method="post"
+                 label-position="left" label-width="0px"
+                 class="login-container">
+            <h3 style="text-align: center;" class="title">系统登录</h3>
+            <el-form-item>
+                <el-input type="text" name="username" v-model="loginForm.username" auto-complete="off"
+                          placeholder="用户名"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-input type="password" name="password" v-model="loginForm.password" auto-complete="off"
+                          placeholder="密码"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-row type="flex" justify="space-between">
+                    <el-col :span="12">
                         <img src="${request.contextPath}/kaptcha"
+                             style="width: 100%;"
                              onclick="this.src='${request.contextPath}/kaptcha'">
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group" style="margin-left: 20px;margin-top: 10px;">
-                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                            <input type="text" class="form-control" name="captcha" placeholder="验证码" required>
-                        </div>
-                    </div>
-                </div>
-            <#if error??><span class="text-danger">${error!}</span></#if>
-            <#if SPRING_SECURITY_LAST_EXCEPTION??>
-                <span class="text-danger">${SPRING_SECURITY_LAST_EXCEPTION.message!}</span>
-            </#if>
-            </div>
-            <div class="panel-footer">
-                <div class="pull-right">
-                    <button type="reset" class="btn btn-default">重置</button>
-                    <button type="submit" class="btn btn-primary">登录</button>
-                </div>
-            </div>
-        </form>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-input
+                                style="width: 100%;"
+                                type="text"
+                                name="captcha"
+                                v-model="loginForm.captcha"
+                                placeholder="验证码"
+                                prefix-icon="el-icon-picture"
+                                required>
+                    </el-col>
+                </el-row>
+            </el-form-item>
+        <#if SPRING_SECURITY_LAST_EXCEPTION??>
+            <el-alert
+                    type="error"
+                    center
+                    style="margin-bottom: 10px;"
+                    show-icon
+                    title="${SPRING_SECURITY_LAST_EXCEPTION.message!}"></el-alert>
+        </#if>
+            <el-form-item>
+                <el-button
+                        type="primary"
+                        native-type="submit"
+                        style="width:100%;"
+                        @click="handleSubmit"
+                        :loading="logining">
+                    登录
+                </el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </div>
-
+<script src="${request.contextPath}/plugins/vue/vue.js"></script>
+<script src="${request.contextPath}/plugins/element-ui/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                logining: false,
+                loginForm: {
+                    username: '',
+                    password: ''
+                },
+            };
+        },
+        methods: {
+            handleSubmit: function () {
+                this.logining = true;
+            }
+        },
+        mounted:function () {
+            this.display = true;
+        }
+    });
+</script>
 </body>
 </html>
