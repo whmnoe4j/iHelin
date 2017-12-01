@@ -51,7 +51,7 @@ public class TaskService {
     public void poemRun() {
         Poem poem = poemMapper.getByRandom();
         String msg = poem.getContent() + "      --" + poem.getTitle();
-        dingService.sendText(msg);
+        dingService.sendTextMsg(msg);
     }
 
     /**
@@ -75,7 +75,7 @@ public class TaskService {
         data.put("markdown", contentMap);
         String jsonData = JsonUtil.toJson(data);
         logger.debug("每日一句：{}", jsonData);
-        dingService.doSay(jsonData);
+        dingService.doSend(jsonData);
     }
 
     /**
@@ -91,22 +91,28 @@ public class TaskService {
         long nowLong = System.currentTimeMillis();
         long betweenDays = (examDateLong - nowLong) / (1000L * 3600 * 24) + 1;
         if (betweenDays > 0) {
-            dingService.sendText("今天距离考试还剩" + betweenDays + "天！");
+            dingService.sendTextMsg("今天距离考试还剩" + betweenDays + "天！");
         }
     }
 
+    /**
+     * 电影
+     *
+     * @author iHelin
+     * @since 2017/12/1 15:57
+     */
     public void sendMovie() {
         String url = "https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&page_limit=50&page_start=0";
         String res = WechatUtil.doGetStr(url);
         Movie movie = JsonUtil.parseObject(res, Movie.class);
         List<Subject> subjectList = movie.getSubjects();
         if (subjectList == null) {
-            dingService.sendText("电影接口有问题啦，快去看看咋回事！");
+            dingService.sendTextMsg("电影接口有问题啦，快去看看咋回事！");
             return;
         }
         List<Link> links = Lists.newArrayList();
         Link link = new Link();
-        link.setTitle("又要到周末啦，快来看看最近热门电影吧！");
+        link.setTitle("又要到周末啦，快来看看最近的热门电影吧！");
         link.setMessageURL(subjectList.get(0).getUrl());
         link.setPicURL(subjectList.get(0).getCover());
         links.add(link);
@@ -119,7 +125,7 @@ public class TaskService {
         }
         FeedCard feedCard = new FeedCard();
         feedCard.setLinks(links);
-        dingService.sendFeedCard(feedCard);
+        dingService.sendFeedCardMsg(feedCard);
     }
 
 }

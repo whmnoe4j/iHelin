@@ -24,18 +24,18 @@ public class DingService {
     private Global global;
 
     /**
-     * 发送指定文本
+     * 发送文本消息
      *
      * @author iHelin
      * @since 2017/5/17 11:16
      */
-    public String sendText(String content) {
+    public String sendTextMsg(String content) {
         Map<String, Object> contentMap = Maps.newHashMap();
         contentMap.put("content", content);
         Map<String, Object> data = Maps.newHashMap();
         data.put("msgtype", "text");
         data.put("text", contentMap);
-        return doSay(JsonUtil.toJson(data));
+        return doSend(JsonUtil.toJson(data));
     }
 
     /**
@@ -44,14 +44,14 @@ public class DingService {
      * @author iHelin
      * @since 2017/12/1 15:14
      */
-    public String sendFeedCard(FeedCard feedCard) {
+    public String sendFeedCardMsg(FeedCard feedCard) {
         Map<String, Object> sendData = Maps.newHashMap();
         sendData.put("msgtype", "feedCard");
         sendData.put("feedCard", JsonUtil.toJson(feedCard));
-        return doSay(JsonUtil.toJson(sendData));
+        return doSend(JsonUtil.toJson(sendData));
     }
 
-    public String doSay(String data) {
+    public String doSend(String data) {
         String res = WechatUtil.doPostStr(global.getValue("ding.robot"), data);
         logger.info("Robot return {}", res);
         return res;
