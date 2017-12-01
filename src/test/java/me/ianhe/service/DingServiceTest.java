@@ -19,7 +19,7 @@ public class DingServiceTest {
 
     @Test
     public void say() {
-
+        System.out.println(dingService.getDingUrl());
     }
 
     @Test

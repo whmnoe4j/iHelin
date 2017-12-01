@@ -6,7 +6,7 @@ import me.ianhe.utils.JsonUtil;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -20,8 +20,12 @@ public class DingService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private Global global;
+    @Value("${ding.robot}")
+    private String dingUrl;
+
+    public String getDingUrl() {
+        return dingUrl;
+    }
 
     /**
      * 发送文本消息
@@ -52,7 +56,7 @@ public class DingService {
     }
 
     public String doSend(String data) {
-        String res = WechatUtil.doPostStr(global.getValue("ding.robot"), data);
+        String res = WechatUtil.doPostStr(dingUrl, data);
         logger.info("Robot return {}", res);
         return res;
     }

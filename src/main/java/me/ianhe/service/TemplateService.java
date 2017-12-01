@@ -7,7 +7,7 @@ import me.ianhe.utils.RequestUtil;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -24,8 +24,8 @@ import java.util.Map;
 @Service
 public class TemplateService {
 
-    @Autowired
-    private Global global;
+    @Value("${mail.tpl}")
+    private String tpl;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,7 +37,7 @@ public class TemplateService {
     public String applyTemplate(String templateName, Map<String, Object> propMap) {
         propMap.put("contextPath", RequestUtil.getRequest().getContextPath());
         Configuration config = new Configuration(Configuration.VERSION_2_3_23);
-        File dir = new File(Global.getClassPath(), global.getValue("mail.tpl"));
+        File dir = new File(Global.getClassPath(), tpl);
         try {
             config.setDirectoryForTemplateLoading(dir);
             Template template = config.getTemplate(templateName, CharEncoding.UTF_8);
