@@ -67,7 +67,7 @@ public class ScoreAfterAspect {
                     myScore.getReason(), total);
         }
         logger.debug(msg);
-        dingService.say(msg);
+        dingService.sendText(msg);
 
         Map<String, Object> res = Maps.newHashMap();
         res.put("score", myScore);

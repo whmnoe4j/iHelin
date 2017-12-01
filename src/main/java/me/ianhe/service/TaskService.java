@@ -1,8 +1,13 @@
 package me.ianhe.service;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.PoemMapper;
 import me.ianhe.db.entity.Poem;
+import me.ianhe.model.ding.FeedCard;
+import me.ianhe.model.ding.Link;
+import me.ianhe.model.douban.Movie;
+import me.ianhe.model.douban.Subject;
 import me.ianhe.utils.JsonUtil;
 import me.ianhe.utils.WechatUtil;
 import org.slf4j.Logger;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +51,7 @@ public class TaskService {
     public void poemRun() {
         Poem poem = poemMapper.getByRandom();
         String msg = poem.getContent() + "      --" + poem.getTitle();
-        dingService.say(msg);
+        dingService.sendText(msg);
     }
 
     /**
@@ -85,8 +91,35 @@ public class TaskService {
         long nowLong = System.currentTimeMillis();
         long betweenDays = (examDateLong - nowLong) / (1000L * 3600 * 24) + 1;
         if (betweenDays > 0) {
-            dingService.say("今天距离考试还剩" + betweenDays + "天！");
+            dingService.sendText("今天距离考试还剩" + betweenDays + "天！");
         }
+    }
+
+    public void sendMovie() {
+        String url = "https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&page_limit=50&page_start=0";
+        String res = WechatUtil.doGetStr(url);
+        Movie movie = JsonUtil.parseObject(res, Movie.class);
+        List<Subject> subjectList = movie.getSubjects();
+        if (subjectList == null) {
+            dingService.sendText("电影接口有问题啦，快去看看咋回事！");
+            return;
+        }
+        List<Link> links = Lists.newArrayList();
+        Link link = new Link();
+        link.setTitle("又要到周末啦，快来看看最近热门电影吧！");
+        link.setMessageURL(subjectList.get(0).getUrl());
+        link.setPicURL(subjectList.get(0).getCover());
+        links.add(link);
+        for (int i = 1; i < 5; i++) {
+            link = new Link();
+            link.setTitle(subjectList.get(i).getTitle());
+            link.setMessageURL(subjectList.get(i).getUrl());
+            link.setPicURL(subjectList.get(i).getCover());
+            links.add(link);
+        }
+        FeedCard feedCard = new FeedCard();
+        feedCard.setLinks(links);
+        dingService.sendFeedCard(feedCard);
     }
 
 }

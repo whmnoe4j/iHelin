@@ -46,4 +46,13 @@ public class JsoupTest {
         }
     }
 
+    @Test
+    public void testDouban(){
+        String url = "https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&page_limit=50&page_start=0";
+       /* String res = WechatUtil.doGetStr(url);
+        System.out.println(res);*/
+       Document document = Jsoup.parse(url);
+        System.out.println(document.text());
+    }
+
 }
