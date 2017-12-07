@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="细心在任何时候都不是多余的"/>
     <meta name="author" content="Ian He"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <#--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
     <title>${title} | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link href="${request.contextPath}/css/bootstrap.min.css" rel="stylesheet">

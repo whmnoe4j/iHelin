@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="细心在任何时候都不是多余的"/>
     <meta name="author" content="Ian He"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/plugins/element-ui/index.css">
     <style>
