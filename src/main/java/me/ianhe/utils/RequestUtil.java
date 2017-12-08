@@ -34,8 +34,7 @@ public class RequestUtil {
 
     public static String getDomain(HttpServletRequest request) {
         StringBuilder sb = new StringBuilder(256);
-        sb.append(request.getServerName())
-                .append(':').append(request.getServerPort());
+        sb.append(request.getServerName());
         return sb.toString();
     }
 
