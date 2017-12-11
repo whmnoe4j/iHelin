@@ -80,6 +80,27 @@ public class FileService {
     }
 
     /**
+     * 以字节流上传
+     * 上传成功返回文件访问路径
+     *
+     * @param bytes
+     * @param key
+     * @return 文件访问地址
+     */
+    public String uploadFile(String key, byte[] bytes) {
+        UploadManager uploadManager = new UploadManager(configuration);
+        String token = auth.uploadToken(global.getValue("qiniu.bucket"));
+        try {
+            Response res = uploadManager.put(bytes, key, token);
+            logger.info("upload file {} to qiniu oss,result:{}", key, res.isOK());
+            return global.getValue("qiniu.prefix") + key;
+        } catch (QiniuException e) {
+            logger.error("error upload file to qiniu ！", e);
+            return "";
+        }
+    }
+
+    /**
      * 删除文件
      *
      * @author iHelin

@@ -6,8 +6,9 @@ import me.ianhe.wechat.enums.MsgTypeEnum;
 import me.ianhe.wechat.enums.URLEnum;
 import org.apache.http.HttpEntity;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +28,8 @@ public class DownloadTools {
      *
      * @param msg
      * @param type
-     * @param path
-     * @return
-     * @author https://github.com/yaphone
-     * @date 2017年4月21日 下午11:00:25
      */
-    public static void getDownloadFn(BaseMsg msg, String type, String path) {
+    public static byte[] getDownloadFn(BaseMsg msg, String type) {
         Map<String, String> headerMap = new HashMap<>();
         List<BasicNameValuePair> params = new ArrayList<>();
         String url = "";
@@ -53,7 +50,14 @@ public class DownloadTools {
         params.add(new BasicNameValuePair("msgid", msg.getNewMsgId()));
         params.add(new BasicNameValuePair("skey", (String) core.getLoginInfo().get("skey")));
         HttpEntity entity = core.getMyHttpClient().doGet(url, params, true, headerMap);
-        CommonTools.saveFile(new File(path), entity);
+//        CommonTools.saveFile(new File(path), entity);
+        try {
+            byte[] bytes = EntityUtils.toByteArray(entity);
+            return bytes;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

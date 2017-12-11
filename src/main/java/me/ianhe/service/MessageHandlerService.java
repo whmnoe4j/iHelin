@@ -5,12 +5,17 @@ import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.beans.RecommendInfo;
 import me.ianhe.wechat.core.Core;
 import me.ianhe.wechat.core.MessageHandler;
+import me.ianhe.wechat.enums.MsgTypeEnum;
+import me.ianhe.wechat.utils.DownloadTools;
 import me.ianhe.wechat.utils.WeChatTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 消息处理类
@@ -22,6 +27,8 @@ import javax.annotation.PostConstruct;
 public class MessageHandlerService implements MessageHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private FileService fileService;
 
     @PostConstruct
     public void init() {
@@ -83,17 +90,20 @@ public class MessageHandlerService implements MessageHandler {
 
     @Override
     public void picMsgHandle(BaseMsg msg) {
-
+        String fileName = new SimpleDateFormat("wechat/pic/yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".jpg";
+        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
     }
 
     @Override
     public void voiceMsgHandle(BaseMsg msg) {
-
+        String fileName = "wechat/voice/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp3";
+        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
     }
 
     @Override
     public void videoMsgHandle(BaseMsg msg) {
-
+        String fileName = "wechat/video/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp4";
+        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VIEDO.getType()));
     }
 
     @Override
