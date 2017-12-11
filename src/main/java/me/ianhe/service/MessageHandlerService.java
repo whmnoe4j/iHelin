@@ -91,19 +91,19 @@ public class MessageHandlerService implements MessageHandler {
     @Override
     public void picMsgHandle(BaseMsg msg) {
         String fileName = new SimpleDateFormat("wechat/pic/yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".jpg";
-        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
+        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.PIC.getType()));
     }
 
     @Override
     public void voiceMsgHandle(BaseMsg msg) {
-        String fileName = "wechat/voice/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp3";
-        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
+//        String fileName = "wechat/voice/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp3";
+//        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
     }
 
     @Override
     public void videoMsgHandle(BaseMsg msg) {
-        String fileName = "wechat/video/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp4";
-        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VIEDO.getType()));
+//        String fileName = "wechat/video/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp4";
+//        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VIEDO.getType()));
     }
 
     @Override
