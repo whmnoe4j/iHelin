@@ -115,7 +115,8 @@ public class MessageHandlerService implements MessageHandler {
     public void mediaMsgHandle(BaseMsg msg) {
         System.out.println(JSON.toJSONString(msg));
         //我已经在百词斩上坚持了157天，今日过招27个单词。
-        if (msg.getFileName().contains("我已经在百词斩上坚持了")) {
+        if (msg.getFileName().contains("我已经在百词斩上坚持了")
+                && "@@2b50dc80a3091e79eca1bea77c617a389b47873c385a29897f368169d2867cf5".equals(msg.getFromUserName())) {
             WeChatTools.sendMsgByUsername("很好，继续努力", msg.getFromUserName());
         }
     }
