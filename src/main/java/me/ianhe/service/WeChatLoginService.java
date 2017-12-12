@@ -210,6 +210,14 @@ public class WeChatLoginService {
      * @since 2017/12/11 14:09
      */
     public boolean weChatInit() {
+        core.getGroupIdList().clear();
+        core.getContactList().clear();
+        core.getGroupList().clear();
+        core.getGroupNickNameList().clear();
+        core.getMemberList().clear();
+        core.getGroupMemeberMap().clear();
+        core.getPublicUsersList().clear();
+        core.getSpecialUsersList().clear();
         //设置最近一次正常返回时间
         core.setLastNormalRetcodeTime(System.currentTimeMillis());
         // 组装请求URL和参数
@@ -289,7 +297,7 @@ public class WeChatLoginService {
      * @author iHelin
      * @since 2017/12/11 14:09
      */
-    public void startReceiving() {
+    private void startReceiving() {
         new Thread(new Runnable() {
             int retryCount = 0;
 
@@ -298,35 +306,31 @@ public class WeChatLoginService {
                 while (core.isAlive()) {
                     try {
                         Map<String, String> resultMap = syncCheck();
-                        logger.info(JSONObject.toJSONString(resultMap));
+                        logger.info("同步检查:{}", JSONObject.toJSONString(resultMap));
                         String retcode = resultMap.get("retcode");
-                        String selector = resultMap.get("selector");
                         if (RetCodeEnum.UNKOWN.getCode().equals(retcode)) {
                             logger.info(RetCodeEnum.UNKOWN.getType());
                         } else if (RetCodeEnum.LOGIN_OUT.getCode().equals(retcode)) {
-                            // 退出
                             logger.info(RetCodeEnum.LOGIN_OUT.getType());
                             break;
                         } else if (RetCodeEnum.LOGIN_OTHERWHERE.getCode().equals(retcode)) {
-                            // 其它地方登录
                             logger.info(RetCodeEnum.LOGIN_OTHERWHERE.getType());
                             break;
                         } else if (RetCodeEnum.MOBILE_LOGIN_OUT.getCode().equals(retcode)) {
-                            // 移动端退出
                             logger.info(RetCodeEnum.MOBILE_LOGIN_OUT.getType());
                             break;
                         } else if (RetCodeEnum.NORMAL.getCode().equals(retcode)) {
-                            // 最后收到正常报文时间
+                            // 正常，最后收到正常报文时间
                             core.setLastNormalRetcodeTime(System.currentTimeMillis());
-                            JSONObject msgObj = webWxSync();
+                            String selector = resultMap.get("selector");
+                            JSONObject msgObj = syncMsg();
                             if ("2".equals(selector)) {
                                 if (msgObj != null) {
                                     try {
                                         JSONArray msgList = msgObj.getJSONArray("AddMsgList");
                                         msgList = MsgCenter.produceMsg(msgList);
                                         for (int j = 0; j < msgList.size(); j++) {
-                                            BaseMsg baseMsg = JSON.toJavaObject(msgList.getJSONObject(j),
-                                                    BaseMsg.class);
+                                            BaseMsg baseMsg = JSON.toJavaObject(msgList.getJSONObject(j), BaseMsg.class);
                                             core.getMsgList().add(baseMsg);
                                         }
                                     } catch (Exception e) {
@@ -334,7 +338,7 @@ public class WeChatLoginService {
                                     }
                                 }
                             } else if ("7".equals(selector)) {
-                                webWxSync();
+                                msgObj = syncMsg();
                             } else if ("4".equals(selector)) {
                             } else if ("3".equals(selector)) {
                             } else if ("6".equals(selector)) {
@@ -355,18 +359,18 @@ public class WeChatLoginService {
                                 }
                             }
                         } else {
-                            webWxSync();
+                            syncMsg();
                         }
                     } catch (Exception e) {
-                        logger.info(e.getMessage());
-                        retryCount += 1;
+                        logger.error(e.getMessage());
+                        retryCount++;
                         if (core.getReceivingRetryCount() < retryCount) {
                             core.setAlive(false);
                         } else {
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException e1) {
-                                logger.info(e.getMessage());
+                                logger.error(e.getMessage());
                             }
                         }
                     }
@@ -374,7 +378,6 @@ public class WeChatLoginService {
                 }
             }
         }).start();
-
     }
 
     /**
@@ -613,11 +616,8 @@ public class WeChatLoginService {
      * 同步消息 sync the messages
      *
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年5月12日 上午12:24:55
      */
-    private JSONObject webWxSync() {
-        JSONObject result = null;
+    private JSONObject syncMsg() {
         String url = String.format(URLEnum.WEB_WX_SYNC_URL.getUrl(),
                 core.getLoginInfo().get(StorageLoginInfoEnum.url.getKey()),
                 core.getLoginInfo().get(StorageLoginInfoEnum.wxsid.getKey()),
@@ -627,17 +627,14 @@ public class WeChatLoginService {
         paramMap.put(StorageLoginInfoEnum.SyncKey.getKey(),
                 core.getLoginInfo().get(StorageLoginInfoEnum.SyncKey.getKey()));
         paramMap.put("rr", -System.currentTimeMillis() / 1000);
-        String paramStr = JSON.toJSONString(paramMap);
+        JSONObject result = null;
         try {
-            HttpEntity entity = core.getMyHttpClient().doPost(url, paramStr);
+            HttpEntity entity = core.getMyHttpClient().doPost(url, JSON.toJSONString(paramMap));
             String text = EntityUtils.toString(entity, Consts.UTF_8);
-            JSONObject obj = JSON.parseObject(text);
-            if (obj.getJSONObject("BaseResponse").getInteger("Ret") != 0) {
-                result = null;
-            } else {
-                result = obj;
-                core.getLoginInfo().put(StorageLoginInfoEnum.SyncKey.getKey(), obj.getJSONObject("SyncCheckKey"));
-                JSONArray syncArray = obj.getJSONObject(StorageLoginInfoEnum.SyncKey.getKey()).getJSONArray("List");
+            result = JSON.parseObject(text);
+            if (result.getJSONObject("BaseResponse").getInteger("Ret") == 0) {
+                core.getLoginInfo().put(StorageLoginInfoEnum.SyncKey.getKey(), result.getJSONObject("SyncCheckKey"));
+                JSONArray syncArray = result.getJSONObject(StorageLoginInfoEnum.SyncKey.getKey()).getJSONArray("List");
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < syncArray.size(); i++) {
                     sb.append(syncArray.getJSONObject(i).getString("Key") + "_"
@@ -647,6 +644,8 @@ public class WeChatLoginService {
                 // 1_656161336|2_656161626|3_656161313|11_656159955|13_656120033|201_1492273724|1000_1492265953|1001_1492250432|1004_1491805192
                 core.getLoginInfo().put(StorageLoginInfoEnum.synckey.getKey(),
                         synckey.substring(0, synckey.length() - 1));
+            } else {
+                result = null;
             }
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -659,11 +658,8 @@ public class WeChatLoginService {
      * 检查是否有新消息 check whether there's a message
      *
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年4月16日 上午11:11:34
      */
     private Map<String, String> syncCheck() {
-        Map<String, String> resultMap = new HashMap<>();
         // 组装请求URL和参数
         String url = core.getLoginInfo().get(StorageLoginInfoEnum.syncUrl.getKey()) + URLEnum.SYNC_CHECK_URL.getUrl();
         List<BasicNameValuePair> params = new ArrayList<>();
@@ -679,6 +675,7 @@ public class WeChatLoginService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Map<String, String> resultMap = new HashMap<>();
         try {
             HttpEntity entity = core.getMyHttpClient().doGet(url, params, true, null);
             if (entity == null) {
@@ -690,7 +687,7 @@ public class WeChatLoginService {
             String regEx = "window.synccheck=\\{retcode:\"(\\d+)\",selector:\"(\\d+)\"\\}";
             Matcher matcher = CommonTools.getMatcher(regEx, text);
             if (!matcher.find() || "2".equals(matcher.group(1))) {
-                logger.info(String.format("Unexpected sync check result: %s", text));
+                logger.info("Unexpected sync check result: {}", text);
             } else {
                 resultMap.put("retcode", matcher.group(1));
                 resultMap.put("selector", matcher.group(2));

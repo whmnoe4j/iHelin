@@ -8,16 +8,23 @@ package me.ianhe.wechat.enums;
  */
 public enum ResultEnum {
 
-    SUCCESS("200", "成功"),
-    WAIT_CONFIRM("201", "请在手机上点击确认"),
-    WAIT_SCAN("408", "请扫描二维码");
+    /**
+     * 成功
+     */
+    SUCCESS("200"),
+    /**
+     * 请在手机上点击确认
+     */
+    WAIT_CONFIRM("201"),
+    /**
+     * 请扫描二维码
+     */
+    WAIT_SCAN("408");
 
     private String code;
-    private String msg;
 
-    ResultEnum(String code, String msg) {
+    ResultEnum(String code) {
         this.code = code;
-        this.msg = msg;
     }
 
     public String getCode() {

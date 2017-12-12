@@ -2,7 +2,6 @@ package me.ianhe.wechat.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.vdurmont.emoji.EmojiParser;
-import me.ianhe.wechat.enums.OsNameEnum;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
@@ -62,8 +61,7 @@ public class CommonTools {
      */
     public static Matcher getMatcher(String regEx, String text) {
         Pattern pattern = Pattern.compile(regEx);
-        Matcher matcher = pattern.matcher(text);
-        return matcher;
+        return pattern.matcher(text);
     }
 
     /**
@@ -91,13 +89,13 @@ public class CommonTools {
     /**
      * 处理emoji表情
      *
-     * @param d
-     * @param k
+     * @param msg
+     * @param key
      */
-    public static void emojiFormatter(JSONObject d, String k) {
-        Matcher matcher = getMatcher("<span class=\"emoji emoji(.{1,10})\"></span>", d.getString(k));
+    public static void emojiFormatter(JSONObject msg, String key) {
+        Matcher matcher = getMatcher("<span class=\"emoji emoji(.{1,10})\"></span>", msg.getString(key));
         StringBuilder sb = new StringBuilder();
-        String content = d.getString(k);
+        String content = msg.getString(key);
         int lastStart = 0;
         while (matcher.find()) {
             String str = matcher.group(1);
@@ -116,44 +114,21 @@ public class CommonTools {
             sb.append(content.substring(lastStart));
         }
         if (sb.length() != 0) {
-            d.put(k, EmojiParser.parseToUnicode(sb.toString()));
+            msg.put(key, EmojiParser.parseToUnicode(sb.toString()));
         } else {
-            d.put(k, content);
+            msg.put(key, content);
         }
-
     }
 
     /**
      * 消息格式化
      *
-     * @param d
-     * @param k
-     * @author https://github.com/yaphone
-     * @date 2017年4月23日 下午4:19:08
+     * @param msg 消息体
+     * @param key key
      */
-    public static void msgFormatter(JSONObject d, String k) {
-        d.put(k, d.getString(k).replace("<br/>", "\n"));
-        emojiFormatter(d, k);
-    }
-
-    /**
-     * 获取系统平台
-     *
-     * @author https://github.com/yaphone
-     * @date 2017年4月8日 下午10:27:53
-     */
-    public static OsNameEnum getOsNameEnum() {
-        String os = System.getProperty("os.name").toUpperCase();
-        if (os.contains(OsNameEnum.DARWIN.toString())) {
-            return OsNameEnum.DARWIN;
-        } else if (os.contains(OsNameEnum.WINDOWS.toString())) {
-            return OsNameEnum.WINDOWS;
-        } else if (os.contains(OsNameEnum.LINUX.toString())) {
-            return OsNameEnum.LINUX;
-        } else if (os.contains(OsNameEnum.MAC.toString())) {
-            return OsNameEnum.MAC;
-        }
-        return OsNameEnum.OTHER;
+    public static void msgFormatter(JSONObject msg, String key) {
+        msg.put(key, msg.getString(key).replace("<br/>", "\n"));
+        emojiFormatter(msg, key);
     }
 
 }

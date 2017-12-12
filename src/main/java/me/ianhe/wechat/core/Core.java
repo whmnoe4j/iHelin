@@ -20,10 +20,7 @@ import java.util.Map;
 public class Core {
 
     private static volatile Core instance;
-
-    private Core() {
-
-    }
+    private String uuid = null;
 
     /**
      * 终极版本：volatile，史上最安全的单例吧
@@ -44,7 +41,6 @@ public class Core {
 
     private volatile Boolean alive = false;
     private int memberCount = 0;
-
     private String indexUrl;
     private String userName;
     private String nickName;
@@ -89,13 +85,10 @@ public class Core {
 
     private Map<String, JSONObject> userInfoMap = new HashMap<>();
 
-    Map<String, Object> loginInfo = new HashMap<>();
-    MyHttpClient myHttpClient = MyHttpClient.getInstance();
-    String uuid = null;
-
-    boolean useHotReload = false;
-    String hotReloadDir = "itchat.pkl";
-    int receivingRetryCount = 5;
+    private Map<String, Object> loginInfo = new HashMap<>();
+    private MyHttpClient myHttpClient = MyHttpClient.getInstance();
+    private boolean useHotReload = false;
+    private int receivingRetryCount = 5;
 
     /**
      * 最后一次收到正常retcode的时间，秒为单位
@@ -161,14 +154,6 @@ public class Core {
 
     public void setUseHotReload(boolean useHotReload) {
         this.useHotReload = useHotReload;
-    }
-
-    public String getHotReloadDir() {
-        return hotReloadDir;
-    }
-
-    public void setHotReloadDir(String hotReloadDir) {
-        this.hotReloadDir = hotReloadDir;
     }
 
     public int getReceivingRetryCount() {
@@ -301,6 +286,10 @@ public class Core {
 
     public void setIndexUrl(String indexUrl) {
         this.indexUrl = indexUrl;
+    }
+
+    private Core() {
+
     }
 
 }

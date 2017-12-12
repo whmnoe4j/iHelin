@@ -33,7 +33,7 @@ public class TestController extends BaseController {
             logger.info("+++++++++++++++++++开始消息处理+++++++++++++++++++++");
             new Thread(() -> MsgCenter.handleMsg(messageHandler), "msg-thread").start();
         } else {
-            response.getWriter().print("微信已在线，请注销后重试");
+            response.getWriter().print("WeChat is online,please logout and try again!");
         }
     }
 

@@ -12,7 +12,7 @@ public enum RetCodeEnum {
     LOGIN_OUT("1102", "退出"),
     LOGIN_OTHERWHERE("1101", "其它地方登录"),
     MOBILE_LOGIN_OUT("1102", "移动端退出"),
-    UNKOWN("9999", "未知");
+    UNKOWN("9999", "未知返回");
 
     private String code;
     private String type;

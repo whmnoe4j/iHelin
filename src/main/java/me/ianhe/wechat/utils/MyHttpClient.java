@@ -31,13 +31,10 @@ import java.util.logging.Logger;
  */
 public class MyHttpClient {
 
-    public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36";
     private Logger logger = Logger.getLogger("MyHttpClient");
-
     private static CloseableHttpClient httpClient;
-
     private static volatile MyHttpClient instance = null;
-
     private static CookieStore cookieStore;
 
     static {
@@ -46,6 +43,12 @@ public class MyHttpClient {
         httpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
     }
 
+    /**
+     * 获取cookies
+     *
+     * @param name
+     * @return
+     */
     public static String getCookie(String name) {
         List<Cookie> cookies = cookieStore.getCookies();
         for (Cookie cookie : cookies) {
@@ -54,15 +57,12 @@ public class MyHttpClient {
             }
         }
         return null;
-
     }
 
     /**
-     * 获取cookies
+     * 获取实例
      *
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年5月7日 下午8:37:17
      */
     public static MyHttpClient getInstance() {
         if (instance == null) {
@@ -80,9 +80,9 @@ public class MyHttpClient {
      *
      * @param url
      * @param params
+     * @param redirect
+     * @param headerMap
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年4月9日 下午7:06:19
      */
     public HttpEntity doGet(String url, List<BasicNameValuePair> params, boolean redirect,
                             Map<String, String> headerMap) {
@@ -111,7 +111,6 @@ public class MyHttpClient {
         } catch (IOException e) {
             logger.info(e.getMessage());
         }
-
         return entity;
     }
 
@@ -121,8 +120,6 @@ public class MyHttpClient {
      * @param url
      * @param paramsStr
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年4月9日 下午7:06:35
      */
     public HttpEntity doPost(String url, String paramsStr) {
         HttpEntity entity = null;
@@ -138,7 +135,6 @@ public class MyHttpClient {
         } catch (IOException e) {
             logger.info(e.getMessage());
         }
-
         return entity;
     }
 
@@ -148,8 +144,6 @@ public class MyHttpClient {
      * @param url
      * @param reqEntity
      * @return
-     * @author https://github.com/yaphone
-     * @date 2017年5月7日 下午9:19:23
      */
     public HttpEntity doPostFile(String url, HttpEntity reqEntity) {
         HttpEntity entity = null;
@@ -159,15 +153,10 @@ public class MyHttpClient {
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);
             entity = response.getEntity();
-
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
         return entity;
-    }
-
-    public static CloseableHttpClient getHttpClient() {
-        return httpClient;
     }
 
 }

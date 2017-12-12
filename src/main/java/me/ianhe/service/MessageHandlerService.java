@@ -5,7 +5,6 @@ import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.core.Core;
 import me.ianhe.wechat.core.MessageHandler;
 import me.ianhe.wechat.enums.MsgTypeEnum;
-import me.ianhe.wechat.utils.DownloadTools;
 import me.ianhe.wechat.utils.WeChatTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class MessageHandlerService implements MessageHandler {
     }
 
     @Override
-    public void textMsgHandle(BaseMsg msg) {
+    public void handleTextMsg(BaseMsg msg) {
         if (!msg.isGroupMsg()) {
             String text = msg.getText();
             logger.info(text);
@@ -59,7 +58,7 @@ public class MessageHandlerService implements MessageHandler {
                 System.out.println(WeChatTools.getContactList());
             }
             if (!msg.getFromUserName().equals(Core.getInstance().getUserName())) {
-//                WeChatTools.sendMsgByUsername("谢谢", msg.getFromUserName());
+//                WeChatTools.sendTextMsgByUsername("谢谢", msg.getFromUserName());
 //                TODO 回复别人的消息
             }
         } else {
@@ -68,7 +67,7 @@ public class MessageHandlerService implements MessageHandler {
     }
 
     @Override
-    public void sysMsgHandle(BaseMsg msg) {
+    public void handleSysMsg(BaseMsg msg) {
         logger.debug("系统消息：{}", JSON.toJSONString(msg));
         String text = msg.getContent();
         if ("发出红包，请在手机上查看".equals(text)) {
@@ -77,46 +76,46 @@ public class MessageHandlerService implements MessageHandler {
     }
 
     @Override
-    public void verifyAddFriendMsgHandle(BaseMsg msg) {
+    public void handleVerifyAddFriendMsg(BaseMsg msg) {
         /*WeChatTools.addFriend(msg, true);
         RecommendInfo recommendInfo = msg.getRecommendInfo();
         String nickName = recommendInfo.getNickName();
         String province = recommendInfo.getProvince();
         String city = recommendInfo.getCity();
         String text = "你好，来自" + province + city + "的" + nickName + "， 欢迎添加我为好友！";
-        WeChatTools.sendMsgByUsername(text, msg.getFromUserName());*/
+        WeChatTools.sendTextMsgByUsername(text, msg.getFromUserName());*/
     }
 
     @Override
-    public void picMsgHandle(BaseMsg msg) {
+    public void handlePicMsg(BaseMsg msg) {
         String fileName = "wechat/pic/" + new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(new Date()) + ".jpg";
-        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.PIC.getType()));
+        fileService.uploadFile(fileName, WeChatTools.downloadMsg(msg, MsgTypeEnum.PIC.getType()));
     }
 
     @Override
-    public void voiceMsgHandle(BaseMsg msg) {
+    public void handleVoiceMsg(BaseMsg msg) {
 //        String fileName = "wechat/voice/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp3";
-//        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VOICE.getType()));
+//        fileService.uploadFile(fileName, WeChatTools.downloadMsg(msg, MsgTypeEnum.VOICE.getType()));
     }
 
     @Override
-    public void videoMsgHandle(BaseMsg msg) {
+    public void handleVideoMsg(BaseMsg msg) {
 //        String fileName = "wechat/video/" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".mp4";
-//        fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.VIEDO.getType()));
+//        fileService.uploadFile(fileName, WeChatTools.downloadMsg(msg, MsgTypeEnum.VIEDO.getType()));
     }
 
     @Override
-    public void nameCardMsgHandle(BaseMsg msg) {
+    public void handleNameCardMsg(BaseMsg msg) {
 
     }
 
     @Override
-    public void mediaMsgHandle(BaseMsg msg) {
+    public void handleMediaMsg(BaseMsg msg) {
         System.out.println(JSON.toJSONString(msg));
         //我已经在百词斩上坚持了157天，今日过招27个单词。
         if (msg.getFileName().contains("我已经在百词斩上坚持了")
                 && "@@2b50dc80a3091e79eca1bea77c617a389b47873c385a29897f368169d2867cf5".equals(msg.getFromUserName())) {
-            WeChatTools.sendMsgByUsername("很好，继续努力", msg.getFromUserName());
+            WeChatTools.sendTextMsgByUsername("很好，继续努力", msg.getFromUserName());
         }
     }
 }

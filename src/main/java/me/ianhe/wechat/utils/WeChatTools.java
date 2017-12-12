@@ -6,9 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.beans.RecommendInfo;
 import me.ianhe.wechat.core.Core;
-import me.ianhe.wechat.enums.StorageLoginInfoEnum;
-import me.ianhe.wechat.enums.URLEnum;
-import me.ianhe.wechat.enums.VerifyFriendEnum;
+import me.ianhe.wechat.enums.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -22,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,19 +37,54 @@ public class WeChatTools {
     private static Core core = Core.getInstance();
 
     /**
-     * 根据username发送文本消息
+     * 发送文本消息
      *
      * @param text
      * @param username
      * @author https://github.com/yaphone
      * @date 2017年5月6日 上午11:45:51
      */
-    public static void sendMsgByUsername(String text, String username) {
+    public static void sendTextMsgByUsername(String text, String username) {
         if (StringUtils.isEmpty(text)) {
             return;
         }
-        logger.info(String.format("发送消息 {}: {}", username, text));
-        sendTextMsg(1, text, username);
+        logger.info("发送消息 {}: {}", username, text);
+        sendTextMsg(MsgCodeEnum.MSGTYPE_TEXT, text, username);
+    }
+
+    /**
+     * 处理下载任务
+     *
+     * @param msg
+     * @param type
+     */
+    public static byte[] downloadMsg(BaseMsg msg, String type) {
+        Map<String, String> headerMap = new HashMap<>();
+        List<BasicNameValuePair> params = new ArrayList<>();
+        String url = "";
+        if (MsgTypeEnum.PIC.getType().equals(type)) {
+            url = String.format(URLEnum.WEB_WX_GET_MSG_IMG.getUrl(), (String) core.getLoginInfo().get("url"));
+        } else if (MsgTypeEnum.VOICE.getType().equals(type)) {
+            url = String.format(URLEnum.WEB_WX_GET_VOICE.getUrl(), (String) core.getLoginInfo().get("url"));
+        } else if (MsgTypeEnum.VIEDO.getType().equals(type)) {
+            headerMap.put("Range", "bytes=0-");
+            url = String.format(URLEnum.WEB_WX_GET_VIEDO.getUrl(), (String) core.getLoginInfo().get("url"));
+        } else if (MsgTypeEnum.MEDIA.getType().equals(type)) {
+            headerMap.put("Range", "bytes=0-");
+            url = String.format(URLEnum.WEB_WX_GET_MEDIA.getUrl(), (String) core.getLoginInfo().get("fileUrl"));
+            params.add(new BasicNameValuePair("sender", msg.getFromUserName()));
+            params.add(new BasicNameValuePair("mediaid", msg.getMediaId()));
+            params.add(new BasicNameValuePair("filename", msg.getFileName()));
+        }
+        params.add(new BasicNameValuePair("msgid", msg.getNewMsgId()));
+        params.add(new BasicNameValuePair("skey", (String) core.getLoginInfo().get("skey")));
+        HttpEntity entity = core.getMyHttpClient().doGet(url, params, true, headerMap);
+        try {
+            return EntityUtils.toByteArray(entity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -63,11 +97,11 @@ public class WeChatTools {
      * @date 2017年5月7日 下午10:34:24
      */
     public static boolean sendPicMsgByUsername(String username, String filePath) {
-        JSONObject responseObj = webWxUploadMedia(filePath);
+        JSONObject responseObj = uploadMediaFile(filePath);
         if (responseObj != null) {
             String mediaId = responseObj.getString("MediaId");
             if (mediaId != null) {
-                return webWxSendMsgImg(username, mediaId);
+                return sendImgMsg(username, mediaId);
             }
         }
         return false;
@@ -90,7 +124,7 @@ public class WeChatTools {
         data.put("type", "6");
         // 文件后缀
         data.put("fileext", title.split("\\.")[1]);
-        JSONObject responseObj = webWxUploadMedia(filePath);
+        JSONObject responseObj = uploadMediaFile(filePath);
         if (responseObj != null) {
             data.put("totallen", responseObj.getString("StartPos"));
             data.put("attachid", responseObj.getString("MediaId"));
@@ -119,8 +153,8 @@ public class WeChatTools {
         // 更新好友列表
         String url = String.format(URLEnum.WEB_WX_VERIFYUSER.getUrl(), core.getLoginInfo().get("url"),
                 String.valueOf(System.currentTimeMillis() / 3158L), core.getLoginInfo().get("pass_ticket"));
-        List<Map<String, Object>> verifyUserList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> verifyUser = new HashMap<String, Object>();
+        List<Map<String, Object>> verifyUserList = new ArrayList<>();
+        Map<String, Object> verifyUser = new HashMap<>();
         verifyUser.put("Value", userName);
         verifyUser.put("VerifyUserTicket", ticket);
         verifyUserList.add(verifyUser);
@@ -231,14 +265,13 @@ public class WeChatTools {
     /**
      * 消息发送
      *
-     * @param msgType
+     * @param msgCodeEnum
      * @param content
      * @param toUserName
      */
-    private static void sendTextMsg(int msgType, String content, String toUserName) {
-        String url = String.format(URLEnum.WEB_WX_SEND_MSG.getUrl(), core.getLoginInfo().get("url"));
+    private static void sendTextMsg(MsgCodeEnum msgCodeEnum, String content, String toUserName) {
         Map<String, Object> msgMap = new HashMap<>();
-        msgMap.put("Type", msgType);
+        msgMap.put("Type", msgCodeEnum.getCode());
         msgMap.put("Content", content);
         msgMap.put("FromUserName", core.getUserName());
         msgMap.put("ToUserName", toUserName == null ? core.getUserName() : toUserName);
@@ -247,6 +280,7 @@ public class WeChatTools {
         Map<String, Object> paramMap = core.getBaseParamMap();
         paramMap.put("Msg", msgMap);
         paramMap.put("Scene", 0);
+        String url = String.format(URLEnum.WEB_WX_SEND_MSG.getUrl(), core.getLoginInfo().get("url"));
         try {
             String paramStr = JSON.toJSONString(paramMap);
             HttpEntity entity = core.getMyHttpClient().doPost(url, paramStr);
@@ -296,19 +330,19 @@ public class WeChatTools {
         String url = String.format(URLEnum.WEB_WX_REMARKNAME.getUrl(), core.getLoginInfo().get("url"),
                 core.getLoginInfo().get(StorageLoginInfoEnum.pass_ticket.getKey()));
         Map<String, Object> msgMap = new HashMap<>();
-        Map<String, Object> msgMap_BaseRequest = new HashMap<>();
+        Map<String, Object> msgMapBaseRequest = new HashMap<>();
         msgMap.put("CmdId", 2);
         msgMap.put("RemarkName", remarkName);
         msgMap.put("UserName", core.getUserInfoMap().get(nickName).get("UserName"));
-        msgMap_BaseRequest.put("Uin", core.getLoginInfo().get(StorageLoginInfoEnum.wxuin.getKey()));
-        msgMap_BaseRequest.put("Sid", core.getLoginInfo().get(StorageLoginInfoEnum.wxsid.getKey()));
-        msgMap_BaseRequest.put("Skey", core.getLoginInfo().get(StorageLoginInfoEnum.skey.getKey()));
-        msgMap_BaseRequest.put("DeviceID", core.getLoginInfo().get(StorageLoginInfoEnum.deviceid.getKey()));
-        msgMap.put("BaseRequest", msgMap_BaseRequest);
+        msgMapBaseRequest.put("Uin", core.getLoginInfo().get(StorageLoginInfoEnum.wxuin.getKey()));
+        msgMapBaseRequest.put("Sid", core.getLoginInfo().get(StorageLoginInfoEnum.wxsid.getKey()));
+        msgMapBaseRequest.put("Skey", core.getLoginInfo().get(StorageLoginInfoEnum.skey.getKey()));
+        msgMapBaseRequest.put("DeviceID", core.getLoginInfo().get(StorageLoginInfoEnum.deviceid.getKey()));
+        msgMap.put("BaseRequest", msgMapBaseRequest);
         try {
             String paramStr = JSON.toJSONString(msgMap);
             core.getMyHttpClient().doPost(url, paramStr);
-            logger.info("修改备注" + remarkName);
+            logger.info("修改备注:{}", remarkName);
         } catch (Exception e) {
             logger.error("remarkNameByUserName", e);
         }
@@ -321,7 +355,7 @@ public class WeChatTools {
      * @param mediaId
      * @return
      */
-    private static boolean webWxSendMsgImg(String userId, String mediaId) {
+    private static boolean sendImgMsg(String userId, String mediaId) {
         String url = String.format("%s/webwxsendmsgimg?fun=async&f=json&pass_ticket=%s", core.getLoginInfo().get("url"),
                 core.getLoginInfo().get("pass_ticket"));
         Map<String, Object> msgMap = new HashMap<>();
@@ -343,7 +377,7 @@ public class WeChatTools {
                 String result = EntityUtils.toString(entity, Consts.UTF_8);
                 return JSON.parseObject(result).getJSONObject("BaseResponse").getInteger("Ret") == 0;
             } catch (Exception e) {
-                logger.error("webWxSendMsgImg 错误： ", e);
+                logger.error("发送图片消息错误", e);
             }
         }
         return false;
@@ -356,10 +390,10 @@ public class WeChatTools {
      * @param filePath
      * @return
      */
-    private static JSONObject webWxUploadMedia(String filePath) {
+    private static JSONObject uploadMediaFile(String filePath) {
         File f = new File(filePath);
         if (!f.exists() && f.isFile()) {
-            logger.info("file is not exist");
+            logger.warn("file is not exist");
             return null;
         }
         String url = String.format(URLEnum.WEB_WX_UPLOAD_MEDIA.getUrl(), core.getLoginInfo().get("fileUrl"));
@@ -368,7 +402,7 @@ public class WeChatTools {
         if (StringUtils.isEmpty(mimeType)) {
             mimeType = "text/plain";
         } else {
-            mediaType = mimeType.split("/")[0].equals("image") ? "pic" : "doc";
+            mediaType = "image".equals(mimeType.split("/")[0]) ? "pic" : "doc";
         }
         String lastModifieDate = new SimpleDateFormat("yyyy MM dd HH:mm:ss").format(new Date());
         long fileSize = f.length();
@@ -376,8 +410,8 @@ public class WeChatTools {
         String clientMediaId = String.valueOf(System.currentTimeMillis())
                 + String.valueOf(new Random().nextLong()).substring(0, 4);
         String webwxDataTicket = MyHttpClient.getCookie("webwx_data_ticket");
-        if (webwxDataTicket == null) {
-            logger.error("get cookie webwx_data_ticket error");
+        if (StringUtils.isEmpty(webwxDataTicket)) {
+            logger.error("get cookie [webwx_data_ticket] error");
             return null;
         }
         Map<String, Object> paramMap = core.getBaseParamMap();
@@ -405,7 +439,7 @@ public class WeChatTools {
                 String result = EntityUtils.toString(entity, Consts.UTF_8);
                 return JSON.parseObject(result);
             } catch (Exception e) {
-                logger.error("webWxUploadMedia 错误： ", e);
+                logger.error("上传多媒体文件错误", e);
             }
 
         }

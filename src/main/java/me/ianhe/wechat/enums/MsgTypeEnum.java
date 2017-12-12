@@ -2,35 +2,53 @@ package me.ianhe.wechat.enums;
 
 
 /**
- * 消息类型枚举类
+ * 经过转换后的消息类型
  *
  * @author iHelin
  * @since 2017/12/11 14:28
  */
 public enum MsgTypeEnum {
-    TEXT("Text", "文本消息"),
-    PIC("Pic", "图片消息"),
-    VOICE("Voice", "语音消息"),
-    VIEDO("Viedo", "小视频消息"),
-    NAMECARD("NameCard", "名片消息"),
-    SYS("Sys", "系统消息"),
-    VERIFYMSG("VerifyMsg", "添加好友"),
-    MEDIA("app", "文件消息");
+
+    /**
+     * 文本消息
+     */
+    TEXT("Text"),
+    /**
+     * 图片消息
+     */
+    PIC("Pic"),
+    /**
+     * 语音消息
+     */
+    VOICE("Voice"),
+    /**
+     * 小视频消息
+     */
+    VIEDO("Viedo"),
+    /**
+     * 名片消息
+     */
+    NAMECARD("NameCard"),
+    /**
+     * 系统消息
+     */
+    SYS("Sys"),
+    /**
+     * 添加好友
+     */
+    VERIFYMSG("VerifyMsg"),
+    /**
+     * 文件消息
+     */
+    MEDIA("app");
 
     private String type;
-    private String code;
 
-    MsgTypeEnum(String type, String code) {
+    MsgTypeEnum(String type) {
         this.type = type;
-        this.code = code;
     }
 
     public String getType() {
         return type;
     }
-
-    public String getCode() {
-        return code;
-    }
-
 }
