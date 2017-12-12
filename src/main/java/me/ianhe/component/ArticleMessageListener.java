@@ -28,7 +28,7 @@ public class ArticleMessageListener {
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "article")
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;
-        logger.debug("接收到文章消息");
+        logger.debug("消费者接收到文章消息");
         try {
             Integer articleID = Integer.valueOf(textMsg.getText());
             long count = commonRedisDao.incr(READ_COUNT_KEY + articleID);

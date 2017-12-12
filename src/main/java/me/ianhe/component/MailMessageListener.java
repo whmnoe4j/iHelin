@@ -29,7 +29,7 @@ public class MailMessageListener {
 
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "mail")
     public void onMessage(ObjectMessage message) {
-        logger.debug("接收到一条邮件消息。");
+        logger.debug("消费者接收到一条邮件消息。");
         try {
             MailModel mail = (MailModel) message.getObject();
             mailService.sendHTMLMail(mail.getToAddress(), mail.getSubject(), mail.getContent());

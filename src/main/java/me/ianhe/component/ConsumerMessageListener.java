@@ -23,7 +23,7 @@ public class ConsumerMessageListener {
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "seven")
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;
-        logger.debug("接收到一个纯文本消息。");
+        logger.debug("消费者接收到一个纯文本消息。");
         try {
             logger.debug("消息内容是：{}", textMsg.getText());
         } catch (JMSException e) {

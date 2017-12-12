@@ -108,10 +108,10 @@ public class WeChatLoginService {
         logger.info("5 开启微信状态通知");
         wxStatusNotify();
 
-        logger.info(String.format("6 欢迎回来， %s", core.getNickName()));
+        logger.info("6 欢迎回来，{}", core.getNickName());
 
         logger.info("7 开始接收消息");
-        startReceiving();
+        receiveServerMsg();
 
         logger.info("8 获取联系人信息");
         webWxGetContact();
@@ -124,8 +124,96 @@ public class WeChatLoginService {
 
         logger.info("11 开启微信状态检测线程");
         //开始检测在线状态
-        Runnable r = new CheckLoginStatusThread();
-        new Thread(r, "checkLoginStatus-thread").start();
+        Runnable runnable = new CheckLoginStatusThread();
+        new Thread(runnable, "checkLoginStatus-thread").start();
+    }
+
+    /**
+     * 接收服务器消息，放入队列
+     *
+     * @author iHelin
+     * @since 2017/12/11 14:09
+     */
+    private void receiveServerMsg() {
+        new Thread(new Runnable() {
+            int retryCount = 0;
+
+            @Override
+            public void run() {
+                while (core.isAlive()) {
+                    try {
+                        Map<String, String> resultMap = syncCheck();
+                        logger.info("同步检查:{}", JSONObject.toJSONString(resultMap));
+                        String retcode = resultMap.get("retcode");
+                        if (RetCodeEnum.UNKOWN.getCode().equals(retcode)) {
+                            logger.info(RetCodeEnum.UNKOWN.getType());
+                        } else if (RetCodeEnum.LOGIN_OUT.getCode().equals(retcode)) {
+                            logger.info(RetCodeEnum.LOGIN_OUT.getType());
+                            break;
+                        } else if (RetCodeEnum.LOGIN_OTHERWHERE.getCode().equals(retcode)) {
+                            logger.info(RetCodeEnum.LOGIN_OTHERWHERE.getType());
+                            break;
+                        } else if (RetCodeEnum.MOBILE_LOGIN_OUT.getCode().equals(retcode)) {
+                            logger.info(RetCodeEnum.MOBILE_LOGIN_OUT.getType());
+                            break;
+                        } else if (RetCodeEnum.NORMAL.getCode().equals(retcode)) {
+                            // 正常，最后收到正常报文时间
+                            core.setLastNormalRetcodeTime(System.currentTimeMillis());
+                            String selector = resultMap.get("selector");
+                            JSONObject msgObj = syncMsg();
+                            if ("2".equals(selector)) {
+                                if (msgObj != null) {
+                                    try {
+                                        JSONArray msgList = MsgCenter.produceMsg(msgObj.getJSONArray("AddMsgList"));
+                                        for (int j = 0; j < msgList.size(); j++) {
+                                            BaseMsg baseMsg = JSON.toJavaObject(msgList.getJSONObject(j), BaseMsg.class);
+                                            //使用jms消息实现
+                                            producerService.sendMessage(destination, baseMsg);
+                                        }
+                                    } catch (Exception e) {
+                                        logger.error("json反序列化失败", e);
+                                    }
+                                }
+                            } else if ("7".equals(selector)) {
+                                msgObj = syncMsg();
+                            } else if ("4".equals(selector)) {
+                            } else if ("3".equals(selector)) {
+                            } else if ("6".equals(selector)) {
+                                if (msgObj != null) {
+                                    try {
+                                        JSONArray msgList = msgObj.getJSONArray("AddMsgList");
+                                        // 存在删除或者新增的好友信息
+                                        JSONArray modContactList = msgObj.getJSONArray("ModContactList");
+                                        msgList = MsgCenter.produceMsg(msgList);
+                                        for (int j = 0; j < msgList.size(); j++) {
+                                            JSONObject userInfo = modContactList.getJSONObject(j);
+                                            // 存在主动加好友之后的同步联系人到本地
+                                            core.getContactList().add(userInfo);
+                                        }
+                                    } catch (Exception e) {
+                                        logger.info(e.getMessage());
+                                    }
+                                }
+                            }
+                        } else {
+                            syncMsg();
+                        }
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                        retryCount++;
+                        if (core.getReceivingRetryCount() < retryCount) {
+                            core.setAlive(false);
+                        } else {
+                            try {
+                                TimeUnit.SECONDS.sleep(1);
+                            } catch (InterruptedException e1) {
+                                logger.error(e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+        }, "msg-receiving-thread").start();
     }
 
     /**
@@ -134,7 +222,7 @@ public class WeChatLoginService {
      * @author iHelin
      * @since 2017/12/11 14:08
      */
-    public void login() {
+    private void login() {
         // 组装参数和URL
         List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair(LoginParaEnum.LOGIN_ICON.getParam(), LoginParaEnum.LOGIN_ICON.value()));
@@ -227,8 +315,6 @@ public class WeChatLoginService {
         core.getGroupMemeberMap().clear();
         core.getPublicUsersList().clear();
         core.getSpecialUsersList().clear();
-        //设置最近一次正常返回时间
-        core.setLastNormalRetcodeTime(System.currentTimeMillis());
         // 组装请求URL和参数
         String url = String.format(URLEnum.INIT_URL.getUrl(),
                 core.getLoginInfo().get(StorageLoginInfoEnum.url.getKey()),
@@ -298,94 +384,6 @@ public class WeChatLoginService {
             logger.error("微信状态通知接口失败！", e);
         }
 
-    }
-
-    /**
-     * 接收消息
-     *
-     * @author iHelin
-     * @since 2017/12/11 14:09
-     */
-    private void startReceiving() {
-        new Thread(new Runnable() {
-            int retryCount = 0;
-
-            @Override
-            public void run() {
-                while (core.isAlive()) {
-                    try {
-                        Map<String, String> resultMap = syncCheck();
-                        logger.info("同步检查:{}", JSONObject.toJSONString(resultMap));
-                        String retcode = resultMap.get("retcode");
-                        if (RetCodeEnum.UNKOWN.getCode().equals(retcode)) {
-                            logger.info(RetCodeEnum.UNKOWN.getType());
-                        } else if (RetCodeEnum.LOGIN_OUT.getCode().equals(retcode)) {
-                            logger.info(RetCodeEnum.LOGIN_OUT.getType());
-                            break;
-                        } else if (RetCodeEnum.LOGIN_OTHERWHERE.getCode().equals(retcode)) {
-                            logger.info(RetCodeEnum.LOGIN_OTHERWHERE.getType());
-                            break;
-                        } else if (RetCodeEnum.MOBILE_LOGIN_OUT.getCode().equals(retcode)) {
-                            logger.info(RetCodeEnum.MOBILE_LOGIN_OUT.getType());
-                            break;
-                        } else if (RetCodeEnum.NORMAL.getCode().equals(retcode)) {
-                            // 正常，最后收到正常报文时间
-                            core.setLastNormalRetcodeTime(System.currentTimeMillis());
-                            String selector = resultMap.get("selector");
-                            JSONObject msgObj = syncMsg();
-                            if ("2".equals(selector)) {
-                                if (msgObj != null) {
-                                    try {
-                                        JSONArray msgList = MsgCenter.produceMsg(msgObj.getJSONArray("AddMsgList"));
-                                        for (int j = 0; j < msgList.size(); j++) {
-                                            BaseMsg baseMsg = JSON.toJavaObject(msgList.getJSONObject(j), BaseMsg.class);
-                                            //使用jms消息实现
-                                            producerService.sendMessage(destination, baseMsg);
-                                        }
-                                    } catch (Exception e) {
-                                        logger.error("json反序列化失败", e);
-                                    }
-                                }
-                            } else if ("7".equals(selector)) {
-                                msgObj = syncMsg();
-                            } else if ("4".equals(selector)) {
-                            } else if ("3".equals(selector)) {
-                            } else if ("6".equals(selector)) {
-                                if (msgObj != null) {
-                                    try {
-                                        JSONArray msgList = msgObj.getJSONArray("AddMsgList");
-                                        // 存在删除或者新增的好友信息
-                                        JSONArray modContactList = msgObj.getJSONArray("ModContactList");
-                                        msgList = MsgCenter.produceMsg(msgList);
-                                        for (int j = 0; j < msgList.size(); j++) {
-                                            JSONObject userInfo = modContactList.getJSONObject(j);
-                                            // 存在主动加好友之后的同步联系人到本地
-                                            core.getContactList().add(userInfo);
-                                        }
-                                    } catch (Exception e) {
-                                        logger.info(e.getMessage());
-                                    }
-                                }
-                            }
-                        } else {
-                            syncMsg();
-                        }
-                    } catch (Exception e) {
-                        logger.error(e.getMessage());
-                        retryCount++;
-                        if (core.getReceivingRetryCount() < retryCount) {
-                            core.setAlive(false);
-                        } else {
-                            try {
-                                TimeUnit.SECONDS.sleep(1);
-                            } catch (InterruptedException e1) {
-                                logger.error(e.getMessage());
-                            }
-                        }
-                    }
-                }
-            }
-        }, "msg-receiving-thread").start();
     }
 
     /**

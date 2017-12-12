@@ -2,7 +2,6 @@ package me.ianhe.wechat.core;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.enums.parameters.BaseParaEnum;
 import me.ianhe.wechat.utils.MyHttpClient;
 
@@ -44,7 +43,6 @@ public class Core {
     private String indexUrl;
     private String userName;
     private String nickName;
-    private List<BaseMsg> msgList = new ArrayList<>();
 
     /**
      * 登录账号自身信息
@@ -166,14 +164,6 @@ public class Core {
 
     public MyHttpClient getMyHttpClient() {
         return myHttpClient;
-    }
-
-    private List<BaseMsg> getMsgList() {
-        return msgList;
-    }
-
-    public void setMsgList(List<BaseMsg> msgList) {
-        this.msgList = msgList;
     }
 
     public void setMyHttpClient(MyHttpClient myHttpClient) {
