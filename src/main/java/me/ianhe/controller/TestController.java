@@ -31,7 +31,7 @@ public class TestController extends BaseController {
         if (!core.isAlive()) {
             weChatLoginService.login(response.getOutputStream());
             logger.info("+++++++++++++++++++开始消息处理+++++++++++++++++++++");
-            new Thread(() -> MsgCenter.handleMsg(messageHandler), "msg-thread").start();
+            new Thread(() -> MsgCenter.handleMsg(messageHandler), "msg-handler-thread").start();
         } else {
             response.getWriter().print("WeChat is online,please logout and try again!");
         }

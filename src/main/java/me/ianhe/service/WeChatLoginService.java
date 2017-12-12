@@ -116,7 +116,7 @@ public class WeChatLoginService {
         logger.info("11 开启微信状态检测线程");
         //开始检测在线状态
         Runnable r = new CheckLoginStatusThread();
-        new Thread(r).start();
+        new Thread(r, "checkLoginStatus-thread").start();
     }
 
     /**
@@ -368,16 +368,15 @@ public class WeChatLoginService {
                             core.setAlive(false);
                         } else {
                             try {
-                                Thread.sleep(1000);
+                                TimeUnit.SECONDS.sleep(1);
                             } catch (InterruptedException e1) {
                                 logger.error(e.getMessage());
                             }
                         }
                     }
-
                 }
             }
-        }).start();
+        }, "msg-receiving-thread").start();
     }
 
     /**

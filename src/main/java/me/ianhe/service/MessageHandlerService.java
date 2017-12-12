@@ -5,6 +5,7 @@ import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.core.Core;
 import me.ianhe.wechat.core.MessageHandler;
 import me.ianhe.wechat.enums.MsgTypeEnum;
+import me.ianhe.wechat.utils.CommonTools;
 import me.ianhe.wechat.utils.WeChatTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
 
 /**
  * 消息处理类
@@ -24,9 +26,10 @@ import java.util.Date;
 @Service
 public class MessageHandlerService implements MessageHandler {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private FileService fileService;
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String familyID = "@@2b50dc80a3091e79eca1bea77c617a389b47873c385a29897f368169d2867cf5";
 
     @PostConstruct
     public void init() {
@@ -69,8 +72,11 @@ public class MessageHandlerService implements MessageHandler {
     @Override
     public void handleSysMsg(BaseMsg msg) {
         logger.debug("系统消息：{}", JSON.toJSONString(msg));
-        String text = msg.getContent();
-        if ("发出红包，请在手机上查看".equals(text)) {
+        String content = msg.getContent();
+        //收到红包，请在手机上查看
+        //发出红包，请在手机上查看
+        if (content.contains("红包，请在手机上查看")
+                && familyID.equals(msg.getFromUserName())) {
 
         }
     }
@@ -113,9 +119,21 @@ public class MessageHandlerService implements MessageHandler {
     public void handleMediaMsg(BaseMsg msg) {
         System.out.println(JSON.toJSONString(msg));
         //我已经在百词斩上坚持了157天，今日过招27个单词。
-        if (msg.getFileName().contains("我已经在百词斩上坚持了")
-                && "@@2b50dc80a3091e79eca1bea77c617a389b47873c385a29897f368169d2867cf5".equals(msg.getFromUserName())) {
-            WeChatTools.sendTextMsgByUsername("很好，继续努力", msg.getFromUserName());
+        if (familyID.equals(msg.getFromUserName())) {
+            Matcher matcher = CommonTools.getMatcher(".*百词斩上坚持了(\\d+)天.*招(\\d+)个单词.*", msg.getFileName());
+            if (matcher.find()) {
+                String day = matcher.group(1);
+                String count = matcher.group(2);
+                WeChatTools.sendTextMsgByUsername("很好，继续努力", msg.getFromUserName());
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Matcher matcher = CommonTools.getMatcher(".*百词斩上坚持了(\\d+)天.*招(\\d+)个单词.*", "我已经在百词斩上坚持了157天，今日过招27个单词。");
+        if (matcher.find()) {
+            System.out.println(matcher.group(1));
+            System.out.println(matcher.group(2));
         }
     }
 }
