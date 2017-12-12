@@ -315,6 +315,7 @@ public class WeChatLoginService {
         core.getGroupMemeberMap().clear();
         core.getPublicUsersList().clear();
         core.getSpecialUsersList().clear();
+        core.setLastNormalRetcodeTime(System.currentTimeMillis());
         // 组装请求URL和参数
         String url = String.format(URLEnum.INIT_URL.getUrl(),
                 core.getLoginInfo().get(StorageLoginInfoEnum.url.getKey()),
