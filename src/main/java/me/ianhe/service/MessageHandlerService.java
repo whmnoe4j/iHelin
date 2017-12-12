@@ -62,7 +62,7 @@ public class MessageHandlerService implements MessageHandler {
 //                TODO 回复别人的消息
             }
         } else {
-            System.out.println("[群消息]" + msg.getFromUserName() + ":" + msg.getText());
+            logger.debug("[群消息]" + msg.getFromUserName() + ":" + msg.getText());
         }
     }
 
