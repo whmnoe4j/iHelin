@@ -1,6 +1,7 @@
 package me.ianhe.wechat.thread;
 
 import me.ianhe.wechat.core.Core;
+import me.ianhe.wechat.utils.WeChatTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,9 @@ public class CheckLoginStatusThread implements Runnable {
         while (core.isAlive()) {
             // 秒为单位
             long t1 = System.currentTimeMillis();
-            // 超过60秒，判为离线
-            if (t1 - core.getLastNormalRetcodeTime() > 60 * 1000) {
-                core.setAlive(false);
+            // 超过180秒，判为离线
+            if (t1 - core.getLastNormalRetcodeTime() > 3L * 60 * 1000) {
+                WeChatTools.logout();
                 logger.info("微信已离线");
             }
             // 休眠10秒

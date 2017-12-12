@@ -24,9 +24,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+import javax.jms.Destination;
 import java.io.OutputStream;
 import java.util.*;
 import java.util.Map.Entry;
@@ -41,6 +44,12 @@ import java.util.regex.Matcher;
  */
 @Service
 public class WeChatLoginService {
+
+    @Autowired
+    protected JmsProducerService producerService;
+    @Autowired
+    @Qualifier("weChatMsgQueue")
+    private Destination destination;
 
     private static final ArrayList<String> API_SPECIAL_USER = new ArrayList<>(Arrays.asList("filehelper", "weibo",
             "qqmail", "fmessage", "tmessage", "qmessage", "qqsync", "floatbottle", "lbsapp", "shakeapp", "medianote",
@@ -327,14 +336,14 @@ public class WeChatLoginService {
                             if ("2".equals(selector)) {
                                 if (msgObj != null) {
                                     try {
-                                        JSONArray msgList = msgObj.getJSONArray("AddMsgList");
-                                        msgList = MsgCenter.produceMsg(msgList);
+                                        JSONArray msgList = MsgCenter.produceMsg(msgObj.getJSONArray("AddMsgList"));
                                         for (int j = 0; j < msgList.size(); j++) {
                                             BaseMsg baseMsg = JSON.toJavaObject(msgList.getJSONObject(j), BaseMsg.class);
-                                            core.getMsgList().add(baseMsg);
+                                            //使用jms消息实现
+                                            producerService.sendMessage(destination, baseMsg);
                                         }
                                     } catch (Exception e) {
-                                        logger.info(e.getMessage());
+                                        logger.error("json反序列化失败", e);
                                     }
                                 }
                             } else if ("7".equals(selector)) {
@@ -559,8 +568,8 @@ public class WeChatLoginService {
             }
             //如果登录被禁止时，则登录返回的message内容不为空，下面代码则判断登录内容是否为空，不为空则退出程序
             String msg = getLoginMessage(text);
-            if (!"".equals(msg)) {
-                logger.error("登录被禁止" + msg);
+            if (StringUtils.isNotEmpty(msg)) {
+                logger.error("登录被禁止:{}", msg);
                 return;
             }
             Document doc = CommonTools.xmlParser(text);

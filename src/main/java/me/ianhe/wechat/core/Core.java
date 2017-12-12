@@ -168,7 +168,7 @@ public class Core {
         return myHttpClient;
     }
 
-    public List<BaseMsg> getMsgList() {
+    private List<BaseMsg> getMsgList() {
         return msgList;
     }
 

@@ -2,14 +2,12 @@ package me.ianhe.wechat.core;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import me.ianhe.wechat.beans.BaseMsg;
 import me.ianhe.wechat.enums.MsgCodeEnum;
 import me.ianhe.wechat.enums.MsgTypeEnum;
 import me.ianhe.wechat.utils.CommonTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -99,44 +97,6 @@ public class MsgCenter {
             result.add(msg);
         }
         return result;
-    }
-
-    /**
-     * 从队列取出消息并进行分发
-     *
-     * @param msgHandler
-     */
-    public static void handleMsg(MessageHandler msgHandler) {
-        while (true) {
-            if (core.getMsgList().size() > 0 && core.getMsgList().get(0).getContent() != null) {
-                BaseMsg msg = core.getMsgList().get(0);
-                if (MsgTypeEnum.TEXT.getType().equals(msg.getType())) {
-                    msgHandler.handleTextMsg(msg);
-                } else if (MsgTypeEnum.PIC.getType().equals(msg.getType())) {
-                    msgHandler.handlePicMsg(msg);
-                } else if (MsgTypeEnum.VOICE.getType().equals(msg.getType())) {
-                    msgHandler.handleVoiceMsg(msg);
-                } else if (MsgTypeEnum.VIEDO.getType().equals(msg.getType())) {
-                    msgHandler.handleVideoMsg(msg);
-                } else if (MsgTypeEnum.NAMECARD.getType().equals(msg.getType())) {
-                    msgHandler.handleNameCardMsg(msg);
-                } else if (MsgTypeEnum.SYS.getType().equals(msg.getType())) {
-                    msgHandler.handleSysMsg(msg);
-                } else if (MsgTypeEnum.VERIFYMSG.getType().equals(msg.getType())) {
-                    msgHandler.handleVerifyAddFriendMsg(msg);
-                } else if (MsgTypeEnum.MEDIA.getType().equals(msg.getType())) {
-                    msgHandler.handleMediaMsg(msg);
-                } else {
-                    logger.debug("应该不会到这里:{}", msg.getType());
-                }
-                core.getMsgList().remove(0);
-            }
-            try {
-                TimeUnit.MILLISECONDS.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

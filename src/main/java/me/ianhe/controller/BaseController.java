@@ -3,7 +3,6 @@ package me.ianhe.controller;
 import com.google.common.collect.Maps;
 import me.ianhe.service.*;
 import me.ianhe.utils.JsonUtil;
-import me.ianhe.wechat.core.MessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +32,6 @@ public abstract class BaseController {
     protected WebSocket webSocket;
     @Autowired
     protected Global global;
-    @Autowired
-    protected MessageHandler messageHandler;
     @Autowired
     protected WeChatLoginService weChatLoginService;
 

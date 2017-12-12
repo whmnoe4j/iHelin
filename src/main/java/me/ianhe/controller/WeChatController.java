@@ -1,7 +1,6 @@
 package me.ianhe.controller;
 
 import me.ianhe.wechat.core.Core;
-import me.ianhe.wechat.core.MsgCenter;
 import me.ianhe.wechat.utils.WeChatTools;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("wechat")
-public class TestController extends BaseController {
+public class WeChatController extends BaseController {
 
     private static Core core = Core.getInstance();
 
@@ -31,7 +30,6 @@ public class TestController extends BaseController {
         if (!core.isAlive()) {
             weChatLoginService.login(response.getOutputStream());
             logger.info("+++++++++++++++++++开始消息处理+++++++++++++++++++++");
-            new Thread(() -> MsgCenter.handleMsg(messageHandler), "msg-handler-thread").start();
         } else {
             response.getWriter().print("WeChat is online,please logout and try again!");
         }

@@ -129,11 +129,4 @@ public class MessageHandlerService implements MessageHandler {
         }
     }
 
-    public static void main(String[] args) {
-        Matcher matcher = CommonTools.getMatcher(".*百词斩上坚持了(\\d+)天.*招(\\d+)个单词.*", "我已经在百词斩上坚持了157天，今日过招27个单词。");
-        if (matcher.find()) {
-            System.out.println(matcher.group(1));
-            System.out.println(matcher.group(2));
-        }
-    }
 }
