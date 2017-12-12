@@ -37,11 +37,6 @@
     </appender>
 
     <logger name="me.ianhe" level="DEBUG"/>
-    <!--<logger name="org.springframework.web" level="DEBUG"/>-->
-
-    <!--<logger name="me.ianhe.service" level="WARN">
-        <appender-ref ref="DB"/>
-    </logger>-->
 
     <!-- Root Logger -->
     <root level="INFO">
