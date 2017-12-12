@@ -127,7 +127,7 @@ public class MsgCenter {
                 } else if (MsgTypeEnum.MEDIA.getType().equals(msg.getType())) {
                     msgHandler.handleMediaMsg(msg);
                 } else {
-                    logger.debug("应该不会到这里");
+                    logger.debug("应该不会到这里:{}", msg.getType());
                 }
                 core.getMsgList().remove(0);
             }
