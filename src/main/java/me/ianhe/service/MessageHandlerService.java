@@ -2,7 +2,6 @@ package me.ianhe.service;
 
 import com.alibaba.fastjson.JSON;
 import me.ianhe.wechat.beans.BaseMsg;
-import me.ianhe.wechat.beans.RecommendInfo;
 import me.ianhe.wechat.core.Core;
 import me.ianhe.wechat.core.MessageHandler;
 import me.ianhe.wechat.enums.MsgTypeEnum;
@@ -60,7 +59,8 @@ public class MessageHandlerService implements MessageHandler {
                 System.out.println(WeChatTools.getContactList());
             }
             if (!msg.getFromUserName().equals(Core.getInstance().getUserName())) {
-                WeChatTools.sendMsgByUsername("谢谢", msg.getFromUserName());
+//                WeChatTools.sendMsgByUsername("谢谢", msg.getFromUserName());
+//                TODO 回复别人的消息
             }
         } else {
             System.out.println("[群消息]" + msg.getFromUserName() + ":" + msg.getText());
@@ -69,9 +69,8 @@ public class MessageHandlerService implements MessageHandler {
 
     @Override
     public void sysMsgHandle(BaseMsg msg) {
-        // 收到系统消息
+        logger.debug("系统消息：{}", JSON.toJSONString(msg));
         String text = msg.getContent();
-        logger.debug("系统消息：{}", text);
         if ("发出红包，请在手机上查看".equals(text)) {
 
         }
@@ -79,18 +78,18 @@ public class MessageHandlerService implements MessageHandler {
 
     @Override
     public void verifyAddFriendMsgHandle(BaseMsg msg) {
-        WeChatTools.addFriend(msg, true);
+        /*WeChatTools.addFriend(msg, true);
         RecommendInfo recommendInfo = msg.getRecommendInfo();
         String nickName = recommendInfo.getNickName();
         String province = recommendInfo.getProvince();
         String city = recommendInfo.getCity();
         String text = "你好，来自" + province + city + "的" + nickName + "， 欢迎添加我为好友！";
-        WeChatTools.sendMsgByUsername(text, msg.getFromUserName());
+        WeChatTools.sendMsgByUsername(text, msg.getFromUserName());*/
     }
 
     @Override
     public void picMsgHandle(BaseMsg msg) {
-        String fileName = new SimpleDateFormat("wechat/pic/yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".jpg";
+        String fileName = "wechat/pic/" + new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(new Date()) + ".jpg";
         fileService.uploadFile(fileName, DownloadTools.getDownloadFn(msg, MsgTypeEnum.PIC.getType()));
     }
 
