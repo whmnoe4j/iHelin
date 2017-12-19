@@ -49,7 +49,7 @@ public class MessageHandlerService implements MessageHandler {
                 // 测试群列表
                 System.out.println(WeChatTools.getGroupNickNameList());
                 System.out.println(WeChatTools.getGroupIdList());
-                System.out.println(Core.getInstance().getGroupMemeberMap());
+//                System.out.println(Core.getInstance().getGroupMemeberMap());
             }
             if ("4".equals(text)) {
                 System.out.println(WeChatTools.getContactNickNameList());
@@ -59,6 +59,9 @@ public class MessageHandlerService implements MessageHandler {
             }
             if ("6".equals(text)) {
                 System.out.println(WeChatTools.getContactList());
+            }
+            if ("1".equals(text)) {
+                System.out.println(WeChatTools.getGroupList());
             }
             if (!msg.getFromUserName().equals(Core.getInstance().getUserName())) {
 //                WeChatTools.sendTextMsgByUsername("谢谢", msg.getFromUserName());
