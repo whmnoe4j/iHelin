@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class ExceptionText {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public static void main(String[] args) {
         try {

@@ -1,4 +1,4 @@
-package me.ianhe.db.plugin;
+package me.ianhe.config.plugin;
 
 /**
  * 分页信息

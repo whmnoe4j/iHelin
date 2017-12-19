@@ -2,7 +2,7 @@ package me.ianhe.service;
 
 import com.google.common.collect.Maps;
 import me.ianhe.dao.UserMapper;
-import me.ianhe.db.entity.User;
+import me.ianhe.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;

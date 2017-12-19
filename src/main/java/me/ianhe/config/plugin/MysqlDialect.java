@@ -1,4 +1,4 @@
-package me.ianhe.db.plugin;
+package me.ianhe.config.plugin;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -35,7 +35,7 @@ public abstract class BaseController {
     @Autowired
     protected WeChatLoginService weChatLoginService;
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 默认分页大小

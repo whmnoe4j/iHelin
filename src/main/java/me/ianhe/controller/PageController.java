@@ -1,6 +1,6 @@
 package me.ianhe.controller;
 
-import me.ianhe.db.entity.Article;
+import me.ianhe.entity.Article;
 import me.ianhe.utils.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

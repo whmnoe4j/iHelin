@@ -1,4 +1,4 @@
-package me.ianhe.db.entity;
+package me.ianhe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;

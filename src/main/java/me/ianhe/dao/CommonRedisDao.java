@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class CommonRedisDao {
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -67,7 +67,7 @@ public class CommonRedisDao {
      */
     public Integer getInt(String key) {
         String value = stringRedisTemplate.boundValueOps(key).get();
-        if (StringUtils.isNotBlank(value)) {
+        if (StringUtils.isNumeric(value)) {
             return Integer.valueOf(value);
         }
         return 0;
@@ -81,7 +81,7 @@ public class CommonRedisDao {
      */
     public Long getLong(String key) {
         String value = stringRedisTemplate.boundValueOps(key).get();
-        if (StringUtils.isNotBlank(value)) {
+        if (StringUtils.isNumeric(value)) {
             return Long.valueOf(value);
         }
         return 0L;
@@ -230,7 +230,7 @@ public class CommonRedisDao {
     }
 
     /**
-     * key是否存在
+     * 检查key是否存在
      *
      * @author iHelin
      * @since 2017/9/16 17:15
@@ -252,7 +252,7 @@ public class CommonRedisDao {
         if (timeout != null) {
             stringRedisTemplate.opsForValue().set(key, value, timeout, unit);
         } else {
-            stringRedisTemplate.opsForValue().set(key, value);
+            set(key, value);
         }
     }
 

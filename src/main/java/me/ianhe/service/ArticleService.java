@@ -2,7 +2,7 @@ package me.ianhe.service;
 
 import com.google.common.collect.Maps;
 import me.ianhe.dao.ArticleMapper;
-import me.ianhe.db.entity.Article;
+import me.ianhe.entity.Article;
 import me.ianhe.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Service
 public class ArticleService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Resource
     private ArticleMapper articleMapper;

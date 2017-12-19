@@ -2,7 +2,7 @@ package me.ianhe.test;
 
 import com.google.common.collect.Lists;
 import me.ianhe.dao.PoemMapper;
-import me.ianhe.db.entity.Poem;
+import me.ianhe.entity.Poem;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

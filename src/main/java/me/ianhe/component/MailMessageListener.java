@@ -22,7 +22,7 @@ import javax.jms.ObjectMessage;
 @EnableJms
 public class MailMessageListener {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MailService mailService;

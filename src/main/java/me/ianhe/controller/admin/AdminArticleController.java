@@ -1,6 +1,6 @@
 package me.ianhe.controller.admin;
 
-import me.ianhe.db.entity.Article;
+import me.ianhe.entity.Article;
 import org.apache.commons.lang3.CharEncoding;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;

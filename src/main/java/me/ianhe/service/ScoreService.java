@@ -1,7 +1,7 @@
 package me.ianhe.service;
 
-import me.ianhe.db.entity.MyScore;
 import me.ianhe.dao.MyScoreMapper;
+import me.ianhe.entity.MyScore;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

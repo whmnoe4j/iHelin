@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Service
 public class JmsProducerService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     @Qualifier("jmsQueueTemplate")

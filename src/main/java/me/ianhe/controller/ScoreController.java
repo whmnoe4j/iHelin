@@ -1,6 +1,6 @@
 package me.ianhe.controller;
 
-import me.ianhe.db.entity.MyScore;
+import me.ianhe.entity.MyScore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

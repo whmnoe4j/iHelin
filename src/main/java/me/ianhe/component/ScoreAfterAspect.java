@@ -1,7 +1,7 @@
 package me.ianhe.component;
 
 import com.google.common.collect.Maps;
-import me.ianhe.db.entity.MyScore;
+import me.ianhe.entity.MyScore;
 import me.ianhe.model.MailModel;
 import me.ianhe.service.DingService;
 import me.ianhe.service.JmsProducerService;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Component
 public class ScoreAfterAspect {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ScoreService scoreService;

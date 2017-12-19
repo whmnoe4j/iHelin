@@ -1,6 +1,6 @@
 package me.ianhe.service;
 
-import me.ianhe.db.entity.MyScore;
+import me.ianhe.entity.MyScore;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 /**
  * @author iHelin

@@ -18,7 +18,7 @@ import javax.jms.TextMessage;
 @EnableJms
 public class ConsumerMessageListener {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "seven")
     public void onMessage(Message message) {

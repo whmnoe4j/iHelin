@@ -1,4 +1,4 @@
-package me.ianhe.db.entity;
+package me.ianhe.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

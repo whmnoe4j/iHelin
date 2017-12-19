@@ -1,6 +1,6 @@
 package me.ianhe.dao;
 
-import me.ianhe.db.entity.MyScore;
+import me.ianhe.entity.MyScore;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;

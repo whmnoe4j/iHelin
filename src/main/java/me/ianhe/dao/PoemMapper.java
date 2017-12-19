@@ -1,6 +1,6 @@
 package me.ianhe.dao;
 
-import me.ianhe.db.entity.Poem;
+import me.ianhe.entity.Poem;
 
 import java.util.List;
 

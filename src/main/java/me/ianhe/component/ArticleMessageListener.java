@@ -23,7 +23,7 @@ public class ArticleMessageListener {
     @Autowired
     protected CommonRedisDao commonRedisDao;
     private static final String READ_COUNT_KEY = "article:readCount:";
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "article")
     public void onMessage(Message message) {

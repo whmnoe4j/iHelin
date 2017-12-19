@@ -1,6 +1,6 @@
 package me.ianhe.dao;
 
-import me.ianhe.db.entity.User;
+import me.ianhe.entity.User;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;

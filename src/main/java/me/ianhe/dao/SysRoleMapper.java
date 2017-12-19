@@ -1,6 +1,6 @@
 package me.ianhe.dao;
 
-import me.ianhe.db.entity.SysRole;
+import me.ianhe.entity.SysRole;
 
 import java.util.List;
 

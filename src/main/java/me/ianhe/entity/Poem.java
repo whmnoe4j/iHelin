@@ -1,4 +1,4 @@
-package me.ianhe.db.entity;
+package me.ianhe.entity;
 
 public class Poem {
     private Integer id;

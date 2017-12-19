@@ -1,6 +1,6 @@
 package me.ianhe.controller;
 
-import me.ianhe.db.entity.Poem;
+import me.ianhe.entity.Poem;
 import me.ianhe.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

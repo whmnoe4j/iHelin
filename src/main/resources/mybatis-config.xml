@@ -17,6 +17,6 @@
         <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
     </settings>
     <plugins>
-        <plugin interceptor="me.ianhe.db.plugin.PaginationInterceptor"></plugin>
+        <plugin interceptor="me.ianhe.config.plugin.PaginationInterceptor"></plugin>
     </plugins>
 </configuration>

@@ -24,7 +24,7 @@ public class WeChatMessageListener {
 
     @Autowired
     protected MessageHandler messageHandler;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @JmsListener(containerFactory = "jmsListenerContainerFactory", destination = "weChatMsg")
     public void onMessage(ObjectMessage message) {

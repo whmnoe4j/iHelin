@@ -3,7 +3,7 @@ package me.ianhe.service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.PoemMapper;
-import me.ianhe.db.entity.Poem;
+import me.ianhe.entity.Poem;
 import me.ianhe.model.ding.FeedCard;
 import me.ianhe.model.ding.Link;
 import me.ianhe.model.douban.Movie;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Service
 public class TaskService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private PoemMapper poemMapper;
@@ -106,7 +106,7 @@ public class TaskService {
         String res = WechatUtil.doGetStr(url);
         Movie movie = JsonUtil.parseObject(res, Movie.class);
         List<Subject> subjectList = movie.getSubjects();
-        if (subjectList == null) {
+        if (subjectList == null || subjectList.isEmpty()) {
             dingService.sendTextMsg("电影接口有问题啦，快去看看咋回事！");
             return;
         }
