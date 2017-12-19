@@ -12,7 +12,7 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, title, author, summary, read_num, create_time, update_time,content
+        id, title, author, summary, read_num, create_time, update_time, content
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -21,16 +21,16 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from article
-        where id = #{id,jdbcType=INTEGER}
+        DELETE FROM article
+        WHERE id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" keyProperty="id" parameterType="me.ianhe.entity.Article" useGeneratedKeys="true">
-        insert into article (title, author, summary,
-        read_num, create_time, update_time,
-        content)
-        values (#{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
-        #{readNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-        #{content,jdbcType=LONGVARCHAR})
+        INSERT INTO article (title, author, summary,
+                             read_num, create_time, update_time,
+                             content)
+        VALUES (#{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+                #{readNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{content,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" keyProperty="id" parameterType="me.ianhe.entity.Article"
             useGeneratedKeys="true">
@@ -110,15 +110,15 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="me.ianhe.entity.Article">
-        update article
-        set title = #{title,jdbcType=VARCHAR},
-        author = #{author,jdbcType=VARCHAR},
-        summary = #{summary,jdbcType=VARCHAR},
-        read_num = #{readNum,jdbcType=INTEGER},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-        content = #{content,jdbcType=LONGVARCHAR}
-        where id = #{id,jdbcType=INTEGER}
+        UPDATE article
+        SET title       = #{title,jdbcType=VARCHAR},
+            author      = #{author,jdbcType=VARCHAR},
+            summary     = #{summary,jdbcType=VARCHAR},
+            read_num    = #{readNum,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            content     = #{content,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
 
@@ -131,9 +131,9 @@
         </where>
         ORDER BY update_time DESC, create_time DESC
     </select>
-    <select id="listCount" resultType="int" parameterType="java.util.Map">
+    <select id="listCount" resultType="long" parameterType="java.util.Map">
         select
-        count(id)
+        count(1)
         from article
         <where>
             <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>

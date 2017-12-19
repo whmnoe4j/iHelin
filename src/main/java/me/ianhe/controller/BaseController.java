@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.google.common.collect.Maps;
+import me.ianhe.model.Pagination;
 import me.ianhe.service.*;
 import me.ianhe.utils.JsonUtil;
 import org.slf4j.Logger;
@@ -45,7 +46,6 @@ public abstract class BaseController {
     private static final String ERROR = "error";
     private static final String STATUS = "status";
     private static final String DATA = "data";
-    private static final String TOTAL = "total";
 
     protected String success() {
         Map<String, Object> res = Maps.newHashMap();
@@ -53,12 +53,14 @@ public abstract class BaseController {
         return JsonUtil.toJson(res);
     }
 
-    protected String page(Collection model, Integer count) {
-        Map<String, Object> res = Maps.newHashMap();
-        res.put(STATUS, SUCCESS);
-        res.put(DATA, model);
-        res.put(TOTAL, count);
-        return JsonUtil.toJson(res);
+    /**
+     * 分页
+     *
+     * @author iHelin
+     * @since 2017/12/19 15:07
+     */
+    protected Pagination page(Collection data, int totalCount, int currentPage, int pageLength) {
+        return new Pagination(data, totalCount, currentPage, pageLength);
     }
 
     protected <T> String success(T model) {

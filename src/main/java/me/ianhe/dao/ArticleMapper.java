@@ -27,5 +27,5 @@ public interface ArticleMapper {
 
     List<Article> listByCondition(Map<String, Object> res, RowBounds rowBounds);
 
-    int listCount(Map<String, Object> res);
+    long listCount(Map<String, Object> res);
 }

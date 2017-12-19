@@ -5,7 +5,10 @@
         el: '#app',
         data: function () {
             return {
-                tableData: []
+                tableData: [],
+                totalCount: 0,
+                currentPage: 1,
+                pageSize: 10
             }
         },
         mounted: function () {
@@ -14,27 +17,34 @@
         },
         methods: {
             init: function () {
-                this.$http.get('${request.contextPath}/admin/articleList?pageNum=1&pageSize=10').then(res => {
-                    this.tableData = res.data;
+                this.$http.get('${request.contextPath}/admin/articleList?pageNum='
+                        + this.currentPage + '&pageSize=' + this.pageSize).then(res => {
+                    this.tableData = res.data.data;
+                    this.totalCount = res.data.totalCount;
                 });
             },
             dateFormat: function (row, column, cellValue) {
-                return new Date(cellValue).format('yyyy-MM-dd HH:mm')
+                return new Date(cellValue).format('yyyy-MM-dd HH:mm');
             },
             handleClick(row) {
                 console.log(row);
+            },
+            currentChange(currentPage) {
+                this.currentPage = currentPage;
+                this.init();
             }
         }
     })
 </script>
 </#assign>
-<@main.page title="首页">
+<@main.page title="文章">
 <el-table
         :data="tableData"
         border
         stripe>
     <el-table-column
             prop="title"
+            show-overflow-tooltip
             label="标题">
     </el-table-column>
     <el-table-column
@@ -61,4 +71,14 @@
         </template>
     </el-table-column>
 </el-table>
+<div>
+    <el-pagination
+            background
+            layout="prev, pager, next"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            @current-change="currentChange"
+            :total="totalCount">
+    </el-pagination>
+</div>
 </@main.page>

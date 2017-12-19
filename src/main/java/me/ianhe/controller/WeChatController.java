@@ -2,12 +2,11 @@ package me.ianhe.controller;
 
 import me.ianhe.wechat.core.Core;
 import me.ianhe.wechat.utils.WeChatTools;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author iHelin
@@ -51,4 +50,9 @@ public class WeChatController extends BaseController {
         return core.isAlive();
     }
 
+    @PostMapping("ws")
+    public String sendMessage(@RequestBody Map<String, String> data) {
+        webSocket.sendMessage(data.get("data"));
+        return success();
+    }
 }

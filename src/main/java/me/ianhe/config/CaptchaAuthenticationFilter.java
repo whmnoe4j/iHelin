@@ -23,9 +23,9 @@ import java.io.IOException;
  */
 public class CaptchaAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
-    public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
-    public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";
+    private static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
+    private static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
+    private static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";
 
     private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
     private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;

@@ -1,4 +1,4 @@
-package me.ianhe.config.plugin;
+package me.ianhe.config;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,14 +24,14 @@ public class PaginationInterceptor implements Interceptor {
 
     private static final int MAPPED_STATEMENT_INDEX = 0;
     private static final int PARAMETER_INDEX = 1;
-    private static final int ROWBOUNDS_INDEX = 2;
+    private static final int ROW_BOUNDS_INDEX = 2;
 
     private MysqlDialect dialect;
 
     @Override
     public Object intercept(Invocation invocation) throws Exception {
         Object[] queryArgs = invocation.getArgs();
-        RowBounds rowBounds = (RowBounds) queryArgs[ROWBOUNDS_INDEX];
+        RowBounds rowBounds = (RowBounds) queryArgs[ROW_BOUNDS_INDEX];
         int offset = rowBounds.getOffset();
         int limit = rowBounds.getLimit();
         if (dialect.supportsLimit() && (offset != RowBounds.NO_ROW_OFFSET || limit != RowBounds.NO_ROW_LIMIT)) {
@@ -46,7 +46,7 @@ public class PaginationInterceptor implements Interceptor {
                 BoundSql newBoundSql = createBoundSql(ms, boundSql, sql, rowBounds);
                 MappedStatement newMs = createMappedStatement(ms, newBoundSql);
                 queryArgs[MAPPED_STATEMENT_INDEX] = newMs;
-                queryArgs[ROWBOUNDS_INDEX] = new RowBounds();
+                queryArgs[ROW_BOUNDS_INDEX] = new RowBounds();
             }
         }
         return invocation.proceed();

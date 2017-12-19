@@ -1,4 +1,6 @@
-package me.ianhe.config.plugin;
+package me.ianhe.model;
+
+import java.util.Collection;
 
 /**
  * 分页信息
@@ -6,17 +8,40 @@ package me.ianhe.config.plugin;
  * @author iHelin
  * @since 2017/11/13 17:30
  */
-public class Pagination {
+public class Pagination<T> {
 
-    private int totalCount;
+    /**
+     * 总个数
+     */
+    private long totalCount;
+    /**
+     * 总页数
+     */
     private int totalPageNum;
+    /**
+     * 最后一页
+     */
     private int endPage;
+    /**
+     * 当前页
+     */
     private int currentPage;
+    /**
+     * 第一页
+     */
     private int startPage;
+    /**
+     * 状态
+     */
+    private String status;
+    /**
+     * 数据
+     */
+    private Collection data;
 
     private static final int PRE_AFT_PAGE_NUM = 3;
 
-    public Pagination(int totalCount, int currentPage, int pageLength) {
+    public Pagination(Collection<? extends T> data, long totalCount, int currentPage, int pageLength) {
         if (totalCount <= 0) {
             totalCount = 0;
         }
@@ -26,6 +51,8 @@ public class Pagination {
 
         this.totalCount = totalCount;
         this.currentPage = currentPage;
+        this.data = data;
+        this.status = "success";
 
         if (pageLength <= 0) {
             pageLength = 1;
@@ -41,7 +68,7 @@ public class Pagination {
         }
     }
 
-    public int getTotalCount() {
+    public long getTotalCount() {
         return totalCount;
     }
 
@@ -60,4 +87,13 @@ public class Pagination {
     public int getTotalPageNum() {
         return totalPageNum;
     }
+
+    public Collection getData() {
+        return data;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
 }

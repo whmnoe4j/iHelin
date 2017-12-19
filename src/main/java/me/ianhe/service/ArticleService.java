@@ -3,6 +3,7 @@ package me.ianhe.service;
 import com.google.common.collect.Maps;
 import me.ianhe.dao.ArticleMapper;
 import me.ianhe.entity.Article;
+import me.ianhe.model.Pagination;
 import me.ianhe.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -57,23 +58,31 @@ public class ArticleService {
         return articleMapper.selectByPrimaryKey(id);
     }
 
-    public List<Article> listByCondition(String title, int offset, int size) {
+    /**
+     * 分页查询
+     *
+     * @author iHelin
+     * @since 2017/12/19 15:17
+     */
+    public Pagination findByPage(String title, int currentPage, int pageLength) {
         Map<String, Object> res = Maps.newHashMap();
         if (StringUtils.isNotEmpty(title)) {
             res.put("title", title);
         }
-        return articleMapper.listByCondition(res, new RowBounds(offset, size));
-    }
-
-    public int listCount(String title) {
-        Map<String, Object> res = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(title)) {
-            res.put("title", title);
-        }
-        return articleMapper.listCount(res);
+        List<Article> data = articleMapper.listByCondition(res, new RowBounds(currentPage, pageLength));
+        long totalCount = articleMapper.listCount(res);
+        return new Pagination(data, totalCount, currentPage, pageLength);
     }
 
     public int deleteById(Integer id) {
         return articleMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Article> listByCondition(String title, int currentPage, int pageLength) {
+        Map<String, Object> res = Maps.newHashMap();
+        if (StringUtils.isNotEmpty(title)) {
+            res.put("title", title);
+        }
+        return articleMapper.listByCondition(res, new RowBounds(currentPage, pageLength));
     }
 }

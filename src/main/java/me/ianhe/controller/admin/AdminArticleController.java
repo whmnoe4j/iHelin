@@ -1,11 +1,10 @@
 package me.ianhe.controller.admin;
 
 import me.ianhe.entity.Article;
+import me.ianhe.model.Pagination;
 import org.apache.commons.lang3.CharEncoding;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
-
-import java.util.List;
 
 /**
  * 文章管理
@@ -29,9 +28,8 @@ public class AdminArticleController extends BaseAdminController {
     }
 
     @GetMapping("articleList")
-    public List<Article> getArticles(Integer pageNum, Integer pageSize) {
-        List<Article> articles = articleService.listByCondition(null, pageNum, pageSize);
-        return articles;
+    public Pagination getArticles(Integer pageNum, Integer pageSize) {
+        return articleService.findByPage(null, pageNum, pageSize);
     }
 
     /**

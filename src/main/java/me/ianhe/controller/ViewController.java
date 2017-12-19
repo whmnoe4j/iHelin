@@ -6,25 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.jms.Destination;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author iHelin
  * @since 2017/11/14 16:47
  */
 @Controller
-public class PageController extends BaseController {
+public class ViewController extends BaseController {
 
     @Autowired
     @Qualifier("articleQueue")
     private Destination destination;
 
-    @GetMapping(value = {"", "index"})
+    @GetMapping({"", "index"})
     public String indexPage(Model model, @RequestHeader("User-Agent") String userAgent) {
         int pageLength = 5;
         int pageNum = 1;
@@ -34,7 +35,7 @@ public class PageController extends BaseController {
         return "index";
     }
 
-    @GetMapping("article/{id}")
+    @GetMapping("article/{id:\\d+}")
     public String articlePage(@PathVariable Integer id, Model model) {
         Article article;
         if (id == null || id == 0) {
@@ -69,14 +70,6 @@ public class PageController extends BaseController {
     public String webSocketPage(HttpServletRequest request, Model model) {
         model.addAttribute("serverName", RequestUtil.getDomain(request));
         return "webSocket";
-    }
-
-    @ResponseBody
-    @PostMapping("ws")
-    public String sendMessage(@RequestBody Map<String, String> data) {
-        System.out.println(data.get("data"));
-        webSocket.sendMessage(data.get("data"));
-        return success();
     }
 
 }

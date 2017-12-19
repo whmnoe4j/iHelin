@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<div id="app">
+<div id="app" style="display: none;" v-show="defaultShow">
     <el-row class="tac">
         <el-col :span="4">
             <el-menu
@@ -112,21 +112,24 @@
     };
 
     Vue.mixin({
-        data() {
+        data: function () {
             return {
-                defaultActiveTag: 'index'
+                defaultActiveTag: 'index',
+                defaultShow: false
             }
+        },
+        mounted: function () {
+            this.defaultShow = true;
         },
         computed: {},
         methods: {
             handleSelect(key, keyPath) {
-//                console.log(key, keyPath);
                 window.location.href = '${request.contextPath}/admin/' + key;
             }
         },
     });
 </script>
-${html_other_script!}
+    ${html_other_script!}
 </body>
 </html>
 </#macro>
