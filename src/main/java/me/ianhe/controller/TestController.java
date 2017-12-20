@@ -16,7 +16,7 @@ public class TestController extends BaseController {
 
     @GetMapping("forum.php")
     public String handleX(HttpServletRequest request, @RequestHeader("User-Agent") String userAgent) {
-        logger.warn("ip是：{},userAgent:{}", RequestUtil.getRealIp(request), userAgent);
+        logger.warn("mmp ip是：{},userAgent:{}", RequestUtil.getRealIp(request), userAgent);
         return "我有一句妈卖批不值当讲不当讲";
     }
 }
