@@ -124,7 +124,7 @@
 
     <select id="listByCondition" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        id, title, author, summary, read_num, create_time, update_time
         from article
         <where>
             <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
@@ -138,5 +138,10 @@
         <where>
             <if test="title!=null">title like "%"#{title,jdbcType=VARCHAR}"%"</if>
         </where>
+    </select>
+
+    <select id="selectAllId" resultType="java.lang.Integer">
+        SELECT id
+        FROM article
     </select>
 </mapper>

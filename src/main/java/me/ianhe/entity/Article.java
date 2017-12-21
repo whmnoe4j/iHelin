@@ -19,17 +19,13 @@ public class Article {
 
     private String summary;
 
-    private Integer readNum;
+    private Long readNum;
 
     private Date createTime;
 
     private Date updateTime;
 
     private String content;
-
-    public Article() {
-        this.readNum = 0;
-    }
 
     public Integer getId() {
         return id;
@@ -63,11 +59,11 @@ public class Article {
         this.summary = summary;
     }
 
-    public Integer getReadNum() {
+    public Long getReadNum() {
         return readNum;
     }
 
-    public void setReadNum(Integer readNum) {
+    public void setReadNum(Long readNum) {
         this.readNum = readNum;
     }
 

@@ -39,7 +39,8 @@ public class ArticleService {
         Date now = new Date();
         article.setCreateTime(now);
         article.setUpdateTime(now);
-        logger.info("create a new article:{}", JsonUtil.toJson(article));
+        article.setReadNum(0L);
+        logger.debug("create a new article:{}", article.getTitle());
         return articleMapper.insert(article);
     }
 

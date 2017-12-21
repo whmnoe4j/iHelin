@@ -28,4 +28,6 @@ public interface ArticleMapper {
     List<Article> listByCondition(Map<String, Object> res, RowBounds rowBounds);
 
     long listCount(Map<String, Object> res);
+
+    List<Integer> selectAllId();
 }

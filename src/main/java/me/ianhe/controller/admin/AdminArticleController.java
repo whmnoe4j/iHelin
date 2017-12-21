@@ -27,6 +27,12 @@ public class AdminArticleController extends BaseAdminController {
         return success();
     }
 
+    /**
+     * 获取文章列表
+     *
+     * @author iHelin
+     * @since 2017/12/21 10:02
+     */
     @GetMapping("articleList")
     public Pagination getArticles(Integer pageNum, Integer pageSize) {
         return articleService.findByPage(null, pageNum, pageSize);

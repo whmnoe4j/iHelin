@@ -1,6 +1,7 @@
 package me.ianhe.controller;
 
 import com.google.common.collect.Maps;
+import me.ianhe.dao.CommonRedisDao;
 import me.ianhe.model.Pagination;
 import me.ianhe.service.*;
 import me.ianhe.utils.JsonUtil;
@@ -35,6 +36,8 @@ public abstract class BaseController {
     protected Global global;
     @Autowired
     protected WeChatLoginService weChatLoginService;
+    @Autowired
+    protected CommonRedisDao commonRedisDao;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
