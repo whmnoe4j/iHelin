@@ -50,11 +50,6 @@ public class ArticleService {
         return articleMapper.updateByPrimaryKey(article);
     }
 
-    public int addReadCount(Article article) {
-        article.setReadNum(article.getReadNum() + 1);
-        return articleMapper.updateByPrimaryKey(article);
-    }
-
     public Article selectArticleById(Integer id) {
         return articleMapper.selectByPrimaryKey(id);
     }
