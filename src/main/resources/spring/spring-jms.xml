@@ -48,8 +48,5 @@
     <bean id="mailQueue" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg value="mail"/>
     </bean>
-    <bean id="weChatMsgQueue" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="weChatMsg"/>
-    </bean>
 
 </beans>

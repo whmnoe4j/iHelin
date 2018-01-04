@@ -35,8 +35,6 @@ public abstract class BaseController {
     @Autowired
     protected Global global;
     @Autowired
-    protected WeChatLoginService weChatLoginService;
-    @Autowired
     protected CommonRedisDao commonRedisDao;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
