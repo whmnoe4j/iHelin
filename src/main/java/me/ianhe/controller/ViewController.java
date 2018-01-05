@@ -72,4 +72,9 @@ public class ViewController extends BaseController {
         return "webSocket";
     }
 
+    @GetMapping("test")
+    public String text(){
+        return "test";
+    }
+
 }

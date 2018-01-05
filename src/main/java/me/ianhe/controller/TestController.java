@@ -32,4 +32,5 @@ public class TestController extends BaseController {
         articleService.addAdvice(advice);
         return success();
     }
+
 }
