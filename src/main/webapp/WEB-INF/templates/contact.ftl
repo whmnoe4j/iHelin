@@ -1,5 +1,5 @@
 <#import "frame.ftl" as main>
-<#assign ex_script in main>
+<#assign html_other_script in main>
 <!-- extend js -->
 <script src="${request.contextPath}/js/jqBootstrapValidation.js"></script>
 <script src="${request.contextPath}/js/contact_me.js"></script>

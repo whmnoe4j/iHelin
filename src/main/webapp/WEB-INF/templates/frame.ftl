@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="细心在任何时候都不是多余的"/>
     <meta name="author" content="Ian He"/>
-    <#--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
+<#--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
     <title>${title} | Ian He</title>
     <link rel="icon" href="${request.contextPath}/favicon.ico"/>
     <link href="${request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +112,9 @@
 <!-- common js -->
 <script src="${request.contextPath}/js/jquery.min.js"></script>
 <script src="${request.contextPath}/js/bootstrap.min.js"></script>
-${ex_script!}
+<script src="${request.contextPath}/plugins/vue/vue.js"></script>
+<script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
+    ${html_other_script!}
 <script>
     $(function () {
         $("body").on("input propertychange", ".floating-label-form-group", function (o) {
