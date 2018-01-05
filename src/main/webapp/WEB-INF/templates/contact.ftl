@@ -2,7 +2,81 @@
 <#assign html_other_script in main>
 <!-- extend js -->
 <script src="${request.contextPath}/js/jqBootstrapValidation.js"></script>
-<script src="${request.contextPath}/js/contact_me.js"></script>
+<script>
+    // Contact Form Scripts
+
+    $(function() {
+
+        $("#contactForm input,#contactForm textarea").jqBootstrapValidation({
+            preventSubmit: true,
+            submitError: function($form, event, errors) {
+                // additional error messages or events
+            },
+            submitSuccess: function($form, event) {
+                event.preventDefault(); // prevent default submit behaviour
+                // get values from FORM
+                var name = $("input#name").val();
+                var email = $("input#email").val();
+                var phone = $("input#phone").val();
+                var message = $("textarea#message").val();
+                var firstName = name; // For Success/Failure Message
+                // Check for white space in name for Success/Fail message
+                if (firstName.indexOf(' ') >= 0) {
+                    firstName = name.split(' ').slice(0, -1).join(' ');
+                }
+                $.ajax({
+                    url: "${request.contextPath}/advice",
+                    type: "POST",
+                    data: {
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        message: message
+                    },
+                    cache: false,
+                    success: function() {
+                        // Success message
+                        $('#success').html("<div class='alert alert-success'>");
+                        $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                                .append("</button>");
+                        $('#success > .alert-success')
+                                .append("<strong>Your message has been sent. </strong>");
+                        $('#success > .alert-success')
+                                .append('</div>');
+
+                        //clear all fields
+                        $('#contactForm').trigger("reset");
+                    },
+                    error: function() {
+                        // Fail message
+                        $('#success').html("<div class='alert alert-danger'>");
+                        $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                                .append("</button>");
+                        $('#success > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
+                        $('#success > .alert-danger').append('</div>');
+                        //clear all fields
+                        $('#contactForm').trigger("reset");
+                    },
+                });
+            },
+            filter: function() {
+                return $(this).is(":visible");
+            },
+        });
+
+        $("a[data-toggle=\"tab\"]").click(function(e) {
+            e.preventDefault();
+            $(this).tab("show");
+        });
+    });
+
+
+    /*When clicking on Full hide fail/success boxes */
+    $('#name').focus(function() {
+        $('#success').html('');
+    });
+
+</script>
 </#assign>
 <@main.page title="contact">
 
@@ -28,9 +102,7 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <p>Want to get in touch with me? Fill out the form below to send me a message and I will try to get back to
                 you within 24 hours!</p>
-            <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-            <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-            <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+            <small>Email to ihelin@outlook.com</small>
             <form name="sentMessage" id="contactForm" novalidate>
                 <div class="row control-group">
                     <div class="form-group col-xs-12 floating-label-form-group controls">

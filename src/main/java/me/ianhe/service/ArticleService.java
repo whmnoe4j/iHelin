@@ -1,7 +1,9 @@
 package me.ianhe.service;
 
 import com.google.common.collect.Maps;
+import me.ianhe.dao.AdviceMapper;
 import me.ianhe.dao.ArticleMapper;
+import me.ianhe.entity.Advice;
 import me.ianhe.entity.Article;
 import me.ianhe.model.Pagination;
 import me.ianhe.utils.JsonUtil;
@@ -9,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +36,8 @@ public class ArticleService {
 
     @Resource
     private ArticleMapper articleMapper;
+    @Autowired
+    private AdviceMapper adviceMapper;
 
     public int addArticle(Article article) {
         article.setAuthor("Ian He");
@@ -80,5 +85,9 @@ public class ArticleService {
             res.put("title", title);
         }
         return articleMapper.listByCondition(res, new RowBounds(currentPage, pageLength));
+    }
+
+    public int addAdvice(Advice advice){
+        return adviceMapper.insert(advice);
     }
 }
