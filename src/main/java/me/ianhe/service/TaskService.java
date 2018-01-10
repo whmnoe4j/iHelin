@@ -74,8 +74,35 @@ public class TaskService {
      * @author iHelin
      * @since 2017/12/21 10:21
      */
-    public void runEveryDay() {
+    public void runEveryDay0() {
         syncReadCount();
+    }
+
+    /**
+     * 每天7点执行
+     *
+     * @author iHelin
+     * @since 2018/1/10 09:07
+     */
+    public void runEveryDay7() {
+        kaoyanCountDown();
+    }
+
+    /**
+     * ky倒计时
+     *
+     * @author iHelin
+     * @since 2017/11/13 17:16
+     */
+    public void kaoyanCountDown() {
+        Calendar terminalDate = new Calendar.Builder().setDate(2018, Calendar.DECEMBER, 23)
+                .build();
+        long terminalLong = terminalDate.getTimeInMillis();
+        long nowLong = System.currentTimeMillis();
+        long betweenDays = (terminalLong - nowLong) / (1000L * 3600 * 24) + 1;
+        if (betweenDays > 0) {
+            dingService.sendTextMsg("距离2019【ky】还剩" + betweenDays + "天！");
+        }
     }
 
     /**
@@ -129,23 +156,6 @@ public class TaskService {
         String jsonData = JsonUtil.toJson(data);
         logger.debug("每日一句：{}", jsonData);
         dingService.doSend(jsonData);
-    }
-
-    /**
-     * 倒计时
-     *
-     * @author iHelin
-     * @since 2017/11/13 17:16
-     */
-    public void countDown() {
-        Calendar terminalDate = new Calendar.Builder().setDate(2018, Calendar.FEBRUARY, 14)
-                .build();
-        long terminalLong = terminalDate.getTimeInMillis();
-        long nowLong = System.currentTimeMillis();
-        long betweenDays = (terminalLong - nowLong) / (1000L * 3600 * 24) + 1;
-        if (betweenDays > 0) {
-            dingService.sendTextMsg("距离放假还剩" + betweenDays + "天！");
-        }
     }
 
     /**
