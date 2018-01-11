@@ -55,7 +55,7 @@ public class TaskService {
      * @since 2017/12/21 10:24
      */
     public void runWorkDay18() {
-        dailyEnglish();
+        poemRun();
     }
 
     /**
@@ -65,7 +65,7 @@ public class TaskService {
      * @since 2017/12/21 10:24
      */
     public void runWorkDay12() {
-        poemRun();
+//        poemRun();
     }
 
     /**
@@ -85,28 +85,11 @@ public class TaskService {
      * @since 2018/1/10 09:07
      */
     public void runEveryDay7() {
-        kaoyanCountDown();
+        dailyEnglish();
     }
 
     /**
-     * ky倒计时
-     *
-     * @author iHelin
-     * @since 2017/11/13 17:16
-     */
-    public void kaoyanCountDown() {
-        Calendar terminalDate = new Calendar.Builder().setDate(2018, Calendar.DECEMBER, 23)
-                .build();
-        long terminalLong = terminalDate.getTimeInMillis();
-        long nowLong = System.currentTimeMillis();
-        long betweenDays = (terminalLong - nowLong) / (1000L * 3600 * 24) + 1;
-        if (betweenDays > 0) {
-            dingService.sendTextMsg("距离2019【ky】还剩" + betweenDays + "天！");
-        }
-    }
-
-    /**
-     * 每天同步阅读数
+     * 每天同步文章阅读数
      *
      * @author iHelin
      * @since 2017/12/21 10:17
@@ -141,21 +124,27 @@ public class TaskService {
      * @since 2017/11/13 17:17
      */
     private void dailyEnglish() {
-        Map<String, Object> contentMap = Maps.newHashMap();
-        String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
-        Map<String, Object> resMap = JsonUtil.parseMap(res);
-        contentMap.put("title", "葫芦娃学英语");
-        String text = "## 葫芦娃学英语\n" +
-                "![screenshot](" + resMap.get("picture") + ")\n" +
-                "##### " + resMap.get("content") + " \n" +
-                "> " + resMap.get("note") + " \n";
-        contentMap.put("text", text);
-        Map<String, Object> data = Maps.newHashMap();
-        data.put("msgtype", "markdown");
-        data.put("markdown", contentMap);
-        String jsonData = JsonUtil.toJson(data);
-        logger.debug("每日一句：{}", jsonData);
-        dingService.doSend(jsonData);
+        Calendar terminalDate = new Calendar.Builder().setDate(2018, Calendar.DECEMBER, 23)
+                .build();
+        long terminalLong = terminalDate.getTimeInMillis();
+        long nowLong = System.currentTimeMillis();
+        long betweenDays = (terminalLong - nowLong) / (1000L * 3600 * 24);
+        if (betweenDays > 0) {
+            Map<String, Object> contentMap = Maps.newHashMap();
+            String res = WechatUtil.doGetStr("http://open.iciba.com/dsapi");
+            Map<String, Object> resMap = JsonUtil.parseMap(res);
+            contentMap.put("title", "葫芦娃学英语");
+            String text = "## 距离2019【ky】还剩" + betweenDays + "天！\n" +
+                    "![葫芦娃学英语](" + resMap.get("picture") + ")\n" +
+                    "##### " + resMap.get("content") + " \n" +
+                    "> " + resMap.get("note") + " \n";
+            contentMap.put("text", text);
+            Map<String, Object> data = Maps.newHashMap();
+            data.put("msgtype", "markdown");
+            data.put("markdown", contentMap);
+            String jsonData = JsonUtil.toJson(data);
+            dingService.doSend(jsonData);
+        }
     }
 
     /**
