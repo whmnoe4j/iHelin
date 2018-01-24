@@ -108,14 +108,13 @@
         </div>
     </div>
 </footer>
-
 <!-- common js -->
 <script src="${request.contextPath}/js/jquery.min.js"></script>
 <script src="${request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${request.contextPath}/plugins/vue/vue.js"></script>
 <script src="${request.contextPath}/plugins/vue/vue-resource.js"></script>
-    ${html_other_script!}
 <script>
+    const a = ["富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善"];
     $(function () {
         $("body").on("input propertychange", ".floating-label-form-group", function (o) {
             $(this).toggleClass("floating-label-form-group-with-value", !!$(o.target).val())
@@ -123,19 +122,34 @@
             $(this).addClass("floating-label-form-group-with-focus")
         }).on("blur", ".floating-label-form-group", function () {
             $(this).removeClass("floating-label-form-group-with-focus")
-        })
-    }), jQuery(document).ready(function (o) {
-        var s = 1170;
-        if (o(window).width() > s) {
-            var i = o(".navbar-custom").height();
-            o(window).on("scroll", {previousTop: 0}, function () {
-                var s = o(window).scrollTop();
-                s < this.previousTop ? s > 0 && o(".navbar-custom").hasClass("is-fixed") ? o(".navbar-custom").addClass("is-visible") : o(".navbar-custom").removeClass("is-visible is-fixed") : s > this.previousTop && (o(".navbar-custom").removeClass("is-visible"), s > i && !o(".navbar-custom").hasClass("is-fixed") && o(".navbar-custom").addClass("is-fixed")), this.previousTop = s
-            })
+        }).click(function (e) {
+            const $i = $("<span />").text(a[parseInt(Math.random() * a.length)]);
+            const x = e.pageX, y = e.pageY;
+            $i.css({
+                "z-index": 999999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": "#ff6651"
+            });
+            $("body").append($i);
+            $i.animate({"top": y - 180, "opacity": 0}, 1500, function () {
+                $i.remove();
+            });
+        });
+        const s = 1170;
+        if ($(window).width() > s) {
+            const i = $(".navbar-custom").height();
+            $(window).on("scroll", {previousTop: 0}, function () {
+                const s = $(window).scrollTop();
+                s < this.previousTop ? s > 0 && $(".navbar-custom").hasClass("is-fixed") ? $(".navbar-custom").addClass("is-visible") : $(".navbar-custom").removeClass("is-visible is-fixed") : s > this.previousTop && ($(".navbar-custom").removeClass("is-visible"), s > i && !$(".navbar-custom").hasClass("is-fixed") && $(".navbar-custom").addClass("is-fixed")), this.previousTop = s
+            });
         }
     });
-</script>
 
+</script>
+    ${html_other_script!}
 </body>
 </html>
 </#macro>
