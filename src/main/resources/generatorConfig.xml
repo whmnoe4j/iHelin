@@ -5,7 +5,7 @@
 
     <!-- 指定数据连接驱动jar地址, must config local maven repo dir -->
     <classPathEntry
-            location="/Users/iHelin/.m2/repository/mysql/mysql-connector-java/5.1.19/mysql-connector-java-5.1.19.jar"/>
+            location="/usr/local/Cellar/gradle/4.4.1/libexec/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar"/>
 
     <!-- 一个数据库一个context -->
     <context id="Tuna" targetRuntime="MyBatis3">
@@ -48,7 +48,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 配置表信息 -->
-        <table schema="iHelin" tableName="advice" domainObjectName="Advice"
+        <table schema="iHelin" tableName="bus" domainObjectName="Bus"
                enableCountByExample="fasle" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
