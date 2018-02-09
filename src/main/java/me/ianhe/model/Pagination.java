@@ -19,27 +19,23 @@ public class Pagination<T> {
      */
     private int totalPageNum;
     /**
-     * 最后一页
-     */
-    private int endPage;
-    /**
      * 当前页
      */
     private int currentPage;
     /**
-     * 第一页
-     */
-    private int startPage;
-    /**
      * 状态
      */
     private String status;
+
+    /**
+     * 数据长度
+     */
+    private int pageLength;
+
     /**
      * 数据
      */
     private Collection data;
-
-    private static final int PRE_AFT_PAGE_NUM = 3;
 
     public Pagination(Collection<? extends T> data, long totalCount, int currentPage, int pageLength) {
         if (totalCount <= 0) {
@@ -48,36 +44,19 @@ public class Pagination<T> {
         if (currentPage <= 0) {
             currentPage = 1;
         }
-
+        if (pageLength <= 0) {
+            pageLength = 1;
+        }
+        this.pageLength = pageLength;
         this.totalCount = totalCount;
         this.currentPage = currentPage;
         this.data = data;
         this.status = "success";
-
-        if (pageLength <= 0) {
-            pageLength = 1;
-        }
         this.totalPageNum = (int) Math.ceil((double) totalCount / pageLength);
-        startPage = currentPage - PRE_AFT_PAGE_NUM;
-        if (startPage <= 0) {
-            startPage = Math.min(1, totalPageNum);
-        }
-        endPage = currentPage + PRE_AFT_PAGE_NUM;
-        if (endPage > totalPageNum) {
-            endPage = totalPageNum;
-        }
     }
 
     public long getTotalCount() {
         return totalCount;
-    }
-
-    public int getEndPage() {
-        return endPage;
-    }
-
-    public int getStartPage() {
-        return startPage;
     }
 
     public int getCurrentPage() {
@@ -96,4 +75,7 @@ public class Pagination<T> {
         return status;
     }
 
+    public int getPageLength() {
+        return pageLength;
+    }
 }
