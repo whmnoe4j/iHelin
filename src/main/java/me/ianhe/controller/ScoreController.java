@@ -3,7 +3,6 @@ package me.ianhe.controller;
 import me.ianhe.entity.MyScore;
 import me.ianhe.utils.JsonUtil;
 import me.ianhe.utils.WechatUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,17 +21,11 @@ import java.util.Map;
 @RestController
 public class ScoreController extends BaseController {
 
-    @Value("${seven.appid}")
-    private String appid;
-
-    @Value("${seven.secret}")
-    private String appsecret;
-
     @GetMapping("score/login")
     public String login(String code) {
         //https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid="
-                + appid + "&secret=" + appsecret + "&js_code=" + code + "&grant_type=authorization_code";
+                + global.getValue("seven.appid") + "&secret=" + global.getValue("seven.secret") + "&js_code=" + code + "&grant_type=authorization_code";
         logger.info("url is : {}", url);
         String res = WechatUtil.doGetStr(url);
         logger.info("res is :{}", res);
