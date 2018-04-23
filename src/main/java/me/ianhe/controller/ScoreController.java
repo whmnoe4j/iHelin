@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 分数
@@ -32,6 +33,7 @@ public class ScoreController extends BaseController {
         Map<String, Object> resMap = JsonUtil.parseMap(res);
         String openid = (String) resMap.get("openid");
         String sessionKey = (String) resMap.get("session_key");
+        commonRedisDao.setTimeout(sessionKey, openid + sessionKey, 7200L, TimeUnit.SECONDS);
         return sessionKey;
     }
 
